@@ -13,9 +13,10 @@
   "dependencies": {
     "body-parser": "*",
     "cookie-parser": "*",
-    "mongoose":"*",
     "express": "*",
-    "express-handlebars": "^3.0.0"
+    "express-handlebars": "^3.0.0",
+    "mongoose": "*",
+    "request": "^2.83.0"
   },
   "keywords": [
     "knowledge",

@@ -669,8 +669,9 @@ nav.navbar.navbar-default {
 }
 
 .s1 h3 {
-	color: #05d561;
-	font-size: 5em;
+	/*color: #05d561;*/
+        color: #95a739;
+	font-size: 2em;
 	font-weight: 700;
 	text-transform: uppercase;
 	text-align: center;
@@ -852,7 +853,7 @@ ul.pagination {
 	line-height: 30px;
 	padding: 4px;
 	display: inline-block;
-	border: 4px solid #05d561;
+	border: 4px solid #95a739;
 }
 
 .navbar-default .navbar-brand,
@@ -864,7 +865,8 @@ ul.pagination {
 .navbar-default .navbar-nav>.active>a,
 .navbar-default .navbar-nav>.active>a:hover,
 .navbar-default .navbar-nav>.active>a:focus {
-	color: #ff0101;
+	/*color: #ff0101;*/
+        color: #95a739;
 	background: none;
 }
 
@@ -3106,8 +3108,10 @@ p.footer_info_w3ls_agile {
 		padding: 3em 2em 0em 2em;
 	}
 	.s1 h3 {
-		color: #05d561;
-		font-size: 4.5em;
+		/*color: #05d561;*/
+                color: #95a739;
+		font-size: 2em;
+                /*font-size: 4.5em;*/
 	}
 	.banner_bottom_w3ls_agile,
 	.portfolio-agileinfo,
@@ -3225,7 +3229,7 @@ p.footer_info_w3ls_agile {
 		width: 67%;
 	}
 	.navbar-nav {
-		margin: 1.7em 0em 0 8em;
+		margin: 0.5em;
 	}
 }
 
