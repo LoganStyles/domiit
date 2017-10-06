@@ -1,0 +1,33 @@
+{
+  "name": "doomiitapp",
+  "version": "1.0.0",
+  "description": "an app to connect people globally across the spectrum of knowledge",
+  "engines": {
+    "node": "6.11.1"
+  },
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "body-parser": "*",
+    "cookie-parser": "*",
+    "mongoose":"*",
+    "express": "*",
+    "express-handlebars": "^3.0.0"
+  },
+  "keywords": [
+    "knowledge",
+    "social",
+    "connect",
+    "people",
+    "global"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LoganStyles/doomiit.git"
+  },
+  "author": "emmanuel okpukpan",
+  "license": "ISC"
+}
