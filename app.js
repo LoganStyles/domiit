@@ -9,18 +9,19 @@ var config = require('./config/database');
 //all middlewares
 var users = require('./routes/users');
 	//port number
-var port = 3000;
+//var port = 3000;
 //connect to db
-mongoose.connect(config.database);
-//on connection
-mongoose.connection.on('connected',function(){
-	console.log('Connected to database '+config.database);
-});
+// mongoose.connect(config.database);
+// //on connection
+// mongoose.connection.on('connected',function(){
+// 	console.log('Connected to database '+config.database);
+// });
 
-//on connection error
-mongoose.connection.on('error',function(err){
-	console.log('Database error '+err);
-});
+// //on connection error
+// mongoose.connection.on('error',function(err){
+// 	console.log('Database error '+err);
+// });
+
 
 var app = express();
 
@@ -56,6 +57,6 @@ app.get('*', function(req, res){
 	res.render('404', {});
 });
 
-app.listen(port,function(){
-console.log('Server started on port '+port);
+app.listen(process.env.PORT || 3000,function(){
+console.log('Server started on port '+process.env.PORT);
 });
