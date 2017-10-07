@@ -5,9 +5,6 @@ var mongoose = require('mongoose');
 // }
 
 var uri = process.env.MONGODB_URI;
-// var uri = 'mongodb://127.0.0.1:27017/doomiit';
-// var uri = 'mongodb://user:pass@host:port/doomiit';
-//console.log('db : '+uri);
 
 mongoose.Promise = global.Promise
 mongoose.connect(uri);
