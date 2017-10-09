@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
     <head>
-        <title>DOOMIITss | Home</title>
+        <title>DOMIIT | Home</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
         <meta name="keywords" content="social,education,questions" />
@@ -47,8 +46,9 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <h1><a class="navbar-brand" href="#"><span>
-                        </span>Doomiit</a></h1>
+                        <h1><a class="navbar-brand" href="#">
+                        <img src="images/domiit_200.png"/>
+                        </a></h1>
                     </div>
                     <!-- Collect the nav links, forms, and other content for toggling -->
 
@@ -91,7 +91,8 @@
                     <a href="#" class="hvr-shutter-out-vertical">Learn More</a>
                 </div>
                 <div class="w3l-button">
-                    <a href="#" class="hvr-shutter-out-vertical scroll ">Login</a>
+                    <a href="#" data-toggle="modal" data-target="#myModal2" class="hvr-shutter-out-vertical scroll ">Login</a>
+                  
                 </div>
                 <div class="clearfix"> </div>
             </div>
@@ -100,7 +101,9 @@
 
         <div class="slides-box">
             <ul class="slides">
+                <li style="background: url(images/banner0.png)center"></li>
                 <li style="background: url(images/banner1.jpg)center"></li>
+                <li style="background: url(images/banner2.png)center"></li>
                 <li style="background: url(images/banner3.jpg) center"></li>
             </ul>
         </div>
@@ -109,10 +112,10 @@
     <div class="banner_bottom_w3ls_agile">
         <div class="banner_bottom_w3ls_info">
             <h2 class="agile_heading">Let's Get Started</h2>
-            <p>Stay connected to the best use generated social networking contents with 
+            <p>Stay connected to the best user generated social networking contents with 
             intellectually focused solutions based on knowledge sharing</p>
             <div class="agileits-button">
-                <a href="#" class="read hvr-shutter-out-vertical">Sign Up Its Free</a>
+                <a href="#" data-toggle="modal" data-target="#myModal3" class="read hvr-shutter-out-vertical">Sign Up Its Free</a>
             </div>
         </div>
     </div>
@@ -121,7 +124,8 @@
     <!-- footer -->
     <div class="footer">
         <div class="container">
-            <h2><a href="#">  DOOMIIT</a></h2>
+            <h2><a href="#">  <img src="images/domiit_200.png"/></a></h2>
+            
             <h3>Subscribe To Our Newsletter</h3><form action="#" method="post">
                 <input type="email" name="email" placeholder="Your email..." required="">
                 <input type="submit" value="Subscribe">
@@ -146,12 +150,73 @@
                 </div>
                 <div class="clearfix"> </div>
             </div>
-            <p>© 2017 DOOMIIT. All rights reserved  
+            <p>© 2017 DOMIIT. All rights reserved  
                 <!--| Design by<a href="http://w3layouts.com/">webmobiles Ltd</a>-->
             </p>
         </div>
     </div>
     <!-- //footer -->
+    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                    <div class="signin-form profile">
+                        <h3 class="agileinfo_sign">Login</h3>   
+                        <div class="login-form">
+                            <form action="#" method="post">
+                                <input type="email" name="email" placeholder="E-mail" required="">
+                                <input type="password" name="password" placeholder="Password" required="">
+                                <div class="tp">
+                                    <input type="submit" value="Sign In">
+                                </div>
+                            </form>
+                        </div>
+                        <p><a href="#" data-toggle="modal" data-target="#myModal3" > Don't have an account? Sign Up</a></p>
+                        <div class="login-social-grids">
+                            <h4 class="agileinfo_sign">Or Connect With</h4> 
+                            <ul>
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            </ul>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //Modal1 -->   
+    
+    <!-- //Modal1 -->   
+    <!-- Modal2 -->
+    <div class="modal fade" id="myModal3" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+        <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    
+                    <div class="signin-form profile">
+                    <h3 class="agileinfo_sign">Sign Up</h3> 
+                            <div class="login-form">
+                                <form action="#" method="post">
+                                   <input type="text" name="name" placeholder="Username" required="">
+                                    <input type="email" name="email" placeholder="Email" required="">
+                                    <input type="password" name="password" placeholder="Password" required="">
+                                    <input type="password" name="password" placeholder="Confirm Password" required="">
+                                    <input type="submit" value="Sign Up">
+                                </form>
+                            </div>
+                            <p><a href="#"> By clicking register, I agree to your terms</a></p>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //Modal2 -->
     <script src="js/jquery-2.1.4.min.js"></script>
     <script src="js/search.js"></script>
     <script src="js/poposlides.js">

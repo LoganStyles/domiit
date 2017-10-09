@@ -739,9 +739,9 @@ ul.pagination {
 .w3ls-about-left a {
     text-decoration: none;
     padding: .6em 1.5em;
-    background: #ff3c41;
+    background: #86be25;
     text-align: center;
-    border: solid 2px #ff3c41;
+    border: solid 2px #86be25;
     letter-spacing: 2px;
     text-transform: uppercase;
     color: #fff;
@@ -910,7 +910,7 @@ ul.pagination {
 .navbar-default .navbar-nav>li>a:hover,
 .navbar-default .navbar-nav>li>a:focus,
 li.active a {
-	color: #ff3c41;
+	color: #86be25;
 }
 
 .agileits_w3layouts_sign_in {
@@ -1019,9 +1019,9 @@ h3.agile_heading.two {
 .agileits-button a {
 	text-decoration: none;
 	padding: .6em 1.5em;
-	background: #ff3c41;
+	background: #86be25;
 	text-align: center;
-	border: solid 2px #ff3c41;
+	border: solid 2px #86be25;
 	letter-spacing: 2px;
 	text-transform: uppercase;
 	color: #fff;
@@ -2974,7 +2974,7 @@ h4.white-w3ls {
 .footer input[type="submit"] {
 	outline: none;
 	width: 25%;
-	background: #ff3c41;
+	background: #86be25;
 	font-size: 15px;
 	text-transform: uppercase;
 	color: #fff;
@@ -3010,7 +3010,7 @@ h4.white-w3ls {
 }
 
 .agileits_w3layouts_nav_left ul li.active a {
-	color: #ff3c41;
+	color: #86be25;
 }
 
 .agileits_w3layouts_nav_right {
@@ -3109,7 +3109,7 @@ p.footer_info_w3ls_agile {
 	}
 	.s1 h3 {
 		/*color: #05d561;*/
-                color: #95a739;
+                color: #86be25;
 		font-size: 2em;
                 /*font-size: 4.5em;*/
 	}
@@ -3295,7 +3295,7 @@ p.footer_info_w3ls_agile {
 
 @media(max-width:991px) {
 	.s1 h3 {
-		font-size: 4em;
+		font-size: 2em;
 	}
 	.w3-button {
 		margin: 2em auto 0;
@@ -3991,3 +3991,140 @@ h3.agileits-title:first-letter {
 p.about-w3text {
     text-align: center;  
 } 
+
+/*-- registration --*/
+.signin-form {
+	    padding: 0em 1em 1em 1em;
+    text-align: center;
+}
+.signin-form h3,h3.agileinfo_sign  {
+       font-size: 1.5em;
+    color: #212121;
+    font-weight: 700;
+    margin: 1em 0 0.8em 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+h3.agileinfo_sign  {
+	text-align:center;
+}
+.signin-form h3 span {
+    color: #67e1ff;
+}
+.login-form {
+    margin: 1em 0 2.5em;
+}
+.signin-form input[type="email"],.signin-form input[type="text"], .signin-form input[type="password"] {
+      width: 100%;
+    padding: 1em 1em 1em 1em;
+    font-size: 0.9em;
+       margin: 0.5em 0;
+    outline: none;
+    color: #212121;
+    border: none;
+    border: 1px solid #ccc;
+    letter-spacing: 1px;
+    text-align: center;
+}
+.signin-form input[type="email"] {
+    background: none;
+    display: block;
+}
+.signin-form input[type="text"] {
+    background: none;
+    display: block;
+}
+.signin-form input[type="password"] {
+     background: none;
+    display: block;
+}
+.signin-form ::-webkit-input-placeholder{
+	color:#212121 !important;
+}
+.signin-form input[type="submit"] {
+    outline: none;
+    padding: 0.8em 0;
+    width: 100%;
+    text-align: center;
+    font-size: 1em;
+    margin-top: 1em;
+    border: none;
+    color: #FFFFFF;
+	text-transform:uppercase;
+    cursor: pointer;
+        background: #95a739;
+    box-shadow: 0px 2px 1px rgba(28, 28, 29, 0.42);
+	
+}
+.signin-form input[type="submit"]:hover {
+    color: #fff;
+       background: #000;
+    transition: .5s all;
+	-webkit-transition: .5s all;
+    -moz-transition: .5s all;
+    -o-transition: .5s all;
+    -ms-transition: .5s all;
+}
+.signin-form p a {
+    font-size: 0.875em;
+    color: #212121;
+    letter-spacing: 1px;
+}
+.login-social-grids{
+    margin: 1em 0;
+}
+.login-social-grids ul {
+    padding: 0;
+    margin: 0;
+}
+.login-social-grids ul li {
+    display: inline-block;
+    margin: 0 .5em 0 0;
+}
+.login-social-grids ul li a {
+    color: #FFFFFF;
+    text-align: center;
+}
+.login-social-grids ul li a i.fa.fa-facebook, .login-social-grids ul li a i.fa.fa-twitter, .login-social-grids ul li a i.fa.fa-rss{
+    height: 30px;
+    width: 30px;
+    border: solid 2px #212121;
+    line-height: 29px;
+    background: none;
+    color: #212121;
+    transition: 0.5s all;
+    -webkit-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+    -o-transition: 0.5s all;
+    -ms-transition: 0.5s all;
+	border-radius:50%;
+	-webkit-border-radius:50%;
+	-moz-border-radius:50%;
+	-ms-border-radius:50%;
+	-o-border-radius:50%;
+	
+}
+.login-social-grids ul li a i.fa.fa-facebook:hover {
+	border: solid 2px #3b5998;
+	background:#3b5998;
+    color: #FFFFFF;
+}
+.login-social-grids ul li a i.fa.fa-twitter:hover{
+	border: solid 2px #55acee;
+	background:#55acee;
+	color: #FFFFFF;
+}
+.login-social-grids ul li a i.fa.fa-rss:hover{
+	border: solid 2px #f26522;
+	background:#f26522;
+	color: #FFFFFF;
+}
+.modal-header .close{
+	float:right!important;
+}
+.form-control:focus {
+    border: 1px solid #ccc;
+    outline: 0;
+	 box-shadow:none!important;
+}
+/*-- //registration --*/

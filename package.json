@@ -12,10 +12,15 @@
   },
   "dependencies": {
     "body-parser": "*",
+    "connect": "^3.6.5",
     "cookie-parser": "*",
+    "everyauth": "^0.4.9",
     "express": "*",
     "express-handlebars": "^3.0.0",
     "mongoose": "*",
+    "passport": "*",
+    "passport-twitter": "*",
+    "passport-facebook": "*",
     "request": "^2.83.0"
   },
   "keywords": [

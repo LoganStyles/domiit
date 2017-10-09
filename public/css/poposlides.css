@@ -76,7 +76,7 @@ ul li {
 	text-decoration: none;
 }
 .pagination .active{
-	background:#05d561;
+	background:#86be25;
 }
 /*--responsive--*/
 @media(max-width:1440px){
