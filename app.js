@@ -118,9 +118,15 @@ app.get('/', isLoggedIn, function(req, res) {
     });
 });
 
+app.get('/dashboard', isLoggedIn, function(req, res) {
+    res.render('dashboard', {
+        loggedIn:req.loggedIn
+    });
+});
+
 app.get('/auth/facebook', passport.authenticate('facebook', {scope:"email"}));
 app.get('/auth/facebook/callback', passport.authenticate('facebook', 
-{ successRedirect: '/', failureRedirect: '/login' }));
+{ successRedirect: '/dashboard', failureRedirect: '/login' }));
 
 app.get('/login', isLoggedIn, function(req, res) {
     if(req.loggedIn) res.redirect('/');
