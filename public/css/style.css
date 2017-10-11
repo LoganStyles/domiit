@@ -3204,6 +3204,16 @@ p.footer_info_w3ls_agile {
 		float: left;
 		width: 70%;
 	}
+
+	#slides_li1 {
+	background: url(/images/banner2.png) no-repeat 0px 0px;
+	background-size: cover;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	-moz-background-size: cover;
+	min-height: 600px;
+}
 }
 
 @media(max-width:1050px) {
@@ -3485,6 +3495,16 @@ p.footer_info_w3ls_agile {
 		margin: 1.2em auto 0;
 		width: 72%;
 	}
+
+	#slides_li1 {
+	background: url(/images/banner2_600.png) no-repeat 0px 0px;
+	background-size: cover;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	-moz-background-size: cover;
+	min-height: 600px;
+}
 }
 
 @media(max-width:767px) {
@@ -3811,7 +3831,7 @@ p.footer_info_w3ls_agile {
 	}
 
 	#slides_li1 {
-	background: url(/images/banner2_400.png) no-repeat 0px 0px;
+	background: url(/images/banner2_300.png) no-repeat 0px 0px;
 	background-size: cover;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
