@@ -3086,6 +3086,16 @@ p.footer_info_w3ls_agile {
 	-moz-opacity: 0;
 	filter: alpha(opacity=0);
 }
+
+#slides_li1 {
+	background: url(/images/banner2.png) no-repeat 0px 0px;
+	background-size: cover;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	-moz-background-size: cover;
+	min-height: 600px;
+}
 /*-- //to-top --*/
 
 /*--responsive--*/
