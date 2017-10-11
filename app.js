@@ -17,12 +17,13 @@ passport.use(new FacebookStrategy({
     clientID: credentials.facebook.app_id,
     clientSecret: credentials.facebook.app_secret,
     callbackURL: credentials.facebook.callback,
-    profileFields:['id','displayName','emails','name','gender']
+    profileFields:['id','displayName','emails','name','gender','username']
     }, function(accessToken, refreshToken, profile, done) {
         //console.log('passport before profile')
         console.log(profile);
         var me = new user({
             email:profile.emails[0].value,
+            username:profile.username,
             name:profile.displayName
         });
 
@@ -89,23 +90,11 @@ app.engine('html', exphbs({
 }));
 app.set('view engine', 'html');
 
-var mongoose = require('mongoose');
 var opts = {
     server: {
         socketOptions: { keepAlive: 1 }
     }
 };
-
-// switch(app.get('env')) {
-//     case 'development':
-//         mongoose.connect(credentials.mongo.development.connectionString, opts);
-//         break;
-//     case 'production':
-//         mongoose.connect(credentials.mongo.production.connectionString, opts);
-//         break;
-//     default:
-//         throw new error('Unknown execution environment: ', app.get('env'));
-// }
 
 function isLoggedIn(req, res, next) {
     req.loggedIn = !!req.user;

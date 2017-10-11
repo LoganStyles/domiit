@@ -47,7 +47,7 @@ ul {
 p,
 ul,
 ol {
-	font-size: 14px;
+	font-size: 16px;
 	letter-spacing: 1px;
 	color: #6e6e6f;
 	line-height: 1.9em;
@@ -3271,7 +3271,7 @@ p.footer_info_w3ls_agile {
 	.footer h3,
 	h2.agile_heading,
 	h3.agile_heading {
-		font-size: 2.3em;
+		font-size: 1.3em;
 	}
 	.banner_bottom_w3ls_agile,
 	.portfolio-agileinfo,
@@ -3334,7 +3334,7 @@ p.footer_info_w3ls_agile {
 	.footer h3,
 	h2.agile_heading,
 	h3.agile_heading {
-		font-size: 2.2em;
+		font-size: 1em;
 	}
 	.agileits_comment_grid_left {
 		padding-left: 0;
@@ -3425,10 +3425,11 @@ p.footer_info_w3ls_agile {
 
 @media(max-width:800px) {
 	.navbar-nav {
-		margin: 1.7em 0em 0 7em;
+		margin: 1.7em 0em 0 1em;
 	}
 	.s1 h3 {
-		font-size: 3.7em;
+		font-size: 1.7em;
+		margin-top:1.3em;
 	}
 	.s1 {
 		position: absolute;
@@ -3494,7 +3495,8 @@ p.footer_info_w3ls_agile {
 		background-color: #fff;
 	}
 	.navbar-default .navbar-toggle {
-		border-color: #f5232e;
+		border: none;
+		/*border-color: #f5232e;*/
 	}
 	.navbar-default .navbar-toggle:hover,
 	.navbar-default .navbar-toggle:focus {
@@ -3797,16 +3799,26 @@ p.footer_info_w3ls_agile {
 	.footer h3,
 	h2.agile_heading,
 	h3.agile_heading {
-		font-size: 1.7em;
+		font-size: 1.2em;
 		line-height: 1.4em;
 	}
 	.agile_services_img_wthree {
 		min-height: 189px;
 	}
 	.s1 h3 {
-		font-size: 2.3em;
+		font-size: 1.3em;
 		letter-spacing: 3px;
 	}
+
+	#slides_li1 {
+	background: url(/images/banner2_400.png) no-repeat 0px 0px;
+	background-size: cover;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	-moz-background-size: cover;
+	min-height: 600px;
+}
 	.w3agile_blog_left_grid_r {
 		float: right;
 		width: 100%;
@@ -3900,7 +3912,7 @@ p.footer_info_w3ls_agile {
 		font-size: 0.9em;
 	}
 	.s1 h3 {
-		font-size: 2em;
+		font-size: 1.3em;
 		letter-spacing: 2px;
 	}
 	.s1 {
@@ -3916,7 +3928,7 @@ p.footer_info_w3ls_agile {
 	}
 	.footer h3,
 	h3.agile_heading {
-		font-size: 1.6em;
+		font-size: 1em;
 	}
 	h2.agile_heading {
 		font-size: 1.4em;
@@ -3935,7 +3947,7 @@ p.footer_info_w3ls_agile {
 		font-size: 0.75em;
 	}
 	.s1 h3 {
-		font-size: 1.8em;
+		font-size: 1.3em;
 		letter-spacing: 2px;
 	}
 	.w3-button {
