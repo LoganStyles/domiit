@@ -4,7 +4,7 @@ var config = require('../config/database');
 var user = require('../models/user');
 
 //Register
-router.post('/register',function(req,res,next){
+router.get('/register',function(req,res,next){
 
 	let newUser=new user();
 	newUser.username=req.body.username;
