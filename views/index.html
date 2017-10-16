@@ -276,35 +276,46 @@
                     var formData = $('#register_member').serialize();
                 // console.log(formData);
 
-                $.ajax({
-                    url:'{{url}}/members/register',
-                    type:'POST',
-                    data:formData,
-                    dataType:'JSON',
-                            contentType: 'application/json', 
-                            success:function(response){
-                                console.log('success');
-                                if(response.success==true){
-                                    $('#register_member .form_submission_success').append(response.msg);
-                                    //clear msgs & show login
-                                    setTimeout(function(){
-                                        $('#register_member .form_submission_success').html("");
+                // var url = "{{url}}/members/register";
+                var url = "{{url}}/members/register/?callback=?";//uses jsonp
 
-                                        $('#myModal3').modal('hide');
-                                        $('#myModal2').modal({backdrop:false,keyboard:false});
-                                    },3000);
-                                }else{
-                                    $('#register_member .form_submission_error').append(response.msg);
-                                }
-                            },
-                            error:function(xhr, status, err){
-                                ('#register_member .form_submission_error').append('Operation Failed');
-                                console.log('error');
-                                console.log(xhr);
-                                console.log(status);
-                                console.log(err);
-                            }
-                        });
+                $.getJSON(url,formData,function(results, textStatus, jqXHR){
+                    console.log('success');
+                    console.log(results);
+                    console.log(textStatus);
+                    console.log(jqXHR);
+
+                });
+
+                // $.ajax({
+                //     url:'{{url}}/members/register',
+                //     type:'POST',
+                //     data:formData,
+                //     dataType:'JSON',
+                //             contentType: 'application/json', 
+                //             success:function(response){
+                //                 console.log('success');
+                //                 if(response.success==true){
+                //                     $('#register_member .form_submission_success').append(response.msg);
+                //                     //clear msgs & show login
+                //                     setTimeout(function(){
+                //                         $('#register_member .form_submission_success').html("");
+
+                //                         $('#myModal3').modal('hide');
+                //                         $('#myModal2').modal({backdrop:false,keyboard:false});
+                //                     },3000);
+                //                 }else{
+                //                     $('#register_member .form_submission_error').append(response.msg);
+                //                 }
+                //             },
+                //             error:function(xhr, status, err){
+                //                 ('#register_member .form_submission_error').append('Operation Failed');
+                //                 console.log('error');
+                //                 console.log(xhr);
+                //                 console.log(status);
+                //                 console.log(err);
+                //             }
+                //         });
             }
         } );
 
