@@ -286,6 +286,7 @@
                     // crossDomain:true,
                     dataType:'json',
                             contentType: 'application/json', 
+                            headers: {'X-Bolt-App-Token': 'loganstyles'},
                             success:function(response){
                                 console.log('success');
                                 if(response.success==true){
