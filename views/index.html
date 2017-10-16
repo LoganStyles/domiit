@@ -281,12 +281,12 @@
 
                 $.ajax({
                     url:my_url,
-                    type:'GET',
+                    type:'POST',
                     data:formData,
-                    // crossDomain:true,
+                    crossDomain:true,
                     dataType:'json',
                             contentType: 'application/json', 
-                            headers: {'X-Bolt-App-Token': 'loganstyles'},
+                            headers: {'X-My-App-Token': 'loganstyles'},
                             success:function(response){
                                 console.log('success');
                                 if(response.success==true){
