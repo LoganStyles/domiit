@@ -274,18 +274,19 @@
                     $('#register_member .form_submission_success').html("");
                     $('#register_member .form_submission_error').html("");
                     var formData = $('#register_member').serialize();
-                // console.log(formData);
+                console.log(formData);
                 var proxy="https://cors-anywhere.herokuapp.com/";
-                var my_url="{{url}}/members/register";
+                var my_url="{{url}}/register";
+                // var my_url="{{url}}/members/register";
                 var url=proxy + my_url;
 
                 $.ajax({
-                    url:url,
+                    url:my_url,
                     type:'POST',
                     data:formData,
-                    crossDomain:true,
+                    // crossDomain:true,
                     dataType:'json',
-                            contentType: 'application/json', 
+                            // contentType: 'application/json', 
                             headers: {'X-My-App-Token': 'loganstyles'},
                             success:function(response){
                                 console.log('success');
