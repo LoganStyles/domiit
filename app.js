@@ -6,6 +6,10 @@ var exphbs = require('express-handlebars');
 var mongoose = require('mongoose');
 var credentials = require('./config/credentials');
 var user = require('./models/user');
+var members = require('./routes/members');
+
+// var url_root="http://localhost:"+process.env.PORT;
+    var url_root="https://ancient-falls-19080.herokuapp.com/"+process.env.PORT;
 
 
 var passport = require('passport'), 
@@ -68,7 +72,7 @@ app.use(require('express-session')({
 app.use(passport.initialize());
 app.use(passport.session());
 
-var members = require('./routes/members');
+
 
 //Body Parser Middleware
 app.use(bodyParser.json());
@@ -101,15 +105,24 @@ function isLoggedIn(req, res, next) {
     next();
 }
 
-app.get('/', isLoggedIn, function(req, res) {
+app.get('/', function(req, res) {
+    
     res.render('index', {
-        loggedIn:req.loggedIn
+        // loggedIn:req.loggedIn,
+        url:url_root
     });
 });
 
-app.get('/dashboard', isLoggedIn, function(req, res) {
+app.get('/dashboard', function(req, res) {
     res.render('dashboard', {
-        loggedIn:req.loggedIn
+        // loggedIn:req.loggedIn,
+        url:url_root
+    });
+});
+
+app.get('/profile', function(req, res) {
+    res.render('profile', {
+        url:url_root
     });
 });
 

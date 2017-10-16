@@ -1584,17 +1584,20 @@ pre code {
 }
 @media (min-width: 768px) {
   .container {
-    width: 750px;
+    width: 760px;
+    /*width: 750px;*/
   }
 }
 @media (min-width: 992px) {
   .container {
-    width: 970px;
+    width: 992px;
+    /*width: 970px;*/
   }
 }
 @media (min-width: 1200px) {
   .container {
-    width: 1170px;
+    width: 1200px;
+    /*width: 1170px;*/
   }
 }
 .container-fluid {
@@ -4431,7 +4434,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   background-color: transparent;
 }
 .navbar-default .navbar-toggle {
-  border-color: #ddd;
+  /*border-color: #ddd;*/
 }
 .navbar-default .navbar-toggle:hover,
 .navbar-default .navbar-toggle:focus {

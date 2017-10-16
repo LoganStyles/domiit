@@ -13,11 +13,5 @@ module.exports = {
         consumer_key:"akeyishere",
         consumer_secret:"mysecretisbetterthanyoursecret",
         callback:"http://localhost:3000/auth/twitter/callback"
-    },
-    // mongo:{
-    //     development:{
-    //         "connectionString":process.env.MONGODB_URI
-    //     },
-    //     production:{}
-    // }
+    }
 }
