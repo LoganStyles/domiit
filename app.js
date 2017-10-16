@@ -133,7 +133,7 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook',
 app.get('/login', isLoggedIn, function(req, res) {
     if(req.loggedIn) res.redirect('/');
     console.log(req.loggedIn);
-    res.render('login', {
+    res.render('index', {
         title:'Login/Registration'
     });
 });
