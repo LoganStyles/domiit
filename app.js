@@ -81,6 +81,13 @@ app.use(passport.session());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
+app.use(function (request, response, next) {
+      response.header('Access-Control-Allow-Origin', '*');
+      response.header('Access-Control-Allow-Headers','Origin, X-Requested-With, Content-Type, Accept');
+      response.header('Access-Control-Allow-Methods', 'DELETE, GET, POST, PUT');
+      next();
+    });
+
 //Set Static Path
 app.use(express.static(path.join(__dirname,'public')));
 
