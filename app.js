@@ -9,7 +9,7 @@ var user = require('./models/user');
 var members = require('./routes/members');
 
 // var url_root="http://localhost:"+process.env.PORT;
-    var url_root="https://ancient-falls-19080.herokuapp.com/";
+    var url_root="https://ancient-falls-19080.herokuapp.com";
     // var url_root="https://ancient-falls-19080.herokuapp.com/"+process.env.PORT;
 
 
