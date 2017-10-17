@@ -11,7 +11,7 @@ var members = require('./routes/members');
 // var config = require('./config/database');
 
 // var url_root="http://localhost:"+process.env.PORT;
-    var url_root="https://ancient-falls-19080.herokuapp.com/";
+    var url_root="https://ancient-falls-19080.herokuapp.com";
 
 
 var passport = require('passport'), 
