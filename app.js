@@ -8,11 +8,10 @@ var credentials = require('./config/credentials');
 var user = require('./models/user');
 var members = require('./routes/members');
 // var router = express.Router();
-var config = require('./config/database');
+// var config = require('./config/database');
 
 // var url_root="http://localhost:"+process.env.PORT;
-    var url_root="https://ancient-falls-19080.herokuapp.com";
-    // var url_root="https://ancient-falls-19080.herokuapp.com/"+process.env.PORT;
+    var url_root="https://ancient-falls-19080.herokuapp.com/";
 
 
 var passport = require('passport'), 
@@ -74,8 +73,6 @@ app.use(require('express-session')({
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-
 
 //Body Parser Middleware
 app.use(bodyParser.json());
@@ -158,34 +155,34 @@ app.use(function(err, req, res, next){
 app.use('/members',members);
 
 //Register
-app.post('/register',function(req,res,next){
-console.log('register');
-    let newUser=new user();
-    newUser.username=req.body.username;
-    newUser.password=req.body.password;
-    newUser.displayPic="";
-    newUser.phone="";
-    newUser.displayName="";
-    newUser.email=req.body.email;   
+// app.post('/register',function(req,res,next){
+// console.log('register');
+//     let newUser=new user();
+//     newUser.username=req.body.username;
+//     newUser.password=req.body.password;
+//     newUser.displayPic="";
+//     newUser.phone="";
+//     newUser.displayName="";
+//     newUser.email=req.body.email;   
     
 
-    user.findOne({email:req.body.email}, function(err, u) {
-        var msg;
-            if(!u) {//user does not previously exist
-                console.log('reg !u findOne in save')
-                newUser.save(function(err, newUser) {
-                    if(err){res.json({success: false,msg:"registration failed"});
-                }else{
-                    res.json({success:true,msg:"User registered"});
-                }
-            });
-            } else {//user previously exists
-                msg="User already exists";
-                res.json({success:false,msg:msg});
-            }
-        });
+//     user.findOne({email:req.body.email}, function(err, u) {
+//         var msg;
+//             if(!u) {//user does not previously exist
+//                 console.log('reg !u findOne in save')
+//                 newUser.save(function(err, newUser) {
+//                     if(err){res.json({success: false,msg:"registration failed"});
+//                 }else{
+//                     res.json({success:true,msg:"User registered"});
+//                 }
+//             });
+//             } else {//user previously exists
+//                 msg="User already exists";
+//                 res.json({success:false,msg:msg});
+//             }
+//         });
     
-});
+// });
 
 app.get('*', function(req, res){
 	res.render('404', {});
