@@ -11,9 +11,11 @@ var userSchema = mongoose.Schema({
     date_created: { type: Date, default: Date.now },
     education:[String],
     current_appointment:[mongoose.Schema.Types.Mixed],
+    qualification:[mongoose.Schema.Types.Mixed],
     description:String,
     area_of_speciality:[String],
-    groups:[String]
+    groups:[String],
+    gender:String
 
 });
 

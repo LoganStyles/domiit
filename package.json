@@ -12,15 +12,18 @@
   },
   "dependencies": {
     "body-parser": "*",
+    "client-sessions": "^0.8.0",
     "connect": "^3.6.5",
     "cookie-parser": "*",
+    "dotenv": "^4.0.0",
     "everyauth": "^0.4.9",
     "express": "*",
     "express-handlebars": "^3.0.0",
     "mongoose": "*",
     "passport": "*",
-    "passport-twitter": "*",
     "passport-facebook": "*",
+    "passport-local": "^1.0.0",
+    "passport-twitter": "*",
     "request": "^2.83.0"
   },
   "keywords": [

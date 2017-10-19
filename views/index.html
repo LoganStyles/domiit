@@ -24,7 +24,7 @@
 
                 </div><br><br>
                 <div >
-                    <a class="loginBtn loginBtn--facebook" href="auth/facebook">Login with Facebook</a>
+                    <a class="loginBtn loginBtn--facebook" href="members/auth/facebook">Login with Facebook</a>
 
                 </div>
                 <div class="clearfix"> </div>
@@ -204,6 +204,16 @@
      <script src="js/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
 
      <script type="text/javascript">
+     function resetFields(){
+        $('#login_member .form_submission_success').html("");
+                                        // $('#log_email').val("");
+                                        // $('#log_password').val("");
+                                        $('#login_member .form_submission_error').html("");
+                                        // $('#email').val("");
+                                        // $('#password').val("");
+                                        $('#register_member .form_submission_success').html("");
+                    $('#register_member .form_submission_error').html("");
+     }
             $.validator.setDefaults( {
 
             } );
@@ -271,14 +281,10 @@
                     $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
                 },
                 submitHandler: function () {
-                    $('#register_member .form_submission_success').html("");
-                    $('#register_member .form_submission_error').html("");
+                    resetFields();
                     var formData = $('#register_member').serialize();
-                console.log(formData);
-                // var proxy="https://cors-anywhere.herokuapp.com/";
-                var my_url="{{url}}/members/register";
-                // var my_url="{{url}}/members/register";
-                // var url=proxy + my_url;
+                    console.log(formData);
+                    var my_url="{{url}}/members/register";
 
                 $.ajax({
                     url:my_url,
@@ -297,6 +303,7 @@
                                         $('#register_member .form_submission_success').html("");
 
                                         $('#myModal3').modal('hide');
+                                        resetFields();
                                         $('#myModal2').modal({backdrop:false,keyboard:false});
                                     },3000);
                                 }else{
@@ -357,8 +364,7 @@ $( "#login_member" ).validate( {
                     $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
                 },
                 submitHandler: function () {
-                    $('#login_member .form_submission_success').html("");
-                    $('#login_member .form_submission_error').html("");
+                    resetFields();
                     var formData = $('#login_member').serialize();
                 console.log(formData);
 
@@ -366,7 +372,8 @@ $( "#login_member" ).validate( {
                     url:'{{url}}/members/login',
                     type:'POST',
                     data:formData,
-                    dataType:'JSON',
+                    dataType:'json',
+                    headers: {'X-My-App-Token': 'loganstyles'},
                             // contentType: false, 
                             success:function(response){
                                 console.log('success');
@@ -375,11 +382,11 @@ $( "#login_member" ).validate( {
                                     window.location.href="{{url}}/dashboard";
                                 
                             }else{
-                                $('#login_member .form_submission_error').append(response.msg);                              
+                                $('#login_member .form_submission_error').append(response.msg);
+
                             }
                         },
                         error:function(xhr, status, err){
-                            // ('#login_member .form_submission_error').append('Login Operation Failed');
                             console.log('error');
                             console.log(xhr);
                             console.log(status);
