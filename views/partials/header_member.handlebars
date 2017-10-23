@@ -51,7 +51,7 @@
                 <div class="container">
                     <!-- BEGIN LOGO -->
                     <div class="page-logo">
-                        <a href="#">
+                        <a href="{{url}}/dashboard">
                             <img src="assets/img/domiit_black_logo.png" alt="logo" class="logo-default">
                         </a>
                         <div class="menu-toggler sidebar-toggler">
@@ -101,7 +101,7 @@
                             <li class="dropdown dropdown-user dropdown-dark">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                     <img alt="" class="img-circle" src="assets/img/avatar.png">
-                                    <span class="username username-hide-mobile">User</span>
+                                    <span class="username username-hide-mobile">{{user_info.displayName}}</span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-default">
                                     <li>
@@ -149,7 +149,7 @@
                     <div class="hor-menu  ">
                         <ul class="nav navbar-nav">
                             <li class="menu-dropdown classic-menu-dropdown active">
-                                <a href="javascript:;"> <i class="icon-home"></i><span>&nbsp;</span> Home
+                                <a href="{{url}}/dashboard"> <i class="icon-home"></i><span>&nbsp;</span> Home
                                     <span class="arrow"></span>
                                 </a>
                             </li>
@@ -166,6 +166,9 @@
                                     </li>
                                     <li>
                                         <a href="#"> Answered Questions </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{url}}/question"> Ask a Question </a>
                                     </li>
                                 </ul>
                             </li>
