@@ -1,3 +1,7 @@
+if(process.env.NODE_ENV !== 'production'){
+    require('dotenv').load();
+}
+
 var http = require('http');
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -7,10 +11,16 @@ var request = require('request');
 var exphbs = require('express-handlebars');
 var user = require('./models/user');
 var members = require('./routes/members');
+var cms_routes = require('./routes/cms');
 var question = require('./models/question');
 
- var url_root="https://ancient-falls-19080.herokuapp.com";
+// var inbound = require('inbound');
+
+ // var url_root="https://ancient-falls-19080.herokuapp.com";
  // var url_root="http://localhost:"+process.env.PORT;
+
+// process.env.URL_ROOT="http://localhost:"+process.env.PORT;
+ // console.log(process.env);
 
 
 
@@ -28,6 +38,31 @@ app.use(function (request, response, next) {
   next();
 });
 
+
+//inbound middleware
+// app.use(function(req,res,next){
+//     // var referrer = req.header('referrer');
+//     // console.log(referrer);
+//     // var href = req.url;
+//     // console.log(href);
+//     // next();
+
+//     var url = "http://www.newyorker.com/online/blogs/johncassidy/2012/08/mbid=gnep&google_editors_picks=true";
+//     var referrer = "http://twitter.com/ryah";
+
+//     inbound.referrer.parse(url, referrer, function (err, description) {
+//         console.log(description);
+//         req.referrer = description;
+//         next(err);
+//     });
+
+// })
+
+// app.get('/social',function(req,res,next){
+//     return res.send(req.referrer);
+// });
+
+
 //Set Static Path
 app.use(express.static(path.join(__dirname,'public')));
 
@@ -40,6 +75,9 @@ app.engine('html', exphbs({
 		json: function(obj) {
 			return JSON.stringify(obj);
 		},
+        counter:function(index){
+            return index +1;
+        },
         ifEquals: function(arg1,arg2,options) {
             if(arguments.length <3)
                 throw new Error("Handlebars Helper equal needs 2 parameters")
@@ -94,7 +132,7 @@ app.get('/profile', function(req, res) {
     console.log(req.user);
     if(req.user){
         res.render('profile', {
-            url:url_root,
+            url:process.env.URL_ROOT,
             user_info:req.user,
             friends_count:req.user.friend_ids.length,
             requests_count:req.user.request_ids.length,
@@ -111,25 +149,43 @@ app.get('/dashboard',isLoggedIn, function(req, res) {
     console.log('inside dashboard');
     console.log(req.user);
     if(req.user){
-     res.render('dashboard', {
-        url:url_root,
+       res.render('dashboard', {
+        title:'Dashboard',
+        url:process.env.URL_ROOT,
         user_info:req.user
     }); 
- }else{
+   }else{
     res.redirect('/');
 }
 
 });
 
+app.get('/admin',isLoggedIn, function(req, res) {
+    console.log('inside cms');
+    // console.log(req.user);
+    if(req.user){
+       res.render('cms_dashboard', {
+        title:'CMS',
+        url:process.env.URL_ROOT,
+        user_info:req.user
+    }); 
+   }else{
+    res.redirect('/');
+}
+
+});
+
+
+
 app.get('/question',isLoggedIn, function(req, res) {
     console.log('inside question');
     // console.log(req.user);
     if(req.user){
-     res.render('question', {
-        url:url_root,
+       res.render('question', {
+        url:process.env.URL_ROOT,
         user_info:req.user
     }); 
- }else{
+   }else{
     res.redirect('/');
 }
 
@@ -138,8 +194,8 @@ app.get('/question',isLoggedIn, function(req, res) {
 
 app.get('/', function(req, res) {    
     res.render('index', {
-        // loggedIn:req.loggedIn,
-        url:url_root
+        title:'Home',
+        url:process.env.URL_ROOT
     });
 });
 
@@ -151,6 +207,7 @@ app.use(function(err, req, res, next){
 });
 
 app.use('/members',members);
+app.use('/cms',cms_routes);
 
 
 app.get('*', function(req, res){
@@ -169,7 +226,6 @@ io.on('connection',function(socket){
 
 app.post('/post_questions',function(req,res,next){
 
-    // {id:St,displayName:String,displayPic:String}
     var owner_details={id:req.user._id,displayName:req.user.displayName,displayPic:req.user.displayPic};
 
     let quest =new question();
@@ -182,7 +238,7 @@ app.post('/post_questions',function(req,res,next){
 
     console.log(typeof quest);
     quest.save(function(err, quest) {
-        
+
         if(err){console.log(err);res.json({success: false,msg:"question submission failed"});
         
     }else{
@@ -193,6 +249,8 @@ app.post('/post_questions',function(req,res,next){
     }   
 });
 });
+
+
 
 
 server.listen(process.env.PORT || 3000,function(){

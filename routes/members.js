@@ -22,7 +22,7 @@ var storage =multer.diskStorage({
 });
 
 // var url_root="http://localhost:"+process.env.PORT;
-var url_root="https://ancient-falls-19080.herokuapp.com";
+// var url_root="https://ancient-falls-19080.herokuapp.com";
 
 
 var uploading = multer({storage:storage}).single('avatar');
@@ -76,7 +76,22 @@ router.post('/login',function(req,res,next){
 
 router.get('/auth/facebook', passport.authenticate('facebook', {scope:"email"}));
 router.get('/auth/facebook/callback', passport.authenticate('facebook', 
-    { successRedirect: '/dashboard', failureRedirect: '/login' }));
+    { successRedirect: '/dashboard', failureRedirect: '/' }));
+
+router.get('/auth/linkedin', passport.authenticate('linkedin',{ scope: ['r_basicprofile', 'r_emailaddress'] }));
+router.get('/auth/linkedin/callback', 
+  passport.authenticate('linkedin', { failureRedirect: '/' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/dashboard');
+  });
+
+
+router.get('/auth/google',  passport.authenticate('google', { scope:[ 'email','profile' ] }));
+router.get( '/auth/google/callback', passport.authenticate( 'google', {
+        successRedirect: '/dashboard',
+        failureRedirect: '/'
+}));
 
 
 router.get('/logout',function(req,res){

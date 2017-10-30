@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var questionCatsSchema = mongoose.Schema({
 	id:String,
 	title:String,
+	value:String,
 	description:{type:String,default:''}
 });
 

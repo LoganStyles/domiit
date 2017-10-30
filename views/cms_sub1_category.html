@@ -1,0 +1,532 @@
+{{>header_cms}}
+
+            <!-- BEGIN CONTENT -->
+            <div class="page-content-wrapper">
+                <!-- BEGIN CONTENT BODY -->
+                <div class="page-content">
+                    <!-- BEGIN PAGE HEADER-->
+                    
+                    <!-- BEGIN PAGE BAR -->
+                    <div class="page-bar">
+                        <ul class="page-breadcrumb">
+                            <li>
+                                <a href="#">Dashboard</a>
+                                <i class="fa fa-circle"></i>
+                            </li>
+                            <li>
+                                <span>Category >></span>
+                            </li>
+                            <li>
+                                <span>Sub Category-1</span>
+                            </li>
+                        </ul>
+                        
+                    </div>
+                    <!-- END PAGE BAR -->
+                    <!-- BEGIN PAGE TITLE-->
+<!--                <h3 class="page-title"> Dashboard 
+                        <small>Unit Prices & statistics</small>
+                    </h3>-->
+                    <!-- END PAGE TITLE-->
+                    <!-- END PAGE HEADER-->
+                    <div class="row">
+                        <div class="col-md-12">
+                                    <!-- BEGIN BORDERED TABLE PORTLET-->
+                                    <div class="portlet light portlet-fit ">
+                                        <div class="portlet-title">
+                                            <div class="caption">
+                                                <span class="caption-subject font-red sbold uppercase">Sub Category-1</span>&nbsp;&nbsp;
+                                            </div>
+                                            <div class="row">                                                
+                                                <div class="btn-group">
+                                                    <a data-toggle="modal" onclick="modalLoader('{{item}}','new','sub1');" class="btn btn-default">
+                                                        <i class="fa fa-plus"></i> New</a>
+                                                    <!-- <a class="btn btn-default">
+                                                        <i class="fa fa-pencil"></i> Edit</a>
+                                                    <a class="btn btn-default">
+                                                        <i class="fa fa-eye"></i> View</a> -->                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="portlet-body">
+                                            <div class="table-scrollable table-scrollable-borderless">
+                                                <table class="table table-hover table-light">
+                                                    <thead>
+                                                        <tr class="uppercase">
+                                                            <th> # </th>
+                                                            <th> Category </th>
+                                                            <th> Sub Category </th>
+                                                            <th> Description </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {{#each data}}
+                                                        <tr>
+                                                            <td> {{counter @index}}</td>
+                                                            <td> {{category}} </td>
+                                                            <td> {{title}} </td>
+                                                            <td> {{description}} </td>
+                                                        </tr>
+                                                        {{/each}}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- END BORDERED TABLE PORTLET-->
+                                </div>                               
+                        
+                    </div>
+                    
+                    <!-- BEGIN MODALS FOR EDIT-->
+                                <div class="row">
+                                <div class="col-md-12">
+                                    <div class="portlet ">
+
+                                        <div class="portlet-body form">                                         
+
+                                            <div id="question_sub1_modal" class="modal fade" tabindex="-1">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                                    <h4 class="modal-title" id="question_sub1_header">Question Sub Category</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form role="form" id="question_sub1_form" action="" method="post">
+                                                    <span class="form_submission_error"></span>
+                                                    <span class="form_submission_success"></span>
+
+                                                        <input type="hidden" name="{{item_id}}"  id="{{item_id}}" value="">
+
+                                                        <div class="form-group form-md-line-input">
+                                                            <label class="control-label col-md-3">Category </label>
+                                                            <div class="col-md-6">
+                                                                <select class="form-control" name="question_sub1_category" id="question_sub1_category">
+                                                                {{#each cat}}
+                                                                    <option value="{{value}}">{{title}}</option>
+                                                                {{/each}}   
+                                                                    
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-body">
+                                                            <div class="form-group form-md-line-input">
+                                                                <input type="text" class="form-control" id="question_sub1_title" name="question_sub1_title">
+                                                                <label for="question_sub1_title">Title</label>
+                                                            </div>     
+
+                                                                                                            
+                                                           
+                                                            <div class="form-group form-md-line-input form-md-floating-label">
+                                                                <textarea class="form-control" rows="3" id="question_sub1_description" name="question_sub1_description"></textarea>
+                                                                <label for="question_sub1_description">Description</label>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        <div class="form-actions noborder">
+                                                            <input type="submit" class="btn blue" name="submit" value="Submit" />
+                                                            <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END PORTLET-->
+
+                             <!-- BEGIN MODALS FOR EDIT-->
+                                <div class="row">
+                                <div class="col-md-12">
+                                    <div class="portlet ">
+
+                                        <div class="portlet-body form">                                         
+
+                                            <div id="article_sub1_modal" class="modal fade" tabindex="-1">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                                    <h4 class="modal-title" id="article_sub1_header">Article Sub Category</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form role="form" id="article_sub1_form" action="" method="post">
+                                                    <span class="form_submission_error"></span>
+                                                    <span class="form_submission_success"></span>
+
+                                                        <input type="hidden" name="{{item_id}}"  id="{{item_id}}" value="">
+
+                                                        <div class="form-group form-md-line-input">
+                                                            <label class="control-label col-md-3">Category </label>
+                                                            <div class="col-md-6">
+                                                                <select class="form-control" name="article_sub1_category" id="article_sub1_category">
+                                                                {{#each cat}}
+                                                                    <option value="{{value}}">{{title}}</option>
+                                                                {{/each}}   
+                                                                    
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="form-body">
+                                                            <div class="form-group form-md-line-input">
+                                                                <input type="text" class="form-control" id="article_sub1_title" name="article_sub1_title">
+                                                                <label for="article_sub1_title">Title</label>
+                                                            </div>                                         
+                                                           
+                                                            <div class="form-group form-md-line-input form-md-floating-label">
+                                                                <textarea class="form-control" rows="3" id="article_sub1_description" name="article_sub1_description"></textarea>
+                                                                <label for="article_sub1_description">Description</label>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        <div class="form-actions noborder">
+                                                            <input type="submit" class="btn blue" name="submit" value="Submit" />
+                                                            <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END PORTLET-->
+
+                             <!-- BEGIN MODALS FOR EDIT-->
+                                <div class="row">
+                                <div class="col-md-12">
+                                    <div class="portlet ">
+
+                                        <div class="portlet-body form">                                         
+
+                                            <div id="riddle_sub1_modal" class="modal fade" tabindex="-1">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                                    <h4 class="modal-title" id="riddle_sub1_header">Riddles Sub Category</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form role="form" id="riddle_sub1_form" action="" method="post">
+                                                    <span class="form_submission_error"></span>
+                                                    <span class="form_submission_success"></span>
+
+                                                        <input type="hidden" name="{{item_id}}"  id="{{item_id}}" value="">
+
+                                                        <div class="form-group form-md-line-input">
+                                                            <label class="control-label col-md-3">Category </label>
+                                                            <div class="col-md-6">
+                                                                <select class="form-control" name="riddle_sub1_category" id="riddle_sub1_category">
+                                                                {{#each cat}}
+                                                                    <option value="{{value}}">{{title}}</option>
+                                                                {{/each}}   
+                                                                    
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="form-body">
+                                                            <div class="form-group form-md-line-input">
+                                                                <input type="text" class="form-control" id="riddle_sub1_title" name="riddle_sub1_title">
+                                                                <label for="riddle_sub1_title">Title</label>
+                                                            </div>                                         
+                                                           
+                                                            <div class="form-group form-md-line-input form-md-floating-label">
+                                                                <textarea class="form-control" rows="3" id="riddle_sub1_description" name="riddle_sub1_description"></textarea>
+                                                                <label for="riddle_sub1_description">Description</label>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        <div class="form-actions noborder">
+                                                            <input type="submit" class="btn blue" name="submit" value="Submit" />
+                                                            <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END PORTLET-->
+                    
+                    
+                </div>
+                <!-- END CONTENT BODY -->
+            </div>
+            <!-- END CONTENT -->
+            
+        </div>
+        <!-- END CONTAINER -->
+    
+  
+    {{>footer_cms}}
+
+
+<script type="text/javascript">
+            
+            function resetFields(){
+                $('#question_sub1_form .form_submission_success').text("");
+                $('#question_sub1_form .form_submission_error').text("");
+                $('#article_sub1_form .form_submission_success').text("");
+                $('#article_sub1_form .form_submission_error').text("");
+                $('#riddle_sub1_form .form_submission_success').text("");
+                $('#riddle_sub1_form .form_submission_error').text("");
+            }
+
+
+            $( document ).ready( function () {
+
+                $( "#question_sub1_form" ).validate( {/*validate & submit category details*/
+                    rules: {  
+                        question_sub1_title: {
+                            required: true
+                        },
+                        question_sub1_category: {
+                            required: true,
+                        }
+                        
+                    },
+                    messages: {                        
+                        question_sub1_title: {
+                            required: "This field is required"
+                        },
+                        question_sub1_category: {
+                            required: "This field is required"
+                        }
+                    },
+                    errorElement: "em",
+                    errorPlacement: function ( error, element ) {
+                    // Add the `help-block` class to the error element
+                    error.addClass( "help-block" );
+
+                    if ( element.prop( "type" ) === "checkbox" ) {
+                        error.insertAfter( element.parent( "label" ) );
+                    } else {
+                        error.insertAfter( element );
+                    }
+                },
+                success: function ( label, element ) {
+                    // Add the span element, if doesn't exists, and apply the icon classes to it.
+                    if ( !$( element ).next( "span" )[ 0 ] ) {
+                        $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+                    }
+                },
+                highlight: function ( element, errorClass, validClass ) {
+                    $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
+                },
+                submitHandler: function () {
+                    resetFields();
+                    var formData = $('#question_sub1_form').serialize();
+                    console.log(formData);
+                    var my_url="{{url}}/cms/post_sub1/question";
+
+                    $.ajax({
+                        url:my_url,
+                        type:'POST',
+                        data:formData,
+                        dataType:'json',
+                            // contentType: 'application/json', 
+                            headers: {'X-My-App-Token': 'loganstyles'},
+                            success:function(response){
+                                console.log('success');
+                                if(response.success==true){
+                                    console.log('response is true');
+                                    $('#question_sub1_form  .form_submission_success').text(response.msg);
+                                    setTimeout(function(){
+                                        $('#question_sub1_form  .form_submission_success').text('');
+                                         window.location.href="{{url}}/cms/sub1/question";
+                                    },3000);
+                                    
+                                }else{
+                                    console.log('response is false');
+                                    $('#question_sub1_form  .form_submission_error').text(response.msg);
+                                }
+                            },
+                            error:function(xhr, status, err){
+                                console.log('error');
+                                console.log(xhr);
+                                console.log(status);
+                                console.log(err);
+                            }
+                        });
+                }
+            } );
+
+
+
+
+            $( "#article_sub1_form" ).validate( {/*validate & submit article sub category details*/
+                    rules: {  
+                        article_sub1_title: {
+                            required: true
+                        },
+                        article_sub1_category: {
+                            required: true,
+                        }
+                        
+                    },
+                    messages: {                        
+                        article_sub1_title: {
+                            required: "This field is required"
+                        },
+                        article_sub1_category: {
+                            required: "This field is required"
+                        }
+                    },
+                    errorElement: "em",
+                    errorPlacement: function ( error, element ) {
+                    // Add the `help-block` class to the error element
+                    error.addClass( "help-block" );
+
+                    if ( element.prop( "type" ) === "checkbox" ) {
+                        error.insertAfter( element.parent( "label" ) );
+                    } else {
+                        error.insertAfter( element );
+                    }
+                },
+                success: function ( label, element ) {
+                    // Add the span element, if doesn't exists, and apply the icon classes to it.
+                    if ( !$( element ).next( "span" )[ 0 ] ) {
+                        $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+                    }
+                },
+                highlight: function ( element, errorClass, validClass ) {
+                    $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
+                },
+                submitHandler: function () {
+                    resetFields();
+                    var formData = $('#article_sub1_form').serialize();
+                    console.log(formData);
+                    var my_url="{{url}}/cms/post_sub1/article";
+
+                    $.ajax({
+                        url:my_url,
+                        type:'POST',
+                        data:formData,
+                        dataType:'json',
+                            // contentType: 'application/json', 
+                            headers: {'X-My-App-Token': 'loganstyles'},
+                            success:function(response){
+                                console.log('success');
+                                if(response.success==true){
+                                    console.log('response is true');
+                                    $('#article_sub1_form  .form_submission_success').text(response.msg);
+                                    setTimeout(function(){
+                                        $('#article_sub1_form  .form_submission_success').text('');
+                                         window.location.href="{{url}}/cms/sub1/article";
+                                    },3000);
+                                    
+                                }else{
+                                    console.log('response is false');
+                                    $('#article_sub1_form  .form_submission_error').text(response.msg);
+                                }
+                            },
+                            error:function(xhr, status, err){
+                                console.log('error');
+                                console.log(xhr);
+                                console.log(status);
+                                console.log(err);
+                            }
+                        });
+                }
+            } );
+
+
+            $( "#riddle_sub1_form" ).validate( {/*validate & submit riddle sub category details*/
+                    rules: {  
+                        riddle_sub1_title: {
+                            required: true
+                        },
+                        riddle_sub1_category: {
+                            required: true,
+                        }
+                        
+                    },
+                    messages: {                        
+                        riddle_sub1_title: {
+                            required: "This field is required"
+                        },
+                        riddle_sub1_category: {
+                            required: "This field is required"
+                        }
+                    },
+                    errorElement: "em",
+                    errorPlacement: function ( error, element ) {
+                    // Add the `help-block` class to the error element
+                    error.addClass( "help-block" );
+
+                    if ( element.prop( "type" ) === "checkbox" ) {
+                        error.insertAfter( element.parent( "label" ) );
+                    } else {
+                        error.insertAfter( element );
+                    }
+                },
+                success: function ( label, element ) {
+                    // Add the span element, if doesn't exists, and apply the icon classes to it.
+                    if ( !$( element ).next( "span" )[ 0 ] ) {
+                        $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+                    }
+                },
+                highlight: function ( element, errorClass, validClass ) {
+                    $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
+                },
+                submitHandler: function () {
+                    resetFields();
+                    var formData = $('#riddle_sub1_form').serialize();
+                    console.log(formData);
+                    var my_url="{{url}}/cms/post_sub1/riddle";
+
+                    $.ajax({
+                        url:my_url,
+                        type:'POST',
+                        data:formData,
+                        dataType:'json',
+                            // contentType: 'application/json', 
+                            headers: {'X-My-App-Token': 'loganstyles'},
+                            success:function(response){
+                                console.log('success');
+                                if(response.success==true){
+                                    console.log('response is true');
+                                    $('#riddle_sub1_form  .form_submission_success').text(response.msg);
+                                    setTimeout(function(){
+                                        $('#riddle_sub1_form  .form_submission_success').text('');
+                                         window.location.href="{{url}}/cms/sub1/riddle";
+                                    },3000);
+                                    
+                                }else{
+                                    console.log('response is false');
+                                    $('#riddle_sub1_form  .form_submission_error').text(response.msg);
+                                }
+                            },
+                            error:function(xhr, status, err){
+                                console.log('error');
+                                console.log(xhr);
+                                console.log(status);
+                                console.log(err);
+                            }
+                        });
+                }
+            } );
+
+
+} );
+        </script>
+
+
+</body>
+
+</html>
+    

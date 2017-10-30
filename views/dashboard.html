@@ -1,14 +1,25 @@
 {{>header_member}}
+
+<!-- BEGIN CONTAINER -->
+        <div class="page-container">
             <!-- BEGIN CONTENT -->
             <div class="page-content-wrapper">
-                <!-- BEGIN CONTENT BODY -->
-                <div class="page-content">
+                
+                <div class="page-head">
 
-                    <!-- END PAGE HEADER-->
-                    <div class="row">
+                </div>
+                <!-- END PAGE HEAD-->
+                <!-- BEGIN PAGE CONTENT BODY -->
+                <div class="page-content">
+                    <div class="container">
+                        <!-- BEGIN PAGE CONTENT INNER -->
+                        <div class="page-content-inner">
+                            
+                            <div class="row">
                         <div class="col-md-12">
-                            <!-- BEGIN PROFILE SIDEBAR -->
-                            <div class="profile-sidebar">
+                            <div class="col-md-3">
+                                <!-- BEGIN PROFILE SIDEBAR -->
+                                <div class="profile-sidebar">
                                 <!-- PORTLET MAIN -->
                                 <div class="portlet light profile-sidebar-portlet ">
 
@@ -33,87 +44,111 @@
                                 </div>
                                 <!-- END PORTLET MAIN -->
                                 <!-- PORTLET MAIN -->
-                                <div class="portlet light ">
-                                    <!-- STAT -->
-                                    <div class="row list-separated profile-stat">
-                                        <!--                                        <div class="col-md-4 col-sm-4 col-xs-6">
-                                                                                    <div class="uppercase profile-stat-title"> 37 </div>
-                                                                                    <div class="uppercase profile-stat-text"> Projects </div>
-                                                                                </div>
-                                                                                <div class="col-md-4 col-sm-4 col-xs-6">
-                                                                                    <div class="uppercase profile-stat-title"> 51 </div>
-                                                                                    <div class="uppercase profile-stat-text"> Tasks </div>
-                                                                                </div>
-                                                                                <div class="col-md-4 col-sm-4 col-xs-6">
-                                                                                    <div class="uppercase profile-stat-title"> 61 </div>
-                                                                                    <div class="uppercase profile-stat-text"> Uploads </div>
-                                                                                </div>-->
-                                    </div>
-                                    <!-- END STAT -->
+                                <div class="portlet light ">                                    
                                     <div>
                                         <h3 class="profile-desc-title">Advert</h3>
-                                        <!--                                        <span class="profile-desc-text"> Lorem ipsum dolor sit amet diam nonummy nibh dolore. </span>
-                                                                                <div class="margin-top-20 profile-desc-link">
-                                                                                    <i class="fa fa-globe"></i>
-                                                                                    <a href="http://www.keenthemes.com">www.keenthemes.com</a>
-                                                                                </div>
-                                                                                <div class="margin-top-20 profile-desc-link">
-                                                                                    <i class="fa fa-twitter"></i>
-                                                                                    <a href="http://www.twitter.com/keenthemes/">@keenthemes</a>
-                                                                                </div>
-                                                                                <div class="margin-top-20 profile-desc-link">
-                                                                                    <i class="fa fa-facebook"></i>
-                                                                                    <a href="http://www.facebook.com/keenthemes/">keenthemes</a>
-                                                                                </div>-->
                                     </div>
                                 </div>
                                 <!-- END PORTLET MAIN -->
                             </div>
                             <!-- END BEGIN PROFILE SIDEBAR -->
-                            <!-- BEGIN PROFILE CONTENT -->
-                            <div class="profile-content">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <!-- BEGIN PORTLET -->
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <!-- BEGIN PORTLET -->
                                         <div class="portlet light ">
                                             <div class="portlet-title">
                                                 <div class="caption caption-md">
-                                                    <i class="icon-bar-chart theme-font hide"></i>
-                                                    <span class="caption-subject font-blue-madison bold uppercase">Recent Posts</span>
-                                                    <!--<span class="caption-helper">45 pending</span>-->
+                                                    <i class="fa fa-question"></i>
+                                                    <span class="caption-subject  bold uppercase" style="color: #86be25">Question</span>
+                                                    <span class="caption-helper">Technology</span>&nbsp;-
+                                                    <span class="caption-helper">Start-up</span> &nbsp;-
+                                                    <span class="caption-helper">Full</span>
                                                 </div>
-                                               <!--  <div class="inputs">
-                                                    <div class="portlet-input input-inline input-small ">
-                                                        <div class="input-icon right">
-                                                            <i class="icon-magnifier"></i>
-                                                            <input type="text" class="form-control form-control-solid" placeholder="search..."> </div>
-                                                    </div>
-                                                </div> -->
+                                                
+                                                <div class="actions">
+                                        <div class="btn-group">
+                                            <span class="item-status" data-toggle="dropdown" style="cursor: pointer;">
+                                                <i class="fa fa-ellipsis-h"></i>
+                                            </span>
+                                            <ul class="dropdown-menu pull-right">
+                                                <li>
+                                                    <a href="javascript:;">
+                                                        <i class="fa fa-pencil"></i> Edit </a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;">
+                                                        <i class="fa fa-trash-o"></i> Delete </a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;">
+                                                        <i class="fa fa-ban"></i> Share </a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;"> Request Answer </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                             </div>
                                             <div class="portlet-body">
                                                 <div class="scroller" style="height: 305px;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
-                                                    <div class="general-item-list posts">
-<!-- <div class="item">
-    <div class="item-head">
-        <div class="item-details">
-            <img class="item-pic" src="assets/img/avatar.png">
-            <a href="#" class="item-name primary-link">Nick Larson</a>
-            <span class="item-label">3 hrs ago</span>
-        </div>
-        <span class="item-status">
-        <span class="badge badge-empty badge-success"></span> Open</span>
-    </div>
-    <div class="item-body"> Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. </div>
-</div> -->
-                                                        
+                                                    <div class="general-item-list">
+                                                        <div class="item">
+                                                            <div class="item-head">
+                                                                <div class="item-details">
+                                                                    <img class="item-pic" src="assets/img/avatar.png">
+                                                                    <a href="" class="item-name primary-link">Nick Larson,</a>
+                                                                    <span>Author</span>
+                                                                    <span class="item-label">3 hrs ago</span>
+                                                                </div>
+                                                                
+                                                            </div>
+                                                            <div class="item-body"> 
+                                                                <div style="margin-bottom: 3%;">                                                                    
+                                                                    <img class="img-responsive" src="assets/img/1.jpg">
+                                                                </div>
+                                                                <div>
+                                                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod 
+                                                                tincidunt ut laoreet dolore magna aliquam erat volutpat. 
+                                                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod 
+                                                                tincidunt ut laoreet dolore magna aliquam erat volutpat. 
+                                                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod 
+                                                                tincidunt ut laoreet dolore magna aliquam erat volutpat. 
+                                                                </div>
+                                                                <div>
+                                                                    
+                                                                </div>
+                                                        </div>                                                        
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <!-- END PORTLET -->
+                                        <div class="task-footer" style="margin: 2%;">
+                                            <a class="btn btn-circle btn-default" href="javascript:;"><span><i class="fa fa-eye"></i><span>&nbsp;0</span>&nbsp;Views</span></a>&nbsp;&nbsp;
+                                            <a class="btn btn-circle btn-default" href="javascript:;"><span><i class="fa fa-heart-o"></i><span>&nbsp;0</span>&nbsp;Likes</span></a>&nbsp;&nbsp;
+                                            <a class="btn btn-circle btn-default" href="javascript:;"><span><i class="fa fa-comment-o"></i><span>&nbsp;0</span>&nbsp;Comments</span></a>&nbsp;&nbsp;
+                                            <a class="btn btn-circle btn-default" href="javascript:;"><span class="item-label"><i class="fa fa-share-alt"></i>&nbsp;Share</span></a>
+                                        </div>
+                                        <div class="task-footer" style="margin: 2%;">
+                                            <div class="btn-arrow-link ">
+                                                <button type="button" class="btn dark btn-outline sbold uppercase"><i class="icon-pencil"></i>Write your answer</button>
+                                                <!--<a href="#"><i class="icon-pencil"></i>Write your answer</a>-->
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        
+                                        
                                     </div>
-                                    <div class="col-md-6">
-                                        <!-- BEGIN PORTLET -->
+                                
+                                
+                            </div>
+                            
+                            <div class="col-md-3">
+                                <div class="row">
+                                    <!-- BEGIN PORTLET -->
                                         <div class="portlet light ">
                                             <div class="portlet-title tabbable-line">
                                                 <div class="caption caption-md">
@@ -128,46 +163,6 @@
                                                     <div class="tab-pane active" id="tab_1_1">
                                                         <div class="scroller" style="height: 320px;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
                                                             <ul class="feeds">
-                                                                <!--                                                                <li>
-                                                                                                                                    <div class="col1">
-                                                                                                                                        <div class="cont">
-                                                                                                                                            <div class="cont-col1">
-                                                                                                                                                <div class="label label-sm label-success">
-                                                                                                                                                    <i class="fa fa-bell-o"></i>
-                                                                                                                                                </div>
-                                                                                                                                            </div>
-                                                                                                                                            <div class="cont-col2">
-                                                                                                                                                <div class="desc"> You have 4 pending tasks.
-                                                                                                                                                    <span class="label label-sm label-info"> Take action
-                                                                                                                                                        <i class="fa fa-share"></i>
-                                                                                                                                                    </span>
-                                                                                                                                                </div>
-                                                                                                                                            </div>
-                                                                                                                                        </div>
-                                                                                                                                    </div>
-                                                                                                                                    <div class="col2">
-                                                                                                                                        <div class="date"> Just now </div>
-                                                                                                                                    </div>
-                                                                                                                                </li>-->
-                                                                <!--                                                                <li>
-                                                                                                                                    <a href="javascript:;">
-                                                                                                                                        <div class="col1">
-                                                                                                                                            <div class="cont">
-                                                                                                                                                <div class="cont-col1">
-                                                                                                                                                    <div class="label label-sm label-success">
-                                                                                                                                                        <i class="fa fa-bell-o"></i>
-                                                                                                                                                    </div>
-                                                                                                                                                </div>
-                                                                                                                                                <div class="cont-col2">
-                                                                                                                                                    <div class="desc"> New version v1.4 just lunched! </div>
-                                                                                                                                                </div>
-                                                                                                                                            </div>
-                                                                                                                                        </div>
-                                                                                                                                        <div class="col2">
-                                                                                                                                            <div class="date"> 20 mins </div>
-                                                                                                                                        </div>
-                                                                                                                                    </a>
-                                                                                                                                </li>-->
                                                                 <li>
                                                                     <div class="col1">
                                                                         <div class="cont">
@@ -246,14 +241,10 @@
                                             </div>
                                         </div>
                                         <!-- END PORTLET -->
-                                    </div>
                                 </div>
+                                
                                 <div class="row">
-                                    <div class="col-md-6">
-
-                                    </div>
-                                    <div class="col-md-6">
-                                        <!-- BEGIN PORTLET -->
+                                    <!-- BEGIN PORTLET -->
                                         <div class="portlet light  tasks-widget">
                                             <div class="portlet-title">
                                                 <div class="caption caption-md">
@@ -273,9 +264,9 @@
                                                                 <div class="task-title">
                                                                     <span class="task-title-sp"> Dr. Samuel Joseph </span>
                                                                     <span class="label label-sm label-success">Follow</span>
-                                                                    <!--                                                                    <span class="task-bell">
-                                                                                                                                            <i class="fa fa-bell-o"></i>
-                                                                                                                                        </span>-->
+<!--                                                                <span class="task-bell">
+                                                            <i class="fa fa-bell-o"></i>
+                                                        </span>-->
                                                                 </div>
 
                                                             </li>
@@ -293,9 +284,9 @@
                                                                 <div class="task-title">
                                                                     <span class="task-title-sp"> Bellow Umaru </span>
                                                                     <span class="label label-sm label-success">Follow</span>
-                                                                    <!--                                                                    <span class="task-bell">
-                                                                                                                                            <i class="fa fa-bell-o"></i>
-                                                                                                                                        </span>-->
+<!--                                                                    <span class="task-bell">
+                                                                    <i class="fa fa-bell-o"></i>
+                                                                </span>-->
                                                                 </div>
                                                             </li>
                                                             <li>
@@ -311,15 +302,17 @@
                                                         <!-- END START TASK LIST -->
                                                     </div>
                                                 </div>
-                                                <!--                                                <div class="task-footer">
+                                                                                                <div class="task-footer">
                                                                                                     <div class="btn-arrow-link pull-right">
                                                                                                         <a href="javascript:;">See All Tasks</a>
                                                                                                     </div>
-                                                                                                </div>-->
+                                                                                                </div>
                                             </div>
                                         </div>
-
-                                        <div class="portlet light  tasks-widget">
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="portlet light  tasks-widget">
                                             <div class="portlet-title">
                                                 <div class="caption caption-md">
                                                     <i class="icon-bar-chart theme-font hide"></i>
@@ -335,20 +328,26 @@
                                             </div>
                                         </div>
                                         <!-- END PORTLET -->
-                                    </div>
                                 </div>
-                            </div>
-                            <!-- END PROFILE CONTENT -->
+                                
+                            </div>                           
+                           
                         </div>
                     </div>
+                        </div>
+                        <!-- END PAGE CONTENT INNER -->
+                    </div>
                 </div>
+                <!-- END PAGE CONTENT BODY -->
                 <!-- END CONTENT BODY -->
             </div>
             <!-- END CONTENT -->
-
+            <!-- BEGIN QUICK SIDEBAR -->
+            <a href="javascript:;" class="page-quick-sidebar-toggler">
+                <i class="icon-login"></i>
+            </a>
+            
+            <!-- END QUICK SIDEBAR -->
         </div>
         <!-- END CONTAINER -->
         {{>footer_member}}
-    </body>
-
-</html>
