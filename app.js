@@ -14,6 +14,8 @@ var members = require('./routes/members');
 var cms_routes = require('./routes/cms');
 var question = require('./models/question');
 
+var quest_cat = require('./models/question_cats');
+
 // var inbound = require('inbound');
 
  // var url_root="https://ancient-falls-19080.herokuapp.com";
@@ -147,17 +149,27 @@ app.get('/profile', function(req, res) {
 
 app.get('/dashboard',isLoggedIn, function(req, res) {
     console.log('inside dashboard');
-    console.log(req.user);
-    if(req.user){
-       res.render('dashboard', {
-        title:'Dashboard',
-        url:process.env.URL_ROOT,
-        user_info:req.user
-    }); 
-   }else{
-    res.redirect('/');
-}
+    //get all items
 
+    quest_cat.find().sort({value:1}).exec(function(err,cat_item){
+        var res_cat=[];
+
+        if(err)console.log(err);
+        if(cat_item){
+            console.log(cat_item);
+            res_cat=cat_item;
+        }
+
+        res.render('dashboard', {
+            title:'Dashboard',
+            url:process.env.URL_ROOT,
+            user_info:req.user,
+            data:res_cat
+        }); 
+        
+
+    });
+    
 });
 
 app.get('/admin',isLoggedIn, function(req, res) {
