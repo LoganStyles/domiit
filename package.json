@@ -19,6 +19,7 @@
     "everyauth": "^0.4.9",
     "express": "*",
     "express-handlebars": "^3.0.0",
+    "fs-extra": "^4.0.2",
     "inbound": "0.0.6",
     "mime-lib": "^0.5.1",
     "moment": "^2.19.1",

@@ -16,28 +16,28 @@
         <meta content="" name="author" />
         <!-- BEGIN GLOBAL MANDATORY STYLES -->        
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
-        <link href="assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-        <link href="assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
-        <link href="assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+        <link href="{{url}}/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="{{url}}/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+        <link href="{{url}}/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="{{url}}/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
         <!-- END GLOBAL MANDATORY STYLES -->
         <!-- BEGIN PAGE LEVEL PLUGINS -->
         <!--<link href="../assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />-->
-        <link href="assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
-        <link href="assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css" rel="stylesheet" type="text/css" />
-        <link href="assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" type="text/css" />
-        <link href="assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
+        <link href="{{url}}/assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
+        <link href="{{url}}/assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css" rel="stylesheet" type="text/css" />
+        <link href="{{url}}/assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" type="text/css" />
+        <link href="{{url}}/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
         <!-- END PAGE LEVEL PLUGINS -->
         <!-- BEGIN THEME GLOBAL STYLES -->
-        <link href="assets/global/css/components-md.min.css" rel="stylesheet" id="style_components" type="text/css" />
-        <link href="assets/global/css/plugins-md.min.css" rel="stylesheet" type="text/css" />
+        <link href="{{url}}/assets/global/css/components-md.min.css" rel="stylesheet" id="style_components" type="text/css" />
+        <link href="{{url}}/assets/global/css/plugins-md.min.css" rel="stylesheet" type="text/css" />
         <!-- END THEME GLOBAL STYLES -->
         <!-- BEGIN THEME LAYOUT STYLES -->        
-        <link href="assets/layouts/layout3/css/layout.min.css" rel="stylesheet" type="text/css" />
-        <link href="assets/layouts/layout3/css/themes/default.min.css" rel="stylesheet" type="text/css" id="style_color" />
-        <link href="assets/layouts/layout3/css/custom.min.css" rel="stylesheet" type="text/css" />
+        <link href="{{url}}/assets/layouts/layout3/css/layout.min.css" rel="stylesheet" type="text/css" />
+        <link href="{{url}}/assets/layouts/layout3/css/themes/default.min.css" rel="stylesheet" type="text/css" id="style_color" />
+        <link href="{{url}}/assets/layouts/layout3/css/custom.min.css" rel="stylesheet" type="text/css" />
         <!-- END THEME LAYOUT STYLES -->
-        <link rel="shortcut icon" href="favicon.ico" /> 
+        <link rel="shortcut icon" href="{{url}}/assets/pages/img/favicon.ico'" /> 
             <style type="text/css">
                     /*form submission*/
             .form_submission_error{
@@ -60,7 +60,7 @@
                     <!-- BEGIN LOGO -->
                     <div class="page-logo" style="width:120px;">
                         <a href="{{url}}/dashboard">
-                            <img src="assets/img/domiit_black_logo.png" alt="logo" class="logo-default">
+                            <img src="{{url}}/assets/img/domiit_black_logo.png" alt="logo" class="logo-default">
                         </a>
                     </div>
                     <!-- END LOGO -->
@@ -372,7 +372,7 @@
                             <!-- BEGIN USER LOGIN DROPDOWN -->
                             <li class="dropdown dropdown-user dropdown-dark">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                    <img alt="" class="img-circle" src="assets/img/avatar.png">
+                                    <img alt="" class="img-circle" src="{{url}}/assets/img/avatar.png">
                                     <span class="username username-hide-mobile">User</span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-default">
@@ -409,17 +409,19 @@
                     <div class="hor-menu  ">
                         <ul class="nav navbar-nav">
                             <li class="menu-dropdown classic-menu-dropdown active">
+
                                 <a href="{{url}}/dashboard"> <i class="icon-home"></i><span>&nbsp;</span> Home
                                     <span class="arrow"></span>
                                 </a>
                             </li>
                             <li class="menu-dropdown classic-menu-dropdown  ">
+                            <!-- <img alt="" class="" src="assets/img/avatar.png"> -->
                                 <a href="javascript:;"> <i class="fa fa-comments-o"></i><span>&nbsp;</span>Questions & Answers
                                     <span class="arrow"></span>
                                 </a>
                                 <ul class="dropdown-menu pull-left">
                                     <li>
-                                        <a href="#"> All </a>
+                                        <a href="{{url}}/posts/question_all"> All </a>
                                     </li>
                                     <li>
                                         <a href="#"> Unanswered Questions </a>

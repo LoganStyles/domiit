@@ -5,6 +5,8 @@ if(process.env.NODE_ENV !== 'production'){
 var http = require('http');
 var express = require('express');
 var bodyParser = require('body-parser');
+// var fs = require('fs-extra');
+// var util = require('util');
 var session = require('client-sessions');
 var path = require('path');
 var request = require('request');
@@ -12,9 +14,31 @@ var exphbs = require('express-handlebars');
 var user = require('./models/user');
 var members = require('./routes/members');
 var cms_routes = require('./routes/cms');
+var posts_routes = require('./routes/posts');
 var question = require('./models/question');
 
 var quest_cat = require('./models/question_cats');
+var quest_sub1 = require('./models/question_sub1');
+var quest_sub2 = require('./models/question_sub2');
+
+var multer = require('multer');
+var mime = require('mime-lib');
+
+var Storage =multer.diskStorage({
+    destination:function(req,file,cb){
+        cb(null,'./public/uploads')//set the destination
+
+    },
+    filename:function(req,file,cb){
+        console.log('filename ext '+file.mimetype);
+        console.log(mime.extension(file.mimetype));
+        cb(null, Date.now() + '.'+mime.extension(file.mimetype)[mime.extension(file.mimetype).length-1]);
+
+    }
+});
+
+
+
 
 // var inbound = require('inbound');
 
@@ -90,6 +114,15 @@ app.engine('html', exphbs({
             }
             // return (arg1==arg2)? options.fn(this):options.inverse(this);
         }
+        // ,
+        // ifArrayLen:function(item,amount,options){
+        //     if(item.length > amount){
+        //         item.slice(0,amount)
+        //     }else{
+        //         return item;
+        //     }
+
+        // }
     }
 }));
 app.set('view engine', 'html');
@@ -147,25 +180,58 @@ app.get('/profile', function(req, res) {
 });
 
 
+/*fetch question cats & sub cats*/
 app.get('/dashboard',isLoggedIn, function(req, res) {
     console.log('inside dashboard');
     //get all items
 
     quest_cat.find().sort({value:1}).exec(function(err,cat_item){
-        var res_cat=[];
+        var res_cat=[],
+        res_sub1=[],
+        res_sub2=[];
+      
 
         if(err)console.log(err);
         if(cat_item){
-            console.log(cat_item);
+            // console.log(cat_item);
             res_cat=cat_item;
-        }
+            var first_cat=(res_cat.length >0)?(res_cat[0].value):(0);
+            
 
-        res.render('dashboard', {
-            title:'Dashboard',
-            url:process.env.URL_ROOT,
-            user_info:req.user,
-            data:res_cat
-        }); 
+            quest_sub1.find({'category':first_cat}).sort({value:1}).exec(function(err1,sub1_item){
+
+                if(err1)console.log(err1);
+                if(sub1_item){
+                    // console.log('sub1 item is')
+                    // console.log(sub1_item);
+                    res_sub1=sub1_item;
+                    var first_sub1=(res_sub1.length >0)?(res_sub1[0].value):(0);
+                    // console.log('first sub1 item: ')
+                    // console.log(first_sub1);
+
+                    quest_sub2.find({'sub1':first_sub1}).sort({value:1}).exec(function(err2,sub2_item){
+
+                        if(err2)console.log(err2);
+                        if(sub2_item){
+                            res_sub2=sub2_item; 
+                            // console.log('sub2 item: ');
+                            // console.log(res_sub2);
+                        }
+                        res.render('dashboard', {
+                            title:'Dashboard',
+                            url:process.env.URL_ROOT,
+                            user_info:req.user,
+                            data:res_cat,
+                            sub1_data:res_sub1,
+                            sub2_data:res_sub2
+                        });  
+
+                    }); 
+                }
+
+            });
+            
+        } 
         
 
     });
@@ -178,22 +244,6 @@ app.get('/admin',isLoggedIn, function(req, res) {
     if(req.user){
        res.render('cms_dashboard', {
         title:'CMS',
-        url:process.env.URL_ROOT,
-        user_info:req.user
-    }); 
-   }else{
-    res.redirect('/');
-}
-
-});
-
-
-
-app.get('/question',isLoggedIn, function(req, res) {
-    console.log('inside question');
-    // console.log(req.user);
-    if(req.user){
-       res.render('question', {
         url:process.env.URL_ROOT,
         user_info:req.user
     }); 
@@ -220,6 +270,7 @@ app.use(function(err, req, res, next){
 
 app.use('/members',members);
 app.use('/cms',cms_routes);
+app.use('/posts',posts_routes);
 
 
 app.get('*', function(req, res){
@@ -236,34 +287,45 @@ io.on('connection',function(socket){
     });
 });
 
-app.post('/post_questions',function(req,res,next){
 
-    var owner_details={id:req.user._id,displayName:req.user.displayName,displayPic:req.user.displayPic};
+/*posts*/
+var upload = multer({storage:Storage});
+/*process an 'ask a question' post,save & update UI immediately*/
+app.post('/ask_question',upload.single('question_photo'),function(req,res,next){
+    // console.log(req.body)
 
-    let quest =new question();
-    quest.body=req.body.quest_description;
-    quest.category_id=req.body.quest_category;
-    quest.sub_cat1=req.body.sub_cat1;
-    quest.sub_cat2=req.body.sub_cat2;
-    quest.owner=owner_details;
-    // quest.date_created= Date();
+    var owner_details={id:req.user._id,displayName:req.user.displayName,displayPic:req.user.displayPic,
+        status:req.user.current_appointment};
 
-    console.log(typeof quest);
-    quest.save(function(err, quest) {
+        // console.log(owner_details)
 
-        if(err){console.log(err);res.json({success: false,msg:"question submission failed"});
-        
-    }else{
-        res.json({success:true,msg:"Question submission succesful"});
-        var json = JSON.stringify(quest, null, 2);
-        console.log(json);
-        io.emit('question posts', json);
-    }   
+        let ask_quest =new question();
+        ask_quest.body=req.body.question_title;
+        ask_quest.category = req.body.question_category;
+        ask_quest.sub_cat1=req.body.question_sub1;
+        ask_quest.sub_cat2=req.body.question_sub2;
+        ask_quest.description=req.body.question_info;
+        ask_quest.owner=owner_details;
+
+        if (req.file && req.file.filename != null) {
+            ask_quest.pics.push(req.file.filename);
+        }
+
+
+        ask_quest.save(function(err1, ask_quest) {
+
+            if(err1){console.log(err1);res.json({success: false,msg:"question submission failed"});
+
+        }else{            
+            var json = JSON.stringify(ask_quest, null, 2);
+            console.log(json);
+            io.emit('all_questions', json);
+            io.emit('unanswered_questions', json);
+            res.json({success:true,msg:"Question submission succesful"});
+        }   
+    });
+
 });
-});
-
-
-
 
 server.listen(process.env.PORT || 3000,function(){
     console.log('Server started on port '+process.env.PORT);

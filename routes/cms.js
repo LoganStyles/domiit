@@ -35,18 +35,30 @@ router.get('/main/:item',isLoggedIn, function(req, res) {
     var modal_id="#"+item+"_cat_modal";
 
     let cat;
+    quest_status=false;
+    quest_cat_status=false;
+    article_status=false;
+    article_cat_status=false;
+    riddle_status=false;
+    riddle_cat_status=false;
 
     switch(item){
         case'question':
         cat = quest_cat;
+        quest_status=true;
+        quest_cat_status=true;
         break;
 
         case'article':
         cat = article_cat;
+        article_status=true;
+        article_cat_status=true;
         break;
 
         case'riddle':
         cat = riddle_cat;
+        riddle_status=true;
+        riddle_cat_status=true;
         break;
 
     }
@@ -54,18 +66,28 @@ router.get('/main/:item',isLoggedIn, function(req, res) {
      //get all items
      cat.find().sort({value:1}).exec(function(err,cat_item){
 
+        var res_cat=[];
+
         if(err)console.log(err);
-        if(cat_item){
-            console.log(cat_item);
-            res.render('cms_category', {
-                title:item+' Category',
-                url:process.env.URL_ROOT,
-                user_info:req.user,
-                item:item,
-                modal_id:modal_id,
-                data:cat_item
-            }); 
+        if(cat_item.length > 0){
+            res_cat=cat_item;
+            console.log(res_cat);            
         }
+
+        res.render('cms_category', {
+            title:item+' Category',
+            url:process.env.URL_ROOT,
+            user_info:req.user,
+            item:item,
+            modal_id:modal_id,
+            data:res_cat,
+            quest_status:quest_status,
+            quest_cat_status:quest_cat_status,
+            article_status:article_status,
+            article_cat_status:article_cat_status,
+            riddle_status:riddle_status,
+            riddle_cat_status:riddle_cat_status
+        }); 
 
     });
      
@@ -82,49 +104,75 @@ router.get('/sub1/:item',isLoggedIn, function(req, res) {
     
      //get all items
      let cat,sub1;
+     let quest_status=false,
+     quest_sub1_status=false,
+     article_status=false,
+     article_sub1_status=false,
+     riddle_status=false,
+     riddle_sub1_status=false;
 
      switch(item){
         case'question':
         cat = quest_cat;
         sub1 = quest_sub1;
+        quest_status=quest_sub1_status=true;
         break;
 
         case'article':
         cat = article_cat;
         sub1 = article_sub1;
+        article_status=article_sub1_status=true;
         break;
 
         case'riddle':
         cat = riddle_cat;
         sub1 = riddle_sub1;
+        riddle_status=riddle_sub1_status=true;
         break;
 
     }
 
     cat.find().sort({value:1}).exec(function(err,cat_item){
 
+        var res_cat=[],
+        res_sub1=[];
+
         if(err)console.log(err);
-        if(cat_item){
+        if(cat_item.length > 0){
+            res_cat=cat_item;
             // console.log(cat_item);
             sub1.find().sort({value:1}).exec(function(err1,sub1_item){
 
                 if(err1)console.log(err1);
-                if(sub1_item){
+                if(sub1_item.length > 0){
                     console.log(sub1_item);
-                    res.render('cms_sub1_category', {
+                    res_sub1=sub1_item;  
+
+
+
+                     res.render('cms_sub1_category', {
                         title:item+' Sub Category',
                         url:process.env.URL_ROOT,
                         user_info:req.user,
                         item:item,
                         modal_id:modal_id,
-                        cat:cat_item,
-                        data:sub1_item
-                    }); 
+                        cat:res_cat,
+                        data:res_sub1,
+                        quest_status:quest_status,
+                        quest_sub1_status:quest_sub1_status,
+                        article_status:article_status,
+                        article_sub1_status:article_sub1_status,
+                        riddle_status:riddle_status,
+                        riddle_sub1_status:riddle_sub1_status
+
+        });                   
                 }
 
             });
             
         }
+
+       
 
     });
 
@@ -143,58 +191,80 @@ router.get('/sub2/:item',isLoggedIn, function(req, res) {
     
      //get all items
      let cat,sub1,sub2;
+     let quest_status=false,
+     quest_sub2_status=false,
+     article_status=false,
+     article_sub2_status=false,
+     riddle_status=false,
+     riddle_sub2_status=false;
 
      switch(item){
         case'question':
         cat = quest_cat;
         sub1 = quest_sub1;
         sub2 = quest_sub2;
+        quest_sub2_status=quest_status=true;
         break;
 
         case'article':
         cat = article_cat;
         sub1 = article_sub1;
         sub2 = article_sub2;
+        article_status=article_sub2_status=true;
         break;
 
         case'riddle':
         cat = riddle_cat;
         sub1 = riddle_sub1;
         sub2 = riddle_sub2;
+        riddle_status=riddle_sub2_status=true;
         break;
 
     }
 
     cat.find().sort({value:1}).exec(function(err,cat_item){
 
+        var res_cat=[];
+        var res_sub1=[];
+        var res_sub2=[];
+
         if(err)console.log(err);
-        if(cat_item){
+        if(cat_item){//items were found
+            res_cat=cat_item;
+            var first_cat=(res_cat.length >0)?(res_cat[0].value):(0);
+
             console.log(cat_item);
-            var first_cat=cat_item[0].value;
             console.log(first_cat);
 
             sub1.find({'category':first_cat}).sort({value:1}).exec(function(err1,sub1_item){
 
                 if(err1)console.log(err1);
                 if(sub1_item){
-                    // console.log(sub1_item);
+                    res_sub1=sub1_item;
+                    var first_sub1=(res_sub1.length >0)?(res_sub1[0].value):(0);
 
                     sub2.find().sort({value:1}).exec(function(err2,sub2_item){
 
                         if(err2)console.log(err2);
                         if(sub2_item){
-                            // console.log(sub2_item);
-                            res.render('cms_sub2_category', {
-                                title:item+' Sub Category-2',
-                                url:process.env.URL_ROOT,
-                                user_info:req.user,
-                                item:item,
-                                modal_id:modal_id,
-                                cat:cat_item,
-                                sub1_data:sub1_item,
-                                sub2_data:sub2_item
-                            }); 
+                            res_sub2=sub2_item; 
                         }
+                        res.render('cms_sub2_category', {
+                            title:item+' Sub Category-2',
+                            url:process.env.URL_ROOT,
+                            user_info:req.user,
+                            item:item,
+                            modal_id:modal_id,
+                            cat:res_cat,
+                            sub1_data:res_sub1,
+                            sub2_data:res_sub2,
+                            quest_status:quest_status,
+                            quest_sub2_status:quest_sub2_status,
+                            article_status:article_status,
+                            article_sub2_status:article_sub2_status,
+                            riddle_status:riddle_status,
+                            riddle_sub2_status:riddle_sub2_status
+                        }); 
 
                     }); 
                 }
@@ -215,6 +285,8 @@ router.get('/selected_cat/:type/:item',isLoggedIn, function(req, res) {
     console.log('inside cms selected category');
     var category = req.params.item;
     var type = req.params.type;
+    console.log(' category '+category);
+    console.log('type '+type);
     
      //get all items
      let cat,sub1,sub2;
@@ -239,17 +311,71 @@ router.get('/selected_cat/:type/:item',isLoggedIn, function(req, res) {
     }
 
     sub1.find({'category':category}).sort({value:1}).exec(function(err1,sub1_item){
-        let result=[];
+        let res_sub1,res_sub2=[];
 
         if(err1)console.log(err1);
         if(sub1_item){
             console.log(sub1_item);
-            result=sub1_item;              
+            res_sub1=sub1_item;  
+            var first_sub1=(res_sub1.length >0)?(res_sub1[0].value):(0);     
+
+            sub2.find({'sub1':first_sub1}).sort({value:1}).exec(function(err2,sub2_item){
+
+                if(err2)console.log(err2);
+                if(sub2_item){
+                    res_sub2=sub2_item; 
+                            // console.log('sub2 item: ');
+                            // console.log(res_sub2);
+                        }
+                        res.send({
+                            sub1_data:res_sub1,
+                            sub2_data:res_sub2
+                        });  
+                    });       
 
         }
-        res.send(result);
 
     });
+
+});
+
+
+/*show selected_sub2 item
+get all applicable sub2s for a sub1 & sort in asc ,
+prepare modal */
+router.get('/selected_sub1/:type/:item',isLoggedIn, function(req, res) {
+    console.log('inside cms selected sub1');
+    var sub1 = req.params.item;
+    var type = req.params.type;
+    
+     //get all items
+     let sub2,res_sub2;
+     
+
+     switch(type){
+        case'question':
+        sub2 = quest_sub2;
+        break;
+
+        case'article':
+        sub2 = article_sub2;
+        break;
+
+        case'riddle':
+        sub2 = riddle_sub2;
+        break;
+    }
+
+    sub2.find({'sub1':sub1}).sort({value:1}).exec(function(err2,sub2_item){
+
+        if(err2)console.log(err2);
+        if(sub2_item){
+            res_sub2=sub2_item; 
+                }
+                res.send({
+                    sub2_data:res_sub2
+                });  
+            }); 
 
 });
 

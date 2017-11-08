@@ -93,7 +93,7 @@ label{
 .navbar-default .navbar-nav>li>a {
     color: #FFFEFE;
     letter-spacing: 1px;
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
     padding: 29px 13px;
     font-weight: 400;
 }
@@ -175,11 +175,20 @@ a.active.scroll {
 }
 
 .banner_text{
-    color: #86be25; 
+    color: #fff; 
     font-weight: 600; 
     text-transform: capitalize; 
     font-size: 1.5em;
     margin: 1.5em;
+}
+
+.content_text{
+    color: #000; 
+    font-weight: 500; 
+    /*text-transform: lowercase; */
+    font-size: 1.2em;
+    margin: 0.8em;
+    text-align: justify;
 }
 
 
@@ -2010,11 +2019,11 @@ ul.w3_address li span {
 .banner_bottom_w3ls_info {
 	margin: 0 auto;
 	text-align: center;
-	width: 60%;
+	width: 80%;
 }
 
 .banner_bottom_w3ls_info p {
-	margin: 2em 0;
+	margin: 1em 0;
 }
 
 

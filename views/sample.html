@@ -58,33 +58,27 @@
 
                                     <div class="col-md-6">                                        
                                         <!-- BEGIN PORTLET -->
-                                <div class="portlet light ">
-                                    <div class="portlet-title" style="border-bottom: 0px;">
-                                        <!-- <div class="task-footer" style="margin: 0%;"> -->
-                                            <div class=" ">
-                                                <div class="row">
-                                                    <a style="color: #000;text-decoration: none;" data-toggle="modal" href="" onclick="modalLoader('question','new','');" class="dark btn-outline sbold col-md-3">Ask a question&nbsp;|</a>
+                                        <div class="portlet light ">
+                                            <div class="portlet-title" style="border-bottom: 0px;">
+                                                <div class="task-footer" style="margin: 2%;">
+                                                    <div class=" ">
+                                                        <div class="row">
+                                                            <a data-toggle="modal" href="#question_modal" class="btn dark btn-outline sbold uppercase col-md-4"><i class="fa fa-comments-o"></i>Ask a question</a>
+                                                            <a data-toggle="modal" href="#question_modal" class="btn dark btn-outline sbold uppercase col-md-4"><i class="fa fa-edit"></i>Write an article</a>
+                                                            <a data-toggle="modal" href="#question_modal" class="btn dark btn-outline sbold uppercase col-md-4"><i class="fa fa-question"></i>Post a riddle</a>
+                                                        </div><br>
+                                                        <div class="row">
+                                                            <a data-toggle="modal" href="#question_modal" class="btn dark btn-outline sbold uppercase col-md-4"><i class="fa fa-book"></i>Post a book</a>
+                                                        </div>                                                      
 
-                                                    <a style="color: #000;text-decoration: none;" data-toggle="modal" href="#" class="  sbold col-md-3">Write an article&nbsp;|</a>
-
-                                                    <a style="color: #000;text-decoration: none;"data-toggle="modal" href="#" class="dark btn-outline sbold col-md-3">Post a riddle &nbsp;|</a>
-
-                                                    <a style="color: #000;text-decoration: none;" data-toggle="modal" href="#" class=" dark btn-outline sbold col-md-3">Post a book</a>
-
-
-                                                </div><br>
-                                                <div class="row">
-                                                    
-                                                </div>                                                      
-
-                                            </div> 
-                                        <!-- </div>                                       -->
-                                    </div>                                                                                  
-                                    <div class="clearfix"></div> 
-                                </div>
+                                                    </div> 
+                                                </div>                                      
+                                            </div>                                                                                  
+                                            <div class="clearfix"></div> 
+                                        </div>
 
                                         <div class="post_area">
-                                            <!-- <div class="portlet light post">
+                                            <div class="portlet light post">
                                                 <div class="portlet-title">
                                                     <div class="caption caption-md">
                                                         <i class="fa fa-question"></i>
@@ -147,7 +141,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <!-- END PORTLET 
+                                                <!-- END PORTLET -->
                                                 <div class="task-footer" style="margin: 2%;">
                                                     <a class="btn btn-circle btn-default" href="javascript:;"><span><i class="fa fa-eye"></i><span>&nbsp;0</span>&nbsp;Views</span></a>&nbsp;&nbsp;
                                                     <a class="btn btn-circle btn-default" href="javascript:;"><span><i class="fa fa-heart-o"></i><span>&nbsp;0</span>&nbsp;Likes</span></a>&nbsp;&nbsp;
@@ -163,7 +157,7 @@
                                                 </div>
                                                 <div class="clearfix"></div>
 
-                                            </div> -->
+                                            </div>
 
                                             
                                         </div>
@@ -375,18 +369,18 @@
                         <h4 class="modal-title" id="question_sub1_header">Ask A Question</h4>
                     </div>
                     <div class="modal-body">
-                 <form role="form" id="question_form" action="" method="post" enctype="multipart/form-data">
+                        <form role="form" id="question_form" action="" method="post" enctype="multipart/form-data">
                         <span class="form_submission_error"></span>
                         <span class="form_submission_success"></span>
 
-                            <input type="hidden" name="question_id"  id="question_id" value="0">
+                            <input type="hidden" name="question_id"  id="question_id" value="">
 
                             <div class="form-group form-md-line-input">
                                 <label class="control-label col-md-3">Category </label>
                                 <div class="col-md-9">
                                     <select class="form-control sel_cat" name="question_category" id="question_category">
                                     {{#each data}}
-                                        <option value="{{title}}">{{title}}</option>
+                                        <option value="{{value}}">{{title}}</option>
                                     {{/each}}   
                                         
                                     </select>
@@ -396,9 +390,9 @@
                             <div class="form-group form-md-line-input">
                                 <label class="control-label col-md-3">Sub-Category-1 </label>
                                 <div class="col-md-9">
-                                    <select class="form-control sel_sub1" name="question_sub1" id="question_sub1">
+                                    <select class="form-control" name="question_sub1" id="question_sub1">
                                     {{#each sub1_data}}
-                                        <option value="{{title}}">{{title}}</option>
+                                        <option value="{{value}}">{{title}}</option>
                                     {{/each}}   
                                         
                                     </select>
@@ -410,7 +404,7 @@
                                 <div class="col-md-9">
                                     <select class="form-control" name="question_sub2" id="question_sub2">
                                     {{#each sub2_data}}
-                                        <option value="{{title}}">{{title}}</option>
+                                        <option value="{{value}}">{{title}}</option>
                                     {{/each}}   
                                         
                                     </select>
@@ -430,7 +424,7 @@
 
                              <div class="form-group">
                                 <label for="question_photo">Add Photo</label>
-                                <input type="file" name="question_photo" accept="application/x-zip-compressed,image/*">
+                                <input type="file" id="question_photo" name="question_photo">
                                 <p class="help-block"> Optional </p>
                             </div>
                             <div class="form-actions noborder">
@@ -464,11 +458,8 @@
                 $('#question_form .form_submission_error').text("");
             }
 
-            // pre-submit callback
-      
-
-
         $( document ).ready( function () {
+        console.log('doc is ready');
 
         $( "#question_form" ).validate( {/*validate & submit category details*/
                 rules: {  
@@ -511,53 +502,78 @@
             unhighlight: function (element, errorClass, validClass) {
                 $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
             },
-
             submitHandler: function () {
-                //modify button
-                var sub_button=$("#question_form").find(':submit');
-                var old_button_val=sub_button.val();
-                sub_button.prop('disabled', true);
-                sub_button.val('...processing');
-
                 resetFields();
-                var my_url="{{url}}/ask_question";
-                $("#question_form").ajaxSubmit({
+                var formData = $('#question_form').serialize();
+                console.log(formData);
+                var my_url="{{url}}/members/ask_question";
+
+                $.ajax({
                     url:my_url,
-                       contentType: 'application/json',
-                       success: function(response){
-                        if(response.success==true){
-                                console.log('image uploaded and form submitted');
+                    type:'POST',
+                    data:formData,
+                    dataType:'json',
+                        // contentType: 'application/json', 
+                        headers: {'X-My-App-Token': 'loganstyles'},
+                        success:function(response){
+                            console.log('success');
+                            if(response.success==true){
+                                console.log('response is true');
                                 $('#question_form  .form_submission_success').text(response.msg);
                                 setTimeout(function(){
                                     $('#question_form  .form_submission_success').text('');
-                                    sub_button.val(old_button_val);
-                                    sub_button.prop('disabled', false);
-                                    $('#question_modal').modal('hide');
-                                     // window.location.href="{{url}}/question_all";
+                                     window.location.href="{{url}}/question_all";
                                 },3000);
                                 
                             }else{
                                 console.log('response is false');
                                 $('#question_form  .form_submission_error').text(response.msg);
-                                sub_button.val(old_button_val);
-                                sub_button.prop('disabled', false);
                             }
-                              
-                       },
-                       error:function(xhr, status, err){
+                        },
+                        error:function(xhr, status, err){
                             console.log('error');
                             console.log(xhr);
                             console.log(status);
                             console.log(err);
                         }
-                   });
-                
+                    });
             }
             } );
 
 
+        $('body').on('change','.sel_cat',function(){/*get sub1s for selected cat*/
+                var selected =$(this).val();
+                var selected_id=$(this).attr('id');
+                console.log(selected_id);
+                var required_id="#"+selected_id.replace('_category','_sub1');
+                var required_type=selected_id.replace('_category','');
+                console.log(required_id);
 
-        
+                var my_url="{{url}}/cms/selected_cat/"+required_type+"/"+selected;
+
+                    $.ajax({
+                        url:my_url,
+                        type:'GET',
+                            headers: {'X-My-App-Token': 'loganstyles'},
+                            success:function(response){
+                                console.log(response);
+                                $(required_id).html('');
+                                $.each(response,function(key,value){
+                                    console.log(value.title);
+                                    console.log(value.value);
+                                    $(required_id).append('<option value="'+value.value+'">'+value.title+'</option>');
+
+                                });
+                            },
+                            error:function(xhr, status, err){
+                                console.log('error');
+                                console.log(xhr);
+                                console.log(status);
+                                console.log(err);
+                            }
+                        });
+
+            });
 
             });
 

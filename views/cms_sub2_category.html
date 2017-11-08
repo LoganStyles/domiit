@@ -64,7 +64,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                    {{#each data}}
+                                                    {{#each sub2_data}}
                                                         <tr>
                                                             <td> {{counter @index}}</td>
                                                             <td> {{category}} </td>
@@ -84,9 +84,9 @@
                     </div>
                     
                     <!-- BEGIN MODALS FOR EDIT-->
-                                <div class="row">
-                                <div class="col-md-12">
-                                    <div class="portlet ">
+                                <!-- <div class="row"> -->
+                                <!-- <div class="col-md-12"> -->
+                                    <!-- <div class="portlet "> -->
 
                                         <div class="portlet-body form">                                         
 
@@ -104,8 +104,8 @@
 
                                                         <div class="form-group form-md-line-input">
                                                             <label class="control-label col-md-3">Category </label>
-                                                            <div class="col-md-8">
-                                                                <select class="form-control selected_cat" name="question_sub2_category" id="question_sub2_category">
+                                                            <div class="col-md-9">
+                                                                <select class="form-control sel_cat" name="question_sub2_category" id="question_sub2_category">
                                                                 {{#each cat}}
                                                                     <option value="{{value}}">{{title}}</option>
                                                                 {{/each}}   
@@ -117,7 +117,7 @@
                                                          <div class="form-group form-md-line-input">
                                                             <label class="control-label col-md-3">Sub Category-1 </label>
                                                             <div class="col-md-8">
-                                                                <select class="form-control" name="question_sub2_sub1" id="question_sub2_sub1">
+                                                                <select class="form-control sel_sub1" name="question_sub2_sub1" id="question_sub2_sub1">
                                                                 {{#each sub1_data}}
                                                                     <option value="{{value}}">{{title}}</option>
                                                                 {{/each}}   
@@ -148,18 +148,7 @@
                                                 </div>
 
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END PORTLET-->
 
-                             <!-- BEGIN MODALS FOR EDIT-->
-                                <div class="row">
-                                <div class="col-md-12">
-                                    <div class="portlet ">
-
-                                        <div class="portlet-body form">                                         
 
                                             <div id="article_sub2_modal" class="modal fade" tabindex="-1">
                                                 <div class="modal-header">
@@ -178,7 +167,7 @@
                                                             <div class="form-group form-md-line-input">
                                                             <label class="control-label col-md-3">Category </label>
                                                             <div class="col-md-8">
-                                                                <select class="form-control selected_cat" name="article_sub2_category" id="article_sub2_category">
+                                                                <select class="form-control sel_cat" name="article_sub2_category" id="article_sub2_category">
                                                                 {{#each cat}}
                                                                     <option value="{{value}}">{{title}}</option>
                                                                 {{/each}}   
@@ -190,7 +179,7 @@
                                                         <div class="form-group form-md-line-input">
                                                             <label class="control-label col-md-3">Sub Category-1 </label>
                                                             <div class="col-md-8">
-                                                                <select class="form-control" name="article_sub2_cat1" id="article_sub2_cat1">
+                                                                <select class="form-control sel_sub1" name="article_sub2_sub1" id="article_sub2_sub1">
                                                                 {{#each sub1_data}}
                                                                     <option value="{{value}}">{{title}}</option>
                                                                 {{/each}}   
@@ -222,19 +211,7 @@
                                                 </div>
 
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END PORTLET-->
 
-
-                            <!-- BEGIN MODALS FOR EDIT-->
-                                <div class="row">
-                                <div class="col-md-12">
-                                    <div class="portlet ">
-
-                                        <div class="portlet-body form">                                         
 
                                             <div id="riddle_sub2_modal" class="modal fade" tabindex="-1">
                                                 <div class="modal-header">
@@ -253,7 +230,7 @@
                                                             <div class="form-group form-md-line-input">
                                                             <label class="control-label col-md-3">Category </label>
                                                             <div class="col-md-8">
-                                                                <select class="form-control selected_cat" name="riddle_sub2_category" id="riddle_sub2_category">
+                                                                <select class="form-control sel_cat" name="riddle_sub2_category" id="riddle_sub2_category">
                                                                 {{#each cat}}
                                                                     <option value="{{value}}">{{title}}</option>
                                                                 {{/each}}   
@@ -265,7 +242,7 @@
                                                         <div class="form-group form-md-line-input">
                                                             <label class="control-label col-md-3">Sub Category-1 </label>
                                                             <div class="col-md-8">
-                                                                <select class="form-control" name="riddle_sub2_cat1" id="riddle_sub2_cat1">
+                                                                <select class="form-control sel_sub1" name="riddle_sub2_sub1" id="riddle_sub2_sub1">
                                                                 {{#each sub1_data}}
                                                                     <option value="{{value}}">{{title}}</option>
                                                                 {{/each}}   
@@ -297,11 +274,15 @@
                                                 </div>
 
                                             </div>
+
+
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
+                                    <!-- </div> -->
+                                <!-- </div> -->
+                            <!-- </div> -->
                             <!-- END PORTLET-->
+
+                             
                     
                     
                 </div>
@@ -573,43 +554,39 @@
 
 
 
-            $('body').on('change','.selected_cat',function(){/*get sub1s for selected cat*/
-                var selected =$(this).val();
-                var selected_id=$(this).attr('id');
-                console.log(selected_id);
-                var required_id="#"+selected_id.replace('_category','_sub1');
-                var required_type=selected_id.replace('_sub2_category','');
-                console.log(required_id);
+            // $('body').on('change','.sel_cat',function(){/*get sub1s for selected cat*/
+            //     var selected =$(this).val();
+            //     var selected_id=$(this).attr('id');
+            //     console.log(selected_id);
+            //     var required_id="#"+selected_id.replace('_category','_sub1');
+            //     var required_type=selected_id.replace('_sub2_category','');
+            //     console.log(required_id);
 
-                var my_url="{{url}}/cms/selected_cat/"+required_type+"/"+selected;
+            //     var my_url="{{url}}/cms/sel_cat/"+required_type+"/"+selected;
 
-                    $.ajax({
-                        url:my_url,
-                        type:'GET',
-                        // data:formData,
-                        // dataType:'json',
-                            // contentType: 'application/json', 
-                            headers: {'X-My-App-Token': 'loganstyles'},
-                            success:function(response){
-                                console.log(response);
-                                $(required_id).html('');
-                                $.each(response,function(key,value){
-                                    console.log(value.title);
-                                    console.log(value.value);
-                                    $(required_id).append('<option value="'+value.value+'">'+value.title+'</option>');
+            //         $.ajax({
+            //             url:my_url,
+            //             type:'GET',
+            //                 headers: {'X-My-App-Token': 'loganstyles'},
+            //                 success:function(response){
+            //                     console.log(response);
+            //                     $(required_id).html('');
+            //                     $.each(response,function(key,value){
+            //                         console.log(value.title);
+            //                         console.log(value.value);
+            //                         $(required_id).append('<option value="'+value.value+'">'+value.title+'</option>');
 
-                                });
-                            },
-                            error:function(xhr, status, err){
-                                console.log('error');
-                                console.log(xhr);
-                                console.log(status);
-                                console.log(err);
-                            }
-                        });
+            //                     });
+            //                 },
+            //                 error:function(xhr, status, err){
+            //                     console.log('error');
+            //                     console.log(xhr);
+            //                     console.log(status);
+            //                     console.log(err);
+            //                 }
+            //             });
 
-
-            });
+            // });
 
 
 });

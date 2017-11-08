@@ -102,11 +102,12 @@
                         <!-- END USER LOGIN DROPDOWN -->
                         <!-- BEGIN QUICK SIDEBAR TOGGLER -->
                         <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-<!--                        <li class="dropdown dropdown-quick-sidebar-toggler">
-                            <a href="javascript:;" class="dropdown-toggle">
+                        <li class="dropdown dropdown-quick-sidebar-toggler">
+                            <a href="{{url}}/members/logout" class="dropdown-toggle">
                                 <i class="icon-logout"></i>
+                                Log Out
                             </a>
-                        </li>-->
+                        </li>
                         <!-- END QUICK SIDEBAR TOGGLER -->
                     </ul>
                 </div>
@@ -175,7 +176,7 @@
                         <li class="heading">
                             <h3 class="uppercase"></h3>
                         </li>
-                        <li class="nav-item  active open">
+                        <li class="nav-item  {{#if quest_status}}active open{{/if}}">
                             <a href="javascript:;" class="nav-link nav-toggle">
                                 <i class="fa fa-comments-o"></i>
                                 <span class="title">Questions & Answers</span>
@@ -183,17 +184,17 @@
                                 <span class="arrow"></span>
                             </a>
                             <ul class="sub-menu">
-                                <li class="nav-item  active open">
+                                <li class="nav-item  {{#if quest_cat_status}}active open{{/if}}">
                                     <a href="{{url}}/cms/main/question" class="nav-link ">
                                         <span class="title">Categories</span>
                                     </a>
                                 </li>
-                                <li class="nav-item  ">
+                                <li class="nav-item  {{#if quest_sub1_status}}active open{{/if}}">
                                     <a href="{{url}}/cms/sub1/question" class="nav-link ">
                                         <span class="title">Sub-Categories-1</span>
                                     </a>
                                 </li>
-                                <li class="nav-item ">
+                                <li class="nav-item {{#if quest_sub2_status}}active open{{/if}}">
                                     <a href="{{url}}/cms/sub2/question" class="nav-link ">
                                         <span class="title">Sub-Categories-2</span>
                                     </a>
@@ -202,24 +203,24 @@
                             </ul>
                         </li>
 
-                        <li class="nav-item  ">
+                        <li class="nav-item  {{#if article_status}}active open{{/if}}">
                             <a href="javascript:;" class="nav-link nav-toggle">
                                 <i class="fa fa-edit"></i>
                                 <span class="title">Articles & Reviews</span>
                                 <span class="arrow"></span>
                             </a>
                             <ul class="sub-menu">
-                                <li class="nav-item  ">
+                                <li class="nav-item  {{#if article_cat_status}}active open{{/if}}">
                                     <a href="{{url}}/cms/main/article" class="nav-link ">
                                         <span class="title">Categories</span>
                                     </a>
                                 </li>
-                                <li class="nav-item  ">
+                                <li class="nav-item  {{#if article_sub1_status}}active open{{/if}}">
                                     <a href="{{url}}/cms/sub1/article" class="nav-link ">
                                         <span class="title">Sub-Categories-1</span>
                                     </a>
                                 </li>
-                                <li class="nav-item  ">
+                                <li class="nav-item  {{#if article_sub2_status}}active open{{/if}}">
                                     <a href="{{url}}/cms/sub2/article" class="nav-link ">
                                         <span class="title">Sub-Categories-2</span>
                                     </a>
@@ -228,24 +229,24 @@
                             </ul>
                         </li>
 
-                        <li class="nav-item  ">
+                        <li class="nav-item  {{#if riddle_status}}active open{{/if}}">
                             <a href="javascript:;" class="nav-link nav-toggle">
                                 <i class="fa fa-edit"></i>
                                 <span class="title">Riddles & Solutions</span>
                                 <span class="arrow"></span>
                             </a>
                             <ul class="sub-menu">
-                                <li class="nav-item  ">
+                                <li class="nav-item  {{#if riddle_cat_status}}active open{{/if}}">
                                     <a href="{{url}}/cms/main/riddle" class="nav-link ">
                                         <span class="title">Categories</span>
                                     </a>
                                 </li>
-                                <li class="nav-item  ">
+                                <li class="nav-item  {{#if riddle_sub1_status}}active open{{/if}}">
                                     <a href="{{url}}/cms/sub1/riddle" class="nav-link ">
                                         <span class="title">Sub-Categories-1</span>
                                     </a>
                                 </li>
-                                <li class="nav-item  ">
+                                <li class="nav-item  {{#if riddle_sub2_status}}active open{{/if}}">
                                     <a href="{{url}}/cms/sub2/riddle" class="nav-link ">
                                         <span class="title">Sub-Categories-2</span>
                                     </a>
