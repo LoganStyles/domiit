@@ -6,24 +6,6 @@ var user = require('../models/user');
 var auth = require('../config/auth');
 
 var passport = require('passport'); 
-// var multer = require('multer');
-// var mime = require('mime-lib');
-// var storage =multer.diskStorage({
-//     destination:function(req,file,cb){
-//         cb(null,'../public/uploads')
-
-//     },
-//     filename:function(req,file,cb){
-//         console.log('filename ext '+file.mimetype);
-//         console.log(mime.extension(file.mimetype));
-//         cb(null, Date.now() + '.'+mime.extension(file.mimetype)[0]);
-
-//     }
-// });
-
-
-
-// var uploading = multer({storage:storage}).single('question_photo');
 
 // //Register
 router.post('/register',function(req,res,next){

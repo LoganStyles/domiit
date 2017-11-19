@@ -11,15 +11,23 @@ var session = require('client-sessions');
 var path = require('path');
 var request = require('request');
 var exphbs = require('express-handlebars');
+var Handlebars = require('handlebars');
+var MomentHandler =require("handlebars.moment");
+MomentHandler.registerHelpers(Handlebars);
 var user = require('./models/user');
 var members = require('./routes/members');
 var cms_routes = require('./routes/cms');
 var posts_routes = require('./routes/posts');
 var question = require('./models/question');
+var article = require('./models/article');
 
 var quest_cat = require('./models/question_cats');
 var quest_sub1 = require('./models/question_sub1');
 var quest_sub2 = require('./models/question_sub2');
+
+var art_cat = require('./models/article_cats');
+var art_sub1 = require('./models/article_sub1');
+var art_sub2 = require('./models/article_sub2');
 
 var multer = require('multer');
 var mime = require('mime-lib');
@@ -112,7 +120,9 @@ app.engine('html', exphbs({
             }else{
                 return options.fn(this);
             }
-            // return (arg1==arg2)? options.fn(this):options.inverse(this);
+        },
+        lastIndex:function(array){
+            return array.length - 1;//get last index of an array
         }
         // ,
         // ifArrayLen:function(item,amount,options){
@@ -184,17 +194,23 @@ app.get('/profile', function(req, res) {
 app.get('/dashboard',isLoggedIn, function(req, res) {
     console.log('inside dashboard');
     //get all items
+    let question_status=false,
+    home_status=true;
 
     quest_cat.find().sort({value:1}).exec(function(err,cat_item){
         var res_cat=[],
         res_sub1=[],
-        res_sub2=[];
-      
+        res_sub2=[],
+        res_article_cat=[],
+        res_article_sub1=[],
+        res_article_sub2=[];
+
 
         if(err)console.log(err);
         if(cat_item){
             // console.log(cat_item);
             res_cat=cat_item;
+        }
             var first_cat=(res_cat.length >0)?(res_cat[0].value):(0);
             
 
@@ -205,6 +221,7 @@ app.get('/dashboard',isLoggedIn, function(req, res) {
                     // console.log('sub1 item is')
                     // console.log(sub1_item);
                     res_sub1=sub1_item;
+                }
                     var first_sub1=(res_sub1.length >0)?(res_sub1[0].value):(0);
                     // console.log('first sub1 item: ')
                     // console.log(first_sub1);
@@ -217,22 +234,35 @@ app.get('/dashboard',isLoggedIn, function(req, res) {
                             // console.log('sub2 item: ');
                             // console.log(res_sub2);
                         }
+
+    art_cat.find().sort({value:1}).exec(function(err_art1,cat_art1){
+
+        if(err_art1)console.log(err_art1);
+        if(cat_art1){
+            res_article_cat=cat_art1;
+        }
+            var first_cat=(res_article_cat.length >0)?(res_article_cat[0].value):(0);
+
+            art_sub1.find({'category':first_cat}).sort({value:1}).exec(function(err_art2,cat_art2){
+
                         res.render('dashboard', {
                             title:'Dashboard',
                             url:process.env.URL_ROOT,
                             user_info:req.user,
                             data:res_cat,
                             sub1_data:res_sub1,
-                            sub2_data:res_sub2
+                            sub2_data:res_sub2,
+                            quest_status:question_status,
+                            home_status:home_status
                         });  
 
-                    }); 
-                }
+                    });
 
             });
+
+                    }); 
+            });
             
-        } 
-        
 
     });
     
@@ -242,12 +272,12 @@ app.get('/admin',isLoggedIn, function(req, res) {
     console.log('inside cms');
     // console.log(req.user);
     if(req.user){
-       res.render('cms_dashboard', {
+     res.render('cms_dashboard', {
         title:'CMS',
         url:process.env.URL_ROOT,
         user_info:req.user
     }); 
-   }else{
+ }else{
     res.redirect('/');
 }
 
@@ -297,8 +327,6 @@ app.post('/ask_question',upload.single('question_photo'),function(req,res,next){
     var owner_details={id:req.user._id,displayName:req.user.displayName,displayPic:req.user.displayPic,
         status:req.user.current_appointment};
 
-        // console.log(owner_details)
-
         let ask_quest =new question();
         ask_quest.body=req.body.question_title;
         ask_quest.category = req.body.question_category;
@@ -316,16 +344,99 @@ app.post('/ask_question',upload.single('question_photo'),function(req,res,next){
 
             if(err1){console.log(err1);res.json({success: false,msg:"question submission failed"});
 
-        }else{            
+        }else{   
+        // console.log(ask_quest);         
             var json = JSON.stringify(ask_quest, null, 2);
-            console.log(json);
+            // console.log(json);
             io.emit('all_questions', json);
             io.emit('unanswered_questions', json);
             res.json({success:true,msg:"Question submission succesful"});
         }   
     });
 
-});
+    });
+
+
+/*process answers immediately*/
+app.post('/answer_question',upload.single('section_answer_photo'),function(req,res,next){
+    // console.log(req.user)
+
+    
+    var section_type=req.body.section_answer_type;
+    var section_id=req.body.section_answer_id;
+    switch(section_type){
+        case'question':
+        section = question;
+        break;
+    }
+
+        section.findOne({_id:section_id},function(error,result){//find the question that was answered
+            if(result){
+                let updateSection = result;
+                // console.log('updateSection')
+                // console.log(updateSection)
+                updateSection.answers_len=updateSection.answers_len +1;//incr the no. of ans
+                updateSection.answers.push({
+                    body : req.body.section_answer_details,
+                    responderDisplayName:req.user.displayName,
+                    responder_id:req.user._id,
+                    responderDisplayPic:req.user.displayPic,
+                    responderStatus:req.user.current_appointment
+                }); 
+
+                //store img if exists    
+
+                if (req.file && req.file.filename != null) {
+                    updateSection.answers[updateSection.answers.length - 1].pics.push(req.file.filename);
+                }
+
+                /*update all received info here*/
+                let temp=updateSection.answers[updateSection.answers.length - 1];
+
+                let most_recent_answer={
+                    _id:temp._id,
+                    body : temp.body,
+                    responderDisplayName:temp.responderDisplayName,
+                    responder_id:temp.responder_id,
+                    responderDisplayPic:temp.responderDisplayPic,
+                    responderStatus:temp.responderStatus,
+                    comments:temp.comments,
+                    upvotes:temp.upvotes,
+                    downvotes:temp.downvotes,
+                    views:temp.views,
+                    post_date:temp.post_date,
+                    date_created:temp.date_created,
+                    date_modified:temp.date_modified,
+                    question_id:section_id,
+                    pics:temp.pics
+
+                }
+
+                // console.log(most_recent_answer);
+
+                section.updateOne({_id:section_id},{$set:updateSection},function(err1,res1){
+
+                    if(err1){
+                        console.log(err1)
+                        res.json({success:false,msg:"Your post failed"});
+                    }
+                    if(res1){
+                        // console.log(most_recent_answer);
+                        var json = JSON.stringify(most_recent_answer, null, 2);
+                        // console.log(json);
+                        io.emit('answered', json);
+                        res.json({success:true,msg:"Your post has been received successfully"});
+                    }
+
+                });             
+            }else{
+                res.json({success:false,msg:"Item not found"});
+            }
+
+        });
+
+
+    });
 
 server.listen(process.env.PORT || 3000,function(){
     console.log('Server started on port '+process.env.PORT);

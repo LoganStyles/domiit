@@ -22,35 +22,12 @@
                                     <div class="col-md-3">
                                         <!-- BEGIN PROFILE SIDEBAR -->
                                         <div class="profile-sidebar">
-                                            <!-- PORTLET MAIN -->
-                                            <!-- <div class="portlet light profile-sidebar-portlet "> -->
-
-                                                <!-- SIDEBAR MENU -->
-                                                <!-- <div class="profile-usermenu">
-                                                    <ul class="nav">
-                                                        <li class="active">
-                                                            <a href="#">
-                                                                <i class="fa fa-share-square"></i> My Requests </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i class="fa fa-book"></i> My Docs </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i class="fa fa-bookmark"></i> My Bookmarked Items </a>
-                                                        </li>
-                                                    </ul>
-                                                </div> -->
-                                                <!-- END MENU -->
-                                            <!-- </div> -->
-                                            <!-- END PORTLET MAIN -->
-                                            <!-- PORTLET MAIN -->
-                                            <div class="portlet light ">                                    
+                                            
+                                            <!-- <div class="portlet light ">                                    
                                                 <div>
                                                     <h3 class="profile-desc-title">Advert</h3>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <!-- END PORTLET MAIN -->
                                         </div>
                                         <!-- END BEGIN PROFILE SIDEBAR -->
@@ -63,7 +40,7 @@
                     <div class="task-footer" >
                         <div class=" ">
                             <div class="row">
-                            <h3>All Questions</h3>
+                            <h3>{{page_title}}</h3>
                                 
                             </div>     
                         </div> 
@@ -76,11 +53,14 @@
 
             {{#each data}}
 
-             <div class="portlet light post">
+             <div class="portlet light posted">
+             <input type="hidden" id="post_id" value="{{_id}}">
+             <input type="hidden" id="post_type" value="{{../page_type}}">
+
                     <div class="portlet-title">
                         <div class="caption caption-md">
-                            <i class="fa fa-question"></i>
-                            <span class="caption-subject  bold uppercase" style="color: #86be25">Question</span>
+                            <img alt="" class="" src="{{url}}/images/questions_icon.png">
+                            <span class="caption-subject  bold uppercase" style="color: #86be25">{{../page_type}}</span>
                             {{#if category}}
                             <span class="caption-helper">{{category}}</span>&nbsp;
                             {{/if}}
@@ -95,77 +75,136 @@
                             
                         </div>
 
-                        <div class="actions">
-                            <div class="btn-group">
-                                <span class="item-status" data-toggle="dropdown" style="cursor: pointer;">
-                                    <i class="fa fa-ellipsis-h"></i>
-                                </span>
-                                <ul class="dropdown-menu pull-right">
-                                    <li>
-                                        <a href="javascript:;">
-                                            <i class="fa fa-pencil"></i> Edit </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            <i class="fa fa-trash-o"></i> Delete </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            <i class="fa fa-ban"></i> Share </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;"> Request Answer </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                       
                     </div>
                     <div class="portlet-body">
-                        <div class="scroller" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
+                        <div class="" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
                             <div class="general-item-list">
                                 <div class="item">
                                     <div class="item-head">
-                                        <div class="item-details">
+
+                                    <div style="width: 100%;"><!--main block-->
+                                        <div class="posts_partition"><!--1st partition-->
+                                        <span> 
                                         {{#if owner.displayPic}}
-                                            <img class="item-pic" src="{{url}}/uploads/{{owner.displayPic}}">
-                                        {{/if}}
+                                        <img class="item-pic" src="{{url}}/uploads/{{owner.displayPic}}">
+                                            {{/if}}
 
-                                            <a href="" class="item-name primary-link">{{owner.displayName}}</a>
+                                                <a style="color: #000;" href="" class="item-name primary-link">{{owner.displayName}}</a>
 
-                                        {{#if owner.status}}
-                                            <span>{{owner.status}}</span>
-                                        {{/if}}
-
-                                            <span class="item-label">{{post_date}}</span>
-                                                                                
+                                            {{#if owner.status}}
+                                                <span>{{owner.status}}</span>
+                                            {{/if}}
+                                            </span>
                                         </div>
 
+                                         <div class="posts_partition_middle"><!--2nd partition-->
+                                            <span style="">
+                                                <img src="{{url}}/uploads/add_person.png">
+                                            </span>
+                                        </div>
+                                         <div class="posts_partition"><!--3rd partition-->
+                                            <div style="margin-left: 60%;">
+                                                <div style="color: #ccc;">{{moment post_date "fromNow"}}</div>
+                                                <div style="display: inline-block;margin-right: 20%;">
+                                                    <img src="{{url}}/uploads/group.png">
+                                                </div>
+                                                 <div class="actions" style="display: inline-block;">
+                                                        <div class="btn-group">
+                                                            <span class="item-status" data-toggle="dropdown" style="cursor: pointer;">
+                                                                <i class="fa fa-ellipsis-v"></i>
+                                                            </span>
+                                                            <ul class="dropdown-menu pull-right">
+                                                                <li>
+                                                                    <a href="javascript:;">
+                                                                        <i class="fa fa-pencil"></i> Edit </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="javascript:;">
+                                                                        <i class="fa fa-trash-o"></i> Delete </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="javascript:;">
+                                                                        <i class="fa fa-ban"></i> Share </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="javascript:;"> Request Answer </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                </div>
+                                            </div><!--end float right-->
+                                            <div class="clearfix"></div>
+                                        </div>
+
+                                    <div class="clearfix"></div>
+                                    </div>                                      
+                                        
+
                                     </div>
+
                                     <div class="item-body"> 
                                     {{#if pics.length }}
                                         <div style="margin-bottom: 3%;">                                                                    
-                                            <img class="img-responsive" src="assets/{{pics.[0]}}">
+                                            <img class="img-responsive" src="{{url}}/uploads/{{pics.[0]}}">
                                         </div>
                                     {{/if}}
-                                        <div style="color: #000;">
+                                        <div style="color: #337ab7;" class="post_question">
                                             {{body}}
                                         </div>
                                         
-                                    </div>                                                        
+                                    </div>  
+
+                                        <div style="width: 100%;"><!--main block-->
+                                        
+
+                                            <div class="posts_partition_right"><!--3rd partition-->
+
+                                                <a class="btn btn-link post_likes"  style="color: #000;font-size: 0.8em;">
+                                                <span>
+                                                    <span class="social_value">{{likes}}</span>&nbsp;
+                                                    <i class="fa fa-heart-o"></i>&nbsp;Likes
+                                                </span>
+                                                </a>&nbsp;
+
+                                                <span style="color: #000;font-size: 0.8em;">
+                                                        <span class="social_value">{{answers_len}}</span>&nbsp;
+                                                        <i class="fa fa-comment-o"></i>&nbsp;
+                                                        Answers
+                                                    </span>
+
+                                                <a class="btn btn-link post_shares" style="color: #000;font-size: 0.8em;">
+                                                    <span class="item-label">
+                                                        <span class="social_value">{{shares}}</span>&nbsp;
+                                                        <i class="fa fa-share-alt"></i>&nbsp;
+                                                        Shares                                
+                                                    </span>
+                                                </a>
+
+                                            </div>
+
+                                        <div class="clearfix"></div>
+                                    </div><hr>
+
+
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- END PORTLET -->
-                    <div class="task-footer" style="margin: 2%;">
-                        
-                        <a class="btn btn-circle btn-default" href="javascript:;"><span><i class="fa fa-heart-o"></i><span>&nbsp;{{likes}}</span>&nbsp;Likes</span></a>&nbsp;&nbsp;
-                        <a class="btn btn-circle btn-default" href="javascript:;"><span><i class="fa fa-comment-o"></i><span>&nbsp;{{comments.length}}</span>&nbsp;Comments</span></a>&nbsp;&nbsp;
-                        <a class="btn btn-circle btn-default" href="javascript:;"><span class="item-label"><i class="fa fa-share-alt"></i>{{shares}}&nbsp;Share</span></a>
-                    </div>
+                    <!-- <div class="task-footer" style="margin: 2%;">
+
+                        <a class="btn btn-link post_likes"  style="color: #000;">
+                        <span><i class="fa fa-heart-o"></i>&nbsp;<span class="social_value">{{likes}}</span>&nbsp;Likes</span>
+                        </a>&nbsp;&nbsp;
+
+                        <a class="btn btn-link " style="color: #000;"><span><i class="fa fa-comment-o"></i>&nbsp;<span class="social_value">{{comments.length}}</span>&nbsp;Comments</span></a>&nbsp;&nbsp;
+
+                        <a class="btn btn-link post_shares" style="color: #000;"><span class="item-label"><i class="fa fa-share-alt"></i>&nbsp;<span class="social_value">{{shares}}</span>&nbsp;Shares</span></a>
+                    </div> -->
                     <div class="task-footer" style="margin: 2%;">
                         <div class="btn-arrow-link ">
-                            <button type="button" class="btn dark btn-outline sbold uppercase"><i class="icon-pencil"></i>Write your answer</button>
+                            <a type="button" class="btn dark btn-outline sbold uppercase answer_button"><i class="icon-pencil"></i>Write your answer</a>
                             
                         </div>
 
@@ -372,6 +411,48 @@
 
             <!-- START MODAL PORTLET-->
 
+            <div class="portlet-body form">                                         
+
+                <div id="section_answer_modal" class="modal fade" tabindex="-1">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <h4 class="modal-title" id="section_answer_header">Answer</h4>
+                    </div>
+                    <div class="modal-body">
+                 <form role="form" id="section_answer_form" action="" method="post" enctype="multipart/form-data">
+                        <span class="form_submission_error"></span>
+                        <span class="form_submission_success"></span>
+
+                            <input type="hidden" name="section_answer_id"  id="section_answer_id" >
+                            <input type="hidden" name="section_answer_type"  id="section_answer_type" >
+
+                            <h5 id="section_answer_body">Answer</h5>                           
+
+                            <div class="form-group form-md-line-input form-md-floating-label">
+                                <textarea  name="section_answer_details" id="section_answer_details" class="form-control" rows="3" style="font-weight: 500"></textarea>
+                                <label for="form_control_1">Write your answer</label>
+                            </div>
+                            
+
+                             <div class="form-group">
+                             <label for="section_answer_photo" class="custom-file-upload">
+                                    <i class="fa fa-camera"></i> Add Photo
+                                </label>
+                                <input id="section_answer_photo" type="file" accept="application/x-zip-compressed,image/*"/>
+                                <p class="help-block"> Optional </p>
+                            </div>
+                            <div class="form-actions noborder">
+                                <input type="submit" class="btn blue" name="submit" value="Answer" />
+                                <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+               
+            </div>
+
 
             <!-- END MODAL PORTLET-->
             <!-- END CONTENT -->
@@ -387,12 +468,9 @@
 
         <script type="text/javascript">
 
-        
+            $( document ).ready( function () {
 
-        $( document ).ready( function () {
-
-        
-
+               
 
             });
 

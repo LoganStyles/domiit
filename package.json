@@ -20,6 +20,8 @@
     "express": "*",
     "express-handlebars": "^3.0.0",
     "fs-extra": "^4.0.2",
+    "handlebars": "^4.0.11",
+    "handlebars.moment": "^1.0.4",
     "inbound": "0.0.6",
     "mime-lib": "^0.5.1",
     "moment": "^2.19.1",

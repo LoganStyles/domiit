@@ -140,17 +140,18 @@ router.get('/sub1/:item',isLoggedIn, function(req, res) {
         if(err)console.log(err);
         if(cat_item.length > 0){
             res_cat=cat_item;
-            // console.log(cat_item);
+            console.log(cat_item);
+        }
+
             sub1.find().sort({value:1}).exec(function(err1,sub1_item){
 
                 if(err1)console.log(err1);
                 if(sub1_item.length > 0){
                     console.log(sub1_item);
-                    res_sub1=sub1_item;  
+                    res_sub1=sub1_item;
+                }
 
-
-
-                     res.render('cms_sub1_category', {
+                res.render('cms_sub1_category', {
                         title:item+' Sub Category',
                         url:process.env.URL_ROOT,
                         user_info:req.user,
@@ -165,15 +166,10 @@ router.get('/sub1/:item',isLoggedIn, function(req, res) {
                         riddle_status:riddle_status,
                         riddle_sub1_status:riddle_sub1_status
 
-        });                   
-                }
+                    }); 
 
-            });
-            
-        }
-
-       
-
+            });         
+        
     });
 
 });
@@ -231,9 +227,10 @@ router.get('/sub2/:item',isLoggedIn, function(req, res) {
         if(err)console.log(err);
         if(cat_item){//items were found
             res_cat=cat_item;
+        }
             var first_cat=(res_cat.length >0)?(res_cat[0].value):(0);
 
-            console.log(cat_item);
+            console.log(res_cat);
             console.log(first_cat);
 
             sub1.find({'category':first_cat}).sort({value:1}).exec(function(err1,sub1_item){
@@ -241,6 +238,7 @@ router.get('/sub2/:item',isLoggedIn, function(req, res) {
                 if(err1)console.log(err1);
                 if(sub1_item){
                     res_sub1=sub1_item;
+                }
                     var first_sub1=(res_sub1.length >0)?(res_sub1[0].value):(0);
 
                     sub2.find().sort({value:1}).exec(function(err2,sub2_item){
@@ -267,11 +265,11 @@ router.get('/sub2/:item',isLoggedIn, function(req, res) {
                         }); 
 
                     }); 
-                }
+                
 
             });
             
-        }
+        
 
     });
 

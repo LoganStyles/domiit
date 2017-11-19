@@ -60,25 +60,25 @@
                                         <!-- BEGIN PORTLET -->
                                 <div class="portlet light ">
                                     <div class="portlet-title" style="border-bottom: 0px;">
-                                        <!-- <div class="task-footer" style="margin: 0%;"> -->
-                                            <div class=" ">
-                                                <div class="row">
-                                                    <a style="color: #000;text-decoration: none;" data-toggle="modal" href="" onclick="modalLoader('question','new','');" class="dark btn-outline sbold col-md-3">Ask a question&nbsp;|</a>
+                                        <div class=" ">
+                                            <div class="row">
+                                                <a style="color: #000;text-decoration: none;" data-toggle="modal" onclick="modalLoader('question','new','');" class="dark btn-outline sbold col-md-3">Ask a question&nbsp;|</a>
 
-                                                    <a style="color: #000;text-decoration: none;" data-toggle="modal" href="#" class="  sbold col-md-3">Write an article&nbsp;|</a>
+                                                <a style="color: #000;text-decoration: none;" data-toggle="modal" onclick="modalLoader('article','new','');" class="  sbold col-md-3">Write an article&nbsp;|</a>
 
-                                                    <a style="color: #000;text-decoration: none;"data-toggle="modal" href="#" class="dark btn-outline sbold col-md-3">Post a riddle &nbsp;|</a>
+                                                <a style="color: #000;text-decoration: none;"data-toggle="modal" href="#" class="dark btn-outline sbold col-md-3">Post a riddle &nbsp;|</a>
 
-                                                    <a style="color: #000;text-decoration: none;" data-toggle="modal" href="#" class=" dark btn-outline sbold col-md-3">Post a book</a>
+                                                <a style="color: #000;text-decoration: none;" data-toggle="modal" href="#" class=" dark btn-outline sbold col-md-3">Post a book</a>
+
+                                                 <!-- <button type="button" class="btn btn-link col-md-3">Link</button> -->
 
 
-                                                </div><br>
-                                                <div class="row">
-                                                    
-                                                </div>                                                      
+                                            </div><br>
+                                            <div class="row">
+                                                
+                                            </div>                                                      
 
-                                            </div> 
-                                        <!-- </div>                                       -->
+                                        </div> 
                                     </div>                                                                                  
                                     <div class="clearfix"></div> 
                                 </div>
@@ -429,10 +429,101 @@
                             </div>
 
                              <div class="form-group">
-                                <label for="question_photo">Add Photo</label>
-                                <input type="file" name="question_photo" accept="application/x-zip-compressed,image/*">
+                                <label for="question_photo" class="custom-file-upload">
+                                    <i class="fa fa-camera"></i> Add Photos
+                                </label>
+                                <input id="question_photo" type="file" accept="application/x-zip-compressed,image/*"/>
                                 <p class="help-block"> Optional </p>
                             </div>
+                            <div class="form-actions noborder">
+                                <input type="submit" class="btn blue" name="submit" value="Submit" />
+                                <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+                
+
+                 <div id="article_modal" class="modal fade" tabindex="-1">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <h4 class="modal-title" id="article_sub1_header">Write An Article</h4>
+                    </div>
+                    <div class="modal-body">
+                 <form role="form" id="article_form" action="" method="post" enctype="multipart/form-data">
+                        <span class="form_submission_error"></span>
+                        <span class="form_submission_success"></span>
+
+                            <input type="hidden" name="article_id"  id="article_id" value="0">
+
+                            <div class="form-group form-md-line-input">
+                                <label class="control-label col-md-3">Category </label>
+                                <div class="col-md-9">
+                                    <select class="form-control sel_cat" name="article_category" id="article_category">
+                                    {{#each data}}
+                                        <option value="{{title}}">{{title}}</option>
+                                    {{/each}}   
+                                        
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-md-line-input">
+                                <label class="control-label col-md-3">Sub-Category-1 </label>
+                                <div class="col-md-9">
+                                    <select class="form-control sel_sub1" name="article_sub1" id="article_sub1">
+                                    {{#each sub1_data}}
+                                        <option value="{{title}}">{{title}}</option>
+                                    {{/each}}   
+                                        
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-md-line-input">
+                                <label class="control-label col-md-3">Sub-Category-2 </label>
+                                <div class="col-md-9">
+                                    <select class="form-control" name="article_sub2" id="article_sub2">
+                                    {{#each sub2_data}}
+                                        <option value="{{title}}">{{title}}</option>
+                                    {{/each}}   
+                                        
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-md-line-input form-md-floating-label">
+                                <textarea  name="article_title" id="article_title" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
+                                <label for="form_control_1">Write your article</label>
+                            </div>
+
+                            <div class="form-group form-md-line-input form-md-floating-label">
+                                <textarea name="article_info" id="article_info" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
+                                <label for="form_control_1">Provide additional information</label>
+                                 <p class="help-block"> Optional </p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="article_attachment" class="custom-file-upload">
+                                    <i class="fa fa-camera"></i> Upload Attachment
+                                </label>
+                                <input id="article_attachment" type="file" accept="application/x-zip-compressed,image/*"/>
+                                <p class="help-block"> Optional </p>
+
+                                <label for="article_photo" class="custom-file-upload">
+                                    <i class="fa fa-camera"></i> Add Photo
+                                </label>
+                                <input id="article_photo" type="file" accept="application/x-zip-compressed,image/*"/>
+                                <p class="help-block"> Optional </p>
+                            </div>
+
+                             <!-- <div class="form-group">
+                                <label for="article_photo">Add Photo</label>
+                                <input type="file" name="article_photo" accept="application/x-zip-compressed,image/*">
+                                <p class="help-block"> Optional </p>
+                            </div> -->
                             <div class="form-actions noborder">
                                 <input type="submit" class="btn blue" name="submit" value="Submit" />
                                 <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
@@ -459,15 +550,7 @@
 
         <script type="text/javascript">
 
-        function resetFields(){
-                $('#question_form .form_submission_success').text("");
-                $('#question_form .form_submission_error').text("");
-            }
-
-            // pre-submit callback
-      
-
-
+        
         $( document ).ready( function () {
 
         $( "#question_form" ).validate( {/*validate & submit category details*/

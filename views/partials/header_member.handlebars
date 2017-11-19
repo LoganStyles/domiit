@@ -9,7 +9,7 @@
 
     <head>
         <meta charset="utf-8" />
-        <title>Domiit | Members - {{title}}</title>
+        <title>domiit | Members - {{title}}</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content="" name="description" />
@@ -31,6 +31,7 @@
         <!-- BEGIN THEME GLOBAL STYLES -->
         <link href="{{url}}/assets/global/css/components-md.min.css" rel="stylesheet" id="style_components" type="text/css" />
         <link href="{{url}}/assets/global/css/plugins-md.min.css" rel="stylesheet" type="text/css" />
+        <link href="{{url}}/assets/global/css/styles.css" rel="stylesheet" type="text/css" />
         <!-- END THEME GLOBAL STYLES -->
         <!-- BEGIN THEME LAYOUT STYLES -->        
         <link href="{{url}}/assets/layouts/layout3/css/layout.min.css" rel="stylesheet" type="text/css" />
@@ -60,7 +61,7 @@
                     <!-- BEGIN LOGO -->
                     <div class="page-logo" style="width:120px;">
                         <a href="{{url}}/dashboard">
-                            <img src="{{url}}/assets/img/domiit_black_logo.png" alt="logo" class="logo-default">
+                            <img src="{{url}}/images/domiit_black_logo.png" alt="logo" class="logo-default">
                         </a>
                     </div>
                     <!-- END LOGO -->
@@ -84,10 +85,10 @@
                         <ul class="nav navbar-nav pull-right">
                             <!-- BEGIN NOTIFICATION DROPDOWN -->
                             <li class="dropdown dropdown-extended dropdown-notification dropdown-dark" id="header_notification_bar">
-                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                <!-- <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                     <i class="icon-bell"></i>
                                     <span class="badge badge-default">7</span>
-                                </a>
+                                </a> -->
                                 <!-- <ul class="dropdown-menu">
                                     <li class="external">
                                         <h3>You have
@@ -184,7 +185,7 @@
                             <!-- END NOTIFICATION DROPDOWN -->
                             <!-- BEGIN TODO DROPDOWN -->
                             <li class="dropdown dropdown-extended dropdown-tasks dropdown-dark" id="header_task_bar">
-                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                               <!-- <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                     <i class="icon-calendar"></i>
                                     <span class="badge badge-default">3</span>
                                 </a>
@@ -293,11 +294,11 @@
                             </li>
                             <!-- END TODO DROPDOWN -->
                             <li class="droddown dropdown-separator">
-                                <span class="separator"></span>
+                                <!-- <span class="separator"></span> -->
                             </li>
                             <!-- BEGIN INBOX DROPDOWN -->
                             <li class="dropdown dropdown-extended dropdown-inbox dropdown-dark" id="header_inbox_bar">
-                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                <!--<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                     <span class="circle">3</span>
                                     <span class="corner"></span>
                                 </a>
@@ -408,31 +409,38 @@
                     <!-- DOC: Remove data-hover="dropdown" and data-close-others="true" attributes below to disable the dropdown opening on mouse hover -->
                     <div class="hor-menu  ">
                         <ul class="nav navbar-nav">
-                            <li class="menu-dropdown classic-menu-dropdown active">
-
-                                <a href="{{url}}/dashboard"> <i class="icon-home"></i><span>&nbsp;</span> Home
+                            <li class="menu-dropdown classic-menu-dropdown {{#if home_status}}active{{/if}}">
+                                <a href="{{url}}/dashboard"> 
+                                <div style="margin-left: 30%;"><img alt="" class="" src="{{url}}/images/home.png"></div>
+                                <div style="color:#000;">Home</div>
                                     <span class="arrow"></span>
                                 </a>
                             </li>
-                            <li class="menu-dropdown classic-menu-dropdown  ">
-                            <!-- <img alt="" class="" src="assets/img/avatar.png"> -->
-                                <a href="javascript:;"> <i class="fa fa-comments-o"></i><span>&nbsp;</span>Questions & Answers
+                            <li class="menu-dropdown classic-menu-dropdown  {{#if quest_status}}active{{/if}}">
+                            
+                                <a href="javascript:;">
+                                <div style="margin-left: 30%;">
+                                <img alt="" class="" src="{{url}}/images/questions_icon.png"></div>
+                                <div>Questions & Answers</div>
                                     <span class="arrow"></span>
                                 </a>
                                 <ul class="dropdown-menu pull-left">
                                     <li>
-                                        <a href="{{url}}/posts/question_all"> All </a>
+                                        <a href="{{url}}/posts/section/question/All/0"> All </a>
                                     </li>
                                     <li>
-                                        <a href="#"> Unanswered Questions </a>
+                                        <a href="{{url}}/posts/section/question/Unanswered/0"> Unanswered Questions </a>
                                     </li>
                                     <li>
-                                        <a href="#"> Answered Questions </a>
+                                        <a href="{{url}}/posts/section/question/Answered/0"> Answered Questions </a>
                                     </li>
                                 </ul>
+
                             </li>
                             <li class="menu-dropdown classic-menu-dropdown ">
-                                <a href="javascript:;"><i class="fa fa-edit"></i><span>&nbsp;</span> Articles & Reviews
+                                <a href="javascript:;">
+                                <div style="margin-left: 30%;"><img alt="" class="" src="{{url}}/images/articles_icon.png"></div>
+                                <div> Articles & Reviews</div>
                                     <span class="arrow"></span>
                                 </a>
                                 <ul class="dropdown-menu pull-left">
@@ -449,7 +457,9 @@
                                 </ul>
                             </li>
                             <li class="menu-dropdown classic-menu-dropdown ">
-                                <a href="javascript:;"><i class="fa fa-question"></i><span>&nbsp;</span> Riddles & Solutions
+                                <a href="javascript:;">
+                                <div style="margin-left: 30%;"><img alt="" class="" src="{{url}}/images/riddle_icon.png"></div>
+                                <div> Riddles & Solutions</div>
                                     <span class="arrow"></span>
                                 </a>
                                 <ul class="dropdown-menu pull-left">
@@ -467,12 +477,17 @@
                             </li>
 
                             <li class="menu-dropdown classic-menu-dropdown ">
-                                <a href="javascript:;"><i class="fa fa-book"></i><span>&nbsp;</span> Posted Books
+                                <a href="javascript:;">
+                                <div style="margin-left: 30%;"><img alt="" class="" src="{{url}}/images/books.png"></div>
+                                <div> Posted Books</div>
+
                                     <span class="arrow"></span>
                                 </a>                                
                             </li>
                             <li class="menu-dropdown classic-menu-dropdown ">
-                                <a href="javascript:;"><i class="fa fa-share-square"></i><span>&nbsp;</span> Requests
+                                <a href="javascript:;">
+                                <div style="margin-left: 30%;"><img alt="" class="" src="{{url}}/images/request_icon.png"></div>
+                                <div> Requests</div>
                                     <span class="arrow"></span>
                                 </a>
                                 <ul class="dropdown-menu pull-left">
@@ -489,12 +504,16 @@
                                 </ul>
                             </li>
                             <li class="menu-dropdown classic-menu-dropdown ">
-                                <a href="javascript:;"><i class="fa fa-book"></i><span>&nbsp;</span> Notice Board
+                                <a href="javascript:;">
+                                <div style="margin-left: 30%;"><img alt="" class="" src="{{url}}/images/notice_icon.png"></div>
+                                <div> Notice Board</div>
                                     <span class="arrow"></span>
                                 </a>                                
                             </li>
                             <li class="menu-dropdown classic-menu-dropdown ">
-                                <a href="javascript:;"><i class="fa fa-book"></i><span>&nbsp;</span> User Groups
+                                <a href="javascript:;">
+                                <div style="margin-left: 30%;"><img alt="" class="" src="{{url}}/images/group_icon.png"></div>
+                                <div> User Groups</div>
                                     <span class="arrow"></span>
                                 </a>                                
                             </li>

@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var questionSchema = mongoose.Schema({
+var articleSchema = mongoose.Schema({
 	id:String,
 	body:String,
 	category:String,
@@ -24,7 +24,7 @@ var questionSchema = mongoose.Schema({
 		responderDisplayPic:String,
 		date_created:{type:Date,default:Date.now}
 	}],
-	answers:[{
+	reviews:[{
 		body:String,
 		responderDisplayName:String,
 		responder_id:String,
@@ -58,5 +58,5 @@ var questionSchema = mongoose.Schema({
 
 });
 
-var Quest = mongoose.model('Quest', questionSchema);
-module.exports = Quest;
+var Art = mongoose.model('Art', articleSchema);
+module.exports = Art;

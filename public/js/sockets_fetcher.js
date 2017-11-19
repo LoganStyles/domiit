@@ -7,8 +7,8 @@ var URL_ROOT="https://ancient-falls-19080.herokuapp.com";
 
 // Connect to Socket.io
 socket.connect(URL_ROOT);
-// socket.connect("https://ancient-falls-19080.herokuapp.com");
 // console.log('fetcher is loaded');
+
 socket.on('all_questions',function(json){
 	console.log('inside question posts socket');
 	var oldest_post = $('.posted').first();
@@ -28,7 +28,7 @@ socket.on('all_questions',function(json){
 	//add new post to the DOM
 	function addPost(){
 		//constuct HTML to append
-		$('.question_all_post_area').append($(post_type));//append html
+		$('.question_all_post_area').prepend($(post_type));//append html
 		//fade post in
 		$('.posted').last().animate({opacity:1},fade_speed,function(){
 			//animation is complete
@@ -66,7 +66,7 @@ socket.on('all_questions',function(json){
 		post_type+='</div><div class="actions">';
 		post_type+='<div class="btn-group">';
 		post_type+='<span class="item-status" data-toggle="dropdown" style="cursor: pointer;">';
-		post_type+='<i class="fa fa-ellipsis-h"></i></span>';
+		post_type+='<i class="fa fa-ellipsis-v"></i></span>';
 		post_type+='<ul class="dropdown-menu pull-right">';
 		post_type+='<li><a href="javascript:;"><i class="fa fa-pencil"></i> Edit </a></li>';
 		post_type+='<li><a href="javascript:;"><i class="fa fa-trash-o"></i> Delete </a></li>';
@@ -110,7 +110,62 @@ socket.on('all_questions',function(json){
 
 
 
-socket.on('unanswered_questions',function(json){
+socket.on('answered',function(json){
 
-	console.log('unanswered_questions');
+	console.log('a new answer has been posted');
+	var parsed = JSON.parse(json);
+	var answer_content="";
+	console.log('question_id '+parsed.question_id);
+	//find the right question
+	$('.posts_answers .posted').each(function(key,value){
+		var post_id=$(this).find('#post_id').val();
+		console.log('post_id '+post_id);
+		if(post_id ===parsed.question_id){
+			console.log('found..begining process');
+			// answer_content+='<div class="portlet-body answer_area">';
+			answer_content+='<div class="" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">';
+			answer_content+='<div class="general-item-list">';
+			answer_content+='<div class="item"><div class="item-head"><div style="width: 100%;">';
+			answer_content+='<div class="posts_partition"><!--1st partition-->';
+			answer_content+='<span> <img class="item-pic" src="'+URL_ROOT+'/uploads/'+parsed.responderDisplayPic+'">';
+			answer_content+='<a style="color: #000;" href="" class="item-name primary-link">'+parsed.responderDisplayName+'</a>';
+			answer_content+='<span>'+parsed.responderStatus+'</span> </span></div>';
+			answer_content+='<div class="posts_partition_middle"><!--2nd partition-->';
+			answer_content+='<span style=""><img src="'+URL_ROOT+'/uploads/add_person.png"> </span></div>';
+			answer_content+='<div class="posts_partition"><!--3rd partition-->';
+			answer_content+='<div style="margin-left: 60%;">';
+			answer_content+='<div style="color: #ccc;">'+moment(parsed.post_date).fromNow()+'</div>';
+			answer_content+='<div style="display: inline-block;margin-right: 20%;">';
+			answer_content+='<img src="'+URL_ROOT+'/uploads/group.png"></div>';
+			answer_content+='<div class="actions" style="display: inline-block;"><div class="btn-group">';
+			answer_content+='<span class="item-status" data-toggle="dropdown" style="cursor: pointer;">';
+			answer_content+='<i class="fa fa-ellipsis-v"></i></span>';
+			answer_content+='<ul class="dropdown-menu pull-right"><li>';
+			answer_content+=' <a href="javascript:;"><i class="fa fa-pencil"></i> Edit </a></li>';
+			answer_content+='<li><a href="javascript:;"><i class="fa fa-trash-o"></i> Delete </a></li>';
+			answer_content+='<li><a href="javascript:;"><i class="fa fa-ban"></i> Share </a></li>';
+			answer_content+='<li><a href="javascript:;"> Request Answer </a></li></ul></div></div></div><!--end float right-->';
+			answer_content+='<div class="clearfix"></div></div><div class="clearfix"></div></div></div>';
+			answer_content+='<div class="item-body">';
+			if(parsed.pics.length >0){
+				answer_content+='<div style="margin-bottom: 3%;">';
+				answer_content+='<img class="img-responsive" src="'+URL_ROOT+'/uploads/'+parsed.pics[0]+'"></div>';
+			}
+
+			answer_content+='<div style="color: #000;" class="post_answer">'+parsed.body+'</div></div>';
+			answer_content+='<div style="width: 100%;"><!--main block-->';
+			answer_content+='<div class="posts_partition_right"><!--3rd partition-->';
+			answer_content+='<a class="btn btn-link " style="color: #000;font-size: 0.8em;">';
+			answer_content+='<span>';
+			answer_content+='<span class="social_value">'+parsed.views+'</span>&nbsp;&nbsp;Views</span></a>&nbsp;|';
+			answer_content+='<a class="btn btn-link post_shares" style="color: #000;font-size: 0.8em;color: orange">About this post</a></div>';
+			answer_content+='<div class="clearfix"></div></div><hr></div></div></div>';
+			var answer_area=$(this).find('.answer_area');
+			console.log('answer_area '+answer_area)
+			// $(answer_area).html("");
+			$(answer_area).html(answer_content);
+
+			return false;
+		}
+	})
 });
