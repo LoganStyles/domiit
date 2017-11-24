@@ -8,6 +8,7 @@ var articleSchema = mongoose.Schema({
 	sub_cat2:{type:String,default:''},
 	description:{type:String,default:''},
 	pics:[String],
+	attachment:[String],
 	date_created: { type: Date, default: Date.now },
 	date_modified: { type: Date, default: Date.now },
 	post_date: { type: Date, default: Date.now },

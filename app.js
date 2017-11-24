@@ -190,82 +190,99 @@ app.get('/profile', function(req, res) {
 });
 
 
-/*fetch question cats & sub cats*/
+/*fetch question,articles cats & sub cats*/
 app.get('/dashboard',isLoggedIn, function(req, res) {
-    console.log('inside dashboard');
-    //get all items
+    console.log('inside dashboard');   
     let question_status=false,
+    article_status=false,
     home_status=true;
 
-    quest_cat.find().sort({value:1}).exec(function(err,cat_item){
-        var res_cat=[],
-        res_sub1=[],
-        res_sub2=[],
+    //get all items
+    quest_cat.find().sort({value:1}).exec(function(err_quest,cat_quest){
+        var res_quest_cat=[],
+        res_quest_sub1=[],
+        res_quest_sub2=[],
         res_article_cat=[],
         res_article_sub1=[],
         res_article_sub2=[];
 
 
-        if(err)console.log(err);
-        if(cat_item){
+        if(err_quest)console.log(err_quest);
+        if(cat_quest){
             // console.log(cat_item);
-            res_cat=cat_item;
+            res_quest_cat=cat_quest;
         }
-            var first_cat=(res_cat.length >0)?(res_cat[0].value):(0);
-            
+        var first_cat=(res_quest_cat.length >0)?(res_quest_cat[0].value):(0);
 
-            quest_sub1.find({'category':first_cat}).sort({value:1}).exec(function(err1,sub1_item){
 
-                if(err1)console.log(err1);
-                if(sub1_item){
-                    // console.log('sub1 item is')
-                    // console.log(sub1_item);
-                    res_sub1=sub1_item;
+        quest_sub1.find({'category':first_cat}).sort({value:1}).exec(function(err1_quest,sub1_quest){
+
+            if(err1_quest)console.log(err1_quest);
+            if(sub1_quest){
+                res_quest_sub1=sub1_quest;
+            }
+            var first_sub1=(res_quest_sub1.length >0)?(res_quest_sub1[0].value):(0);
+
+            quest_sub2.find({'sub1':first_sub1}).sort({value:1}).exec(function(err2_quest,sub2_quest){
+
+                if(err2_quest)console.log(err2_quest);
+                if(sub2_quest){
+                    res_quest_sub2=sub2_quest; 
                 }
-                    var first_sub1=(res_sub1.length >0)?(res_sub1[0].value):(0);
-                    // console.log('first sub1 item: ')
-                    // console.log(first_sub1);
 
-                    quest_sub2.find({'sub1':first_sub1}).sort({value:1}).exec(function(err2,sub2_item){
+                art_cat.find().sort({value:1}).exec(function(err_art,cat_art){
 
-                        if(err2)console.log(err2);
-                        if(sub2_item){
-                            res_sub2=sub2_item; 
-                            // console.log('sub2 item: ');
-                            // console.log(res_sub2);
+                    if(err_art)console.log(err_art);
+                    if(cat_art){
+                        res_article_cat=cat_art;
+                    }
+                    var first_cat=(res_article_cat.length >0)?(res_article_cat[0].value):(0);
+
+                    art_sub1.find({'category':first_cat}).sort({value:1}).exec(function(err1_art,sub1_art){
+
+                        if(err1_art)console.log(err1_art);
+                        if(sub1_art){
+                            res_article_sub1=sub1_art;
                         }
+                        var first_sub1=(res_article_sub1.length >0)?(res_article_sub1[0].value):(0);
 
-    art_cat.find().sort({value:1}).exec(function(err_art1,cat_art1){
+                        art_sub2.find({'sub1':first_sub1}).sort({value:1}).exec(function(err2_art,sub2_art){
 
-        if(err_art1)console.log(err_art1);
-        if(cat_art1){
-            res_article_cat=cat_art1;
-        }
-            var first_cat=(res_article_cat.length >0)?(res_article_cat[0].value):(0);
+                            if(err2_art)console.log(err2_art);
+                            if(sub2_art){
+                                res_article_sub2=sub2_art; 
+                            }
 
-            art_sub1.find({'category':first_cat}).sort({value:1}).exec(function(err_art2,cat_art2){
+                            res.render('dashboard', {
+                                title:'Dashboard',
+                                url:process.env.URL_ROOT,
+                                user_info:req.user,
 
-                        res.render('dashboard', {
-                            title:'Dashboard',
-                            url:process.env.URL_ROOT,
-                            user_info:req.user,
-                            data:res_cat,
-                            sub1_data:res_sub1,
-                            sub2_data:res_sub2,
-                            quest_status:question_status,
-                            home_status:home_status
-                        });  
+                                data_quest:res_quest_cat,
+                                sub1_data_quest:res_quest_sub1,
+                                sub2_data_quest:res_quest_sub2,
+
+                                data_art:res_article_cat,
+                                sub1_data_art:res_article_sub1,
+                                sub2_data_art:res_article_sub2,
+
+                                quest_status:question_status,
+                                art_status:article_status,
+                                home_status:home_status
+                            });  
+
+                        });
 
                     });
 
-            });
-
-                    }); 
+                }); //end article
             });
             
 
+        });
+
     });
-    
+
 });
 
 app.get('/admin',isLoggedIn, function(req, res) {

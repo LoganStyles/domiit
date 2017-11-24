@@ -4,526 +4,490 @@
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
 <!--[if !IE]><!-->
 <html lang="en">
-    <!--<![endif]-->
-    <!-- BEGIN HEAD -->
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
 
-    <head>
-        <meta charset="utf-8" />
-        <title>domiit | Members - {{title}}</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta content="width=device-width, initial-scale=1" name="viewport" />
-        <meta content="" name="description" />
-        <meta content="" name="author" />
-        <!-- BEGIN GLOBAL MANDATORY STYLES -->        
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
-        <link href="{{url}}/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-        <link href="{{url}}/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
-        <link href="{{url}}/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="{{url}}/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
-        <!-- END GLOBAL MANDATORY STYLES -->
-        <!-- BEGIN PAGE LEVEL PLUGINS -->
-        <!--<link href="../assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />-->
-        <link href="{{url}}/assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
-        <link href="{{url}}/assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css" rel="stylesheet" type="text/css" />
-        <link href="{{url}}/assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" type="text/css" />
-        <link href="{{url}}/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
-        <!-- END PAGE LEVEL PLUGINS -->
-        <!-- BEGIN THEME GLOBAL STYLES -->
-        <link href="{{url}}/assets/global/css/components-md.min.css" rel="stylesheet" id="style_components" type="text/css" />
-        <link href="{{url}}/assets/global/css/plugins-md.min.css" rel="stylesheet" type="text/css" />
-        <link href="{{url}}/assets/global/css/styles.css" rel="stylesheet" type="text/css" />
-        <!-- END THEME GLOBAL STYLES -->
-        <!-- BEGIN THEME LAYOUT STYLES -->        
-        <link href="{{url}}/assets/layouts/layout3/css/layout.min.css" rel="stylesheet" type="text/css" />
-        <link href="{{url}}/assets/layouts/layout3/css/themes/default.min.css" rel="stylesheet" type="text/css" id="style_color" />
-        <link href="{{url}}/assets/layouts/layout3/css/custom.min.css" rel="stylesheet" type="text/css" />
-        <!-- END THEME LAYOUT STYLES -->
-        <link rel="shortcut icon" href="{{url}}/assets/pages/img/favicon.ico'" /> 
-            <style type="text/css">
-                    /*form submission*/
-            .form_submission_error{
-                color:#f00;    
-            }
+<head>
+    <meta charset="utf-8" />
+    <title>domiit | Members - {{title}}</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->        
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link href="{{url}}/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{url}}/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{url}}/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{url}}/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <!--<link href="../assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />-->
+    <link href="{{url}}/assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
+    <link href="{{url}}/assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css" rel="stylesheet" type="text/css" />
+    <link href="{{url}}/assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" type="text/css" />
+    <link href="{{url}}/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN THEME GLOBAL STYLES -->
+    <link href="{{url}}/assets/global/css/components-md.min.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="{{url}}/assets/global/css/plugins-md.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{url}}/assets/global/css/styles.css" rel="stylesheet" type="text/css" />
+    <!-- END THEME GLOBAL STYLES -->
+    <!-- BEGIN THEME LAYOUT STYLES -->        
+    <link href="{{url}}/assets/layouts/layout3/css/layout.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{url}}/assets/layouts/layout3/css/themes/default.min.css" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="{{url}}/assets/layouts/layout3/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <!-- END THEME LAYOUT STYLES -->
+    <link rel="shortcut icon" href="{{url}}/assets/pages/img/favicon.ico'" /> 
+    <style type="text/css">
+        /*form submission*/
+        .form_submission_error{
+            color:#f00;    
+        }
 
-            .form_submission_success{
-                color:#26C281;    
-            }
-                </style>
-        </head>
-    <!-- END HEAD -->
+        .form_submission_success{
+            color:#26C281;    
+        }
+    </style>
+</head>
+<!-- END HEAD -->
 
-    <body class="page-container-bg-solid page-md">
-        <!-- BEGIN HEADER -->
-        <div class="page-header">
-            <!-- BEGIN HEADER TOP -->
-            <div class="page-header-top" style="background-color: #000;">
-                <div class="container">
-                    <!-- BEGIN LOGO -->
-                    <div class="page-logo" style="width:120px;">
-                        <a href="{{url}}/dashboard">
-                            <img src="{{url}}/images/domiit_logo2.png" alt="logo" class="logo-default">
-                        </a>
-                    </div>
-                    <!-- END LOGO -->
+<body class="page-container-bg-solid page-md">
+    <!-- BEGIN HEADER -->
+    <div class="page-header">
+        <!-- BEGIN HEADER TOP -->
+        <div class="page-header-top" style="background-color: #000;">
+            <div class="container" style="padding-top: 2%;">
+                <!-- BEGIN LOGO -->
+                <div class="col-md-2">
+                    <a href="{{url}}/dashboard">
+                        <img src="{{url}}/images/domiit_logo_150.png" alt="logo" class="logo-default">
+                    </a>
+                </div>
+                <!-- END LOGO -->
+                <div class="col-md-4">
                     <!-- BEGIN HEADER SEARCH BOX -->
-                    <form class="search-form col-md-5" action="#" method="GET" style="margin-top: 2%;">
+                    <form class="search-form" action="#" method="GET">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search" name="query">
                             <span class="input-group-btn">
-                                <a href="javascript:;" class="btn submit">
+                                <a href="javascript:;" class="btn submit" style="background: #86be25;color: #fff;">
                                     <i class="icon-magnifier"></i>
                                 </a>
                             </span>
                         </div>
                     </form>
                     <!-- END HEADER SEARCH BOX -->
-                    <!-- BEGIN RESPONSIVE MENU TOGGLER -->
-                    <a href="javascript:;" class="menu-toggler"></a>
-                    <!-- END RESPONSIVE MENU TOGGLER -->
-                    <!-- BEGIN TOP NAVIGATION MENU -->
-                    <div class="top-menu">
-                        <ul class="nav navbar-nav pull-right">
-                            <!-- BEGIN NOTIFICATION DROPDOWN -->
-                            <li class="dropdown dropdown-extended dropdown-notification dropdown-dark" id="header_notification_bar">
-                                <!-- <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                    <i class="icon-bell"></i>
-                                    <span class="badge badge-default">7</span>
-                                </a> -->
-                                <!-- <ul class="dropdown-menu">
-                                    <li class="external">
-                                        <h3>You have
-                                            <strong>12 pending</strong> tasks</h3>
-                                        <a href="app_todo.html">view all</a>
+                </div>
+                <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+                <a href="javascript:;" class="menu-toggler"></a>
+                <!-- END RESPONSIVE MENU TOGGLER -->
+                <!-- BEGIN TOP NAVIGATION MENU -->
+                <div class="top-menu col-md-6">
+                    <ul class="nav navbar-nav pull-right">
+                        <!-- BEGIN NOTIFICATION DROPDOWN -->
+                        <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+                        <li class="dropdown dropdown-extended dropdown-notification dropdown-dark" id="header_notification_bar">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                               
+                                <span><img alt="" class="" src="{{url}}/images/advert.png"></span>
+                                    <span class="badge badge-default " style="right: -5px;">7</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                            <li class="external">
+                                        <h3>Adverts
+                                            <strong>(10)</strong> </h3>
+                                        <a href="#">view all</a>
                                     </li>
-                                    <li>
-                                        <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
+                               
+                                <li>
+                                    <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
+                                       
+                                        <li>
+                                            <a href="javascript:;">
+                                                <span class="time">just now</span>
+                                                <span class="details">
+                                                    <span class="label label-sm label-icon label-success">
+                                                        <i class="fa fa-plus"></i>
+                                                    </span> My iphone launch </span>
+                                            </a>
+                                            </li>
+                                             <li>
+                                                <a href="javascript:;">
+                                                    <span class="time">2 mins ago</span>
+                                                    <span class="details">
+                                                        <span class="label label-sm label-icon label-success">
+                                                            <i class="fa fa-plus"></i>
+                                                        </span> Brand new shirts </span>
+                                                </a>
+                                            </li>
                                             <li>
+                                                <a href="javascript:;">
+                                                    <span class="time">1 hour ago</span>
+                                                    <span class="details">
+                                                        <span class="label label-sm label-icon label-success">
+                                                            <i class="fa fa-plus"></i>
+                                                        </span> Buy a house this december </span>
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown dropdown-extended dropdown-notification dropdown-dark" id="header_category_bar">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                               
+                                <span><img alt="" class="" src="{{url}}/images/categories.png"></span>
+                                    <span class="badge badge-default " style="right: -5px;">12</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                            <li class="external">
+                                        <h3>Categories
+                                            <strong>(12)</strong> </h3>
+                                        <a href="#">view all</a>
+                                    </li>
+                               
+                                <li>
+                                    <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
+                                       
+                                        <li>
+                                            <a href="javascript:;">
+                                                <span class="time">just now</span>
+                                                <span class="details">
+                                                    <span class="label label-sm label-icon label-success">
+                                                        <i class="fa fa-plus"></i>
+                                                    </span> My iphone launch </span>
+                                            </a>
+                                            </li>
+                                             <li>
+                                                <a href="javascript:;">
+                                                    <span class="time">2 mins ago</span>
+                                                    <span class="details">
+                                                        <span class="label label-sm label-icon label-success">
+                                                            <i class="fa fa-plus"></i>
+                                                        </span> Brand new shirts </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:;">
+                                                    <span class="time">1 hour ago</span>
+                                                    <span class="details">
+                                                        <span class="label label-sm label-icon label-success">
+                                                            <i class="fa fa-plus"></i>
+                                                        </span> Buy a house this december </span>
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- END NOTIFICATION DROPDOWN -->
+                        <!-- BEGIN INBOX DROPDOWN -->
+                        <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+                        <li class="dropdown dropdown-extended dropdown-inbox dropdown-dark" id="header_inbox_bar" >
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                <span><img alt="" class="" src="{{url}}/images/messages.png"></span>
+                                    <span class="badge badge-default " style="right: -5px;">23</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="external">
+                                    <h3>Messages
+                                        <span class="bold">(23)</span></h3>
+                                    <a href="#">view all</a>
+                                </li>
+                                <li>
+                                    <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
+                                       
+                                        <li>
+                                            <a href="javascript:;">
+                                                <span class="time">just now</span>
+                                                <span class="details">
+                                                    <span class="label label-sm label-icon label-success">
+                                                        <i class="fa fa-plus"></i>
+                                                    </span> My iphone launch </span>
+                                            </a>
+                                            </li>
+                                             <li>
+                                                <a href="javascript:;">
+                                                    <span class="time">2 mins ago</span>
+                                                    <span class="details">
+                                                        <span class="label label-sm label-icon label-success">
+                                                            <i class="fa fa-plus"></i>
+                                                        </span> Brand new shirts </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:;">
+                                                    <span class="time">1 hour ago</span>
+                                                    <span class="details">
+                                                        <span class="label label-sm label-icon label-success">
+                                                            <i class="fa fa-plus"></i>
+                                                        </span> Buy a house this december </span>
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown dropdown-extended dropdown-inbox dropdown-dark" id="header_notification_bar">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                <span><img alt="" class="" src="{{url}}/images/notification.png"></span>
+                                    <span class="badge badge-default " style="right: -5px;">23</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="external">
+                                    <h3>Notifications
+                                        <span class="bold">(23)</span></h3>
+                                    <a href="#">view all</a>
+                                </li>
+                                <li>
+                                    <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
+                                        <li>
                                                 <a href="javascript:;">
                                                     <span class="time">just now</span>
                                                     <span class="details">
                                                         <span class="label label-sm label-icon label-success">
                                                             <i class="fa fa-plus"></i>
-                                                        </span> New user registered. </span>
+                                                        </span> My iphone launch </span>
                                                 </a>
                                             </li>
                                             <li>
                                                 <a href="javascript:;">
-                                                    <span class="time">3 mins</span>
+                                                    <span class="time">2 mins ago</span>
                                                     <span class="details">
-                                                        <span class="label label-sm label-icon label-danger">
-                                                            <i class="fa fa-bolt"></i>
-                                                        </span> Server #12 overloaded. </span>
+                                                        <span class="label label-sm label-icon label-success">
+                                                            <i class="fa fa-plus"></i>
+                                                        </span> Brand new shirts </span>
                                                 </a>
                                             </li>
                                             <li>
                                                 <a href="javascript:;">
-                                                    <span class="time">10 mins</span>
+                                                    <span class="time">1 hour ago</span>
                                                     <span class="details">
-                                                        <span class="label label-sm label-icon label-warning">
-                                                            <i class="fa fa-bell-o"></i>
-                                                        </span> Server #2 not responding. </span>
+                                                        <span class="label label-sm label-icon label-success">
+                                                            <i class="fa fa-plus"></i>
+                                                        </span> Buy a house this december </span>
                                                 </a>
                                             </li>
-                                            <li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown dropdown-extended dropdown-inbox dropdown-dark" id="header_friends_bar">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                <span><img alt="" class="" src="{{url}}/images/friends.png"></span>
+                                    <span class="badge badge-default " style="right: -5px;">3</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="external">
+                                    <h3>Friends
+                                        <span class="bold">(3)</span></h3>
+                                    <a href="#">view all</a>
+                                </li>
+                                <li>
+                                    <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
+                                        <li>
                                                 <a href="javascript:;">
-                                                    <span class="time">14 hrs</span>
+                                                    <span class="time">just now</span>
                                                     <span class="details">
-                                                        <span class="label label-sm label-icon label-info">
-                                                            <i class="fa fa-bullhorn"></i>
-                                                        </span> Application error. </span>
+                                                        <span class="label label-sm label-icon label-success">
+                                                            <i class="fa fa-plus"></i>
+                                                        </span> My iphone launch </span>
                                                 </a>
                                             </li>
                                             <li>
                                                 <a href="javascript:;">
-                                                    <span class="time">2 days</span>
+                                                    <span class="time">2 mins ago</span>
                                                     <span class="details">
-                                                        <span class="label label-sm label-icon label-danger">
-                                                            <i class="fa fa-bolt"></i>
-                                                        </span> Database overloaded 68%. </span>
+                                                        <span class="label label-sm label-icon label-success">
+                                                            <i class="fa fa-plus"></i>
+                                                        </span> Brand new shirts </span>
                                                 </a>
                                             </li>
                                             <li>
                                                 <a href="javascript:;">
-                                                    <span class="time">3 days</span>
+                                                    <span class="time">1 hour ago</span>
                                                     <span class="details">
-                                                        <span class="label label-sm label-icon label-danger">
-                                                            <i class="fa fa-bolt"></i>
-                                                        </span> A user IP blocked. </span>
+                                                        <span class="label label-sm label-icon label-success">
+                                                            <i class="fa fa-plus"></i>
+                                                        </span> Buy a house this december </span>
                                                 </a>
                                             </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="time">4 days</span>
-                                                    <span class="details">
-                                                        <span class="label label-sm label-icon label-warning">
-                                                            <i class="fa fa-bell-o"></i>
-                                                        </span> Storage Server #4 not responding dfdfdfd. </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="time">5 days</span>
-                                                    <span class="details">
-                                                        <span class="label label-sm label-icon label-info">
-                                                            <i class="fa fa-bullhorn"></i>
-                                                        </span> System Error. </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="time">9 days</span>
-                                                    <span class="details">
-                                                        <span class="label label-sm label-icon label-danger">
-                                                            <i class="fa fa-bolt"></i>
-                                                        </span> Storage server failed. </span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul> -->
-                            </li>
-                            <!-- END NOTIFICATION DROPDOWN -->
-                            <!-- BEGIN TODO DROPDOWN -->
-                            <li class="dropdown dropdown-extended dropdown-tasks dropdown-dark" id="header_task_bar">
-                               <!-- <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                    <i class="icon-calendar"></i>
-                                    <span class="badge badge-default">3</span>
-                                </a>
-                                <!-- <ul class="dropdown-menu extended tasks">
-                                    <li class="external">
-                                        <h3>You have
-                                            <strong>12 pending</strong> tasks</h3>
-                                        <a href="app_todo_2.html">view all</a>
-                                    </li>
-                                    <li>
-                                        <ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="task">
-                                                        <span class="desc">New release v1.2 </span>
-                                                        <span class="percent">30%</span>
-                                                    </span>
-                                                    <span class="progress">
-                                                        <span style="width: 40%;" class="progress-bar progress-bar-success" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">40% Complete</span>
-                                                        </span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="task">
-                                                        <span class="desc">Application deployment</span>
-                                                        <span class="percent">65%</span>
-                                                    </span>
-                                                    <span class="progress">
-                                                        <span style="width: 65%;" class="progress-bar progress-bar-danger" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">65% Complete</span>
-                                                        </span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="task">
-                                                        <span class="desc">Mobile app release</span>
-                                                        <span class="percent">98%</span>
-                                                    </span>
-                                                    <span class="progress">
-                                                        <span style="width: 98%;" class="progress-bar progress-bar-success" aria-valuenow="98" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">98% Complete</span>
-                                                        </span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="task">
-                                                        <span class="desc">Database migration</span>
-                                                        <span class="percent">10%</span>
-                                                    </span>
-                                                    <span class="progress">
-                                                        <span style="width: 10%;" class="progress-bar progress-bar-warning" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">10% Complete</span>
-                                                        </span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="task">
-                                                        <span class="desc">Web server upgrade</span>
-                                                        <span class="percent">58%</span>
-                                                    </span>
-                                                    <span class="progress">
-                                                        <span style="width: 58%;" class="progress-bar progress-bar-info" aria-valuenow="58" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">58% Complete</span>
-                                                        </span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="task">
-                                                        <span class="desc">Mobile development</span>
-                                                        <span class="percent">85%</span>
-                                                    </span>
-                                                    <span class="progress">
-                                                        <span style="width: 85%;" class="progress-bar progress-bar-success" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">85% Complete</span>
-                                                        </span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="task">
-                                                        <span class="desc">New UI release</span>
-                                                        <span class="percent">38%</span>
-                                                    </span>
-                                                    <span class="progress progress-striped">
-                                                        <span style="width: 38%;" class="progress-bar progress-bar-important" aria-valuenow="18" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">38% Complete</span>
-                                                        </span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul> -->
-                            </li>
-                            <!-- END TODO DROPDOWN -->
-                            <li class="droddown dropdown-separator">
-                                <!-- <span class="separator"></span> -->
-                            </li>
-                            <!-- BEGIN INBOX DROPDOWN -->
-                            <li class="dropdown dropdown-extended dropdown-inbox dropdown-dark" id="header_inbox_bar">
-                                <!--<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                    <span class="circle">3</span>
-                                    <span class="corner"></span>
-                                </a>
-                                <!-- <ul class="dropdown-menu">
-                                    <li class="external">
-                                        <h3>You have
-                                            <strong>7 New</strong> Messages</h3>
-                                        <a href="app_inbox.html">view all</a>
-                                    </li>
-                                    <li>
-                                        <ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
-                                            <li>
-                                                <a href="#">
-                                                    <span class="photo">
-                                                        <img src="../assets/layouts/layout3/img/avatar2.jpg" class="img-circle" alt=""> </span>
-                                                    <span class="subject">
-                                                        <span class="from"> Lisa Wong </span>
-                                                        <span class="time">Just Now </span>
-                                                    </span>
-                                                    <span class="message"> Vivamus sed auctor nibh congue nibh. auctor nibh auctor nibh... </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <span class="photo">
-                                                        <img src="../assets/layouts/layout3/img/avatar3.jpg" class="img-circle" alt=""> </span>
-                                                    <span class="subject">
-                                                        <span class="from"> Richard Doe </span>
-                                                        <span class="time">16 mins </span>
-                                                    </span>
-                                                    <span class="message"> Vivamus sed congue nibh auctor nibh congue nibh. auctor nibh auctor nibh... </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <span class="photo">
-                                                        <img src="../assets/layouts/layout3/img/avatar1.jpg" class="img-circle" alt=""> </span>
-                                                    <span class="subject">
-                                                        <span class="from"> Bob Nilson </span>
-                                                        <span class="time">2 hrs </span>
-                                                    </span>
-                                                    <span class="message"> Vivamus sed nibh auctor nibh congue nibh. auctor nibh auctor nibh... </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <span class="photo">
-                                                        <img src="../assets/layouts/layout3/img/avatar2.jpg" class="img-circle" alt=""> </span>
-                                                    <span class="subject">
-                                                        <span class="from"> Lisa Wong </span>
-                                                        <span class="time">40 mins </span>
-                                                    </span>
-                                                    <span class="message"> Vivamus sed auctor 40% nibh congue nibh... </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <span class="photo">
-                                                        <img src="../assets/layouts/layout3/img/avatar3.jpg" class="img-circle" alt=""> </span>
-                                                    <span class="subject">
-                                                        <span class="from"> Richard Doe </span>
-                                                        <span class="time">46 mins </span>
-                                                    </span>
-                                                    <span class="message"> Vivamus sed congue nibh auctor nibh congue nibh. auctor nibh auctor nibh... </span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul> -->
-                            </li>
-                            <!-- END INBOX DROPDOWN -->
-                            <!-- BEGIN USER LOGIN DROPDOWN -->
-                            <li class="dropdown dropdown-user dropdown-dark">
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- END INBOX DROPDOWN -->
+                        <!-- BEGIN TODO DROPDOWN -->
+                        <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+                       
+                        <!-- END TODO DROPDOWN -->
+                        <!-- BEGIN USER LOGIN DROPDOWN -->
+                        <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+                        <li class="dropdown dropdown-extended dropdown-notification dropdown-dark" id="header_profile">
+                        
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                    <img alt="" class="img-circle" src="{{url}}/assets/img/avatar.png">
-                                    <span class="username username-hide-mobile">User</span>
+
+                                 <span><img alt="" class="" src="{{url}}/images/user_profile.png"></span>
+                                    <span class="username username-hide-mobile">michael olu ade</span>
                                 </a>
-                                <ul class="dropdown-menu dropdown-menu-default">
+                                <ul class="dropdown-menu">
+                                    
                                     <li>
-                                        <a href="{{url}}/profile">
-                                            <i class="icon-user"></i> My Profile </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{url}}/members/logout">
-                                            <i class="icon-key"></i> Log Out </a>
+                                        <ul class="dropdown-menu-list " style="height: 110px;" data-handle-color="#637283">
+                                            <li>
+                                            <a href="{{url}}/profile">
+                                                <i class="icon-user"></i> My Profile </a>
+                                        </li>
+                                            <li>
+                                            <a href="{{url}}/members/logout">
+                                                <i class="icon-key"></i> Log Out </a>
+                                        </li>
+                                            
+                                            
+                                        </ul>
                                     </li>
                                 </ul>
                             </li>
-                            <!-- END USER LOGIN DROPDOWN -->
-                            <!-- BEGIN QUICK SIDEBAR TOGGLER -->
-                            <li class="dropdown dropdown-extended quick-sidebar-toggler">
-                                <span class="sr-only">&nbsp;&nbsp;&nbsp;</span>
-                                <!--<i class="icon-logout"></i>-->
-                            </li>
-                            <!-- END QUICK SIDEBAR TOGGLER -->
-                        </ul>
-                    </div>
-                    <!-- END TOP NAVIGATION MENU -->
+                        <!-- END USER LOGIN DROPDOWN -->                       
+                    </ul>
                 </div>
+
+
+                            <!-- END TOP NAVIGATION MENU -->
             </div>
-            <!-- END HEADER TOP -->
-            <!-- BEGIN HEADER MENU -->
-            <div class="page-header-menu" style="background-color: #fff;">
-                <div class="container">
-                    
-                    <!-- BEGIN MEGA MENU -->
-                    <!-- DOC: Apply "hor-menu-light" class after the "hor-menu" class below to have a horizontal menu with white background -->
-                    <!-- DOC: Remove data-hover="dropdown" and data-close-others="true" attributes below to disable the dropdown opening on mouse hover -->
-                    <div class="hor-menu  ">
-                        <ul class="nav navbar-nav">
-                            <li class="menu-dropdown classic-menu-dropdown {{#if home_status}}active{{/if}}">
-                                <a href="{{url}}/dashboard"> 
+        </div>
+                    <!-- END HEADER TOP -->
+                    <!-- BEGIN HEADER MENU -->
+        <div class="page-header-menu" style="background-color: #fff;">
+            <div class="container">
+
+                <!-- BEGIN MEGA MENU -->
+                <!-- DOC: Apply "hor-menu-light" class after the "hor-menu" class below to have a horizontal menu with white background -->
+                <!-- DOC: Remove data-hover="dropdown" and data-close-others="true" attributes below to disable the dropdown opening on mouse hover -->
+                <div class="hor-menu  ">
+                    <ul class="nav navbar-nav">
+                        <li class="menu-dropdown classic-menu-dropdown {{#if home_status}}active{{/if}}">
+                            <a href="{{url}}/dashboard"> 
                                 <div style="margin-left: 30%;"><img alt="" class="" src="{{url}}/images/home.png"></div>
                                 <div style="color:#000;">Home</div>
-                                    <span class="arrow"></span>
-                                </a>
-                            </li>
-                            <li class="menu-dropdown classic-menu-dropdown  {{#if quest_status}}active{{/if}}">
-                            
-                                <a href="javascript:;">
-                                <div style="margin-left: 30%;">
-                                <img alt="" class="" src="{{url}}/images/questions_icon.png"></div>
-                                <div>Questions & Answers</div>
-                                    <span class="arrow"></span>
-                                </a>
-                                <ul class="dropdown-menu pull-left">
-                                    <li>
-                                        <a href="{{url}}/posts/section/question/All/0"> All </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{url}}/posts/section/question/Unanswered/0"> Unanswered Questions </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{url}}/posts/section/question/Answered/0"> Answered Questions </a>
-                                    </li>
-                                </ul>
+                                <span class="arrow"></span>
+                            </a>
+                        </li>
+                        <li class="menu-dropdown classic-menu-dropdown  {{#if quest_status}}active{{/if}}">
 
-                            </li>
-                            <li class="menu-dropdown classic-menu-dropdown ">
-                                <a href="javascript:;">
+                            <a href="javascript:;">
+                                <div style="margin-left: 30%;">
+                                    <img alt="" class="" src="{{url}}/images/Question_and_Answer.png"></div>
+                                    <div>Questions & Answers</div>
+                                    <span class="arrow"></span>
+                            </a>
+                            <ul class="dropdown-menu pull-left">
+                                <li>
+                                    <a href="{{url}}/posts/section/question/All/0"> All </a>
+                                </li>
+                                <li>
+                                    <a href="{{url}}/posts/section/question/Unanswered/0"> Unanswered Questions </a>
+                                </li>
+                                <li>
+                                    <a href="{{url}}/posts/section/question/Answered/0"> Answered Questions </a>
+                                </li>
+                            </ul>
+
+                        </li>
+                        <li class="menu-dropdown classic-menu-dropdown ">
+                            <a href="javascript:;">
                                 <div style="margin-left: 30%;"><img alt="" class="" src="{{url}}/images/articles_icon.png"></div>
                                 <div> Articles & Reviews</div>
-                                    <span class="arrow"></span>
-                                </a>
-                                <ul class="dropdown-menu pull-left">
-                                    <li class=" ">
-                                        <a href="#" class="nav-link  "> All </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="#" class="nav-link  "> Unreviewed Articles </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="#" class="nav-link  "> Reviewed Articles </a>
-                                    </li>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="dropdown-menu pull-left">
+                                <li class=" ">
+                                    <a href="#" class="nav-link  "> All </a>
+                                </li>
+                                <li class=" ">
+                                    <a href="#" class="nav-link  "> Unreviewed Articles </a>
+                                </li>
+                                <li class=" ">
+                                    <a href="#" class="nav-link  "> Reviewed Articles </a>
+                                </li>
 
-                                </ul>
-                            </li>
-                            <li class="menu-dropdown classic-menu-dropdown ">
-                                <a href="javascript:;">
-                                <div style="margin-left: 30%;"><img alt="" class="" src="{{url}}/images/riddle_icon.png"></div>
+                            </ul>
+                        </li>
+                        <li class="menu-dropdown classic-menu-dropdown ">
+                            <a href="javascript:;">
+                                <div style="margin-left: 30%;"><img alt="" class="" src="{{url}}/images/riddles_solutions.png"></div>
                                 <div> Riddles & Solutions</div>
-                                    <span class="arrow"></span>
-                                </a>
-                                <ul class="dropdown-menu pull-left">
-                                    <li class=" ">
-                                        <a href="#" class="nav-link  "> All </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="#" class="nav-link  "> Unresolved Riddles </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="#" class="nav-link  "> Solved Riddles </a>
-                                    </li>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="dropdown-menu pull-left">
+                                <li class=" ">
+                                    <a href="#" class="nav-link  "> All </a>
+                                </li>
+                                <li class=" ">
+                                    <a href="#" class="nav-link  "> Unresolved Riddles </a>
+                                </li>
+                                <li class=" ">
+                                    <a href="#" class="nav-link  "> Solved Riddles </a>
+                                </li>
 
-                                </ul>
-                            </li>
+                            </ul>
+                        </li>
 
-                            <li class="menu-dropdown classic-menu-dropdown ">
-                                <a href="javascript:;">
+                        <li class="menu-dropdown classic-menu-dropdown ">
+                            <a href="javascript:;">
                                 <div style="margin-left: 30%;"><img alt="" class="" src="{{url}}/images/books.png"></div>
                                 <div> Posted Books</div>
 
-                                    <span class="arrow"></span>
-                                </a>                                
-                            </li>
-                            <li class="menu-dropdown classic-menu-dropdown ">
-                                <a href="javascript:;">
+                                <span class="arrow"></span>
+                            </a>                                
+                        </li>
+                        <li class="menu-dropdown classic-menu-dropdown ">
+                            <a href="javascript:;">
                                 <div style="margin-left: 30%;"><img alt="" class="" src="{{url}}/images/request_icon.png"></div>
                                 <div> Requests</div>
-                                    <span class="arrow"></span>
-                                </a>
-                                <ul class="dropdown-menu pull-left">
-                                    <li class=" ">
-                                        <a href="#" class="nav-link  "> Requests For Answers </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="#" class="nav-link  "> Requests For Review </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="#" class="nav-link  "> Requests For Solutions</a>
-                                    </li>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="dropdown-menu pull-left">
+                                <li class=" ">
+                                    <a href="#" class="nav-link  "> Requests For Answers </a>
+                                </li>
+                                <li class=" ">
+                                    <a href="#" class="nav-link  "> Requests For Review </a>
+                                </li>
+                                <li class=" ">
+                                    <a href="#" class="nav-link  "> Requests For Solutions</a>
+                                </li>
 
-                                </ul>
-                            </li>
-                            <li class="menu-dropdown classic-menu-dropdown ">
-                                <a href="javascript:;">
+                            </ul>
+                        </li>
+                        <li class="menu-dropdown classic-menu-dropdown ">
+                            <a href="javascript:;">
                                 <div style="margin-left: 30%;"><img alt="" class="" src="{{url}}/images/notice_icon.png"></div>
                                 <div> Notice Board</div>
-                                    <span class="arrow"></span>
-                                </a>                                
-                            </li>
-                            <li class="menu-dropdown classic-menu-dropdown ">
-                                <a href="javascript:;">
-                                <div style="margin-left: 30%;"><img alt="" class="" src="{{url}}/images/group_icon.png"></div>
+                                <span class="arrow"></span>
+                            </a>                                
+                        </li>
+                        <li class="menu-dropdown classic-menu-dropdown ">
+                            <a href="javascript:;">
+                                <div style="margin-left: 30%;"><img alt="" class="" src="{{url}}/images/user_group.png"></div>
                                 <div> User Groups</div>
-                                    <span class="arrow"></span>
-                                </a>                                
-                            </li>
+                                <span class="arrow"></span>
+                            </a>                                
+                        </li>
 
-                        </ul>
-                    </div>
-                    <!-- END MEGA MENU -->
+                    </ul>
                 </div>
+                    <!-- END MEGA MENU -->
             </div>
-            <!-- END HEADER MENU -->
         </div>
+            <!-- END HEADER MENU -->
+    </div>
         <!-- END HEADER -->
-        
+

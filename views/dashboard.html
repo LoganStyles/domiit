@@ -30,15 +30,16 @@
                                                     <ul class="nav">
                                                         <li class="active">
                                                             <a href="#">
-                                                                <i class="fa fa-share-square"></i> My Requests </a>
+                                                            <img alt="" class="" src="{{url}}/images/my_requests.png">
+                                                                My Requests </a>
                                                         </li>
                                                         <li>
                                                             <a href="#">
-                                                                <i class="fa fa-book"></i> My Docs </a>
+                                                                <img alt="" class="" src="{{url}}/images/my_documents.png"> My Docs </a>
                                                         </li>
                                                         <li>
                                                             <a href="#">
-                                                                <i class="fa fa-bookmark"></i> My Bookmarked Items </a>
+                                                                <img alt="" class="" src="{{url}}/images/my_bookmarked_items.png"> My Bookmarked Items </a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -193,7 +194,7 @@
                                                                             <div class="cont">
                                                                                 <div class="cont-col1">
                                                                                     <div class="label label-sm label-success">
-                                                                                        <i class="fa fa-bullhorn"></i>
+                                                                                        <img alt="" class="" src="{{url}}/images/trending.png">
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="cont-col2">
@@ -210,7 +211,7 @@
                                                                             <div class="cont">
                                                                                 <div class="cont-col1">
                                                                                     <div class="label label-sm label-success">
-                                                                                        <i class="fa fa-bullhorn"></i>
+                                                                                        <img alt="" class="" src="{{url}}/images/trending.png">
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="cont-col2">
@@ -227,7 +228,7 @@
                                                                             <div class="cont">
                                                                                 <div class="cont-col1">
                                                                                     <div class="label label-sm label-success">
-                                                                                        <i class="fa fa-bullhorn"></i>
+                                                                                        <img alt="" class="" src="{{url}}/images/trending.png">
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="cont-col2">
@@ -244,7 +245,7 @@
                                                                             <div class="cont">
                                                                                 <div class="cont-col1">
                                                                                     <div class="label label-sm label-success">
-                                                                                        <i class="fa fa-bullhorn"></i>
+                                                                                        <img alt="" class="" src="{{url}}/images/trending.png">
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="cont-col2">
@@ -385,7 +386,7 @@
                                 <label class="control-label col-md-3">Category </label>
                                 <div class="col-md-9">
                                     <select class="form-control sel_cat" name="question_category" id="question_category">
-                                    {{#each data}}
+                                    {{#each data_quest}}
                                         <option value="{{title}}">{{title}}</option>
                                     {{/each}}   
                                         
@@ -397,7 +398,7 @@
                                 <label class="control-label col-md-3">Sub-Category-1 </label>
                                 <div class="col-md-9">
                                     <select class="form-control sel_sub1" name="question_sub1" id="question_sub1">
-                                    {{#each sub1_data}}
+                                    {{#each sub1_data_quest}}
                                         <option value="{{title}}">{{title}}</option>
                                     {{/each}}   
                                         
@@ -409,7 +410,7 @@
                                 <label class="control-label col-md-3">Sub-Category-2 </label>
                                 <div class="col-md-9">
                                     <select class="form-control" name="question_sub2" id="question_sub2">
-                                    {{#each sub2_data}}
+                                    {{#each sub2_data_quest}}
                                         <option value="{{title}}">{{title}}</option>
                                     {{/each}}   
                                         
@@ -462,7 +463,7 @@
                                 <label class="control-label col-md-3">Category </label>
                                 <div class="col-md-9">
                                     <select class="form-control sel_cat" name="article_category" id="article_category">
-                                    {{#each data}}
+                                    {{#each data_art}}
                                         <option value="{{title}}">{{title}}</option>
                                     {{/each}}   
                                         
@@ -474,7 +475,7 @@
                                 <label class="control-label col-md-3">Sub-Category-1 </label>
                                 <div class="col-md-9">
                                     <select class="form-control sel_sub1" name="article_sub1" id="article_sub1">
-                                    {{#each sub1_data}}
+                                    {{#each sub1_data_art}}
                                         <option value="{{title}}">{{title}}</option>
                                     {{/each}}   
                                         
@@ -486,7 +487,7 @@
                                 <label class="control-label col-md-3">Sub-Category-2 </label>
                                 <div class="col-md-9">
                                     <select class="form-control" name="article_sub2" id="article_sub2">
-                                    {{#each sub2_data}}
+                                    {{#each sub2_data_art}}
                                         <option value="{{title}}">{{title}}</option>
                                     {{/each}}   
                                         
@@ -507,7 +508,7 @@
 
                             <div class="form-group">
                                 <label for="article_attachment" class="custom-file-upload">
-                                    <i class="fa fa-camera"></i> Upload Attachment
+                                    <img src="{{url}}/images/upload_attachment.png" /> Upload Attachment
                                 </label>
                                 <input id="article_attachment" type="file" accept="application/x-zip-compressed,image/*"/>
                                 <p class="help-block"> Optional </p>
@@ -553,7 +554,7 @@
         
         $( document ).ready( function () {
 
-        $( "#question_form" ).validate( {/*validate & submit category details*/
+        $( "#question_form" ).validate( {/*validate & submit question modal data*/
                 rules: {  
                     question_category: {
                         required: true
