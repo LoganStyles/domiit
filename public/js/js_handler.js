@@ -29,6 +29,12 @@ function modalLoader(type, mode,cat_type) {
                 // $(form_action).val("insert");
                 $(modal).modal({backdrop: false, keyboard: false});
                 break;
+
+            case 'edit':
+            console.log('inside mode edit: ');
+                
+                $(modal).modal({backdrop: false, keyboard: false});
+                break;
             
             default:
                 break;

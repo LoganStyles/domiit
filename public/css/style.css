@@ -187,7 +187,7 @@ a.active.scroll {
     color: #000; 
     font-weight: 500; 
     /*text-transform: lowercase; */
-    font-size: 1.2em;
+    font-size: 1em;
     margin: 0.8em;
     text-align: justify;
 }
@@ -3087,7 +3087,7 @@ ul.w3_address li span {
 	.banner_bottom_w3ls_agile,
 	.portfolio-agileinfo,
 	.featured_services {
-		padding: 4em 0;
+		padding: 1em 0;
 	}
 }
 
@@ -3247,7 +3247,7 @@ ul.w3_address li span {
 	.banner_bottom_w3ls_agile,
 	.portfolio-agileinfo,
 	.featured_services {
-		padding: 3em 0;
+		padding: 1em 0;
 	}
 	.inner_agile_pages {
 		min-height: 209px;
@@ -3831,7 +3831,7 @@ ul.w3_address li span {
 	.banner_bottom_w3ls_agile,
 	.portfolio-agileinfo,
 	.featured_services {
-		padding: 2.5em 0;
+		padding: 1em 0;
 	}
 	.portfolio-grids_left {
 		padding: 0;
@@ -3953,3 +3953,18 @@ input[type="file"] {
     padding: 6px 12px;
     cursor: pointer;
 }
+
+/*toggle cntent*/
+.morecontent span {
+    display: none;
+}
+.morelink {
+    display: block;
+}
+
+.more{
+    text-align: justify;
+}
+
+
+/*landing*/
