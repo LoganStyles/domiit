@@ -23,11 +23,16 @@
                             <div class="col-md-8 col-lg-8 profile_top profile_area" style="">                                        
 
                                 <div class="profile_bg"><!--background img-->
-                                    <img class="object-fit_cover profile-img" src="">
+                                {{#if backgroundPic}}
+                                    <img class="object-fit_cover" src="{{url}}/uploads/{{backgroundPic}}">
+                                    {{/if}}
                                 </div>
 
                                 <div class="profile_img_container">
                                     <div class="profile_img">
+                                    {{#if displayPic}}
+                                    <img class="object-fit_cover" src="{{url}}/uploads/{{displayPic}}">
+                                    {{/if}}
                                     </div>
                                 </div>
 
@@ -42,19 +47,33 @@
 
                                 <div class="profile_hr">
                                     <div class="profile_img_text">
-                                        <div>Moses salah</div>
-                                        <div>founder, CEO, magister.com</div>
-                                        <div>Bsc (Hons) Mathematics</div>                                   
+                                        <div>{{user_info.displayName}}</div>
+                                        <div>{{user_info.qualification}}</div>
+                                        <div>{{user_info.designation}}</div>                                   
                                     </div>
-                                    <div class="more thin_border_top">
-                                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    <div class="thin_border_top">
+
+                                    <div class="profile_editicon" style="cursor: pointer;" onclick="modalLoader('profile_desc','edit','');">
+                                      <img src="{{url}}/images/edit_icon_24.png">
+
+                                    </div>
+                                    <div class="clearfix"></div>
+
+                                    <div class="more">
+                                      {{user_info.description}}
+                                    </div>
+
                                   </div>
                                   <div class="thin_border_top">
                                       <div class="col-md-6 col-lg-6 col-sm-12 profile_bios">
-                                          <div class="profile_text_section">
+                                        <div class="profile_text_section">
+                                        <div class="profile_editicon" style="cursor: pointer;" onclick="modalLoader('profile_bio1','edit','');">
+                                    <img src="{{url}}/images/edit_icon_24.png">
+
+                                    </div>
+                                    <div class="clearfix"></div>
                                             <span class="profile_text_head">Age:</span>
-                                            <span class="profile_text_body">34</span>          
+                                            <span class="profile_text_body">{{age}}</span>          
                                           </div>
                                           <div class="profile_text_section thin_border_top">
                                             <div class="profile_text_head">Education:</div>
@@ -271,14 +290,14 @@
                             <div class="form-group form-md-line-input">
                                 <label class="control-label col-md-3">Firstname </label>
                                 <div class="col-md-9">
-                                    <input type="text" name="profile_bio1_firstname" id="profile_bio1_firstname">
+                                    <input type="text" name="profile_bio1_firstname" id="profile_bio1_firstname" value="{{user_info.firstname}}">
                                 </div>
                             </div>
 
                             <div class="form-group form-md-line-input">
                                 <label class="control-label col-md-3">Lastname </label>
                                 <div class="col-md-9">
-                                    <input type="text" name="profile_bio1_lastname" id="profile_bio1_lastname">
+                                    <input type="text" name="profile_bio1_lastname" id="profile_bio1_lastname" value="{{user_info.lastname}}">
                                 </div>
                             </div>
 
@@ -287,7 +306,7 @@
                                 <label for="profile_bio1_displayPic" class="custom-file-upload">
                                     <i class="fa fa-camera"></i> Upload Avatar
                                 </label>
-                                <input id="profile_bio1_displayPic" type="file" accept="application/x-zip-compressed,image/*"/>
+                                <input id="profile_bio1_displayPic" name="profile_bio1_displayPic" type="file" accept="application/x-zip-compressed,image/*"/>
                                 <p class="help-block"> Optional </p>
                             </div>
 
@@ -295,11 +314,89 @@
                                 <label for="profile_bio1_backgroundPic" class="custom-file-upload">
                                     <i class="fa fa-camera"></i> Upload Background Picture
                                 </label>
-                                <input id="profile_bio1_backgroundPic" type="file" accept="application/x-zip-compressed,image/*"/>
+                                <input id="profile_bio1_backgroundPic" name="profile_bio1_backgroundPic" type="file" accept="application/x-zip-compressed,image/*"/>
                                 <p class="help-block"> Optional </p>
                             </div>
                             <div class="form-actions noborder">
-                                <input type="submit" class="btn blue" name="submit" value="Submit" />
+                                <input type="submit" class="btn blue" name="submit" value="Save" />
+                                <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>  
+
+                <div id="profile_desc_modal" class="modal fade" tabindex="-1">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <h4 class="modal-title" id="profile_desc_header">Edit Description</h4>
+                    </div>
+                    <div class="modal-body">
+                 <form role="form" id="profile_desc_form" action="" method="post">
+                        <span class="form_submission_error"></span>
+                        <span class="form_submission_success"></span>
+
+                            <input type="hidden" name="profile_desc_id"  id="profile_desc_id" value="0">
+
+                            <div class="form-group">
+                                <textarea name="profile_desc_description" id="profile_desc_description" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
+                                <label for="form_control_1">Provide Description</label>
+                            </div>
+
+                            <div class="form-actions noborder">
+                                <input type="submit" class="btn blue" name="submit" value="Save" />
+                                <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>  
+
+
+                <div id="profile_bio2_modal" class="modal fade" tabindex="-1">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <h4 class="modal-title" id="profile_bio2_header">Edit Intro</h4>
+                    </div>
+                    <div class="modal-body">
+                 <form role="form" id="profile_bio2_form" action="" method="post" enctype="multipart/form-data">
+                        <span class="form_submission_error"></span>
+                        <span class="form_submission_success"></span>
+
+                            <input type="hidden" name="profile_bio2_id"  id="profile_bio2_id" value="0">
+
+                            <div class="form-group form-md-line-input">
+                                <label class="control-label col-md-3">Firstname </label>
+                                <div class="col-md-9">
+                                    <input type="text" name="profile_bio2_firstname" id="profile_bio2_firstname" value="{{user_info.firstname}}">
+                                </div>
+                            </div>
+
+                            <div class="form-group form-md-line-input">
+                                <label class="control-label col-md-3">Lastname </label>
+                                <div class="col-md-9">
+                                    <input type="text" name="profile_bio2_lastname" id="profile_bio2_lastname" value="{{user_info.lastname}}">
+                                </div>
+                            </div>
+
+
+                             <div class="form-group">
+                                <label for="profile_bio2_displayPic" class="custom-file-upload">
+                                    <i class="fa fa-camera"></i> Upload Avatar
+                                </label>
+                                <input id="profile_bio2_displayPic" name="profile_bio2_displayPic" type="file" accept="application/x-zip-compressed,image/*"/>
+                                <p class="help-block"> Optional </p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="profile_bio2_backgroundPic" class="custom-file-upload">
+                                    <i class="fa fa-camera"></i> Upload Background Picture
+                                </label>
+                                <input id="profile_bio2_backgroundPic" name="profile_bio2_backgroundPic" type="file" accept="application/x-zip-compressed,image/*"/>
+                                <p class="help-block"> Optional </p>
+                            </div>
+                            <div class="form-actions noborder">
+                                <input type="submit" class="btn blue" name="submit" value="Save" />
                                 <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
                             </div>
                         </form>
@@ -445,21 +542,21 @@
         
         $( document ).ready( function () {
 
-        $( "#question_form" ).validate( {/*validate & submit question modal data*/
+        $( "#profile_bio1_form" ).validate( {/*validate & submit profile bio1 modal data*/
                 rules: {  
-                    question_category: {
+                    profile_bio1_firstname: {
                         required: true
                     },
-                    question_title: {
+                    profile_bio1_lastname: {
                         required: true,
                     }
                     
                 },
                 messages: {                        
-                    question_category: {
+                    profile_bio1_firstname: {
                         required: "This field is required"
                     },
-                    question_title: {
+                    profile_bio1_lastname: {
                         required: "This field is required"
                     }
                 },
@@ -489,31 +586,31 @@
 
             submitHandler: function () {
                 //modify button
-                var sub_button=$("#question_form").find(':submit');
+                var sub_button=$("#profile_bio1_form").find(':submit');
                 var old_button_val=sub_button.val();
                 sub_button.prop('disabled', true);
                 sub_button.val('...processing');
 
                 resetFields();
-                var my_url="{{url}}/ask_question";
-                $("#question_form").ajaxSubmit({
+                var my_url="{{url}}/update_bio1";
+                $("#profile_bio1_form").ajaxSubmit({
                     url:my_url,
                        contentType: 'application/json',
                        success: function(response){
                         if(response.success==true){
                                 console.log('image uploaded and form submitted');
-                                $('#question_form  .form_submission_success').text(response.msg);
+                                $('#profile_bio1_form  .form_submission_success').text(response.msg);
                                 setTimeout(function(){
-                                    $('#question_form  .form_submission_success').text('');
+                                    $('#profile_bio1_form  .form_submission_success').text('');
                                     sub_button.val(old_button_val);
                                     sub_button.prop('disabled', false);
-                                    $('#question_modal').modal('hide');
-                                     // window.location.href="{{url}}/question_all";
+                                    $('#profile_bio1_modal').modal('hide');
+                                     window.location.href="{{url}}/profile";
                                 },3000);
                                 
                             }else{
                                 console.log('response is false');
-                                $('#question_form  .form_submission_error').text(response.msg);
+                                $('#profile_bio1_form  .form_submission_error').text(response.msg);
                                 sub_button.val(old_button_val);
                                 sub_button.prop('disabled', false);
                             }
@@ -528,6 +625,87 @@
                    });
                 
             }
+            } );
+
+        $( "#profile_desc_form" ).validate( {/*validate & submit profile description modal data*/
+                rules: {  
+                    profile_desc_description: {
+                        required: true
+                    }
+                    
+                },
+                messages: {                        
+                    profile_bio1_firstname: {
+                        required: "This field is required"
+                    }
+                },
+                errorElement: "em",
+                errorPlacement: function ( error, element ) {
+                // Add the `help-block` class to the error element
+                error.addClass( "help-block" );
+
+                if ( element.prop( "type" ) === "checkbox" ) {
+                    error.insertAfter( element.parent( "label" ) );
+                } else {
+                    error.insertAfter( element );
+                }
+            },
+            success: function ( label, element ) {
+                // Add the span element, if doesn't exists, and apply the icon classes to it.
+                if ( !$( element ).next( "span" )[ 0 ] ) {
+                    $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+                }
+            },
+            highlight: function ( element, errorClass, validClass ) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
+            },
+
+            submitHandler: function () {
+                //modify button
+                var sub_button=$("#profile_desc_form").find(':submit');
+                var old_button_val=sub_button.val();
+                sub_button.prop('disabled', true);
+                sub_button.val('...processing');
+
+                resetFields();
+                var my_url="{{url}}/update_desc";
+                console.log(my_url);
+                
+                $("#profile_desc_form").ajaxSubmit({
+                    url:my_url,
+                       contentType: 'application/json',
+                       success: function(response){
+                        if(response.success==true){
+                                console.log('image uploaded and form submitted');
+                                $('#profile_desc_form  .form_submission_success').text(response.msg);
+                                setTimeout(function(){
+                                    $('#profile_desc_form  .form_submission_success').text('');
+                                    sub_button.val(old_button_val);
+                                    sub_button.prop('disabled', false);
+                                    $('#profile_desc_modal').modal('hide');
+                                     window.location.href="{{url}}/profile";
+                                },3000);
+                                
+                            }else{
+                                console.log('response is false');
+                                $('#profile_desc_form  .form_submission_error').text(response.msg);
+                                sub_button.val(old_button_val);
+                                sub_button.prop('disabled', false);
+                            }
+                              
+                       },
+                       error:function(xhr, status, err){
+                            console.log('error');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(err);
+                        }
+                   });
+                
+              }
             } );
 
 

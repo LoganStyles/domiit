@@ -83,25 +83,28 @@
                 <a href="javascript:;" class="menu-toggler"></a>
                 <!-- END RESPONSIVE MENU TOGGLER -->
                 <!-- BEGIN TOP NAVIGATION MENU -->
-                <div class="top-menu col-md-5 pull-left" style="margin-left: -10%;">
+                <div class="top-menu col-md-5 pull-left" style="">
                     <ul class="nav navbar-nav pull-right">
                         <!-- BEGIN NOTIFICATION DROPDOWN -->
                         <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
                         <li class="dropdown dropdown-extended dropdown-notification dropdown-dark" id="header_notification_bar">
-                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <a href="javascript:;" class="dropdown-toggle swap_icons" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                
-                                <span><img alt="" class="" src="{{url}}/images/advert.png"></span>
-                                    <span class="badge badge-default " style="right: -5px;">7</span>
+                                <span>
+                                    <img alt="" class="icon_size" src="{{url}}/images/advert_white.png">
+                                    <img alt="" class="icon_size" src="{{url}}/images/advert.png">
+                                </span>
+                                    <!-- <span class="badge badge-default " style="right: -5px;">7</span> -->
                             </a>
                             <ul class="dropdown-menu">
                             <li class="external">
                                         <h3>Adverts
-                                            <strong>(10)</strong> </h3>
-                                        <a href="#">view all</a>
+                                            <strong>(0)</strong> </h3>
+                                        <!-- <a href="#">view all</a> -->
                                     </li>
                                
                                 <li>
-                                    <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
+                                    <!-- <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
                                        
                                         <li>
                                             <a href="javascript:;">
@@ -131,56 +134,29 @@
                                                 </a>
                                             </li>
                                         
-                                    </ul>
+                                    </ul> -->
                                 </li>
                             </ul>
                         </li>
 
                         <li class="dropdown dropdown-extended dropdown-notification dropdown-dark" id="header_category_bar">
-                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <a href="javascript:;" class="dropdown-toggle swap_icons" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                
-                                <span><img alt="" class="" src="{{url}}/images/categories.png"></span>
-                                    <span class="badge badge-default " style="right: -5px;">12</span>
+                                <span>
+                                    <img alt="" class="icon_size" src="{{url}}/images/categories_white.png">
+                                    <img alt="" class="icon_size" src="{{url}}/images/categories.png">
+                                </span>
+                                    <!-- <span class="badge badge-default " style="right: -5px;">12</span> -->
                             </a>
                             <ul class="dropdown-menu">
                             <li class="external">
                                         <h3>Categories
-                                            <strong>(12)</strong> </h3>
-                                        <a href="#">view all</a>
+                                            <strong>(0)</strong> </h3>
+                                        <!-- <a href="#">view all</a> -->
                                     </li>
                                
                                 <li>
-                                    <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
-                                       
-                                        <li>
-                                            <a href="javascript:;">
-                                                <span class="time">just now</span>
-                                                <span class="details">
-                                                    <span class="label label-sm label-icon label-success">
-                                                        <i class="fa fa-plus"></i>
-                                                    </span> My iphone launch </span>
-                                            </a>
-                                            </li>
-                                             <li>
-                                                <a href="javascript:;">
-                                                    <span class="time">2 mins ago</span>
-                                                    <span class="details">
-                                                        <span class="label label-sm label-icon label-success">
-                                                            <i class="fa fa-plus"></i>
-                                                        </span> Brand new shirts </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="time">1 hour ago</span>
-                                                    <span class="details">
-                                                        <span class="label label-sm label-icon label-success">
-                                                            <i class="fa fa-plus"></i>
-                                                        </span> Buy a house this december </span>
-                                                </a>
-                                            </li>
-                                        
-                                    </ul>
+                                   
                                 </li>
                             </ul>
                         </li>                                              
@@ -188,9 +164,12 @@
                         <!-- END NOTIFICATION DROPDOWN -->
                         <!-- BEGIN INBOX DROPDOWN -->
                         <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-                        <li class="dropdown dropdown-extended dropdown-inbox dropdown-dark" id="header_inbox_bar" >
-                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                <span><img alt="" class="" src="{{url}}/images/messages.png"></span>
+                        <li style="padding-left: 20px;" class="dropdown dropdown-extended dropdown-inbox dropdown-dark" id="header_inbox_bar" >
+                            <a href="javascript:;" class="dropdown-toggle swap_icons" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                <span>
+                                    <img alt="" class="icon_size" src="{{url}}/images/messages_white.png">
+                                    <img alt="" class="icon_size" src="{{url}}/images/messages.png">
+                                </span>
                                     <span class="badge badge-default " style="right: -5px;">23</span>
                             </a>
                             <ul class="dropdown-menu">
@@ -235,107 +214,60 @@
                             </ul>
                         </li>
 
-                        <li class="dropdown dropdown-extended dropdown-inbox dropdown-dark" id="header_notification_bar">
-                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                <span><img alt="" class="" src="{{url}}/images/notification.png"></span>
-                                    <span class="badge badge-default " style="right: -5px;">23</span>
+                        <li style="padding-left: 10px;" class="dropdown dropdown-extended dropdown-inbox dropdown-dark" id="header_notification_bar">
+                            <a href="javascript:;" class="dropdown-toggle swap_icons" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <span>
+                                    <img alt="" class="icon_size" src="{{url}}/images/notification_white.png">
+                                    <img alt="" class="icon_size" src="{{url}}/images/notification.png">
+                                </span>
+
+                                    <!-- <span class="badge badge-default " style="right: -5px;">23</span> -->
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="external">
                                     <h3>Notifications
-                                        <span class="bold">(23)</span></h3>
-                                    <a href="#">view all</a>
+                                        <span class="bold">(0)</span></h3>
+                                    <!-- <a href="#">view all</a> -->
                                 </li>
                                 <li>
-                                    <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
-                                        <li>
-                                                <a href="javascript:;">
-                                                    <span class="time">just now</span>
-                                                    <span class="details">
-                                                        <span class="label label-sm label-icon label-success">
-                                                            <i class="fa fa-plus"></i>
-                                                        </span> My iphone launch </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="time">2 mins ago</span>
-                                                    <span class="details">
-                                                        <span class="label label-sm label-icon label-success">
-                                                            <i class="fa fa-plus"></i>
-                                                        </span> Brand new shirts </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="time">1 hour ago</span>
-                                                    <span class="details">
-                                                        <span class="label label-sm label-icon label-success">
-                                                            <i class="fa fa-plus"></i>
-                                                        </span> Buy a house this december </span>
-                                                </a>
-                                            </li>
-                                    </ul>
+                                   
                                 </li>
                             </ul>
                         </li>
 
                         <li class="dropdown dropdown-extended dropdown-inbox dropdown-dark" id="header_friends_bar">
-                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                <span><img alt="" class="" src="{{url}}/images/friends.png"></span>
-                                    <span class="badge badge-default " style="right: -5px;">3</span>
+                            <a href="javascript:;" class="dropdown-toggle swap_icons" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+
+                            <span>
+                                    <img alt="" class="icon_size" src="{{url}}/images/friends_white.png">
+                                    <img alt="" class="icon_size" src="{{url}}/images/friends.png">
+                                </span>
+
+                                <!-- <span class="badge badge-default " style="right: -5px;">3</span> -->
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="external">
                                     <h3>Friends
-                                        <span class="bold">(3)</span></h3>
-                                    <a href="#">view all</a>
+                                        <span class="bold">(0)</span></h3>
+                                    <!-- <a href="#">view all</a> -->
                                 </li>
                                 <li>
-                                    <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
-                                        <li>
-                                                <a href="javascript:;">
-                                                    <span class="time">just now</span>
-                                                    <span class="details">
-                                                        <span class="label label-sm label-icon label-success">
-                                                            <i class="fa fa-plus"></i>
-                                                        </span> My iphone launch </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="time">2 mins ago</span>
-                                                    <span class="details">
-                                                        <span class="label label-sm label-icon label-success">
-                                                            <i class="fa fa-plus"></i>
-                                                        </span> Brand new shirts </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="time">1 hour ago</span>
-                                                    <span class="details">
-                                                        <span class="label label-sm label-icon label-success">
-                                                            <i class="fa fa-plus"></i>
-                                                        </span> Buy a house this december </span>
-                                                </a>
-                                            </li>
-                                    </ul>
+                                    
                                 </li>
                             </ul>
                         </li>
-                        <!-- END INBOX DROPDOWN -->
-                        <!-- BEGIN TODO DROPDOWN -->
-                        <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-                       
-                        <!-- END TODO DROPDOWN -->
-                        <!-- BEGIN USER LOGIN DROPDOWN -->
-                        <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-                        <li class="dropdown dropdown-extended dropdown-notification dropdown-dark" id="header_profile">
                         
-                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                        <li style="padding-left: 10px;" class="dropdown dropdown-extended dropdown-notification dropdown-dark" id="header_profile">
+                        
+                                <a href="javascript:;" class="dropdown-toggle swap_icons" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 
-                                 <span><img alt="" class="img-circle" src="{{url}}/images/user_profile.png"></span>
+                                 <!-- <span><img alt="" class="img-circle" src="{{url}}/images/user_profile.png"></span> -->
+
+                                 <span>
+                                    <img alt="" class="icon_size" src="{{url}}/images/user_profile_white.png">
+                                    <img alt="" class="icon_size" src="{{url}}/images/user_profile.png">
+                                </span>
+
                                     <span class="username username-hide-mobile">michael olu ade</span>
                                 </a>
                                 <ul class="dropdown-menu">
@@ -358,6 +290,8 @@
                             </li>
                         <!-- END USER LOGIN DROPDOWN -->                       
                     </ul>
+
+
                 </div>
 
 
@@ -383,9 +317,10 @@
                         </li>
                         <li class="menu-dropdown classic-menu-dropdown  {{#if quest_status}}active{{/if}}">
 
-                            <a href="javascript:;">
+                            <a href="javascript:;" class="swap_icons">
                                 <div style="margin-left: 30%;">
-                                    <img alt="" class="" src="{{url}}/images/Question_and_Answer.png"></div>
+                                <img alt="" class="icon_size" src="{{url}}/images/Question_and_Answer.png">
+                                <img alt="" class="icon_size" src="{{url}}/images/Question_and_Answer_white.png"></div>
                                     <div>Questions & Answers</div>
                                     <span class="arrow"></span>
                             </a>
@@ -403,8 +338,12 @@
 
                         </li>
                         <li class="menu-dropdown classic-menu-dropdown ">
-                            <a href="javascript:;">
-                                <div style="margin-left: 30%;"><img alt="" class="" src="{{url}}/images/articles_icon.png"></div>
+                            <a href="javascript:;" class="swap_icons">
+                                <div style="margin-left: 30%;">
+                                <!-- <img alt="" class="icon_size" src="{{url}}/images/Question_and_Answer.png">
+                                <img alt="" class="icon_size" src="{{url}}/images/Question_and_Answer_white.png"> -->
+
+                                <img alt="" class="" src="{{url}}/images/articles_icon.png"></div>
                                 <div> Articles & Reviews</div>
                                 <span class="arrow"></span>
                             </a>
@@ -421,11 +360,14 @@
 
                             </ul>
                         </li>
-                        <li class="menu-dropdown classic-menu-dropdown ">
-                            <a href="javascript:;">
-                                <div style="margin-left: 30%;"><img alt="" class="" src="{{url}}/images/riddles_solutions.png"></div>
-                                <div> Riddles & Solutions</div>
-                                <span class="arrow"></span>
+                        <li class="menu-dropdown classic-menu-dropdown  ">
+
+                            <a href="javascript:;" class="swap_icons">
+                                <div style="margin-left: 30%;">
+                                <img alt="" class="icon_size" src="{{url}}/images/riddles_solutions.png">
+                                <img alt="" class="icon_size" src="{{url}}/images/riddles_solutions_white.png"></div>
+                                    <div>Riddles & Solutions</div>
+                                    <span class="arrow"></span>
                             </a>
                             <ul class="dropdown-menu pull-left">
                                 <li class=" ">
@@ -439,7 +381,9 @@
                                 </li>
 
                             </ul>
+
                         </li>
+                        
 
                         <li class="menu-dropdown classic-menu-dropdown ">
                             <a href="javascript:;">
@@ -468,19 +412,29 @@
 
                             </ul>
                         </li>
-                        <li class="menu-dropdown classic-menu-dropdown ">
-                            <a href="javascript:;">
-                                <div style="margin-left: 30%;"><img alt="" class="" src="{{url}}/images/notice_icon.png"></div>
-                                <div> Notice Board</div>
-                                <span class="arrow"></span>
-                            </a>                                
+                                               
+                         <li class="menu-dropdown classic-menu-dropdown ">
+
+                            <a href="javascript:;" class="swap_icons">
+                                <div style="margin-left: 30%;">
+                                <img alt="" class="icon_size" src="{{url}}/images/notice_board.png">
+                                <img alt="" class="icon_size" src="{{url}}/images/notice_board_white.png"></div>
+                                    <div>Notice Board</div>
+                                    <span class="arrow"></span>
+                            </a>                            
+
                         </li>
+
                         <li class="menu-dropdown classic-menu-dropdown ">
-                            <a href="javascript:;">
-                                <div style="margin-left: 30%;"><img alt="" class="" src="{{url}}/images/user_group.png"></div>
-                                <div> User Groups</div>
-                                <span class="arrow"></span>
-                            </a>                                
+
+                            <a href="javascript:;" class="swap_icons">
+                                <div style="margin-left: 30%;">
+                                <img alt="" class="icon_size" src="{{url}}/images/user_group.png">
+                                <img alt="" class="icon_size" src="{{url}}/images/user_group_white.png"></div>
+                                    <div>User Groups</div>
+                                    <span class="arrow"></span>
+                            </a>                            
+
                         </li>
 
                     </ul>

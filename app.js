@@ -147,6 +147,8 @@ app.use(session({
     ephemeral:true
 }));
 
+
+
 app.use(function(req,res,next){
     if(req.session && req.session.user){
         user.findOne({email:req.session.user.email},function(err,user){
@@ -175,10 +177,19 @@ function isLoggedIn(req, res, next) {
 app.get('/profile', function(req, res) {
     console.log('inside profile');
     console.log(req.user);
+    if(age){
+        var age =  moment().diff(req.user.dob, 'years');    
+    }else{age='';}
+    
     if(req.user){
         res.render('profile', {
             url:process.env.URL_ROOT,
             user_info:req.user,
+            age:age,
+            displayPic:req.user.displayPic[0],
+            qualification:req.user.qualification[0],
+            designation:req.user.designation[0],
+            backgroundPic:req.user.backgroundPic[0],
             friends_count:req.user.friend_ids.length,
             requests_count:req.user.request_ids.length,
             groups_count:req.user.group_ids.length
@@ -373,6 +384,80 @@ app.post('/ask_question',upload.single('question_photo'),function(req,res,next){
 
     });
 
+app.post('/update_desc',function(req,res,next){
+    console.log('about desc')
+
+    // user.findOne({email:req.session.user.email }, function(err, u) {
+
+    //     if(u){
+    //         let updateUser=u;
+    //         updateUser.description=req.body.profile_desc_description;
+
+    //         console.log(updateUser);
+
+    //         user.updateOne({email:req.session.user.email},{$set:updateUser},function(err1,res1){
+
+    //             if(err1){
+    //                 console.log(err1)
+    //                 res.json({success:false,msg:"Your profile update failed"});
+    //             }
+    //             if(res1){                        
+    //                 res.json({success:true,msg:"Your profile update was successfull"});
+    //             }
+
+    //         });
+    //     }
+    // });
+
+});
+
+
+/*updates bio1*/
+var profile_upload = upload.fields([
+    {name: 'profile_bio1_displayPic',maxCount:1 },
+    {name: 'profile_bio1_backgroundPic',maxCount:1 }]);
+
+app.post('/update_bio1',profile_upload,function(req,res,next){
+
+    console.log(req.files);
+
+    user.findOne({email:req.session.user.email }, function(err, u) {
+        if(u){
+            let updateUser=u;
+            updateUser.firstname=req.body.profile_bio1_firstname;
+            updateUser.lastname=req.body.profile_bio1_lastname;
+            updateUser.displayName=updateUser.firstname+' '+updateUser.lastname;
+
+            //store img if it exists
+            if(req.files && req.files['profile_bio1_displayPic']){
+                console.log('filename '+req.files['profile_bio1_displayPic'][0].filename)
+                updateUser.displayPic.push(req.files['profile_bio1_displayPic'][0].filename);
+            }
+
+            if(req.files && req.files['profile_bio1_backgroundPic']){
+                console.log('filename '+req.files['profile_bio1_backgroundPic'][0].filename)
+                updateUser.backgroundPic.push(req.files['profile_bio1_backgroundPic'][0].filename);
+            }
+            console.log(updateUser);
+
+            user.updateOne({email:req.session.user.email},{$set:updateUser},function(err1,res1){
+
+                    if(err1){
+                        console.log(err1)
+                        res.json({success:false,msg:"Your profile update failed"});
+                    }
+                    if(res1){                        
+                        res.json({success:true,msg:"Your profile update was successfull"});
+                    }
+
+                });
+
+        }
+
+    });
+
+});
+
 
 /*process answers immediately*/
 app.post('/answer_question',upload.single('section_answer_photo'),function(req,res,next){
@@ -390,8 +475,6 @@ app.post('/answer_question',upload.single('section_answer_photo'),function(req,r
         section.findOne({_id:section_id},function(error,result){//find the question that was answered
             if(result){
                 let updateSection = result;
-                // console.log('updateSection')
-                // console.log(updateSection)
                 updateSection.answers_len=updateSection.answers_len +1;//incr the no. of ans
                 updateSection.answers.push({
                     body : req.body.section_answer_details,

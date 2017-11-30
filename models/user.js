@@ -11,7 +11,7 @@ var userSchema = mongoose.Schema({
     country:{type:String,default:''},
     displayName:{type:String,default:'User'},
     displayPic:[{type:String,default:'avatar.png'}],
-    backgroundPic:[{type:String,default:'avatar.png'}],
+    backgroundPic:[{type:String,default:''}],
     phone:{type:String,default:''},
     date_created: { type: Date, default: Date.now },
     date_modified: { type: Date, default: Date.now },

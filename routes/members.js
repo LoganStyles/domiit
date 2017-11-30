@@ -133,5 +133,14 @@ router.post('/update_avatar',function(req,res,next){
     });
 });
 
+// router.post('/update_bio1',function(req,res,next){
+
+//     //get current user by his/her email
+//     user.findOne({email:req.session.user.email }, function(err, u) {
+
+
+//     });
+// });
+
 
 module.exports  = router;
