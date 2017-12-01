@@ -68,21 +68,46 @@
                                       <div class="col-md-6 col-lg-6 col-sm-12 profile_bios">
                                         <div class="profile_text_section">
                                         <div class="profile_editicon" style="cursor: pointer;" onclick="modalLoader('profile_bio1','edit','');">
-                                    <img src="{{url}}/images/edit_icon_24.png">
+                                    <img class="icon_size_15" src="{{url}}/images/edit_icon_24.png">
 
                                     </div>
                                     <div class="clearfix"></div>
                                             <span class="profile_text_head">Age:</span>
-                                            <span class="profile_text_body">{{age}}</span>          
+                                            <span class="profile_text_body"></span>          
                                           </div>
-                                          <div class="profile_text_section thin_border_top">
-                                            <div class="profile_text_head">Education:</div>
-                                            <div class="profile_text_body">
-                                                <div class="profile_text_title">Ahmdu bello university</div>
+
+                                          <div class="profile_text_section thin_border_top multiple">
+                                            <div class="profile_text_head ">Education:</div>
+
+                                            <div class="profile_subitem">
+
+                                              <div class="profile_text_body">
+                                                <div class="profile_text_title"><strong>Ahmdu bello university</strong></div>
                                                 <div class="profile_text_duration">2005 - 2010</div>
+                                              </div>
+
+                                              <div class="profile_text_body_icons">
+                                                <div class="action_icons">
+                                                  <img class="icon_size_15" src="{{url}}/images/add.png">
+                                                  <div class="clearfix"></div>
+                                                </div>
+                                                <div class="action_icons">
+                                                  <img class="icon_size_15" src="{{url}}/images/edit_icon_24.png">
+                                                  <div class="clearfix"></div>
+                                                </div>
+                                                
+                                              </div>
+
+                                              <div class="clearfix"></div>
+                                            </div>
+
+                                            <div class="profile_text_body">
+                                                <div class="profile_text_title"><strong>NIIT</strong></div>
+                                                <div class="profile_text_duration">2011 - 2015</div>
                                             </div>                                                  
                                           </div>
-                                          <div class="profile_text_section thin_border_top">
+
+                                         <!--  <div class="profile_text_section thin_border_top">
                                               <div class="profile_text_head">
                                                 <strong>Qualifications:</strong>
                                               </div>
@@ -113,34 +138,39 @@
                                           <div class="profile_text_section">
                                             <span class="profile_text_head">Email address:</span>
                                             <span class="profile_text_body">silicon@yahoo.com</span>          
-                                          </div>
+                                          </div> -->
                                                                                         
                                       </div>
 
                                       <div class="col-md-6 col-lg-6 col-sm-12 ">                 
-                                          <div class="profile_text_section">
-                                            <span class="profile_text_head">Friends:</span>
-                                            <span class="profile_text_body">150</span>          
+                                          <div class="profile_text_section line_space">
+                                            <div class="profile_text_head">Friends:</div>
+                                            <div class="profile_text_body">{{friends_count}}</div>  
+                                            <div class="clearfix"></div>     
                                           </div>
 
-                                          <div class="profile_text_section">
-                                            <span class="profile_text_head">Follows:</span>
-                                            <span class="profile_text_body">10</span>          
+                                          <div class="profile_text_section line_space">
+                                            <div class="profile_text_head">Follows:</div>
+                                            <div class="profile_text_body">{{user_info.follows}}</div>
+                                            <div class="clearfix"></div>       
                                           </div>
 
-                                          <div class="profile_text_section">
-                                            <span class="profile_text_head">Followed:</span>
-                                            <span class="profile_text_body">20</span>          
+                                          <div class="profile_text_section line_space">
+                                            <div class="profile_text_head">Followed:</div>
+                                            <div class="profile_text_body">{{user_info.followed}}</div>
+                                            <div class="clearfix"></div>         
                                           </div>
 
-                                          <div class="profile_text_section">
-                                            <span class="profile_text_head">Upvotes:</span>
-                                            <span class="profile_text_body">20</span>          
+                                          <div class="profile_text_section line_space">
+                                            <div class="profile_text_head">Upvotes:</div>
+                                            <div class="profile_text_body">{{user_info.upvotes}}</div>
+                                            <div class="clearfix"></div>         
                                           </div>
 
-                                          <div class="profile_text_section">
-                                            <span class="profile_text_head">Downvotes:</span>
-                                            <span class="profile_text_body">40</span>          
+                                          <div class="profile_text_section line_space">
+                                            <div class="profile_text_head">Downvotes:</div>
+                                            <div class="profile_text_body">{{user_info.downvotes}}</div>
+                                            <div class="clearfix"></div>        
                                           </div>
                                                                                         
                                       </div>
@@ -322,87 +352,127 @@
                                 <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
                             </div>
                         </form>
+                  </div>
+        </div>  
+
+        <!--description modal-->
+        <div id="profile_desc_modal" class="modal fade" tabindex="-1">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h4 class="modal-title" id="profile_desc_header">Edit Description</h4>
+          </div>
+          <div class="modal-body">
+            <form role="form" id="profile_desc_form" action="" method="post">
+              <span class="form_submission_error"></span>
+              <span class="form_submission_success"></span>
+
+              <input type="hidden" name="profile_desc_id"  id="profile_desc_id" value="0">
+
+              <div class="form-group">
+                <textarea name="profile_desc_description" id="profile_desc_description" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600">{{user_info.description}}</textarea>
+              </div>
+
+              <div class="form-actions noborder">
+                <input type="submit" class="btn blue" name="submit" value="Save" />
+                <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+              </div>
+            </form>
+          </div>
+
+        </div>  
+
+        <!--education modal-->
+        <div id="profile_edu_modal" class="modal fade" tabindex="-1">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h4 class="modal-title" id="profile_edu_header">Edit Education</h4>
+          </div>
+          <div class="modal-body">
+            <form role="form" id="profile_edu_form" action="" method="post">
+              <span class="form_submission_error"></span>
+              <span class="form_submission_success"></span>
+
+              <input type="hidden" name="profile_edu_id"  id="profile_edu_id" value="0">
+
+              <div class="form-group">
+                <label class="control-label col-md-3">Title</label>
+                <input type="text" name="profile_edu_title" id="profile_edu_title" class="form-control">
+              </div>
+
+              <div class="form-group">
+                <input type="text" name="profile_edu_title" id="profile_edu_title" class="form-control">
+              </div>
+
+              <div class="form-group">
+                  <label class="control-label col-md-3">From year</label>
+                  <div class="col-md-9">
+                      <select class="form-control sel_cat" name="profile_edu_from" id="profile_edu_from">
+                      {{#myforloop data_quest}}
+                          <option value="{{title}}">{{title}}</option>
+                      {{/each}}
+                      </select>
+                  </div>
+              </div>
+
+              <div class="form-actions noborder">
+                <input type="submit" class="btn blue" name="submit" value="Save" />
+                <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+              </div>
+            </form>
+          </div>
+        </div>  
+
+
+        <div id="profile_bio2_modal" class="modal fade" tabindex="-1">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title" id="profile_bio2_header">Edit Intro</h4>
+            </div>
+            <div class="modal-body">
+         <form role="form" id="profile_bio2_form" action="" method="post" enctype="multipart/form-data">
+                <span class="form_submission_error"></span>
+                <span class="form_submission_success"></span>
+
+                    <input type="hidden" name="profile_bio2_id"  id="profile_bio2_id" value="0">
+
+                    <div class="form-group form-md-line-input">
+                        <label class="control-label col-md-3">Firstname </label>
+                        <div class="col-md-9">
+                            <input type="text" name="profile_bio2_firstname" id="profile_bio2_firstname" value="{{user_info.firstname}}">
+                        </div>
                     </div>
 
-                </div>  
-
-                <div id="profile_desc_modal" class="modal fade" tabindex="-1">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                        <h4 class="modal-title" id="profile_desc_header">Edit Description</h4>
-                    </div>
-                    <div class="modal-body">
-                 <form role="form" id="profile_desc_form" action="" method="post">
-                        <span class="form_submission_error"></span>
-                        <span class="form_submission_success"></span>
-
-                            <input type="hidden" name="profile_desc_id"  id="profile_desc_id" value="0">
-
-                            <div class="form-group">
-                                <textarea name="profile_desc_description" id="profile_desc_description" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
-                                <label for="form_control_1">Provide Description</label>
-                            </div>
-
-                            <div class="form-actions noborder">
-                                <input type="submit" class="btn blue" name="submit" value="Save" />
-                                <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
-                            </div>
-                        </form>
+                    <div class="form-group form-md-line-input">
+                        <label class="control-label col-md-3">Lastname </label>
+                        <div class="col-md-9">
+                            <input type="text" name="profile_bio2_lastname" id="profile_bio2_lastname" value="{{user_info.lastname}}">
+                        </div>
                     </div>
 
-                </div>  
 
-
-                <div id="profile_bio2_modal" class="modal fade" tabindex="-1">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                        <h4 class="modal-title" id="profile_bio2_header">Edit Intro</h4>
-                    </div>
-                    <div class="modal-body">
-                 <form role="form" id="profile_bio2_form" action="" method="post" enctype="multipart/form-data">
-                        <span class="form_submission_error"></span>
-                        <span class="form_submission_success"></span>
-
-                            <input type="hidden" name="profile_bio2_id"  id="profile_bio2_id" value="0">
-
-                            <div class="form-group form-md-line-input">
-                                <label class="control-label col-md-3">Firstname </label>
-                                <div class="col-md-9">
-                                    <input type="text" name="profile_bio2_firstname" id="profile_bio2_firstname" value="{{user_info.firstname}}">
-                                </div>
-                            </div>
-
-                            <div class="form-group form-md-line-input">
-                                <label class="control-label col-md-3">Lastname </label>
-                                <div class="col-md-9">
-                                    <input type="text" name="profile_bio2_lastname" id="profile_bio2_lastname" value="{{user_info.lastname}}">
-                                </div>
-                            </div>
-
-
-                             <div class="form-group">
-                                <label for="profile_bio2_displayPic" class="custom-file-upload">
-                                    <i class="fa fa-camera"></i> Upload Avatar
-                                </label>
-                                <input id="profile_bio2_displayPic" name="profile_bio2_displayPic" type="file" accept="application/x-zip-compressed,image/*"/>
-                                <p class="help-block"> Optional </p>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="profile_bio2_backgroundPic" class="custom-file-upload">
-                                    <i class="fa fa-camera"></i> Upload Background Picture
-                                </label>
-                                <input id="profile_bio2_backgroundPic" name="profile_bio2_backgroundPic" type="file" accept="application/x-zip-compressed,image/*"/>
-                                <p class="help-block"> Optional </p>
-                            </div>
-                            <div class="form-actions noborder">
-                                <input type="submit" class="btn blue" name="submit" value="Save" />
-                                <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
-                            </div>
-                        </form>
+                     <div class="form-group">
+                        <label for="profile_bio2_displayPic" class="custom-file-upload">
+                            <i class="fa fa-camera"></i> Upload Avatar
+                        </label>
+                        <input id="profile_bio2_displayPic" name="profile_bio2_displayPic" type="file" accept="application/x-zip-compressed,image/*"/>
+                        <p class="help-block"> Optional </p>
                     </div>
 
-                </div>   
+                    <div class="form-group">
+                        <label for="profile_bio2_backgroundPic" class="custom-file-upload">
+                            <i class="fa fa-camera"></i> Upload Background Picture
+                        </label>
+                        <input id="profile_bio2_backgroundPic" name="profile_bio2_backgroundPic" type="file" accept="application/x-zip-compressed,image/*"/>
+                        <p class="help-block"> Optional </p>
+                    </div>
+                    <div class="form-actions noborder">
+                        <input type="submit" class="btn blue" name="submit" value="Save" />
+                        <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>   
 
 
 
@@ -628,17 +698,17 @@
             } );
 
         $( "#profile_desc_form" ).validate( {/*validate & submit profile description modal data*/
-                rules: {  
-                    profile_desc_description: {
-                        required: true
-                    }
+                // rules: {  
+                //     profile_desc_description: {
+                //         required: true
+                //     }
                     
-                },
-                messages: {                        
-                    profile_bio1_firstname: {
-                        required: "This field is required"
-                    }
-                },
+                // },
+                // messages: {                        
+                //     profile_bio1_firstname: {
+                //         required: "This field is required"
+                //     }
+                // },
                 errorElement: "em",
                 errorPlacement: function ( error, element ) {
                 // Add the `help-block` class to the error element
@@ -676,7 +746,7 @@
                 
                 $("#profile_desc_form").ajaxSubmit({
                     url:my_url,
-                       contentType: 'application/json',
+                       // contentType: 'application/json',
                        success: function(response){
                         if(response.success==true){
                                 console.log('image uploaded and form submitted');

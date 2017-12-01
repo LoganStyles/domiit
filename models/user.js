@@ -15,7 +15,7 @@ var userSchema = mongoose.Schema({
     phone:{type:String,default:''},
     date_created: { type: Date, default: Date.now },
     date_modified: { type: Date, default: Date.now },
-    education:[{ title: String,body: String, date: Date }],
+    education:[{ title: String,body: String,from_year:String,to_year:String date: Date }],
     schools:[{ title: String,body: String, date: Date }],
     designation:[{ title: String,body: String, date: Date }],
     qualification:[{ title: String,body: String, date: Date }],

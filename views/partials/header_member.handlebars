@@ -92,7 +92,7 @@
                                
                                 <span>
                                     <img alt="" class="icon_size" src="{{url}}/images/advert_white.png">
-                                    <img alt="" class="icon_size" src="{{url}}/images/advert.png">
+                                    <img alt="" class="icon_size" src="{{url}}/images/advert_white.png">
                                 </span>
                                     <!-- <span class="badge badge-default " style="right: -5px;">7</span> -->
                             </a>
@@ -104,37 +104,6 @@
                                     </li>
                                
                                 <li>
-                                    <!-- <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
-                                       
-                                        <li>
-                                            <a href="javascript:;">
-                                                <span class="time">just now</span>
-                                                <span class="details">
-                                                    <span class="label label-sm label-icon label-success">
-                                                        <i class="fa fa-plus"></i>
-                                                    </span> My iphone launch </span>
-                                            </a>
-                                            </li>
-                                             <li>
-                                                <a href="javascript:;">
-                                                    <span class="time">2 mins ago</span>
-                                                    <span class="details">
-                                                        <span class="label label-sm label-icon label-success">
-                                                            <i class="fa fa-plus"></i>
-                                                        </span> Brand new shirts </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="time">1 hour ago</span>
-                                                    <span class="details">
-                                                        <span class="label label-sm label-icon label-success">
-                                                            <i class="fa fa-plus"></i>
-                                                        </span> Buy a house this december </span>
-                                                </a>
-                                            </li>
-                                        
-                                    </ul> -->
                                 </li>
                             </ul>
                         </li>
@@ -144,7 +113,7 @@
                                
                                 <span>
                                     <img alt="" class="icon_size" src="{{url}}/images/categories_white.png">
-                                    <img alt="" class="icon_size" src="{{url}}/images/categories.png">
+                                    <img alt="" class="icon_size" src="{{url}}/images/categories_white.png">
                                 </span>
                                     <!-- <span class="badge badge-default " style="right: -5px;">12</span> -->
                             </a>
@@ -168,7 +137,7 @@
                             <a href="javascript:;" class="dropdown-toggle swap_icons" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                 <span>
                                     <img alt="" class="icon_size" src="{{url}}/images/messages_white.png">
-                                    <img alt="" class="icon_size" src="{{url}}/images/messages.png">
+                                    <img alt="" class="icon_size" src="{{url}}/images/messages_white.png">
                                 </span>
                                     <span class="badge badge-default " style="right: -5px;">23</span>
                             </a>
@@ -268,7 +237,7 @@
                                     <img alt="" class="icon_size" src="{{url}}/images/user_profile.png">
                                 </span>
 
-                                    <span class="username username-hide-mobile">michael olu ade</span>
+                                    <span class="username username-hide-mobile">{{user_info.displayName}}</span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     
@@ -290,7 +259,6 @@
                             </li>
                         <!-- END USER LOGIN DROPDOWN -->                       
                     </ul>
-
 
                 </div>
 
@@ -315,6 +283,14 @@
                                 <span class="arrow"></span>
                             </a>
                         </li>
+                        
+
+                    </ul>
+                </div>
+
+                <div class="hor-menu  pull-right">
+                    <ul class="nav navbar-nav">
+                        
                         <li class="menu-dropdown classic-menu-dropdown  {{#if quest_status}}active{{/if}}">
 
                             <a href="javascript:;" class="swap_icons">
@@ -340,10 +316,13 @@
                         <li class="menu-dropdown classic-menu-dropdown ">
                             <a href="javascript:;" class="swap_icons">
                                 <div style="margin-left: 30%;">
+                                <img alt="" class="icon_size" src="{{url}}/images/articles_icon.png">
+                                <img alt="" class="icon_size" src="{{url}}/images/articles_icon.png">
+                                </div>
                                 <!-- <img alt="" class="icon_size" src="{{url}}/images/Question_and_Answer.png">
                                 <img alt="" class="icon_size" src="{{url}}/images/Question_and_Answer_white.png"> -->
 
-                                <img alt="" class="" src="{{url}}/images/articles_icon.png"></div>
+                                <!-- <img alt="" class="" src="{{url}}/images/articles_icon.png"></div> -->
                                 <div> Articles & Reviews</div>
                                 <span class="arrow"></span>
                             </a>
@@ -440,6 +419,7 @@
                     </ul>
                 </div>
                     <!-- END MEGA MENU -->
+                    <div class="clearfix"></div>
             </div>
         </div>
             <!-- END HEADER MENU -->

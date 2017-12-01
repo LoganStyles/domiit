@@ -123,6 +123,13 @@ app.engine('html', exphbs({
         },
         lastIndex:function(array){
             return array.length - 1;//get last index of an array
+        },
+        myforloop:function(n,block){
+            var content='';
+            var current_year=Date.getYear();
+            for(var i=current_year;i>1958; i--)
+                content+=block.fn(i);
+            return content;
         }
         // ,
         // ifArrayLen:function(item,amount,options){
@@ -177,15 +184,16 @@ function isLoggedIn(req, res, next) {
 app.get('/profile', function(req, res) {
     console.log('inside profile');
     console.log(req.user);
-    if(age){
-        var age =  moment().diff(req.user.dob, 'years');    
-    }else{age='';}
+
+    // if(age){
+    //     var age =  moment().diff(req.user.dob, 'years');    
+    // }else{age='';}
     
     if(req.user){
         res.render('profile', {
             url:process.env.URL_ROOT,
             user_info:req.user,
-            age:age,
+            // age:age,
             displayPic:req.user.displayPic[0],
             qualification:req.user.qualification[0],
             designation:req.user.designation[0],
@@ -384,31 +392,25 @@ app.post('/ask_question',upload.single('question_photo'),function(req,res,next){
 
     });
 
+
+/*updates the description on the profile */
 app.post('/update_desc',function(req,res,next){
-    console.log('about desc')
+    console.log('about desc');
+    console.log(req.body.profile_desc_description)
+    var update_desc={description:req.body.profile_desc_description};
 
-    // user.findOne({email:req.session.user.email }, function(err, u) {
+    user.findOneAndUpdate({email:req.session.user.email},{$set:update_desc},function(err1,res1){
 
-    //     if(u){
-    //         let updateUser=u;
-    //         updateUser.description=req.body.profile_desc_description;
+        if(err1){
+            console.log(err1)
+            res.json({success:false,msg:"Your profile update failed"});
+        }
+        if(res1){                        
+            res.json({success:true,msg:"Your profile update was successfull"});
+        }
 
-    //         console.log(updateUser);
-
-    //         user.updateOne({email:req.session.user.email},{$set:updateUser},function(err1,res1){
-
-    //             if(err1){
-    //                 console.log(err1)
-    //                 res.json({success:false,msg:"Your profile update failed"});
-    //             }
-    //             if(res1){                        
-    //                 res.json({success:true,msg:"Your profile update was successfull"});
-    //             }
-
-    //         });
-    //     }
-    // });
-
+    });
+    
 });
 
 
