@@ -74,114 +74,107 @@
                     </div>
                     
                     <!-- BEGIN MODALS FOR EDIT-->
-                                <!-- <div class="row"> -->
-                                <!-- <div class="col-md-12"> -->
-                                    <!-- <div class="portlet "> -->
 
-                                        <div class="portlet-body form">                                         
+                    <div class="portlet-body form">                                      
 
-                                            <div id="question_cat_modal" class="modal fade" tabindex="-1">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                                    <h4 class="modal-title" id="question_cat_header">Question Category</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form role="form" id="question_cat_form" action="" method="post">
-                                                    <span class="form_submission_error"></span>
-                                                    <span class="form_submission_success"></span>
+                        <div id="question_cat_modal" class="modal fade" tabindex="-1">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                <h4 class="modal-title" id="question_cat_header">Question Category</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form role="form" id="question_cat_form" action="" method="post">
+                                    <span class="form_submission_error"></span>
+                                    <span class="form_submission_success"></span>
 
-                                                        <input type="hidden" name="question_cat_id"  id="question_cat_id" value="">
-                                                        <div class="form-body">
-                                                            <div class="form-group form-md-line-input">
-                                                                <input type="text" class="form-control" id="question_cat_title" name="question_cat_title">
-                                                                <label for="question_cat_title">Title</label>
-                                                            </div>                                                     
-                                                           
-                                                            <div class="form-group form-md-line-input form-md-floating-label">
-                                                                <textarea class="form-control" rows="3" id="question_cat_description" name="question_cat_description"></textarea>
-                                                                <label for="form_control_1">Description</label>
-                                                            </div>
-                                                            
-                                                        </div>
-                                                        <div class="form-actions noborder">
-                                                            <input type="submit" class="btn blue" name="submit" value="Submit" />
-                                                            <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-
-                                            </div>
-
-
-                                            <div id="article_cat_modal" class="modal fade" tabindex="-1">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                                    <h4 class="modal-title" id="article_cat_header">Article Category</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form role="form" id="article_cat_form" action="" method="post">
-                                                    <span class="form_submission_error"></span>
-                                                    <span class="form_submission_success"></span>
-
-                                                        <input type="hidden" name="article_cat_id"  id="article_cat_id" value="">
-                                                        <div class="form-body">
-                                                            <div class="form-group form-md-line-input">
-                                                                <input type="text" class="form-control" id="article_cat_title" name="article_cat_title">
-                                                                <label for="article_cat_title">Title</label>
-                                                            </div>                                                     
-                                                           
-                                                            <div class="form-group form-md-line-input form-md-floating-label">
-                                                                <textarea class="form-control" rows="3" id="article_cat_description" name="article_cat_description"></textarea>
-                                                                <label for="form_control_1">Description</label>
-                                                            </div>
-                                                            
-                                                        </div>
-                                                        <div class="form-actions noborder">
-                                                            <input type="submit" class="btn blue" name="submit" value="Submit" />
-                                                            <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-
-                                            </div>
-
-
-                                            <div id="riddle_cat_modal" class="modal fade" tabindex="-1">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                                    <h4 class="modal-title" id="riddle_cat_header">Riddle Category</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form role="form" id="riddle_cat_form" action="" method="post">
-                                                    <span class="form_submission_error"></span>
-                                                    <span class="form_submission_success"></span>
-
-                                                        <input type="hidden" name="riddle_cat_id"  id="riddle_cat_id" value="">
-                                                        <div class="form-body">
-                                                            <div class="form-group form-md-line-input">
-                                                                <input type="text" class="form-control" id="riddle_cat_title" name="riddle_cat_title">
-                                                                <label for="riddle_cat_title">Title</label>
-                                                            </div>                                                     
-                                                           
-                                                            <div class="form-group form-md-line-input form-md-floating-label">
-                                                                <textarea class="form-control" rows="3" id="riddle_cat_description" name="riddle_cat_description"></textarea>
-                                                                <label for="form_control_1">Description</label>
-                                                            </div>
-                                                            
-                                                        </div>
-                                                        <div class="form-actions noborder">
-                                                            <input type="submit" class="btn blue" name="submit" value="Submit" />
-                                                            <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-
-                                            </div>
+                                    <input type="hidden" name="question_cat_id"  id="question_cat_id" value="">
+                                    <div class="form-body">
+                                        <div class="form-group form-md-line-input">
+                                            <input type="text" class="form-control" id="question_cat_title" name="question_cat_title">
+                                            <label for="question_cat_title">Title</label>
+                                        </div>                                                     
+                                        
+                                        <div class="form-group form-md-line-input form-md-floating-label">
+                                            <textarea class="form-control" rows="3" id="question_cat_description" name="question_cat_description"></textarea>
+                                            <label for="form_control_1">Description</label>
                                         </div>
-                                    <!-- </div> -->
-                                <!-- </div> -->
-                            <!-- </div> -->
-                            <!-- END PORTLET-->
+                                        
+                                    </div>
+                                    <div class="form-actions noborder">
+                                        <input type="submit" class="btn blue" name="submit" value="Submit" />
+                                        <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+
+
+                        <div id="article_cat_modal" class="modal fade" tabindex="-1">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                <h4 class="modal-title" id="article_cat_header">Article Category</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form role="form" id="article_cat_form" action="" method="post">
+                                    <span class="form_submission_error"></span>
+                                    <span class="form_submission_success"></span>
+
+                                    <input type="hidden" name="article_cat_id"  id="article_cat_id" value="">
+                                    <div class="form-body">
+                                        <div class="form-group form-md-line-input">
+                                            <input type="text" class="form-control" id="article_cat_title" name="article_cat_title">
+                                            <label for="article_cat_title">Title</label>
+                                        </div>                                                     
+                                        
+                                        <div class="form-group form-md-line-input form-md-floating-label">
+                                            <textarea class="form-control" rows="3" id="article_cat_description" name="article_cat_description"></textarea>
+                                            <label for="form_control_1">Description</label>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="form-actions noborder">
+                                        <input type="submit" class="btn blue" name="submit" value="Submit" />
+                                        <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+
+
+                        <div id="riddle_cat_modal" class="modal fade" tabindex="-1">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                <h4 class="modal-title" id="riddle_cat_header">Riddle Category</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form role="form" id="riddle_cat_form" action="" method="post">
+                                    <span class="form_submission_error"></span>
+                                    <span class="form_submission_success"></span>
+
+                                    <input type="hidden" name="riddle_cat_id"  id="riddle_cat_id" value="">
+                                    <div class="form-body">
+                                        <div class="form-group form-md-line-input">
+                                            <input type="text" class="form-control" id="riddle_cat_title" name="riddle_cat_title">
+                                            <label for="riddle_cat_title">Title</label>
+                                        </div>                                                     
+                                        
+                                        <div class="form-group form-md-line-input form-md-floating-label">
+                                            <textarea class="form-control" rows="3" id="riddle_cat_description" name="riddle_cat_description"></textarea>
+                                            <label for="form_control_1">Description</label>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="form-actions noborder">
+                                        <input type="submit" class="btn blue" name="submit" value="Submit" />
+                                        <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
                     
                     
                 </div>

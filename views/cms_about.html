@@ -1,0 +1,224 @@
+{{>header_cms}}
+
+            <!-- BEGIN CONTENT -->
+            <div class="page-content-wrapper">
+                <!-- BEGIN CONTENT BODY -->
+                <div class="page-content">
+                    <!-- BEGIN PAGE HEADER-->
+                    
+                    <!-- BEGIN PAGE BAR -->
+                    <div class="page-bar">
+                        <ul class="page-breadcrumb">
+                            <li>
+                                <a href="#">Dashboard</a>
+                                <i class="fa fa-circle"></i>
+                            </li>
+                            <li>
+                                <span>About</span>
+                            </li>
+                            <li>
+                                <span style="text-transform: capitalize; ">{{item}}</span>
+                            </li>
+                        </ul>
+                        
+                    </div>
+                    <!-- END PAGE BAR -->
+                    <!-- BEGIN PAGE TITLE-->
+<!--                <h3 class="page-title"> Dashboard 
+                        <small>Unit Prices & statistics</small>
+                    </h3>-->
+                    <!-- END PAGE TITLE-->
+                    <!-- END PAGE HEADER-->
+                    <div class="row">
+                        <div class="col-md-12">
+                                    <!-- BEGIN BORDERED TABLE PORTLET-->
+                                    <div class="portlet light portlet-fit ">
+                                        <div class="portlet-title">
+                                            <div class="caption">
+                                                <span class="caption-subject font-red sbold uppercase">About</span>&nbsp;&nbsp;
+                                            </div>
+                                            <div class="row">                                                
+                                                <div class="btn-group">
+                                                    <a data-toggle="modal" onclick="modalLoader('{{item}}','new','about');" class="btn btn-default">
+                                                        <i class="fa fa-plus"></i> New</a>
+                                                     <a class="btn btn-default admin_edit">
+                                                        <i class="fa fa-pencil"></i> Edit</a>
+                                                    <!--<a class="btn btn-default">
+                                                        <i class="fa fa-eye"></i> View</a> -->                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="portlet-body">
+                                            <form role="form" id="overview_about_form" action="" method="post">
+                                                <span class="form_submission_error"></span>
+                                                <span class="form_submission_success"></span>
+
+                                                <input type="hidden" name="overview_about_id"  id="overview_about_id" value="">
+                                                <div class="form-body">
+                                                    <div class="form-group form-md-line-input">
+                                                        <input type="text" class="form-control" id="overview_about_title" name="overview_about_title">
+                                                        <label for="overview_about_title">Title</label>
+                                                    </div>                                                     
+
+                                                    <div class="form-group form-md-line-input form-md-floating-label">
+                                                        <textarea class="form-control" rows="3" id="overview_about_description" name="overview_about_description"></textarea>
+                                                        <label for="form_control_1">Description</label>
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-actions noborder">
+                                                <input type="submit" class="btn blue" name="submit" value="Save" />
+                                                    <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <!-- END BORDERED TABLE PORTLET-->
+                                </div>                               
+                        
+                    </div>
+                    
+                    <!-- BEGIN MODALS FOR EDIT-->
+
+                    <div class="portlet-body form">                                      
+
+                        <div id="overview_about_modal" class="modal fade" tabindex="-1">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                <h4 class="modal-title" id="overview_about_header">Overview</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form role="form" id="overview_about_form" action="" method="post">
+                                    <span class="form_submission_error"></span>
+                                    <span class="form_submission_success"></span>
+
+                                    <input type="hidden" name="overview_about_id"  id="overview_about_id" value="">
+                                    <div class="form-body">
+                                        <div class="form-group form-md-line-input">
+                                            <input type="text" class="form-control" id="overview_about_title" name="overview_about_title">
+                                            <label for="overview_about_title">Title</label>
+                                        </div>                                                     
+
+                                        <div class="form-group form-md-line-input form-md-floating-label">
+                                            <textarea class="form-control" rows="3" id="overview_about_description" name="overview_about_description"></textarea>
+                                            <label for="form_control_1">Description</label>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="form-actions noborder">
+                                        <input type="submit" class="btn blue" name="submit" value="Submit" />
+                                        <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+                <!-- END CONTENT BODY -->
+            </div>
+            <!-- END CONTENT -->
+            
+        </div>
+        <!-- END CONTAINER -->
+    
+  
+    {{>footer_cms}}
+
+    
+<script type="text/javascript">
+            
+            function resetFields(){
+                $('#overview_about_form .form_submission_success').text("");
+                $('#overview_about_form .form_submission_error').text("");
+            }
+
+           
+
+            $( document ).ready( function () {
+
+                $( "#overview_about_form" ).validate( {/*validate & submit category details*/
+                    rules: {  
+                        overview_about_title: {
+                            required: true
+                        }
+                        
+                    },
+                    messages: {                        
+                        overview_about_title: {
+                            required: "This field is required"
+                        }
+                        
+                    },
+                    errorElement: "em",
+                    errorPlacement: function ( error, element ) {
+                    // Add the `help-block` class to the error element
+                    error.addClass( "help-block" );
+
+                    if ( element.prop( "type" ) === "checkbox" ) {
+                        error.insertAfter( element.parent( "label" ) );
+                    } else {
+                        error.insertAfter( element );
+                    }
+                },
+                success: function ( label, element ) {
+                    // Add the span element, if doesn't exists, and apply the icon classes to it.
+                    if ( !$( element ).next( "span" )[ 0 ] ) {
+                        $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+                    }
+                },
+                highlight: function ( element, errorClass, validClass ) {
+                    $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
+                },
+                submitHandler: function () {
+                    resetFields();
+                    var formData = $('#overview_about_form').serialize();
+                    console.log(formData);
+                    var my_url="{{url}}/cms/post_cat/question";
+
+                    $.ajax({
+                        url:my_url,
+                        type:'POST',
+                        data:formData,
+                        dataType:'json',
+                            // contentType: 'application/json', 
+                            headers: {'X-My-App-Token': 'loganstyles'},
+                            success:function(response){
+                                console.log('success');
+                                if(response.success==true){
+                                    console.log('response is true');
+                                    $('#overview_about_form  .form_submission_success').text(response.msg);
+                                    setTimeout(function(){
+                                        $('#overview_about_form  .form_submission_success').text('');
+                                         window.location.href="{{url}}/cms/about/overview";
+                                    },3000);
+                                    
+                                }else{
+                                    console.log('response is false');
+                                    $('#overview_about_form  .form_submission_error').text(response.msg);
+                                }
+                            },
+                            error:function(xhr, status, err){
+                                console.log('error');
+                                console.log(xhr);
+                                console.log(status);
+                                console.log(err);
+                            }
+                        });
+                }
+            } );
+
+
+} );
+        </script>
+
+        
+</body>
+
+</html>
+    

@@ -6,7 +6,7 @@ var http = require('http');
 var express = require('express');
 var bodyParser = require('body-parser');
 // var fs = require('fs-extra');
-// var util = require('util');
+var moment = require('moment');
 var session = require('client-sessions');
 var path = require('path');
 var request = require('request');
@@ -126,9 +126,14 @@ app.engine('html', exphbs({
         },
         myforloop:function(n,block){
             var content='';
-            var current_year=Date.getYear();
-            for(var i=current_year;i>1958; i--)
+            var date = new Date();
+            var current_year=date.getFullYear();
+
+            for(var i=n;i<=current_year; i++)
+            {
                 content+=block.fn(i);
+            }
+            // console.log(content);
             return content;
         }
         // ,
@@ -183,25 +188,57 @@ function isLoggedIn(req, res, next) {
 
 app.get('/profile', function(req, res) {
     console.log('inside profile');
-    console.log(req.user);
-
-    // if(age){
-    //     var age =  moment().diff(req.user.dob, 'years');    
-    // }else{age='';}
+    console.log(req.user);    
+    
     
     if(req.user){
+        var qualification,designation,dob,displayPic="";
+        if(req.user.qualification[0]){
+            qualification=req.user.qualification[req.user.qualification.length -1].title;
+        }
+        console.log('qualification : '+qualification)
+
+        if(req.user.designation[0]){
+            designation=req.user.designation[req.user.designation.length -1].title;
+        }
+        console.log('designation : '+designation);
+
+        if(req.user.dob){
+            dob=moment().diff(new Date(req.user.dob),'years');
+        }
+        console.log('dob : '+dob);
+        if(req.user.displayPic[0]){
+            displayPic=req.user.displayPic[req.user.displayPic.length - 1];
+        }
+        console.log('displayPic : '+displayPic);
+
+        if(req.user.backgroundPic[0]){
+            backgroundPic=req.user.backgroundPic[req.user.backgroundPic.length - 1];
+        }
+        console.log('backgroundPic : '+backgroundPic);
+
+
+
         res.render('profile', {
             url:process.env.URL_ROOT,
             user_info:req.user,
-            // age:age,
-            displayPic:req.user.displayPic[0],
-            qualification:req.user.qualification[0],
-            designation:req.user.designation[0],
-            backgroundPic:req.user.backgroundPic[0],
+            dob:dob,
+            displayPic:displayPic,
+            qualification:qualification,
+            designation:designation,
+            backgroundPic:backgroundPic,
             friends_count:req.user.friend_ids.length,
             requests_count:req.user.request_ids.length,
+            questions_count:req.user.question_ids.length,
+            answers_count:req.user.answer_ids.length,
+            articles_count:req.user.article_ids.length,
+            reviews_count:req.user.review_ids.length,
+            riddles_count:req.user.riddle_ids.length,
+            solutions_count:req.user.solution_ids.length,
+            postedbooks_count:req.user.postedbook_ids.length,
             groups_count:req.user.group_ids.length
         });
+
     }else{
         res.redirect('/');
     }
@@ -306,7 +343,6 @@ app.get('/dashboard',isLoggedIn, function(req, res) {
 
 app.get('/admin',isLoggedIn, function(req, res) {
     console.log('inside cms');
-    // console.log(req.user);
     if(req.user){
      res.render('cms_dashboard', {
         title:'CMS',
@@ -395,8 +431,6 @@ app.post('/ask_question',upload.single('question_photo'),function(req,res,next){
 
 /*updates the description on the profile */
 app.post('/update_desc',function(req,res,next){
-    console.log('about desc');
-    console.log(req.body.profile_desc_description)
     var update_desc={description:req.body.profile_desc_description};
 
     user.findOneAndUpdate({email:req.session.user.email},{$set:update_desc},function(err1,res1){
@@ -414,6 +448,115 @@ app.post('/update_desc',function(req,res,next){
 });
 
 
+/*updates the education on the profile */
+app.post('/update_edu',function(req,res,next){
+
+    var update_items={
+        title:req.body.profile_edu_title,
+        // body:'',
+        from_year:req.body.profile_edu_from,
+        to_year:req.body.profile_edu_to
+    }
+
+
+    user.findOne({email:req.session.user.email }, function(err, u) {
+        if(u){
+            let updateUser=u;
+            updateUser.education.push(update_items);//append education items
+
+            console.log(updateUser);
+
+            user.updateOne({email:req.session.user.email},{$set:updateUser},function(err1,res1){
+
+                if(err1){
+                    console.log(err1)
+                    res.json({success:false,msg:"Your profile update failed"});
+                }
+                if(res1){                        
+                    res.json({success:true,msg:"Your profile update was successfull"});
+                }
+
+            });
+
+        }
+
+    });
+    
+});
+
+/*updates the qualifications on the profile */
+app.post('/update_qual',function(req,res,next){
+    // console.log('about qual');
+    // console.log(req.body.profile_qual_title)
+    // console.log(req.body.profile_qual_year)
+
+    var update_items={
+        title:req.body.profile_qual_title,
+        // body:'',
+        year:req.body.profile_qual_year
+    }
+
+
+    user.findOne({email:req.session.user.email }, function(err, u) {
+        if(u){
+            let updateUser=u;
+            updateUser.qualification.push(update_items);//append education items
+
+            console.log(updateUser);
+
+            user.updateOne({email:req.session.user.email},{$set:updateUser},function(err1,res1){
+
+                if(err1){
+                    console.log(err1)
+                    res.json({success:false,msg:"Your profile update failed"});
+                }
+                if(res1){                        
+                    res.json({success:true,msg:"Your profile update was successfull"});
+                }
+
+            });
+
+        }
+
+    });
+    
+});
+
+/*updates the schools on the profile */
+app.post('/update_sch',function(req,res,next){
+
+    var update_items={
+        title:req.body.profile_sch_title,
+        // body:'',
+    }
+
+
+    user.findOne({email:req.session.user.email }, function(err, u) {
+        if(u){
+            let updateUser=u;
+            updateUser.schools.push(update_items);//append education items
+
+            console.log(updateUser);
+
+            user.updateOne({email:req.session.user.email},{$set:updateUser},function(err1,res1){
+
+                if(err1){
+                    console.log(err1)
+                    res.json({success:false,msg:"Your profile update failed"});
+                }
+                if(res1){                        
+                    res.json({success:true,msg:"Your profile update was successfull"});
+                }
+
+            });
+
+        }
+
+    });
+    
+});
+
+
 /*updates bio1*/
 var profile_upload = upload.fields([
     {name: 'profile_bio1_displayPic',maxCount:1 },
@@ -421,14 +564,24 @@ var profile_upload = upload.fields([
 
 app.post('/update_bio1',profile_upload,function(req,res,next){
 
-    console.log(req.files);
+    console.log(req.body);
+
+    var dob = moment(req.body.profile_bio1_dob,'MM-DD-YYYY');
+    console.log(dob);
+
+    designation_updates={
+        title:req.body.profile_bio1_designation,
+        body:''
+    }
 
     user.findOne({email:req.session.user.email }, function(err, u) {
         if(u){
             let updateUser=u;
             updateUser.firstname=req.body.profile_bio1_firstname;
             updateUser.lastname=req.body.profile_bio1_lastname;
+            updateUser.dob=dob;
             updateUser.displayName=updateUser.firstname+' '+updateUser.lastname;
+            updateUser.designation.push(designation_updates);
 
             //store img if it exists
             if(req.files && req.files['profile_bio1_displayPic']){
@@ -444,16 +597,15 @@ app.post('/update_bio1',profile_upload,function(req,res,next){
 
             user.updateOne({email:req.session.user.email},{$set:updateUser},function(err1,res1){
 
-                    if(err1){
-                        console.log(err1)
-                        res.json({success:false,msg:"Your profile update failed"});
-                    }
-                    if(res1){                        
-                        res.json({success:true,msg:"Your profile update was successfull"});
-                    }
+                if(err1){
+                    console.log(err1)
+                    res.json({success:false,msg:"Your profile update failed"});
+                }
+                if(res1){                        
+                    res.json({success:true,msg:"Your profile update was successfull"});
+                }
 
                 });
-
         }
 
     });

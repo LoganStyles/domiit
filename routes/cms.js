@@ -15,6 +15,8 @@ var riddle_cat = require('../models/riddle_cats');
 var riddle_sub1 = require('../models/riddle_sub1');
 var riddle_sub2 = require('../models/riddle_sub2');
 
+var about = require('../models/about');
+
 
 /*check if user is logged in*/
 function isLoggedIn(req, res, next) {
@@ -24,6 +26,66 @@ function isLoggedIn(req, res, next) {
         next();
     }
 }
+
+/*show about
+get a specific about item,
+prepare modal */
+router.get('/about/:item',isLoggedIn, function(req, res) {
+    console.log('inside cms about');
+    var item = req.params.item;
+    var modal_id="#"+item+"_about_modal";
+    console.log('modal_id '+modal_id);
+
+    let cat,projection;
+    quest_status=false;
+    quest_cat_status=false;
+    article_status=false;
+    article_cat_status=false;
+    riddle_status=false;
+    riddle_cat_status=false;
+    about_overview_status=false;
+        
+
+    switch(item){
+        case'overview':
+        about_overview_status=true;
+        projection={overview:1};
+        break;
+
+    }
+    
+     //get all items
+     about.find({},projection).exec(function(err,result){
+        if(err){
+            console.log('err occurred');
+            console.log(err);
+        }
+
+        if(result){
+            console.log('result occurred');
+            console.log(result);
+        }
+
+        res.render('cms_about_overview', {
+            title:item+' - About',
+            url:process.env.URL_ROOT,
+            user_info:req.user,
+            item:item,
+            // item_id:
+            modal_id:modal_id,
+            data:result,
+            quest_status:quest_status,
+            quest_cat_status:quest_cat_status,
+            article_status:article_status,
+            article_cat_status:article_cat_status,
+            riddle_status:riddle_status,
+            riddle_cat_status:riddle_cat_status,
+            about_overview_status:about_overview_status
+        });
+
+     });
+         
+ });
 
 
 /*show category
@@ -41,6 +103,7 @@ router.get('/main/:item',isLoggedIn, function(req, res) {
     article_cat_status=false;
     riddle_status=false;
     riddle_cat_status=false;
+    about_overview_status=false;
 
     switch(item){
         case'question':
@@ -375,6 +438,50 @@ router.get('/selected_sub1/:type/:item',isLoggedIn, function(req, res) {
                 });  
             }); 
 
+});
+
+
+/*save an about item
+get all submitted about info for an item,
+save a cat */
+router.post('/post_about/:type',function(req,res,next){
+
+    var type = req.params.type;
+    let cat;
+
+    switch(type){
+        case 'question':
+        cat = new quest_cat();
+        cat.title = (req.body.question_cat_title).trim();
+        cat.value = (req.body.question_cat_title).trim().replace(/[^A-Za-z0-9]/g, "_");
+        cat.description=req.body.question_cat_description;
+        break;
+
+        case 'article':
+        cat = new article_cat();
+        cat.title = (req.body.article_cat_title).trim();
+        cat.value = (req.body.article_cat_title).trim().replace(/[^A-Za-z0-9]/g, "_");
+        cat.description=req.body.article_cat_description;
+        break;
+
+        case 'riddle':
+        cat = new riddle_cat();
+        cat.title = (req.body.riddle_cat_title).trim();
+        cat.value = (req.body.riddle_cat_title).trim().replace(/[^A-Za-z0-9]/g, "_");
+        cat.description=req.body.riddle_cat_description;
+        break;
+
+    }   
+
+    cat.save(function(err,quest){
+        if(err){console.log(err);res.json({success:false,msg:type+" category update failed"});
+    }else{
+        res.json({success:true,msg:type+" category submission succesful"});
+        var json = JSON.stringify(cat,null,2);
+        // console.log(json);
+
+    }
+})
 });
 
 

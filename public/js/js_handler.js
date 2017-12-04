@@ -7,6 +7,7 @@ function modalLoader(type, mode,cat_type) {
         
         // var form_action = "#" + type + "_action";
         var formid = "#" + type + "_form";
+        var header = "#" + type + "_header";
         var submit_but = formid + " input[type='submit']";
         if(cat_type){
             var modal ="#"+type+"_"+cat_type+"_modal";
@@ -28,12 +29,13 @@ function modalLoader(type, mode,cat_type) {
                 $(formid).trigger('reset');
                 // $(form_action).val("insert");
                 $(modal).modal({backdrop: false, keyboard: false});
+                $(header).text('Add');
                 break;
 
             case 'edit':
-            console.log('inside mode edit: ');
-                
+            console.log('inside mode edit: ');                
                 $(modal).modal({backdrop: false, keyboard: false});
+                $(header).text('Edit');
                 break;
             
             default:

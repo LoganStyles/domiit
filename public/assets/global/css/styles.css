@@ -47,25 +47,7 @@
 	/*padding-bottom: 1%;
 	background: #fff;*/
 }
-.profile_bg{
-	position: relative;
-	/*height: 30vh;*/
-	background-color: #ccc;
 
-	/*float: left;*/
-	width: 100%;
-	height: 180px;
-	/*margin: 0 30px 20px 0;*/
-}
-
-.profile_bg img{
-	height: 180px;
-	/*background-color: #444;*/
-}
-
-.profile_bg img[class] { 
-	max-width: 100%;
-}
 
 
 
@@ -87,17 +69,7 @@
 	background-clip:         padding-box;
 }
 
-.profile_img_container{
-	height: 200px;
-	width: 200px;
-	position: absolute;
-	left: 50%;
-	top:13vh;
-	margin-left: -100px;
-	-webkit-border-radius: 50%;
-	-moz-border-radius: 50%; 
-	border-radius: 50%;
-}
+
 
 .profile_img_text{	
 	color: #86be25;
@@ -138,7 +110,7 @@
 .profile_text_section.line_space .profile_text_body{
 	width: 60%;
 	float: left;
-	text-align: center;
+	text-align: left;
 	display: inline-block;
 }
 
@@ -149,20 +121,29 @@
 
 .profile_text_section.multiple .profile_subitem{
 	width: 100%;
+	margin-bottom: 5%;
 }
 
-.profile_text_section.multiple .profile_text_body{
+.profile_text_section.multiple .profile_text_body,.section_title{
 	width: 60%;
 	float: left;
 }
 
-.profile_text_section.multiple .profile_text_body_icons .action_icons{
+.profile_text_section.multiple .profile_text_body_icons .action_icons,.section_icon{
 	float: right;
 	padding: 1% 0;
 	cursor: pointer;	
 	width: 30%;
 }
 
+.profile_text_section.multiple .profile_text_body_icons .action_icons.hide_edit_icons img{
+	display: none;
+	
+}
+
+.action_icons{
+	float: right;
+}
 .profile_text_section.multiple .profile_text_body_icons .action_icons img{
 	float: right;
 	display: block;
@@ -211,8 +192,49 @@
      	padding: 1%;
      }
 
+     /*images*/
+
+     .profile_bgimg_container{
+     	height: 180px;
+     	width: 100%;
+     	position: relative;
+     	background-color: #ccc;
+     }
+
+     .pro_bgimage{
+     	float: left;
+     }
 
 
+     .pro_bgimage img {
+     	height: 180px; 
+     	width: 100%;  		
+     }
+
+     .profile_img_container{
+     	background-color: #444;
+     	height: 200px;
+     	width: 200px;
+     	position: absolute;
+     	left: 50%;
+     	top:13vh;
+     	margin-left: -100px;
+     	-webkit-border-radius: 50%;
+     	-moz-border-radius: 50%; 
+     	border-radius: 50%;
+     }
+
+     .pro_image{
+     	float: left;
+     }
+
+     .pro_image img {
+     	height: 200px; 
+     	width: 200px;
+     	-webkit-border-radius: 50%;
+     	-moz-border-radius: 50%; 
+     	border-radius: 50%;
+     }
 
      /*toggle cntent*/
      .morecontent span {
