@@ -29,6 +29,8 @@ var art_cat = require('./models/article_cats');
 var art_sub1 = require('./models/article_sub1');
 var art_sub2 = require('./models/article_sub2');
 
+var about = require('./models/about');
+
 var multer = require('multer');
 var mime = require('mime-lib');
 
@@ -218,7 +220,6 @@ app.get('/profile', function(req, res) {
         console.log('backgroundPic : '+backgroundPic);
 
 
-
         res.render('profile', {
             url:process.env.URL_ROOT,
             user_info:req.user,
@@ -347,7 +348,9 @@ app.get('/admin',isLoggedIn, function(req, res) {
      res.render('cms_dashboard', {
         title:'CMS',
         url:process.env.URL_ROOT,
-        user_info:req.user
+        user_info:req.user,
+        about_home_status:true,
+        about_status:true,
     }); 
  }else{
     res.redirect('/');
@@ -356,11 +359,24 @@ app.get('/admin',isLoggedIn, function(req, res) {
 });
 
 
-app.get('/', function(req, res) {    
-    res.render('index', {
-        title:'Home',
-        url:process.env.URL_ROOT
+app.get('/', function(req, res) {
+    about.findOne({id:1},function(error,result){
+        var res_data=[];
+        if(error){
+            console.log(error)
+        }else if(result){
+            console.log(result)
+            res_data=result;
+        }
+
+        res.render('index', {
+            title:'Home',
+            url:process.env.URL_ROOT,
+            data:res_data
+        });
+
     });
+
 });
 
 // 500 error handler (middleware)
@@ -471,8 +487,7 @@ app.post('/update_edu',function(req,res,next){
                 if(err1){
                     console.log(err1)
                     res.json({success:false,msg:"Your profile update failed"});
-                }
-                if(res1){                        
+                }else if(res1){                        
                     res.json({success:true,msg:"Your profile update was successfull"});
                 }
 
@@ -509,8 +524,7 @@ app.post('/update_qual',function(req,res,next){
                 if(err1){
                     console.log(err1)
                     res.json({success:false,msg:"Your profile update failed"});
-                }
-                if(res1){                        
+                }else if(res1){                        
                     res.json({success:true,msg:"Your profile update was successfull"});
                 }
 
@@ -543,8 +557,7 @@ app.post('/update_sch',function(req,res,next){
                 if(err1){
                     console.log(err1)
                     res.json({success:false,msg:"Your profile update failed"});
-                }
-                if(res1){                        
+                }else if(res1){                        
                     res.json({success:true,msg:"Your profile update was successfull"});
                 }
 
@@ -600,8 +613,7 @@ app.post('/update_bio1',profile_upload,function(req,res,next){
                 if(err1){
                     console.log(err1)
                     res.json({success:false,msg:"Your profile update failed"});
-                }
-                if(res1){                        
+                }else if(res1){                        
                     res.json({success:true,msg:"Your profile update was successfull"});
                 }
 
@@ -673,8 +685,7 @@ app.post('/answer_question',upload.single('section_answer_photo'),function(req,r
                     if(err1){
                         console.log(err1)
                         res.json({success:false,msg:"Your post failed"});
-                    }
-                    if(res1){
+                    }else if(res1){
                         // console.log(most_recent_answer);
                         var json = JSON.stringify(most_recent_answer, null, 2);
                         // console.log(json);

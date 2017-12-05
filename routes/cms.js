@@ -29,62 +29,88 @@ function isLoggedIn(req, res, next) {
 
 /*show about
 get a specific about item,
-prepare modal */
+and display */
 router.get('/about/:item',isLoggedIn, function(req, res) {
     console.log('inside cms about');
     var item = req.params.item;
-    var modal_id="#"+item+"_about_modal";
-    console.log('modal_id '+modal_id);
+    var page='cms_about_item';
 
-    let cat,projection;
-    quest_status=false;
-    quest_cat_status=false;
-    article_status=false;
-    article_cat_status=false;
-    riddle_status=false;
-    riddle_cat_status=false;
-    about_overview_status=false;
-        
+    let quest_status=false,
+    quest_cat_status=false,
+    article_status=false,
+    article_cat_status=false,
+    riddle_status=false,
+    riddle_cat_status=false,
+    about_status=false,
+    about_overview_status=false,
+    about_who_status=false,
+    about_how_status=false;
+    about_home_status=false;
+
 
     switch(item){
         case'overview':
+        about_status=true;
         about_overview_status=true;
-        projection={overview:1};
+        page='cms_about_overview';
+        page_title='overview';
         break;
 
+        case'who':
+        about_status=true;
+        about_who_status=true;
+        page='cms_about_who';
+        page_title='who we are';
+        break;
+
+        case'how':
+        about_status=true;
+        about_how_status=true;
+        page_title='How it works';
+        break;
     }
     
      //get all items
-     about.find({},projection).exec(function(err,result){
+     about.find({id:1}).exec(function(err,result){
+        var res_data,res_data_item=[];
+
         if(err){
             console.log('err occurred');
             console.log(err);
-        }
-
-        if(result){
+        }else if(result){
             console.log('result occurred');
             console.log(result);
+            res_data=(result[0])?(result[0]):([]);
+            console.log(res_data);
+
+            switch(item){
+                case 'how':
+                res_data_item=((res_data.length > 0) && (res_data['how']))?(res_data['how']):([]);
+            }
         }
 
-        res.render('cms_about_overview', {
-            title:item+' - About',
+        res.render(page, {
+            title:page_title,
             url:process.env.URL_ROOT,
             user_info:req.user,
             item:item,
-            // item_id:
-            modal_id:modal_id,
-            data:result,
+            data:res_data,
+            dataitem:res_data_item,
             quest_status:quest_status,
             quest_cat_status:quest_cat_status,
             article_status:article_status,
             article_cat_status:article_cat_status,
             riddle_status:riddle_status,
             riddle_cat_status:riddle_cat_status,
-            about_overview_status:about_overview_status
+            about_status:about_status,
+            about_overview_status:about_overview_status,
+            about_who_status:about_who_status,
+            about_how_status:about_how_status,
+            about_home_status:about_home_status
         });
 
-     });
-         
+    });
+
  });
 
 
@@ -443,45 +469,105 @@ router.get('/selected_sub1/:type/:item',isLoggedIn, function(req, res) {
 
 /*save an about item
 get all submitted about info for an item,
-save a cat */
+save a about */
 router.post('/post_about/:type',function(req,res,next){
 
+
     var type = req.params.type;
-    let cat;
+    var update_items;
 
     switch(type){
-        case 'question':
-        cat = new quest_cat();
-        cat.title = (req.body.question_cat_title).trim();
-        cat.value = (req.body.question_cat_title).trim().replace(/[^A-Za-z0-9]/g, "_");
-        cat.description=req.body.question_cat_description;
+        case 'overview':
+        update_items={
+            title:type,
+            body:req.body.overview_about_description
+        };
+        update_param={overview:update_items};
         break;
 
-        case 'article':
-        cat = new article_cat();
-        cat.title = (req.body.article_cat_title).trim();
-        cat.value = (req.body.article_cat_title).trim().replace(/[^A-Za-z0-9]/g, "_");
-        cat.description=req.body.article_cat_description;
+        case 'who':
+        update_items={
+            title:type,
+            body:req.body.who_about_description
+        };
+        update_param={who_we_are:update_items};
         break;
-
-        case 'riddle':
-        cat = new riddle_cat();
-        cat.title = (req.body.riddle_cat_title).trim();
-        cat.value = (req.body.riddle_cat_title).trim().replace(/[^A-Za-z0-9]/g, "_");
-        cat.description=req.body.riddle_cat_description;
-        break;
-
-    }   
-
-    cat.save(function(err,quest){
-        if(err){console.log(err);res.json({success:false,msg:type+" category update failed"});
-    }else{
-        res.json({success:true,msg:type+" category submission succesful"});
-        var json = JSON.stringify(cat,null,2);
-        // console.log(json);
-
     }
-})
+
+    options = { upsert: true, new: true, setDefaultsOnInsert: true };
+
+    about.findOneAndUpdate({id:1},update_param,options,function(err2,res2){
+
+        if(err2){
+            console.log('err2')
+            res.json({success:false,msg:"About2 item update failed"});
+        }else if(res2){  
+            console.log('res2')                      
+            res.json({success:true,msg:"About2 item update was successfull"});
+        }
+
+    });
+    
+});
+
+
+/*save an about subitem
+get all submitted about info for an item,
+save a about */
+router.post('/post_about_subitem/:type',function(req,res,next){
+
+
+    var type = req.params.type;
+    var update_items;
+
+    switch(type){
+        case 'how':
+        update_items={
+            title:req.body.item_about_title,
+            body:req.body.item_about_description
+        };
+
+        about.findOne({id:1}, function(err, ab) {
+            if(ab){//if this item exists update and return
+                let updateAbout=ab;
+                updateAbout.how.push(update_items);//append how items
+                console.log(updateAbout);
+
+                about.updateOne({id:1},{$set:updateAbout},function(err1,res1){
+
+                    if(err1){
+                        console.log('err1')
+                        res.json({success:false,msg:"About item update failed"});
+                    }else if(res1){  
+                        console.log('res1')                      
+                        res.json({success:true,msg:"About item update was successfull"});
+                    }
+
+                });
+
+                do_update=false;//don't update again
+
+            }else{
+                update_param={how:[update_items]};
+                options = { upsert: true, new: true, setDefaultsOnInsert: true };
+
+                about.findOneAndUpdate({id:1},update_param,options,function(err2,res2){
+
+                    if(err2){
+                        console.log('err2')
+                        res.json({success:false,msg:"About2 item update failed"});
+                    }else if(res2){  
+                        console.log('res2')                      
+                        res.json({success:true,msg:"About2 item update was successfull"});
+                    }
+
+                });
+            }
+
+        });
+        break;
+    }
+    
 });
 
 

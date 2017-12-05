@@ -1,3 +1,8 @@
+function newData(){
+    $('#item_about_form').trigger('reset');
+    $('#item_about_title').focus();
+}
+
 
 function modalLoader(type, mode,cat_type) {
 

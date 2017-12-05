@@ -23,10 +23,7 @@
                 
             </div>
             <!-- END PAGE BAR -->
-            <!-- BEGIN PAGE TITLE-->
-<!--                <h3 class="page-title"> Dashboard 
-                <small>Unit Prices & statistics</small>
-            </h3>-->
+            
             <!-- END PAGE TITLE-->
             <!-- END PAGE HEADER-->
             <div class="row">
@@ -35,22 +32,22 @@
                     <div class="portlet light portlet-fit ">
                         <div class="portlet-title">
                             <div class="caption">
-                                <span class="caption-subject font-red sbold uppercase">Overview</span>&nbsp;&nbsp;
+                                <span class="caption-subject font-red sbold uppercase">Who We Are</span>&nbsp;&nbsp;
                             </div>
                             <div class="row">                                                
                                 <div class="btn-group"></div>
                             </div>
                         </div>
                         <div class="portlet-body">
-                            <form role="form" id="overview_about_form" action="" method="post">
+                            <form role="form" id="who_about_form" action="" method="post">
                                 <span class="form_submission_error"></span>
                                 <span class="form_submission_success"></span>
 
-                                <input type="hidden" name="overview_about_id"  id="overview_about_id" value="">
+                                <input type="hidden" name="who_about_id"  id="who_about_id" value="">
                                 <div class="form-body">                          
 
                                     <div class="form-group form-md-line-input form-md-floating-label">
-                                        <textarea class="form-control" rows="3" id="overview_about_description" name="overview_about_description">{{data.overview.body}}</textarea>
+                                        <textarea class="form-control" rows="3" id="who_about_description" name="who_about_description">{{data.who_we_are.body}}</textarea>
                                         <label for="form_control_1">Description</label>
                                     </div>
 
@@ -81,23 +78,23 @@
 <script type="text/javascript">
             
             function resetFields(){
-                $('#overview_about_form .form_submission_success').text("");
-                $('#overview_about_form .form_submission_error').text("");
+                $('#who_about_form .form_submission_success').text("");
+                $('#who_about_form .form_submission_error').text("");
             }
 
            
 
             $( document ).ready( function () {
 
-                $( "#overview_about_form" ).validate( {/*validate & submit category details*/
+                $( "#who_about_form" ).validate( {/*validate & submit category details*/
                     rules: {  
-                        overview_about_description: {
+                        who_about_description: {
                             required: true
                         }
                         
                     },
                     messages: {                        
-                        overview_about_description: {
+                        who_about_description: {
                             required: "This field is required"
                         }
                         
@@ -127,9 +124,9 @@
                 },
                 submitHandler: function () {
                     resetFields();
-                    var formData = $('#overview_about_form').serialize();
+                    var formData = $('#who_about_form').serialize();
                     console.log(formData);
-                    var my_url="{{url}}/cms/post_about/overview";
+                    var my_url="{{url}}/cms/post_about/who";
 
                     $.ajax({
                         url:my_url,
@@ -142,15 +139,15 @@
                                 console.log('success');
                                 if(response.success==true){
                                     console.log('response is true');
-                                    $('#overview_about_form  .form_submission_success').text(response.msg);
+                                    $('#who_about_form  .form_submission_success').text(response.msg);
                                     setTimeout(function(){
-                                        $('#overview_about_form  .form_submission_success').text('');
-                                         window.location.href="{{url}}/cms/about/overview";
+                                        $('#who_about_form  .form_submission_success').text('');
+                                         window.location.href="{{url}}/cms/about/who";
                                     },3000);
                                     
                                 }else{
                                     console.log('response is false');
-                                    $('#overview_about_form  .form_submission_error').text(response.msg);
+                                    $('#who_about_form  .form_submission_error').text(response.msg);
                                 }
                             },
                             error:function(xhr, status, err){
