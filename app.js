@@ -189,9 +189,10 @@ function isLoggedIn(req, res, next) {
 }
 
 app.get('/profile', function(req, res) {
+    console.log(process.env);
     console.log('inside profile');
-    console.log(req.user);    
-    
+    console.log(req.user); 
+   
     
     if(req.user){
         var qualification="",
@@ -199,7 +200,7 @@ app.get('/profile', function(req, res) {
         dob="",
         displayPic="",
         backgroundPic="";
-        
+
         if(req.user.qualification[0]){
             qualification=req.user.qualification[req.user.qualification.length -1].title;
         }
