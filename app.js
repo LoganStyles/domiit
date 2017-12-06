@@ -194,7 +194,12 @@ app.get('/profile', function(req, res) {
     
     
     if(req.user){
-        var qualification,designation,dob,displayPic="";
+        var qualification="",
+        designation="",
+        dob="",
+        displayPic="",
+        backgroundPic="";
+        
         if(req.user.qualification[0]){
             qualification=req.user.qualification[req.user.qualification.length -1].title;
         }
