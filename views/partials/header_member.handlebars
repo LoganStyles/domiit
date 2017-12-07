@@ -313,28 +313,24 @@
                             </ul>
 
                         </li>
-                        <li class="menu-dropdown classic-menu-dropdown ">
+                        <li class="menu-dropdown classic-menu-dropdown {{#if art_status}}active{{/if}}">
                             <a href="javascript:;" class="swap_icons">
                                 <div style="margin-left: 30%;">
                                 <img alt="" class="icon_size" src="{{url}}/images/articles_icon.png">
                                 <img alt="" class="icon_size" src="{{url}}/images/articles_icon.png">
                                 </div>
-                                <!-- <img alt="" class="icon_size" src="{{url}}/images/Question_and_Answer.png">
-                                <img alt="" class="icon_size" src="{{url}}/images/Question_and_Answer_white.png"> -->
-
-                                <!-- <img alt="" class="" src="{{url}}/images/articles_icon.png"></div> -->
                                 <div> Articles & Reviews</div>
                                 <span class="arrow"></span>
                             </a>
                             <ul class="dropdown-menu pull-left">
                                 <li class=" ">
-                                    <a href="#" class="nav-link  "> All </a>
+                                    <a href="{{url}}/posts/section/article/All/0" class="nav-link  "> All </a>
                                 </li>
                                 <li class=" ">
-                                    <a href="#" class="nav-link  "> Unreviewed Articles </a>
+                                    <a href="{{url}}/posts/section/article/Unanswered/0" class="nav-link  "> Unreviewed Articles </a>
                                 </li>
                                 <li class=" ">
-                                    <a href="#" class="nav-link  "> Reviewed Articles </a>
+                                    <a href="{{url}}/posts/section/article/Answered/0" class="nav-link  "> Reviewed Articles </a>
                                 </li>
 
                             </ul>

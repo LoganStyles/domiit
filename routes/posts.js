@@ -4,6 +4,7 @@ var ne = require('node-each');
 var config = require('../config/database');
 var user = require('../models/user');
 var question = require('../models/question');
+var article = require('../models/article');
 
 
 
@@ -24,15 +25,15 @@ function getLatestOwnerDetails(arr){
 
 
 /*get all posted questions,*/
-router.get('/section/:item/:type/:question_id', isLoggedIn,function(req, res) {
+router.get('/section/:item/:type/:id', isLoggedIn,function(req, res) {
     console.log('inside all sections');
 
     var item = req.params.item;
     var type = req.params.type;
-    var question_id = req.params.question_id;
+    var id = req.params.id;
     console.log('item :'+item);
     console.log('type :'+type);
-    console.log('question_id :'+question_id);
+    console.log('id :'+id);
 
     let question_status=true,
     home_status=false;
@@ -42,27 +43,27 @@ router.get('/section/:item/:type/:question_id', isLoggedIn,function(req, res) {
     switch(type){
         case 'All':
         selection={};
-        page_title='All Questions';
+        page_title='All '+item+'s';
         break;
 
         case 'Unanswered':
         selection={answers:{$size:0}};
-        page_title='Unanswered Questions';
+        page_title='Unanswered '+item+'s';
         break;
 
-        //get only answered questions
+        //get only answered questions/articles
         case 'Answered':
         selection={"answers_len":{"$gt":0}};
         page='posts_answers';
-        page_title='Answered Questions';
+        page_title='Answered '+item+'s';
         break;
 
-        //get only answers for a question
+        //get only answers for a question/article
         case 'all_answers':
-        if(question_id){
-            selection={_id:question_id};
+        if(id){
+            selection={_id:id};
             page='posts_all_answers';
-            page_title='All Answers';
+            page_title='All '+item+'s';
         }        
         break;
 
@@ -71,6 +72,10 @@ router.get('/section/:item/:type/:question_id', isLoggedIn,function(req, res) {
     switch(item){
         case'question':
         section = question;
+        break;
+
+        case'article':
+        section = article;
         break;
     }
 
@@ -85,17 +90,19 @@ section.find(selection).sort({post_date:-1}).exec(function(err,items){
     /*for each item update owner details such as displayPic & displayName
     since these may have changed*/
     ne.each(items,function(el,i){
-        var updated_obj={};
-        var promise = getLatestOwnerDetails(el.owner);
-        promise.then(function(response){
-            var displayPic=(response.displayPic)?(response.displayPic[response.displayPic.length -1]):('avatar.png')
-            updated_obj={
-                id:(response._id).toString(),
-                displayName:response.displayName,
-                displayPic:displayPic
-            };
-            el.owner=updated_obj;
-        });
+        if(items.length > 0){
+            var updated_obj={};
+            var promise = getLatestOwnerDetails(el.owner);
+            promise.then(function(response){
+                var displayPic=(response.displayPic)?(response.displayPic[response.displayPic.length -1]):('avatar.png')
+                updated_obj={
+                    id:(response._id).toString(),
+                    displayName:response.displayName,
+                    displayPic:displayPic
+                };
+                el.owner=updated_obj;
+            });
+        }        
 
     }).then(function(res2){
 

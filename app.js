@@ -375,7 +375,8 @@ io.on('connection',function(socket){
 var upload = multer({storage:Storage});
 /*process an 'ask a question' post,save & update UI immediately*/
 app.post('/ask_question',upload.single('question_photo'),function(req,res,next){
-    // console.log(req.body)
+    console.log('req.fil')
+    console.log(req.file)
 
     var owner_details={id:req.user._id,displayName:req.user.displayName,displayPic:req.user.displayPic,
         status:req.user.current_appointment};
@@ -404,6 +405,58 @@ app.post('/ask_question',upload.single('question_photo'),function(req,res,next){
             io.emit('all_questions', json);
             io.emit('unanswered_questions', json);
             res.json({success:true,msg:"Question submission succesful"});
+        }   
+    });
+
+    });
+
+
+/*process an 'write an article' post,save & update UI immediately*/
+var article_upload = upload.fields([
+    {name: 'article_attachment',maxCount:1 },
+    {name: 'article_photo',maxCount:1 }]);
+app.post('/ask_article',article_upload,function(req,res,next){
+    console.log(req.files)
+
+    var owner_details={id:req.user._id,displayName:req.user.displayName,displayPic:req.user.displayPic,
+        status:req.user.current_appointment};
+
+        let write_art =new article();
+        write_art.body=req.body.article_title;
+        write_art.category = req.body.article_category;
+        write_art.sub_cat1=req.body.article_sub1;
+        write_art.sub_cat2=req.body.article_sub2;
+        write_art.description=req.body.article_info;
+        write_art.owner=owner_details;
+
+        // if (req.file && req.file.filename != null) {
+        //     write_art.pics.push(req.file.filename);
+        // }
+
+        //store attachment if it exists
+        if(req.files && req.files['article_attachment']){
+            console.log('filename '+req.files['article_attachment'][0].filename)
+            write_art.attachment.push(req.files['article_attachment'][0].filename);
+        }
+
+        //store photo if it exists
+        if(req.files && req.files['article_photo']){
+            console.log('filename '+req.files['article_photo'][0].filename)
+            write_art.pics.push(req.files['article_photo'][0].filename);
+        }
+
+
+        write_art.save(function(err1, ask_quest) {
+
+            if(err1){console.log(err1);res.json({success: false,msg:"article submission failed"});
+
+        }else{   
+        // console.log(ask_quest);         
+            var json = JSON.stringify(write_art, null, 2);
+            // console.log(json);
+            // io.emit('all_questions', json);
+            // io.emit('unanswered_questions', json);
+            res.json({success:true,msg:"article submission succesful"});
         }   
     });
 

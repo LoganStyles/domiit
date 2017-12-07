@@ -25,7 +25,7 @@ var articleSchema = mongoose.Schema({
 		responderDisplayPic:String,
 		date_created:{type:Date,default:Date.now}
 	}],
-	reviews:[{
+	answers:[{
 		body:String,
 		responderDisplayName:String,
 		responder_id:String,
