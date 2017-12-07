@@ -35,34 +35,42 @@ router.get('/section/:item/:type/:id', isLoggedIn,function(req, res) {
     console.log('type :'+type);
     console.log('id :'+id);
 
-    let question_status=true,
-    home_status=false;
+    
+    let question_status=false,
+    home_status=false,
+    article_status=false;
+
+    let page_icon=item+'s_icon.png';
 
     var selection,section;
     var page='section';
+
     switch(type){
         case 'All':
         selection={};
-        page_title='All '+item+'s';
+        page_title=type+' '+item+'s';
         break;
 
         case 'Unanswered':
+        case 'Unreviewed':
         selection={answers:{$size:0}};
-        page_title='Unanswered '+item+'s';
+        page_title=type+' '+item+'s';
         break;
 
         //get only answered questions/articles
         case 'Answered':
+        case 'Reviewed':
         selection={"answers_len":{"$gt":0}};
-        page='posts_answers';
-        page_title='Answered '+item+'s';
+        // page='posts_'+type.toLowerCase();
+        page='section_response';
+        page_title=type+' '+item+'s';
         break;
 
         //get only answers for a question/article
         case 'all_answers':
         if(id){
             selection={_id:id};
-            page='posts_all_answers';
+            page='section_all_response';
             page_title='All '+item+'s';
         }        
         break;
@@ -72,10 +80,12 @@ router.get('/section/:item/:type/:id', isLoggedIn,function(req, res) {
     switch(item){
         case'question':
         section = question;
+        question_status=true;        
         break;
 
         case'article':
         section = article;
+        article_status=true;
         break;
     }
 
@@ -121,7 +131,9 @@ section.find(selection).sort({post_date:-1}).exec(function(err,items){
             data:res_items,
             page_title: page_title,
             page_type:item,
+            page_icon:page_icon,
             quest_status:question_status,
+            art_status:article_status,
             home_status:home_status
         });
     })

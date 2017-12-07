@@ -49,7 +49,7 @@
                 <div class="clearfix"></div> 
             </div>
 
-            <div class="question_all_post_area">
+            <div class="posts_answers question_all_post_area">
 
             {{#each data}}
 
@@ -59,7 +59,7 @@
 
                     <div class="portlet-title">
                         <div class="caption caption-md">
-                            <img alt="" class="icon_size" src="{{../url}}/images/{{../page_icon}}">
+                            <img alt="" class="" src="{{url}}/images/articles_icon.png">
                             <span class="caption-subject  bold uppercase" style="color: #86be25">{{../page_type}}</span>
                             {{#if category}}
                             <span class="caption-helper">{{category}}</span>&nbsp;
@@ -73,11 +73,9 @@
                             |&nbsp;<span class="caption-helper">{{sub_cat2}}</span>&nbsp;
                             {{/if}}
                             
-                        </div>
-
-                       
+                        </div>                       
                     </div>
-                    <div class="portlet-body" style="padding-top: 0px;">
+                    <div class="portlet-body">
                         <div class="" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
                             <div class="general-item-list">
                                 <div class="item">
@@ -87,7 +85,7 @@
                                         <div class="posts_partition"><!--1st partition-->
                                         <span> 
                                         
-                                        <img class="icon_size img-circle" src="{{../url}}/uploads/{{owner.displayPic}}">
+                                        <img class="icon_size img-circle" src="{{url}}/uploads/{{owner.displayPic}}">
                                             
 
                                                 <a style="color: #000;" href="" class="item-name primary-link">{{owner.displayName}}</a>
@@ -98,13 +96,14 @@
                                             </span>
                                         </div>
 
-                                         <div class="posts_partition_middle"><!--2nd partition-->
+                                        <div class="posts_partition_middle"><!--2nd partition-->
                                             <span style="">
                                                 <img class="icon_size_40" src="{{url}}/images/add_person.png">
                                             </span>
                                         </div>
-                                         <div class="posts_partition"><!--3rd partition-->
-                                            <div style="margin-left: 0%;text-align: right;">
+
+                                        <div class="posts_partition"><!--3rd partition-->
+                                            <div style="margin-left: 60%;">
                                                 <div style="color: #ccc;">{{moment post_date "fromNow"}}</div>
                                                 <div style="display: inline-block;margin-right: 20%;">
                                                     <img src="{{url}}/images/group.png">
@@ -144,14 +143,14 @@
                                     </div>
 
                                     <div class="item-body"> 
-                                    {{#if pics.length }}
-                                        <div style="margin-bottom: 3%;">                                                                    
-                                            <img class="img-responsive" src="{{url}}/uploads/{{pics.[0]}}">
-                                        </div>
-                                    {{/if}}
-                                        <div style="color: #337ab7;" class="post_question">
-                                            {{body}}
-                                        </div>
+                                        {{#if pics.length }}
+                                            <div style="margin-bottom: 3%;">                                                                    
+                                                <img class="img-responsive" src="{{url}}/uploads/{{pics.[0]}}">
+                                            </div>
+                                        {{/if}}
+                                            <div style="color: #337ab7;" class="post_question">
+                                                {{body}}
+                                            </div>
                                         
                                     </div>  
 
@@ -191,24 +190,173 @@
                             </div>
                         </div>
                     </div>
-                    <!-- END PORTLET -->
-                   {{#if ../quest_status}}
-                    <div class="task-footer" style="margin: 2%;">
-                        <div class="btn-arrow-link ">
-                            <a type="button" class="btn dark btn-outline sbold uppercase answer_button"><i class="icon-pencil"></i>Write your answer</a>
-                            
-                        </div>
-                    </div>
-                    {{/if}}
 
-                    {{#if ../art_status}}
-                    <div class="task-footer" style="margin: 2%;">
-                        <div class="btn-arrow-link ">
-                            <a type="button" class="btn dark btn-outline sbold uppercase answer_button"><i class="icon-globe"></i>Download</a>                            
+                    <!--answers-->
+
+                    {{#each answers}}
+
+                        {{#if @last}}
+
+                    <div>
+                        <div class="caption caption-md">
+                            <!-- <i class="fa fa-question"></i> -->
+                            <span class="caption-subject  bold uppercase" style="color: #86be25">New Answer</span>
+                            
+                        </div>                       
+                    </div>
+                    <div class="portlet-body answer_area">
+                        <div class="" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
+                            <div class="general-item-list">
+                                <div class="item">
+                                    <div class="item-head">
+
+                                    <div style="width: 100%;"><!--main block: display the latest answer-->
+                                        <div class="posts_partition"><!--1st partition-->
+                                        <span> 
+                                        
+                                            <img class="icon_size img-circle" src="{{url}}/uploads/{{responderDisplayPic}}">
+
+
+                                                <a style="color: #000;" href="" class="item-name primary-link">{{responderDisplayName}}</a>
+
+                                                <span>{{responderStatus}}</span>
+
+                                                                                    
+                                            </span>
+                                        </div>
+
+                                        <div class="posts_partition_middle"><!--2nd partition-->
+                                            <span style="">
+                                                <img class="icon_size_40" src="{{url}}/images/add_person.png">
+                                            </span>
+                                        </div>
+
+                                        <div class="posts_partition"><!--3rd partition-->
+                                            <div style="margin-left: 60%;">
+                                                <div style="color: #ccc;">{{moment post_date "fromNow"}}</div>
+                                                <div style="display: inline-block;margin-right: 20%;">
+                                                    <img src="{{url}}/images/group.png">
+                                                </div>
+                                                 <div class="actions" style="display: inline-block;">
+                                                        <div class="btn-group">
+                                                            <span class="item-status" data-toggle="dropdown" style="cursor: pointer;">
+                                                                <i class="fa fa-ellipsis-v"></i>
+                                                            </span>
+                                                            <ul class="dropdown-menu pull-right">
+                                                                <li>
+                                                                    <a href="javascript:;">
+                                                                        <i class="fa fa-pencil"></i> Edit </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="javascript:;">
+                                                                        <i class="fa fa-trash-o"></i> Delete </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="javascript:;">
+                                                                        <i class="fa fa-ban"></i> Share </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="javascript:;"> Request Answer </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                </div>
+                                            </div><!--end float right-->
+                                            <div class="clearfix"></div>
+                                        </div>
+
+                                    <div class="clearfix"></div>
+                                    </div>                                      
+                                        
+
+                                    </div>
+
+                                    <div class="item-body"> 
+                                        {{#if pics.length }}
+                                            <div style="margin-bottom: 3%;">                                                                    
+                                                <img class="img-responsive" src="{{url}}/uploads/{{pics.[0]}}">
+                                            </div>
+                                        {{/if}}
+                                            <div style="color: #000;" class="post_answer">
+                                                {{body}}
+                                            </div>
+                                        
+                                    </div>  
+
+                                        <div style="width: 100%;"><!--main block-->
+                                        
+
+                                            <div class="posts_partition_right"><!--3rd partition-->
+
+                                                
+                                                <a class="btn btn-link " style="color: #000;font-size: 0.8em;">
+                                                    <span>
+                                                        <span class="social_value">{{views}}</span>&nbsp;&nbsp;
+                                                        Views
+                                                    </span>
+                                                </a>&nbsp;|
+
+                                                <a class="btn btn-link post_shares" style="color: #000;font-size: 0.8em;color: orange">About this post
+                                                    
+                                                </a>
+
+                                            </div>
+
+                                        <div class="clearfix"></div>
+                                    </div><hr>
+
+
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    {{/if}}
+                            
+
+
+                    <!-- END PORTLET -->
+                    <div class="answer_votes" style="margin: 2%;">
+                        <input type="hidden" id="post_answer_id" value="{{_id}}">
+
+                        <a class="btn btn-link post_upvotes"  style="color: #000;font-size: 0.8em">
+                        <span>
+                            <span class="social_value">{{upvotes}}</span>&nbsp;
+                            <img src="{{url}}/images/up_vote.png">&nbsp;Upvotes
+                        </span>
+                        </a>&nbsp;&nbsp;
+
+                        <a class="btn btn-link post_downvotes" style="color: #000;font-size: 0.8em">
+                            <span>
+                                <span class="social_value">{{downvotes}}</span>&nbsp;
+                                <img src="{{url}}/images/down_vote.png">&nbsp;Downvotes
+                            </span>
+                        </a>&nbsp;&nbsp;
+
+                        <a class="btn btn-link " style="color: #000;font-size: 0.8em">
+                            <span class="">
+                                <span class="social_value">{{comments.length}}</span>&nbsp;
+                                <img src="{{url}}/images/comments.png">&nbsp;Comments
+                            </span>
+                        </a>
+                    </div>
+
+                    <div style="width: 100%; border:1px solid #ddd;padding: 10px">
+                        <a href="{{url}}/posts/section/question/all_answers/{{../_id}}">
+                            <div style="width: 45%;display: inline-block;text-align: center;border-right: 1px solid;">
+                            View Other answers                            
+                        </div>
+                        </a>
+
+                        <a href="#" class="answer_button">
+                            <div style="width: 45%;display: inline-block;text-align: center;">Add Your Answer                            
+                        </div>
+                        </a>
+
+                    </div>
                     <div class="clearfix"></div>
+
+                        {{/if}}
+
+                    {{/each}}
 
                 </div>
             {{/each}}
@@ -427,13 +575,18 @@
 
                             <h5 id="section_answer_body">Answer</h5>                           
 
-                            <div class="form-group">
+                            <div class="form-group form-md-line-input form-md-floating-label">
                                 <textarea  name="section_answer_details" id="section_answer_details" class="form-control" rows="3" style="font-weight: 500"></textarea>
                                 <label for="form_control_1">Write your answer</label>
                             </div>
                             
 
-                             <div class="form-group">
+                            <!--  <div class="form-group">
+                                <label for="section_answer_photo">Add Photo</label>
+                                <input type="file" name="section_answer_photo" accept="application/x-zip-compressed,image/*">
+                                <p class="help-block"> Optional </p>
+                            </div> -->
+                            <div class="form-group">
                              <label for="section_answer_photo" class="custom-file-upload">
                                     <i class="fa fa-camera"></i> Add Photo
                                 </label>
@@ -469,8 +622,7 @@
 
             $( document ).ready( function () {
 
-               
-
+                
             });
 
             </script>
