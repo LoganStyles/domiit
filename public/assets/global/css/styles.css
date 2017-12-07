@@ -212,7 +212,7 @@
      }
 
      .profile_img_container{
-     	background-color: #444;
+     	background-color: #fff;
      	height: 200px;
      	width: 200px;
      	position: absolute;
@@ -274,3 +274,16 @@
      .swap_icons img:last-child{display:none}
      .swap_icons:hover img:first-child{display:none}
      .swap_icons:hover img:last-child{display:inline-block}
+
+     
+
+     /*file upload*/
+     input[type="file"] {
+         display: none;
+     }
+     .custom-file-upload {
+         border: 1px solid #ccc;
+         display: inline-block;
+         padding: 6px 12px;
+         cursor: pointer;
+     }

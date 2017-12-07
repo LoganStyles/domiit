@@ -260,50 +260,91 @@ app.get('/dashboard',isLoggedIn, function(req, res) {
     article_status=false,
     home_status=true;
 
-    var displayPic='avatar.png';
-        if(req.user.displayPic[0]){
-            displayPic=req.user.displayPic[req.user.displayPic.length - 1];
-        }
-
-
     //get all items
     quest_cat.find().sort({value:1}).exec(function(err_quest,cat_quest){
         var res_quest_cat=[],
-        res_article_cat=[];
+        res_quest_sub1=[],
+        res_quest_sub2=[],
+        res_article_cat=[],
+        res_article_sub1=[],
+        res_article_sub2=[];
 
-        if(err_quest){console.log(err_quest);}
-        else if(cat_quest){
+
+        if(err_quest)console.log(err_quest);
+        if(cat_quest){
             // console.log(cat_item);
             res_quest_cat=cat_quest;
         }
+        var first_cat=(res_quest_cat.length >0)?(res_quest_cat[0].value):(0);
 
-        art_cat.find().sort({value:1}).exec(function(err_art,cat_art){
 
-            if(err_art)console.log(err_art);
-            if(cat_art){
-                res_article_cat=cat_art;
+        quest_sub1.find({'category':first_cat}).sort({value:1}).exec(function(err1_quest,sub1_quest){
+
+            if(err1_quest)console.log(err1_quest);
+            if(sub1_quest){
+                res_quest_sub1=sub1_quest;
             }
+            var first_sub1=(res_quest_sub1.length >0)?(res_quest_sub1[0].value):(0);
 
+            quest_sub2.find({'sub1':first_sub1}).sort({value:1}).exec(function(err2_quest,sub2_quest){
 
-            res.render('dashboard', {
-                    title:'Dashboard',
-                    url:process.env.URL_ROOT,
-                    user_info:req.user,
-                    displayPic:displayPic,
+                if(err2_quest)console.log(err2_quest);
+                if(sub2_quest){
+                    res_quest_sub2=sub2_quest; 
+                }
 
-                    data_quest:res_quest_cat,
-                    data_art:res_article_cat,
+                art_cat.find().sort({value:1}).exec(function(err_art,cat_art){
 
-                    quest_status:question_status,
-                    art_status:article_status,
-                    home_status:home_status
-                }); 
+                    if(err_art)console.log(err_art);
+                    if(cat_art){
+                        res_article_cat=cat_art;
+                    }
+                    var first_cat=(res_article_cat.length >0)?(res_article_cat[0].value):(0);
+
+                    art_sub1.find({'category':first_cat}).sort({value:1}).exec(function(err1_art,sub1_art){
+
+                        if(err1_art)console.log(err1_art);
+                        if(sub1_art){
+                            res_article_sub1=sub1_art;
+                        }
+                        var first_sub1=(res_article_sub1.length >0)?(res_article_sub1[0].value):(0);
+
+                        art_sub2.find({'sub1':first_sub1}).sort({value:1}).exec(function(err2_art,sub2_art){
+
+                            if(err2_art)console.log(err2_art);
+                            if(sub2_art){
+                                res_article_sub2=sub2_art; 
+                            }
+
+                            res.render('dashboard', {
+                                title:'Dashboard',
+                                url:process.env.URL_ROOT,
+                                user_info:req.user,
+
+                                data_quest:res_quest_cat,
+                                sub1_data_quest:res_quest_sub1,
+                                sub2_data_quest:res_quest_sub2,
+
+                                data_art:res_article_cat,
+                                sub1_data_art:res_article_sub1,
+                                sub2_data_art:res_article_sub2,
+
+                                quest_status:question_status,
+                                art_status:article_status,
+                                home_status:home_status
+                            });  
+
+                        });
+
+                    });
+
+                }); //end article
+            });
+            
 
         });
 
-
     });
-
 
 });
 

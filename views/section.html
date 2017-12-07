@@ -59,7 +59,7 @@
 
                     <div class="portlet-title">
                         <div class="caption caption-md">
-                            <img alt="" class="" src="{{url}}/images/questions_icon.png">
+                            <img alt="" class="icon_size" src="{{url}}/images/Question_and_Answer.png">
                             <span class="caption-subject  bold uppercase" style="color: #86be25">{{../page_type}}</span>
                             {{#if category}}
                             <span class="caption-helper">{{category}}</span>&nbsp;
@@ -77,7 +77,7 @@
 
                        
                     </div>
-                    <div class="portlet-body">
+                    <div class="portlet-body" style="padding-top: 0px;">
                         <div class="" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
                             <div class="general-item-list">
                                 <div class="item">
@@ -86,9 +86,9 @@
                                     <div style="width: 100%;"><!--main block-->
                                         <div class="posts_partition"><!--1st partition-->
                                         <span> 
-                                        {{#if owner.displayPic}}
-                                        <img class="item-pic" src="{{url}}/uploads/{{owner.displayPic}}">
-                                            {{/if}}
+                                        
+                                        <img class="icon_size img-circle" src="{{../url}}/uploads/{{owner.displayPic}}">
+                                            
 
                                                 <a style="color: #000;" href="" class="item-name primary-link">{{owner.displayName}}</a>
 
@@ -104,7 +104,7 @@
                                             </span>
                                         </div>
                                          <div class="posts_partition"><!--3rd partition-->
-                                            <div style="margin-left: 60%;">
+                                            <div style="margin-left: 0%;text-align: right;">
                                                 <div style="color: #ccc;">{{moment post_date "fromNow"}}</div>
                                                 <div style="display: inline-block;margin-right: 20%;">
                                                     <img src="{{url}}/images/group.png">

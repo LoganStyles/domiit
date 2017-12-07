@@ -1,8 +1,10 @@
 var express = require('express');
 var router = express.Router();
+var ne = require('node-each');
 var config = require('../config/database');
-// var user = require('../models/user');
+var user = require('../models/user');
 var question = require('../models/question');
+
 
 
 /*chk loggedin*/
@@ -12,6 +14,12 @@ function isLoggedIn(req, res, next) {
     }else{
         next();
     }
+}
+
+/*get owner details*/
+function getLatestOwnerDetails(arr){
+    var promise=user.findOne({_id:arr.id},{displayName:1,displayPic:1}).exec();
+    return promise;
 }
 
 
@@ -58,27 +66,50 @@ router.get('/section/:item/:type/:question_id', isLoggedIn,function(req, res) {
         }        
         break;
 
-        }
+    }
 
-switch(item){
-    case'question':
-    section = question;
-    break;
-}
+    switch(item){
+        case'question':
+        section = question;
+        break;
+    }
 
 //get required questions
 section.find(selection).sort({post_date:-1}).exec(function(err,items){
 
     var res_items=[];
 
-    if(err)console.log(err);
-        if(items){//items were found
-            res_items=items;
-            console.log(res_items)
+    if(err){console.log(err);}
+    else if(items){
+    //items were found
+    /*for each item update owner details such as displayPic & displayName
+    since these may have changed*/
+    ne.each(items,function(el,i){
+        var updated_obj={};
+        var promise = getLatestOwnerDetails(el.owner);
+        promise.then(function(response){
+            var displayPic=(response.displayPic)?(response.displayPic[response.displayPic.length -1]):('avatar.png')
+            updated_obj={
+                id:(response._id).toString(),
+                displayName:response.displayName,
+                displayPic:displayPic
+            };
+            el.owner=updated_obj;
+        });
+
+    }).then(function(res2){
+
+        res_items=items;
+
+        console.log(res_items);
+        var displayPic='avatar.png';
+        if(req.user.displayPic[0]){
+            displayPic=req.user.displayPic[req.user.displayPic.length - 1];
         }
 
         res.render(page, {
             url:process.env.URL_ROOT,
+            displayPic:displayPic,
             user_info:req.user,
             data:res_items,
             page_title: page_title,
@@ -86,10 +117,16 @@ section.find(selection).sort({post_date:-1}).exec(function(err,items){
             quest_status:question_status,
             home_status:home_status
         });
+    })
 
-    });
+
+
+}
 
 });
+
+});
+
 
 router.post('/update_meta/:type/:id/:action/:subitem_id',function(req,res,next){
     var section_type=req.params.type;

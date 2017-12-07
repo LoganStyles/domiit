@@ -2,8 +2,8 @@ var total_messages = 5;
 var delay_amount = 0;
 var fade_speed = 200;
 var socket = io();
-var URL_ROOT="https://ancient-falls-19080.herokuapp.com";
-// var URL_ROOT="http://localhost:8000";
+// var URL_ROOT="https://ancient-falls-19080.herokuapp.com";
+var URL_ROOT="http://localhost:8000";
 
 // Connect to Socket.io
 socket.connect(URL_ROOT);
@@ -75,7 +75,7 @@ socket.on('all_questions',function(json){
 		post_type+='<div class="portlet-body"><div class="scroller"  data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">';
 		post_type+='<div class="general-item-list"><div class="item"><div class="item-head"><div class="item-details">';
 		if(parsed.owner.displayPic){
-			post_type+='<img class="item-pic" src="'+URL_ROOT+'/assets/img/'+parsed.owner.displayPic+'">';	
+			post_type+='<img class="item-pic" src="'+URL_ROOT+'/uploads/'+parsed.owner.displayPic+'">';	
 		}
 		
 		post_type+='<a href="" class="item-name primary-link">'+parsed.owner.displayName+'</a>';
