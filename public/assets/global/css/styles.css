@@ -73,11 +73,7 @@
 }
 
 .profile_top{
-	background: url(../../../images/profile_bg.jpg) no-repeat center center fixed; 
-       -webkit-background-size: cover;
-       -moz-background-size: cover;
-       -o-background-size: cover;
-       background-size: cover;
+	/**/
 }
 
 
@@ -231,7 +227,12 @@
      	height: 180px;
      	width: 100%;
      	position: relative;
-     	background-color: #ccc;
+     	/*background-color: #ccc;*/
+          background: url(../../../images/profile_bg.jpg) no-repeat center center fixed; 
+       -webkit-background-size: cover;
+       -moz-background-size: cover;
+       -o-background-size: cover;
+       background-size: cover;
      }
 
      .pro_bgimage{

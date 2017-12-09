@@ -796,6 +796,7 @@ app.post('/response_item',upload.single('section_response_photo'),function(req,r
             if(result){
                 let updateSection = result;
                 updateSection.answers_len=updateSection.answers_len +1;//incr the no. of ans
+                updateSection.date_modified=new Date();
                 updateSection.answers.push({
                     body : req.body.section_response_details,
                     responderDisplayName:req.user.displayName,
@@ -804,8 +805,7 @@ app.post('/response_item',upload.single('section_response_photo'),function(req,r
                     responderStatus:req.user.current_appointment
                 }); 
 
-                //store img if exists    
-
+                //store img if exists
                 if (req.file && req.file.filename != null) {
                     updateSection.answers[updateSection.answers.length - 1].pics.push(req.file.filename);
                 }
@@ -833,8 +833,7 @@ app.post('/response_item',upload.single('section_response_photo'),function(req,r
                 }
 
 
-                section.updateOne({_id:section_id},
-                    {$currentDate:{date_modified:true},$set:updateSection},function(err1,res1){
+                section.updateOne({_id:section_id},{$set:updateSection},function(err1,res1){
 
                     if(err1){
                         console.log(err1)
