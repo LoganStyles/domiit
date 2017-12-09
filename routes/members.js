@@ -97,7 +97,8 @@ router.post('/update_password',function(req,res,next){
             updateUser.password=req.body.new_password;
             updateUser.date_modified=Date.now;
 
-            user.updateOne({email:req.session.user.email}, { $set: updateUser },function(err,affected,resp){
+            user.updateOne({email:req.session.user.email},
+                {$currentDate:{date_modified:true}, $set: updateUser },function(err,affected,resp){
                 if(err){
                     // console.log('err occurred');
                     console.log(err);
@@ -123,24 +124,5 @@ router.post('/update_password',function(req,res,next){
     });    
 
 });
-
-router.post('/update_avatar',function(req,res,next){
-    uploading(req,res,function(err){
-        if(err){
-            return res.end("Error uploading file.");
-        }
-        res.end("File is uploaded");
-    });
-});
-
-// router.post('/update_bio1',function(req,res,next){
-
-//     //get current user by his/her email
-//     user.findOne({email:req.session.user.email }, function(err, u) {
-
-
-//     });
-// });
-
 
 module.exports  = router;

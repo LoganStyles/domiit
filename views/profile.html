@@ -384,54 +384,62 @@
               <div class="form-body"> 
 
                 <div class="form-group">
-                  <label class="col-md-2 col-lg-2 col-sm-12 control-label">Firstname</label>
-                  <div class="col-md-10 col-lg-10 col-sm-12 ">
+                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">First Name</label>
+                  <div class="col-md-9 col-lg-9 col-sm-12 ">
                     <input type="text" name="profile_bio1_firstname" id="profile_bio1_firstname" class="form-control" value="{{user_info.firstname}}">
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label class="col-md-2 col-lg-2 col-sm-12 control-label">Lastname</label>
-                  <div class="col-md-10 col-lg-10 col-sm-12 ">
+                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Last Name</label>
+                  <div class="col-md-9 col-lg-9 col-sm-12 ">
                     <input type="text" name="profile_bio1_lastname" id="profile_bio1_lastname" class="form-control" value="{{user_info.lastname}}">
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label class="col-md-2 col-lg-2 col-sm-12 control-label">Designation</label>
-                  <div class="col-md-10 col-lg-10 col-sm-12 ">
+                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Designation</label>
+                  <div class="col-md-9 col-lg-9 col-sm-12 ">
                     <input type="text" name="profile_bio1_designation" id="profile_bio1_designation" class="form-control" value="{{designation}}">
                   </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label col-md-2 col-lg-2 col-sm-12 ">Date of Birth</label>
-                    <div class="col-md-10 col-lg-10 col-sm-12">
+                    <label class="control-label col-md-3 col-lg-3 col-sm-12 ">Date of Birth</label>
+                    <div class="col-md-9 col-lg-9 col-sm-12">
                         <input class="form-control form-control-inline input-medium date-picker" type="text" name="profile_bio1_dob" id="profile_bio1_dob" value="{{dob}}" />
                         <span class="help-block"> Select date </span>
                     </div>
                 </div>
 
                 <div class="form-group">
+                <div class="col-md-3 col-lg-3 col-sm-12"></div>
+                <div class="col-md-9 col-lg-9 col-sm-12">
                   <label for="profile_bio1_displayPic" class="custom-file-upload">
-                    <i class="fa fa-camera"></i> Upload Avatar
+                    <i class="fa fa-camera"></i> Upload Profile Picture
                   </label>
                   <input id="profile_bio1_displayPic" name="profile_bio1_displayPic" type="file" accept="application/x-zip-compressed,image/*"/>
+                </div>
+                  
                   <!-- <p class="help-block"> Optional </p> -->
                 </div>
 
                 <div class="form-group">
-                  <label for="profile_bio1_backgroundPic" class="custom-file-upload">
+                  <div class="col-md-3 col-lg-3 col-sm-12"></div>
+                  <div class="col-md-9 col-lg-9 col-sm-12">
+                    <label for="profile_bio1_backgroundPic" class="custom-file-upload">
                     <i class="fa fa-camera"></i> Upload Background Picture
                   </label>
                   <input id="profile_bio1_backgroundPic" name="profile_bio1_backgroundPic" type="file" accept="application/x-zip-compressed,image/*"/>
-                  <!-- <p class="help-block"> Optional </p> -->
+                  </div>
+                  
                 </div>
               </div>
-              <div class="form-actions noborder">
+              <div class="form-actions noborder pull-right">
                 <input type="submit" class="btn blue" name="submit" value="Save" />
                 <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
               </div>
+              <div class="clearfix"></div>
             </form>
           </div>
         </div>  
@@ -476,7 +484,7 @@
             <div class="form-body">
               <div class="form-group">
                 <label class="col-md-2 col-lg-2 col-sm-12 control-label">Title</label>
-                <div class="col-md-10 col-lg-10 col-sm-12 ">
+                <div class="col-md-9 col-lg-9 col-sm-12 ">
                   <input type="text" name="profile_edu_title" id="profile_edu_title" class="form-control">
                 </div>
               </div>
@@ -484,7 +492,7 @@
 
               <div class="form-group">
                 <label class="col-md-2 col-lg-2 col-sm-12 control-label">From Year</label>
-                <div class="col-md-10 col-lg-10 col-sm-12">
+                <div class="col-md-9 col-lg-9 col-sm-12">
                   <select class="form-control" name="profile_edu_from" id="profile_edu_from">
                     {{#myforloop 1958}}
                     <option value="{{this}}">{{this}}</option>
@@ -498,7 +506,7 @@
 
               <div class="form-group">
                 <label class="col-md-2 col-lg-2 col-sm-12 control-label">To Year</label>
-                <div class="col-md-10 col-lg-10 col-sm-12">
+                <div class="col-md-9 col-lg-9 col-sm-12">
                   <select class="form-control" name="profile_edu_to" id="profile_edu_to">
                     {{#myforloop 1958}}
                     <option value="{{this}}">{{this}}</option>

@@ -20,14 +20,19 @@ var cms_routes = require('./routes/cms');
 var posts_routes = require('./routes/posts');
 var question = require('./models/question');
 var article = require('./models/article');
+var riddle = require('./models/riddle');
+var pab = require('./models/pab');
 
 var quest_cat = require('./models/question_cats');
-var quest_sub1 = require('./models/question_sub1');
-var quest_sub2 = require('./models/question_sub2');
+// var quest_sub1 = require('./models/question_sub1');
+// var quest_sub2 = require('./models/question_sub2');
 
 var art_cat = require('./models/article_cats');
-var art_sub1 = require('./models/article_sub1');
-var art_sub2 = require('./models/article_sub2');
+// var art_sub1 = require('./models/article_sub1');
+// var art_sub2 = require('./models/article_sub2');
+
+var riddle_cat = require('./models/riddle_cats');
+var pab_cat = require('./models/pab_cats');
 
 var about = require('./models/about');
 
@@ -258,22 +263,25 @@ app.get('/dashboard',isLoggedIn, function(req, res) {
     console.log('inside dashboard');   
     let question_status=false,
     article_status=false,
+    riddle_status=false,
+    pab_status=false,
     home_status=true;
 
     var displayPic='avatar.png';
-        if(req.user.displayPic[0]){
-            displayPic=req.user.displayPic[req.user.displayPic.length - 1];
-        }
+    if(req.user.displayPic[0]){
+        displayPic=req.user.displayPic[req.user.displayPic.length - 1];
+    }
 
 
     //get all items
     quest_cat.find().sort({value:1}).exec(function(err_quest,cat_quest){
         var res_quest_cat=[],
-        res_article_cat=[];
+        res_article_cat=[],
+        res_pab_cat=[],
+        res_riddle_cat=[];
 
         if(err_quest){console.log(err_quest);}
         else if(cat_quest){
-            // console.log(cat_item);
             res_quest_cat=cat_quest;
         }
 
@@ -284,23 +292,43 @@ app.get('/dashboard',isLoggedIn, function(req, res) {
                 res_article_cat=cat_art;
             }
 
+            riddle_cat.find().sort({value:1}).exec(function(err_rid,cat_rid){
 
-            res.render('dashboard', {
-                    title:'Dashboard',
-                    url:process.env.URL_ROOT,
-                    user_info:req.user,
-                    displayPic:displayPic,
+                if(err_rid)console.log(err_rid);
+                if(cat_rid){
+                    res_riddle_cat=cat_rid;
+                }
 
-                    data_quest:res_quest_cat,
-                    data_art:res_article_cat,
 
-                    quest_status:question_status,
-                    art_status:article_status,
-                    home_status:home_status
-                }); 
+                pab_cat.find().sort({value:1}).exec(function(err_pab,cat_pab){
+
+                    if(err_pab)console.log(err_rid);
+                    if(cat_pab){
+                        res_pab_cat=cat_pab;
+                    }
+
+                    res.render('dashboard', {
+                        title:'Dashboard',
+                        url:process.env.URL_ROOT,
+                        user_info:req.user,
+                        displayPic:displayPic,
+
+                        data_quest:res_quest_cat,
+                        data_art:res_article_cat,
+                        data_riddle:res_riddle_cat,
+                        data_pab:res_pab_cat,
+
+                        quest_status:question_status,
+                        art_status:article_status,
+                        riddle_status:riddle_status,
+                        home_status:home_status
+                    });
+
+                });
+
+            });             
 
         });
-
 
     });
 
@@ -376,9 +404,13 @@ var upload = multer({storage:Storage});
 /*process an 'ask a question' post,save & update UI immediately*/
 app.post('/ask_question',upload.single('question_photo'),function(req,res,next){
     console.log('req.fil')
-    console.log(req.file)
+    console.log(req.file);
 
-    var owner_details={id:req.user._id,displayName:req.user.displayName,displayPic:req.user.displayPic,
+    var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
+
+    var owner_details={id:req.user._id,
+        displayName:req.user.displayName,
+        displayPic:displayPic,
         status:req.user.current_appointment};
 
         let ask_quest =new question();
@@ -418,7 +450,11 @@ var article_upload = upload.fields([
 app.post('/ask_article',article_upload,function(req,res,next){
     console.log(req.files)
 
-    var owner_details={id:req.user._id,displayName:req.user.displayName,displayPic:req.user.displayPic,
+    var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
+
+    var owner_details={id:req.user._id,
+        displayName:req.user.displayName,
+        displayPic:displayPic,
         status:req.user.current_appointment};
 
         let write_art =new article();
@@ -448,7 +484,7 @@ app.post('/ask_article',article_upload,function(req,res,next){
 
         write_art.save(function(err1, ask_quest) {
 
-            if(err1){console.log(err1);res.json({success: false,msg:"article submission failed"});
+            if(err1){console.log(err1);res.json({success: false,msg:"Article submission failed"});
 
         }else{   
         // console.log(ask_quest);         
@@ -456,7 +492,97 @@ app.post('/ask_article',article_upload,function(req,res,next){
             // console.log(json);
             // io.emit('all_questions', json);
             // io.emit('unanswered_questions', json);
-            res.json({success:true,msg:"article submission succesful"});
+            res.json({success:true,msg:"Article submission succesful"});
+        }   
+    });
+
+    });
+
+
+
+/*process an 'ask a riddle' post,save & update UI immediately*/
+app.post('/ask_riddle',upload.single('riddle_photo'),function(req,res,next){
+    console.log('req.fil')
+    console.log(req.file)
+
+    var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
+
+    var owner_details={id:req.user._id,
+        displayName:req.user.displayName,
+        displayPic:displayPic,
+        status:req.user.current_appointment};
+
+        let ask_riddle =new riddle();
+        ask_riddle.body=req.body.riddle_title;
+        ask_riddle.category = req.body.riddle_category;
+        ask_riddle.sub_cat1=req.body.riddle_sub1;
+        ask_riddle.sub_cat2=req.body.riddle_sub2;
+        ask_riddle.owner=owner_details;
+
+        if (req.file && req.file.filename != null) {
+            ask_riddle.pics.push(req.file.filename);
+        }
+
+
+        ask_riddle.save(function(err1, saved_ridd) {
+
+            if(err1){console.log(err1);res.json({success: false,msg:"Riddle submission failed"});
+
+        }else{   
+        // console.log(ask_quest);         
+            var json = JSON.stringify(saved_ridd, null, 2);
+            // console.log(json);
+            // io.emit('all_questions', json);
+            // io.emit('unanswered_questions', json);
+            res.json({success:true,msg:"Riddle submission successful"});
+        }   
+    });
+
+    });
+
+
+/*process an 'post a book' post,save & update UI immediately*/
+app.post('/ask_pab',upload.single('pab_photo'),function(req,res,next){
+    console.log('req.fil')
+    console.log(req.file)
+
+    var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
+
+    var owner_details={id:req.user._id,
+        displayName:req.user.displayName,
+        displayPic:displayPic,
+        status:req.user.current_appointment};
+
+        let ask_pab =new pab();
+        ask_pab.body=req.body.pab_title;
+        ask_pab.category = req.body.pab_category;
+        ask_pab.author=req.body.pab_author;
+        ask_pab.amount=req.body.pab_amount;
+        ask_pab.isbn=req.body.pab_isbn;
+        ask_pab.pages=req.body.pab_pages;
+        ask_pab.publishers=req.body.pab_publishers;
+        ask_pab.bookshop=req.body.pab_bookshop;
+        ask_pab.url=req.body.pab_url;
+        ask_pab.synopsis=req.body.pab_synopsis;
+        ask_pab.about_author=req.body.pab_about_author;
+        ask_pab.owner=owner_details;
+
+        if (req.file && req.file.filename != null) {
+            ask_pab.pics.push(req.file.filename);
+        }
+
+
+        ask_pab.save(function(err1, saved) {
+
+            if(err1){console.log(err1);res.json({success: false,msg:"Book post failed"});
+
+        }else{   
+        // console.log(ask_quest);         
+            var json = JSON.stringify(saved, null, 2);
+            // console.log(json);
+            // io.emit('all_questions', json);
+            // io.emit('unanswered_questions', json);
+            res.json({success:true,msg:"Book post successful"});
         }   
     });
 
@@ -467,7 +593,9 @@ app.post('/ask_article',article_upload,function(req,res,next){
 app.post('/update_desc',function(req,res,next){
     var update_desc={description:req.body.profile_desc_description};
 
-    user.findOneAndUpdate({email:req.session.user.email},{$set:update_desc},function(err1,res1){
+    user.findOneAndUpdate(
+        {email:req.session.user.email},
+        {$currentDate:{date_modified:true},$set:update_desc},function(err1,res1){
 
         if(err1){
             console.log(err1)
@@ -500,7 +628,8 @@ app.post('/update_edu',function(req,res,next){
 
             console.log(updateUser);
 
-            user.updateOne({email:req.session.user.email},{$set:updateUser},function(err1,res1){
+            user.updateOne({email:req.session.user.email},
+                {$currentDate:{date_modified:true},$set:updateUser},function(err1,res1){
 
                 if(err1){
                     console.log(err1)
@@ -537,7 +666,8 @@ app.post('/update_qual',function(req,res,next){
 
             console.log(updateUser);
 
-            user.updateOne({email:req.session.user.email},{$set:updateUser},function(err1,res1){
+            user.updateOne({email:req.session.user.email},
+                {$currentDate:{date_modified:true},$set:updateUser},function(err1,res1){
 
                 if(err1){
                     console.log(err1)
@@ -570,7 +700,8 @@ app.post('/update_sch',function(req,res,next){
 
             console.log(updateUser);
 
-            user.updateOne({email:req.session.user.email},{$set:updateUser},function(err1,res1){
+            user.updateOne({email:req.session.user.email},
+                {$currentDate:{date_modified:true},$set:updateUser},function(err1,res1){
 
                 if(err1){
                     console.log(err1)
@@ -626,7 +757,8 @@ app.post('/update_bio1',profile_upload,function(req,res,next){
             }
             console.log(updateUser);
 
-            user.updateOne({email:req.session.user.email},{$set:updateUser},function(err1,res1){
+            user.updateOne({email:req.session.user.email},
+                {$currentDate:{date_modified:true},$set:updateUser},function(err1,res1){
 
                 if(err1){
                     console.log(err1)
@@ -643,25 +775,29 @@ app.post('/update_bio1',profile_upload,function(req,res,next){
 });
 
 
-/*process answers immediately*/
-app.post('/answer_question',upload.single('section_answer_photo'),function(req,res,next){
+/*process responses immediately*/
+app.post('/response_item',upload.single('section_response_photo'),function(req,res,next){
     // console.log(req.user)
 
     
-    var section_type=req.body.section_answer_type;
-    var section_id=req.body.section_answer_id;
+    var section_type=req.body.section_response_type;
+    var section_id=req.body.section_response_id;
     switch(section_type){
         case'question':
         section = question;
         break;
+
+        case'article':
+        section = article;
+        break;
     }
 
-        section.findOne({_id:section_id},function(error,result){//find the question that was answered
+        section.findOne({_id:section_id},function(error,result){//find the question that was responsed
             if(result){
                 let updateSection = result;
                 updateSection.answers_len=updateSection.answers_len +1;//incr the no. of ans
                 updateSection.answers.push({
-                    body : req.body.section_answer_details,
+                    body : req.body.section_response_details,
                     responderDisplayName:req.user.displayName,
                     responder_id:req.user._id,
                     responderDisplayPic:req.user.displayPic,
@@ -677,7 +813,7 @@ app.post('/answer_question',upload.single('section_answer_photo'),function(req,r
                 /*update all received info here*/
                 let temp=updateSection.answers[updateSection.answers.length - 1];
 
-                let most_recent_answer={
+                let most_recent_response={
                     _id:temp._id,
                     body : temp.body,
                     responderDisplayName:temp.responderDisplayName,
@@ -691,23 +827,22 @@ app.post('/answer_question',upload.single('section_answer_photo'),function(req,r
                     post_date:temp.post_date,
                     date_created:temp.date_created,
                     date_modified:temp.date_modified,
-                    question_id:section_id,
+                    item_id:section_id,
                     pics:temp.pics
 
                 }
 
-                // console.log(most_recent_answer);
 
-                section.updateOne({_id:section_id},{$set:updateSection},function(err1,res1){
+                section.updateOne({_id:section_id},
+                    {$currentDate:{date_modified:true},$set:updateSection},function(err1,res1){
 
                     if(err1){
                         console.log(err1)
                         res.json({success:false,msg:"Your post failed"});
                     }else if(res1){
-                        // console.log(most_recent_answer);
-                        var json = JSON.stringify(most_recent_answer, null, 2);
+                        var json = JSON.stringify(most_recent_response, null, 2);
                         // console.log(json);
-                        io.emit('answered', json);
+                        io.emit('responded', json);
                         res.json({success:true,msg:"Your post has been received successfully"});
                     }
 

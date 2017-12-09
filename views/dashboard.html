@@ -67,9 +67,9 @@
 
                                                                     <a style="color: #000;text-decoration: none;padding: 1px;" data-toggle="modal" onclick="modalLoader('article','new','');" class="  sbold col-md-3">|&nbsp;Write an article</a>
 
-                                                                    <a style="color: #000;text-decoration: none;padding: 1px;"data-toggle="modal" href="#" class="dark btn-outline sbold col-md-3">|&nbsp;Post a riddle</a>
+                                                                    <a style="color: #000;text-decoration: none;padding: 1px;"data-toggle="modal" onclick="modalLoader('riddle','new','');" class="dark btn-outline sbold col-md-3">|&nbsp;Post a riddle</a>
 
-                                                                    <a style="color: #000;text-decoration: none;padding: 1px;" data-toggle="modal" href="#" class=" dark btn-outline sbold col-md-3">|&nbsp;Post a book</a>
+                                                                    <a style="color: #000;text-decoration: none;padding: 1px;" data-toggle="modal" onclick="modalLoader('pab','new','');" class=" dark btn-outline sbold col-md-3">|&nbsp;Post a book</a>
 
                                                                     <!-- <button type="button" class="btn btn-link col-md-3">Link</button> -->
 
@@ -307,7 +307,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-lg-3 col-sm-12">Category </label>
                                     <div class="col-md-9 col-lg-9 col-sm-12">
-                                        <select class="form-control sel_cat" name="question_category" id="question_category">
+                                        <select class="form-control " name="question_category" id="question_category">
                                             {{#each data_quest}}
                                             <option value="{{title}}">{{title}}</option>
                                             {{/each}}   
@@ -388,7 +388,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-3 col-lg-3 col-sm-12">Category </label>
                             <div class="col-md-9 col-lg-9 col-sm-12">
-                                <select class="form-control sel_cat" name="article_category" id="article_category">
+                                <select class="form-control " name="article_category" id="article_category">
                                     {{#each data_art}}
                                     <option value="{{title}}">{{title}}</option>
                                     {{/each}}   
@@ -458,110 +458,213 @@
         </form>
     </div>
 
+</div>
+
+
+<div id="riddle_modal" class="modal fade" tabindex="-1">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title" id="riddle_sub1_header">Write A Riddle</h4>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" role="form" id="riddle_form" action="" method="post" enctype="multipart/form-data">
+            <span class="form_submission_error"></span>
+            <span class="form_submission_success"></span>
+
+            <input type="hidden" name="riddle_id"  id="riddle_id" value="0">
+
+            <div class="form-body">
+
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-lg-3 col-sm-12">Category </label>
+                    <div class="col-md-9 col-lg-9 col-sm-12">
+                        <select class="form-control " name="riddle_category" id="riddle_category">
+                            {{#each data_riddle}}
+                            <option value="{{title}}">{{title}}</option>
+                            {{/each}}   
+
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Sub-Category1</label>
+                  <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <input type="text" name="riddle_sub1" id="riddle_sub1" class="form-control" value="">
+                </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 col-lg-3 col-sm-12 control-label">Sub-Category2</label>
+              <div class="col-md-9 col-lg-9 col-sm-12 ">
+                <input type="text" name="riddle_sub2" id="riddle_sub2" class="form-control" value="">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-md-3 col-lg-3 col-sm-12 control-label">Write your riddle</label>
+            <div class="col-md-9 col-lg-9 col-sm-12 ">
+                <textarea  name="riddle_title" id="riddle_title" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
+            </div>                                
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-3 col-lg-3 col-sm-12"></div>
+
+            <div class="col-md-9 col-lg-9 col-sm-12 ">
+
+                <label for="riddle_photo" class="col-md-4 col-lg-4 col-sm-12 control-label custom-file-upload">
+                    <i class="fa fa-camera"></i> Add Photos
+                </label>
+                <div class="col-md-2 col-lg-2 col-sm-12">
+                    <input id="riddle_photo" name="riddle_photo" type="file" accept="application/x-zip-compressed,image/*"/>
+                </div>
+
+            </div>                                
+        </div>
+
+
+        <div class="form-actions noborder">
+            <input type="submit" class="btn blue" name="submit" value="Submit" />
+            <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+        </div>
+
+    </div>
+</form>
+</div>
+
+</div>
+
+<div id="pab_modal" class="modal fade" tabindex="-1">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title" id="pab_sub1_header">Post a book</h4>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" role="form" id="pab_form" action="" method="post" enctype="multipart/form-data">
+            <span class="form_submission_error"></span>
+            <span class="form_submission_success"></span>
+
+            <input type="hidden" name="pab_id"  id="pab_id" value="0">
+
+            <div class="form-body">
+
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-lg-3 col-sm-12">Genre </label>
+                    <div class="col-md-9 col-lg-9 col-sm-12">
+                        <select class="form-control " name="pab_category" id="pab_category">
+                            {{#each data_pab}}
+                            <option value="{{title}}">{{title}}</option>
+                            {{/each}}   
+
+                        </select>
+                    </div>
+                </div>
+
+
+            <div class="form-group">
+                <div class="col-md-3 col-lg-3 col-sm-12"></div>
+
+                <div class="col-md-9 col-lg-9 col-sm-12 ">
+
+                    <label for="pab_photo" class="col-md-4 col-lg-4 col-sm-12 control-label custom-file-upload">
+                        <i class="fa fa-camera"></i> Upload Picture of book cover
+                    </label>
+                    <div class="col-md-2 col-lg-2 col-sm-12">
+                        <input id="pab_photo" name="pab_photo" type="file" accept="application/x-zip-compressed,image/*"/>
+                    </div>
+
+                </div>                                
+            </div>
+
+            <div class="form-group">
+                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Title of the book</label>
+                  <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <input type="text" name="pab_title" id="pab_title" class="form-control" value="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Author</label>
+                  <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <input type="text" name="pab_author" id="pab_author" class="form-control" value="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Amount</label>
+                  <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <input type="number" name="pab_amount" id="pab_amount" class="form-control" value="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">ISBN</label>
+                  <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <input type="text" name="pab_isbn" id="pab_isbn" class="form-control" value="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Number of pages</label>
+                  <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <input type="number" name="pab_pages" id="pab_pages" class="form-control" value="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Publishers</label>
+                  <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <input type="text" name="pab_publishers" id="pab_publishers" class="form-control" value="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Bookshop or Contact</label>
+                  <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <input type="text" name="pab_bookshop" id="pab_bookshop" class="form-control" value="">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-md-3 col-lg-3 col-sm-12 control-label">Url</label>
+                <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <input type="text" name="pab_url" id="pab_url" class="form-control" value="">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-md-3 col-lg-3 col-sm-12 control-label">Synopsis</label>
+                <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <textarea  name="pab_synopsis" id="pab_synopsis" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
+                </div>                                
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3 col-lg-3 col-sm-12 control-label">About the author</label>
+                <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <textarea  name="pab_about_author" id="pab_about_author" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
+                </div>                                
+            </div>
+
+
+
+            <div class="form-actions noborder">
+                <input type="submit" class="btn blue" name="submit" value="Submit" />
+                <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+            </div>
+
+        </div>
+    </form>
     </div>
 
-                
+</div>
 
-                 <!-- <div id="article_modal" class="modal fade" tabindex="-1">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                        <h4 class="modal-title" id="article_sub1_header">Write An Article</h4>
-                    </div>
-                    <div class="modal-body">
-                 <form role="form" id="article_form" action="" method="post" enctype="multipart/form-data">
-                        <span class="form_submission_error"></span>
-                        <span class="form_submission_success"></span>
-
-                            <input type="hidden" name="article_id"  id="article_id" value="0">
-
-                            <div class="form-group form-md-line-input">
-                                <label class="control-label col-md-3">Category </label>
-                                <div class="col-md-9">
-                                    <select class="form-control sel_cat" name="article_category" id="article_category">
-                                    {{#each data_art}}
-                                        <option value="{{title}}">{{title}}</option>
-                                    {{/each}}   
-                                        
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                              <label class="col-md-2 col-lg-2 col-sm-12 control-label">Sub-Category-1</label>
-                              <div class="col-md-10 col-lg-10 col-sm-12 ">
-                                <input type="text" name="question_sub1" id="question_sub1" class="form-control" value="">
-                              </div>
-                            </div>
-
-                            <div class="form-group">
-                              <label class="col-md-2 col-lg-2 col-sm-12 control-label">Sub-Category-2</label>
-                              <div class="col-md-10 col-lg-10 col-sm-12 ">
-                                <input type="text" name="question_sub2" id="question_sub2" class="form-control" value="">
-                              </div>
-                            </div>
-
-                            <div class="form-group form-md-line-input">
-                                <label class="control-label col-md-3">Sub-Category-1 </label>
-                                <div class="col-md-9">
-                                    <select class="form-control sel_sub1" name="article_sub1" id="article_sub1">
-                                    {{#each sub1_data_art}}
-                                        <option value="{{title}}">{{title}}</option>
-                                    {{/each}}   
-                                        
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-md-line-input">
-                                <label class="control-label col-md-3">Sub-Category-2 </label>
-                                <div class="col-md-9">
-                                    <select class="form-control" name="article_sub2" id="article_sub2">
-                                    {{#each sub2_data_art}}
-                                        <option value="{{title}}">{{title}}</option>
-                                    {{/each}}   
-                                        
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-md-line-input form-md-floating-label">
-                                <textarea  name="article_title" id="article_title" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
-                                <label for="form_control_1">Write your article</label>
-                            </div>
-
-                            <div class="form-group form-md-line-input form-md-floating-label">
-                                <textarea name="article_info" id="article_info" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
-                                <label for="form_control_1">Provide additional information</label>
-                                 <p class="help-block"> Optional </p>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="article_attachment" class="custom-file-upload">
-                                    <img src="{{url}}/images/upload_attachment.png" /> Upload Attachment
-                                </label>
-                                <input id="article_attachment" type="file" accept="application/x-zip-compressed,image/*"/>
-                                <p class="help-block"> Optional </p>
-
-                                <label for="article_photo" class="custom-file-upload">
-                                    <i class="fa fa-camera"></i> Add Photo
-                                </label>
-                                <input id="article_photo" type="file" accept="application/x-zip-compressed,image/*"/>
-                                <p class="help-block"> Optional </p>
-                            </div>
-
-                             <!-- <div class="form-group">
-                                <label for="article_photo">Add Photo</label>
-                                <input type="file" name="article_photo" accept="application/x-zip-compressed,image/*">
-                                <p class="help-block"> Optional </p>
-                            </div> -
-                            <div class="form-actions noborder">
-                                <input type="submit" class="btn blue" name="submit" value="Submit" />
-                                <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
-                            </div>
-                        </form>
-                    </div>
-
-                </div> -->
 
                
             </div>
@@ -736,6 +839,175 @@
                             }else{
                                 console.log('response is false');
                                 $('#article_form  .form_submission_error').text(response.msg);
+                                sub_button.val(old_button_val);
+                                sub_button.prop('disabled', false);
+                            }
+                              
+                       },
+                       error:function(xhr, status, err){
+                            console.log('error');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(err);
+                        }
+                   });
+                
+            }
+            } );
+
+        $( "#riddle_form" ).validate( {/*validate & submit riddle modal data*/
+                rules: {  
+                    riddle_category: {
+                        required: true
+                    },
+                    riddle_title: {
+                        required: true,
+                    }
+                    
+                },
+                messages: {                        
+                    riddle_category: {
+                        required: "This field is required"
+                    },
+                    riddle_title: {
+                        required: "This field is required"
+                    }
+                },
+                errorElement: "em",
+                errorPlacement: function ( error, element ) {
+                // Add the `help-block` class to the error element
+                error.addClass( "help-block" );
+
+                if ( element.prop( "type" ) === "checkbox" ) {
+                    error.insertAfter( element.parent( "label" ) );
+                } else {
+                    error.insertAfter( element );
+                }
+            },
+            success: function ( label, element ) {
+                // Add the span element, if doesn't exists, and apply the icon classes to it.
+                if ( !$( element ).next( "span" )[ 0 ] ) {
+                    $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+                }
+            },
+            highlight: function ( element, errorClass, validClass ) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
+            },
+
+            submitHandler: function () {
+                //modify button
+                var sub_button=$("#riddle_form").find(':submit');
+                var old_button_val=sub_button.val();
+                sub_button.prop('disabled', true);
+                sub_button.val('...processing');
+
+                resetFields();
+                var my_url="{{url}}/ask_riddle";
+                $("#riddle_form").ajaxSubmit({
+                    url:my_url,
+                       contentType: 'application/json',
+                       success: function(response){
+                        if(response.success==true){
+                                console.log('image uploaded and form submitted');
+                                $('#riddle_form  .form_submission_success').text(response.msg);
+                                setTimeout(function(){
+                                    $('#riddle_form  .form_submission_success').text('');
+                                    sub_button.val(old_button_val);
+                                    sub_button.prop('disabled', false);
+                                    $('#riddle_modal').modal('hide');
+                                },3000);
+                                
+                            }else{
+                                console.log('response is false');
+                                $('#riddle_form  .form_submission_error').text(response.msg);
+                                sub_button.val(old_button_val);
+                                sub_button.prop('disabled', false);
+                            }
+                              
+                       },
+                       error:function(xhr, status, err){
+                            console.log('error');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(err);
+                        }
+                   });
+                
+            }
+            } );
+
+
+        $( "#pab_form" ).validate( {/*validate & submit pab modal data*/
+                rules: {  
+                    pab_category: {
+                        required: true
+                    },
+                    pab_title: {
+                        required: true,
+                    }
+                    
+                },
+                messages: {                        
+                    pab_category: {
+                        required: "This field is required"
+                    },
+                    pab_title: {
+                        required: "This field is required"
+                    }
+                },
+                errorElement: "em",
+                errorPlacement: function ( error, element ) {
+                // Add the `help-block` class to the error element
+                error.addClass( "help-block" );
+
+                if ( element.prop( "type" ) === "checkbox" ) {
+                    error.insertAfter( element.parent( "label" ) );
+                } else {
+                    error.insertAfter( element );
+                }
+            },
+            success: function ( label, element ) {
+                // Add the span element, if doesn't exists, and apply the icon classes to it.
+                if ( !$( element ).next( "span" )[ 0 ] ) {
+                    $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+                }
+            },
+            highlight: function ( element, errorClass, validClass ) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
+            },
+
+            submitHandler: function () {
+                //modify button
+                var sub_button=$("#pab_form").find(':submit');
+                var old_button_val=sub_button.val();
+                sub_button.prop('disabled', true);
+                sub_button.val('...processing');
+
+                resetFields();
+                var my_url="{{url}}/ask_pab";
+                $("#pab_form").ajaxSubmit({
+                    url:my_url,
+                       contentType: 'application/json',
+                       success: function(response){
+                        if(response.success==true){
+                                console.log('image uploaded and form submitted');
+                                $('#pab_form  .form_submission_success').text(response.msg);
+                                setTimeout(function(){
+                                    $('#pab_form  .form_submission_success').text('');
+                                    sub_button.val(old_button_val);
+                                    sub_button.prop('disabled', false);
+                                    $('#pab_modal').modal('hide');
+                                },3000);
+                                
+                            }else{
+                                console.log('response is false');
+                                $('#pab_form  .form_submission_error').text(response.msg);
                                 sub_button.val(old_button_val);
                                 sub_button.prop('disabled', false);
                             }

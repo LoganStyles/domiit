@@ -335,7 +335,7 @@
 
                             </ul>
                         </li>
-                        <li class="menu-dropdown classic-menu-dropdown  ">
+                        <li class="menu-dropdown classic-menu-dropdown  {{#if riddle_status}}active{{/if}}">
 
                             <a href="javascript:;" class="swap_icons">
                                 <div style="margin-left: 30%;">
@@ -346,13 +346,13 @@
                             </a>
                             <ul class="dropdown-menu pull-left">
                                 <li class=" ">
-                                    <a href="#" class="nav-link  "> All </a>
+                                    <a href="{{url}}/posts/section/riddle/All/0" class="nav-link  "> All </a>
                                 </li>
                                 <li class=" ">
-                                    <a href="#" class="nav-link  "> Unresolved Riddles </a>
+                                    <a href="{{url}}/posts/section/riddle/Unresolved/0" class="nav-link  "> Unresolved Riddles </a>
                                 </li>
                                 <li class=" ">
-                                    <a href="#" class="nav-link  "> Solved Riddles </a>
+                                    <a href="{{url}}/posts/section/riddle/Solved/0" class="nav-link  "> Solved Riddles </a>
                                 </li>
 
                             </ul>
@@ -360,9 +360,10 @@
                         </li>
                         
 
-                        <li class="menu-dropdown classic-menu-dropdown ">
-                            <a href="javascript:;">
-                                <div style="margin-left: 30%;"><img alt="" class="" src="{{url}}/images/books.png"></div>
+                        <li class="menu-dropdown classic-menu-dropdown {{#if pab_status}}active{{/if}}">
+                            <a href="{{url}}/posts/section/pab/All/0">
+                                <div style="margin-left: 30%;">
+                                <img alt="" class="" src="{{url}}/images/books.png"></div>
                                 <div> Posted Books</div>
 
                                 <span class="arrow"></span>

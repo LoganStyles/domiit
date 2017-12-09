@@ -30,6 +30,36 @@
 	color: #000;
 }
 
+.posts_pab_itemtitle{
+     float: left;
+     font-weight: 600;
+     width: 30%;
+}
+
+.posts_pab_itemdetails{
+     float: left;
+     width: 60%;
+     text-align: left;
+}
+
+.posts_pab_itemimage{
+     width: 30%;
+     display: inline-block;
+     float: left;
+     padding-right: 3%;
+}
+
+.posts_pab_itemright{
+     width: 60%;
+     display: inline-block;
+     float: left;
+}
+
+.posts_pab_itemright_row{
+     padding: 4% 0;
+     width: 100%;
+}
+
 /*profile*/
 .profile_area{
 	background-color: #fff;
@@ -41,11 +71,13 @@
 	padding: 1%;
 	/*margin-top: 3%;*/
 }
+
 .profile_top{
-	/*min-height: 500px;
-	position: relative;*/
-	/*padding-bottom: 1%;
-	background: #fff;*/
+	background: url(../../../images/profile_bg.jpg) no-repeat center center fixed; 
+       -webkit-background-size: cover;
+       -moz-background-size: cover;
+       -o-background-size: cover;
+       background-size: cover;
 }
 
 
@@ -72,7 +104,8 @@
 
 
 .profile_img_text{	
-	color: #86be25;
+	color: #000;
+     /*color: #86be25;*/
 	text-align: center;
 }
 
@@ -222,6 +255,7 @@
      	-webkit-border-radius: 50%;
      	-moz-border-radius: 50%; 
      	border-radius: 50%;
+          border: 0px solid #fff;
      }
 
      .pro_image{
@@ -234,6 +268,7 @@
      	-webkit-border-radius: 50%;
      	-moz-border-radius: 50%; 
      	border-radius: 50%;
+          border: 0px solid #fff;
      }
 
      /*toggle cntent*/

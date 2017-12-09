@@ -35,7 +35,7 @@
 
         <div class="col-md-6">                                        
             <!-- BEGIN PORTLET -->
-            <div class="portlet light ">
+            <div class="portlet light " {{#unless page_response}} style="display: none;"{{/unless}}>
                 <div class="portlet-title" style="border-bottom: 0px;">
                     <div class="task-footer" >
                         <div class=" ">
@@ -142,18 +142,123 @@
                                         
 
                                     </div>
+                                    {{#if ../pab_status}}
 
                                     <div class="item-body"> 
-                                    {{#if pics.length }}
-                                        <div style="margin-bottom: 3%;">                                                                    
-                                            <img class="img-responsive" src="{{url}}/uploads/{{pics.[0]}}">
+                                        <div style="width: 100%; color: #000;">
+
+                                            <div class="posts_pab_itemimage">
+                                            {{#if pics}}
+                                                <img class="img-responsive" src="{{url}}/uploads/{{pics.[0]}}">
+                                                {{else}}
+                                                <img class="img-responsive" src="{{url}}/uploads/default_img.png">
+                                            {{/if}}
+                                            
+                                            </div>
+
+                        <div class="posts_pab_itemright">
+                            <div>
+                            {{#if body}}
+                            <div class="posts_pab_itemright_row">
+                                <div class="posts_pab_itemtitle">Title:</div>
+                                <div class="posts_pab_itemdetails">{{body}}</div>
+                            </div>
+                            {{/if}}
+                            {{#if author}}
+                            <div class="posts_pab_itemright_row">
+                                <div class="posts_pab_itemtitle">Author:</div>
+                                <div class="posts_pab_itemdetails">{{author}}</div>
+                            </div>
+                            {{/if}}
+                            {{#if pages}}
+                            <div class="posts_pab_itemright_row">
+                                <div class="posts_pab_itemtitle">Pages:</div>
+                                <div class="posts_pab_itemdetails">{{pages}}</div>
+                            </div>
+                            {{/if}}
+                            {{#if amount}}
+                            <div class="posts_pab_itemright_row">
+                                <div class="posts_pab_itemtitle">Price:</div>
+                                <div class="posts_pab_itemdetails">N{{amount}}</div>
+                            </div>
+                            {{/if}}
+
+                            {{#if isbn}}
+                            <div class="posts_pab_itemright_row">
+                                <div class="posts_pab_itemtitle">ISBN:</div>
+                                <div class="posts_pab_itemdetails">{{isbn}}</div>
+                            </div>
+                            {{/if}}
+
+                            {{#if publishers}}
+                            <div class="posts_pab_itemright_row">
+                                <div class="posts_pab_itemtitle">Publisher:</div>
+                                <div class="posts_pab_itemdetails">{{publishers}}</div>
+                            </div>
+                            {{/if}}
+
+                            {{#if bookshop}}
+                            <div class="posts_pab_itemright_row">
+                                <div class="posts_pab_itemtitle">Bookshop:</div>
+                                <div class="posts_pab_itemdetails">{{bookshop}}</div>
+                            </div>
+                            {{/if}}
+
+                            {{#if url}}
+                            <div class="posts_pab_itemright_row">
+                                <div class="posts_pab_itemtitle">Url:</div>
+                                <div class="posts_pab_itemdetails">{{url}}</div>
+                            </div>
+                            {{/if}}
+
+                            </div>
+                        </div>
+
+                                            <div class="clearfix"></div>
+                                            
                                         </div>
-                                    {{/if}}
-                                        <div style="color: #337ab7;" class="post_question">
-                                            {{body}}
+
+                                        <div style="width: 100%; color: #000;padding: 2%;">
+                                            <div class="">
+  
+
+                                              <ul class="nav nav-tabs navbar-right">
+                                                <li class="active"><a data-toggle="tab" href="#home">SYNOPSIS</a></li>
+                                                <li><a data-toggle="tab" href="#menu1">ABOUT THE AUTHOR</a></li>
+                                              </ul>
+                                              <div class="clearfix"></div>
+
+                                              <div class="tab-content">
+                                                <div id="home" class="tab-pane fade in active">
+                                                  <p>{{synopsis}}</p>
+                                                </div>
+                                                <div id="menu1" class="tab-pane fade">
+                                                  <p>{{about_author}}</p>
+                                                </div>
+                                                
+                                              </div>
+                                            </div>
                                         </div>
+
+
                                         
                                     </div>  
+                                    {{else}}
+
+                                        <div class="item-body"> 
+                                            {{#if pics.length }}
+                                                <div style="margin-bottom: 3%;">                                                                    
+                                                    <img class="img-responsive" src="{{url}}/uploads/{{pics.[0]}}">
+                                                </div>
+                                            {{/if}}
+                                                <div style="color: #337ab7;" class="post_item">
+                                                    {{body}}
+                                                </div>
+                                            
+                                        </div> 
+
+
+                                    {{/if}}
 
                                         <div style="width: 100%;"><!--main block-->
                                         
@@ -169,8 +274,15 @@
 
                                                 <span style="color: #000;font-size: 0.8em;">
                                                         <span class="social_value">{{answers_len}}</span>&nbsp;
+                                                         {{#if ../quest_status}}
                                                         <i class="fa fa-comment-o"></i>&nbsp;
                                                         Answers
+                                                        {{/if}}
+
+                                                        {{#if ../art_status}}
+                                                        <img alt="" class="icon_size_15" src="{{../url}}/images/{{../page_icon}}">&nbsp;
+                                                        Reviews
+                                                        {{/if}}
                                                     </span>
 
                                                 <a class="btn btn-link post_shares" style="color: #000;font-size: 0.8em;">
@@ -192,22 +304,18 @@
                         </div>
                     </div>
                     <!-- END PORTLET -->
-                   {{#if ../quest_status}}
+                   
                     <div class="task-footer" style="margin: 2%;">
                         <div class="btn-arrow-link ">
-                            <a type="button" class="btn dark btn-outline sbold uppercase answer_button"><i class="icon-pencil"></i>Write your answer</a>
-                            
-                        </div>
-                    </div>
-                    {{/if}}
+                        {{#unless ../pab_status}}
+                            <a type="button" class="btn dark btn-outline sbold uppercase response_button"><i class="icon-pencil"></i>Write your {{../page_response}}</a>                            
+                        {{/unless}}
 
-                    {{#if ../art_status}}
-                    <div class="task-footer" style="margin: 2%;">
-                        <div class="btn-arrow-link ">
-                            <a type="button" class="btn dark btn-outline sbold uppercase answer_button"><i class="icon-globe"></i>Download</a>                            
+                        {{#if ../art_status}}
+                                <a type="button" class="btn dark btn-outline sbold uppercase download_button"><i class="fa fa-cloud-download"></i>&nbsp;Download</a>                       
+                        {{/if}}
                         </div>
                     </div>
-                    {{/if}}
                     <div class="clearfix"></div>
 
                 </div>
@@ -412,7 +520,7 @@
 
             <div class="portlet-body form">                                         
 
-                <div id="section_answer_modal" class="modal fade" tabindex="-1">
+                <!-- <div id="section_answer_modal" class="modal fade" tabindex="-1">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                         <h4 class="modal-title" id="section_answer_header">Answer</h4>
@@ -447,6 +555,44 @@
                         </form>
                     </div>
 
+                </div> -->
+
+
+                <div id="section_response_modal" class="modal fade" tabindex="-1">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <h4 class="modal-title" id="section_response_header">{{page_response}}</h4>
+                    </div>
+                    <div class="modal-body">
+                 <form role="form" id="section_response_form" action="" method="post" enctype="multipart/form-data">
+                        <span class="form_submission_error"></span>
+                        <span class="form_submission_success"></span>
+
+                            <input type="hidden" name="section_response_id"  id="section_response_id" >
+                            <input type="hidden" name="section_response_type"  id="section_response_type" >
+
+                            <h5 id="section_response_body">{{page_response}}s</h5>                           
+
+                            <div class="form-group">
+                                <textarea  name="section_response_details" id="section_response_details" class="form-control" rows="3" style="font-weight: 500"></textarea>
+                                <label for="form_control_1">Write your {{page_response}}</label>
+                            </div>
+                            
+
+                             <div class="form-group">
+                             <label for="section_response_photo" class="custom-file-upload">
+                                    <i class="fa fa-camera"></i> Add Photo
+                                </label>
+                                <input id="section_response_photo" name="section_response_photo" type="file" accept="application/x-zip-compressed,image/*"/>
+                                <p class="help-block"> Optional </p>
+                            </div>
+                            <div class="form-actions noborder">
+                                <input type="submit" class="btn blue" name="submit" value="Answer" />
+                                <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+                            </div>
+                        </form>
+                    </div>
+
                 </div>
 
                
@@ -468,6 +614,85 @@
         <script type="text/javascript">
 
             $( document ).ready( function () {
+
+
+                $( "#section_response_form" ).validate( {/*validate & submit response details*/
+                rules: {  
+                    section_response_details: {
+                        required: true
+                    }                    
+                },
+                messages: {                        
+                    section_response_details: {
+                        required: "This field is required"
+                    }
+                },
+                errorElement: "em",
+                errorPlacement: function ( error, element ) {
+                // Add the `help-block` class to the error element
+                error.addClass( "help-block" );
+
+                if ( element.prop( "type" ) === "checkbox" ) {
+                    error.insertAfter( element.parent( "label" ) );
+                } else {
+                    error.insertAfter( element );
+                }
+            },
+            success: function ( label, element ) {
+                // Add the span element, if doesn't exists, and apply the icon classes to it.
+                if ( !$( element ).next( "span" )[ 0 ] ) {
+                    $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+                }
+            },
+            highlight: function ( element, errorClass, validClass ) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
+            },
+
+            submitHandler: function () {
+                //modify button
+                var sub_button=$(this).find(':submit');
+                var old_button_val=sub_button.val();
+                sub_button.prop('disabled', true);
+                sub_button.val('...processing');
+
+                resetFields();
+                var my_url="{{url}}/response_item";
+                console.log('url: '+my_url);
+
+                $("#section_response_form").ajaxSubmit({
+                    url:my_url,
+                       contentType: 'application/json',
+                       success: function(response){
+                        if(response.success==true){
+                                $('#section_response_form  .form_submission_success').text(response.msg);
+                                setTimeout(function(){
+                                    $('#section_response_form  .form_submission_success').text('');
+                                    sub_button.val(old_button_val);
+                                    sub_button.prop('disabled', false);
+                                    $('#section_response_modal').modal('hide');
+                                },3000);
+                                
+                            }else{
+                                console.log('response is false');
+                                $('#section_response_form  .form_submission_error').text(response.msg);
+                                sub_button.val(old_button_val);
+                                sub_button.prop('disabled', false);
+                            }
+                              
+                       },
+                       error:function(xhr, status, err){
+                            console.log('error');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(err);
+                        }
+                   });
+                
+            }
+            } );
 
                
 

@@ -174,6 +174,40 @@
                             </div>
 
                         </div>
+
+                        <div id="pab_cat_modal" class="modal fade" tabindex="-1">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                <h4 class="modal-title" id="pab_cat_header">Post A Book Genre</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form role="form" id="pab_cat_form" action="" method="post">
+                                    <span class="form_submission_error"></span>
+                                    <span class="form_submission_success"></span>
+
+                                    <input type="hidden" name="pab_cat_id"  id="pab_cat_id" value="">
+                                    <div class="form-body">
+                                        <div class="form-group form-md-line-input">
+                                            <input type="text" class="form-control" id="pab_cat_title" name="pab_cat_title">
+                                            <label for="pab_cat_title">Title</label>
+                                        </div>                                                     
+                                        
+                                        <div class="form-group form-md-line-input form-md-floating-label">
+                                            <textarea class="form-control" rows="3" id="pab_cat_description" name="pab_cat_description"></textarea>
+                                            <label for="form_control_1">Description</label>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="form-actions noborder">
+                                        <input type="submit" class="btn blue" name="submit" value="Submit" />
+                                        <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+
+
                     </div>
                     
                     
@@ -198,6 +232,8 @@
                 $('#article_cat_form .form_submission_error').text("");
                 $('#riddle_cat_form .form_submission_success').text("");
                 $('#riddle_cat_form .form_submission_error').text("");
+                $('#pab_cat_form .form_submission_success').text("");
+                $('#pab_cat_form .form_submission_error').text("");
             }
 
            
@@ -419,6 +455,80 @@
                                 }else{
                                     console.log('response is false');
                                     $('#riddle_cat_form  .form_submission_error').text(response.msg);
+                                }
+                            },
+                            error:function(xhr, status, err){
+                                console.log('error');
+                                console.log(xhr);
+                                console.log(status);
+                                console.log(err);
+                            }
+                        });
+                }
+            } );
+
+                $( "#pab_cat_form" ).validate( {/*validate & submit pab category details*/
+                    rules: {  
+                        pab_cat_title: {
+                            required: true
+                        }
+                        
+                    },
+                    messages: {                        
+                        pab_cat_title: {
+                            required: "This field is required"
+                        }
+                        
+                    },
+                    errorElement: "em",
+                    errorPlacement: function ( error, element ) {
+                    // Add the `help-block` class to the error element
+                    error.addClass( "help-block" );
+
+                    if ( element.prop( "type" ) === "checkbox" ) {
+                        error.insertAfter( element.parent( "label" ) );
+                    } else {
+                        error.insertAfter( element );
+                    }
+                },
+                success: function ( label, element ) {
+                    // Add the span element, if doesn't exists, and apply the icon classes to it.
+                    if ( !$( element ).next( "span" )[ 0 ] ) {
+                        $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+                    }
+                },
+                highlight: function ( element, errorClass, validClass ) {
+                    $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
+                },
+                submitHandler: function () {
+                    resetFields();
+                    var formData = $('#pab_cat_form').serialize();
+                    console.log(formData);
+                    var my_url="{{url}}/cms/post_cat/pab";
+
+                    $.ajax({
+                        url:my_url,
+                        type:'POST',
+                        data:formData,
+                        dataType:'json',
+                            // contentType: 'application/json', 
+                            headers: {'X-My-App-Token': 'loganstyles'},
+                            success:function(response){
+                                console.log('success');
+                                if(response.success==true){
+                                    console.log('response is true');
+                                    $('#pab_cat_form  .form_submission_success').text(response.msg);
+                                    setTimeout(function(){
+                                        $('#pab_cat_form  .form_submission_success').text('');
+                                         window.location.href="{{url}}/cms/main/pab";
+                                    },3000);
+                                    
+                                }else{
+                                    console.log('response is false');
+                                    $('#pab_cat_form  .form_submission_error').text(response.msg);
                                 }
                             },
                             error:function(xhr, status, err){
