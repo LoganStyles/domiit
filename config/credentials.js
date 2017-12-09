@@ -11,7 +11,7 @@ module.exports = {
         clientID:"7303366212-o9bt7v8r9j8aflrbk7925r4b1o48fgq4.apps.googleusercontent.com",
         clientSecret:"jIUAEuHXQcUp0F1iE3AT9CpY",
         // callback:"http://localhost:8000/members/auth/google/callback"        
-        callback:"https://ancient-falls-19080.herokuapp.com/members/auth/facebook/callback"        
+        callback:"https://ancient-falls-19080.herokuapp.com/members/auth/google/callback"        
     },
     linkedin:{
         clientID:"78y5uh3ph35mrb",
