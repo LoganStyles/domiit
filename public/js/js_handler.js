@@ -3,6 +3,35 @@ function newData(){
     $('#item_about_title').focus();
 }
 
+function typeModalLoader(mode,type){
+    /*mode:new,edit
+    type:cat,story
+    */
+    switch (mode) {
+        case 'new':
+        console.log('inside mode new for '+type);
+        $("#page_modal #page_form").trigger('reset');
+        $("#page_modal #page_id").val(0);
+        $("#page_modal #page_type").val(type);
+        $("#page_modal #page_mode").val("insert");
+        $("#page_modal #page_title").val("").attr('readonly',false);
+        $("#page_modal #page_description").text("").attr('readonly',false);
+        $("#page_modal #page_header").text('Add');
+        $("#page_modal").modal({backdrop: false, keyboard: false});
+        
+        
+        break;
+
+        // case 'edit':
+        // console.log('inside mode edit: ');                
+        // $('#cat_modal').modal({backdrop: false, keyboard: false});
+        // $('#cat_header').text('Edit');
+        // break;
+
+        default:
+        break;
+    }
+}
 
 function modalLoader(type, mode,cat_type) {
 

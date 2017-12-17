@@ -323,3 +323,18 @@
          padding: 6px 12px;
          cursor: pointer;
      }
+
+     #section_update_header{
+          text-transform: uppercase; 
+     }
+
+     /*category rows*/
+     .page_row.active{
+         background-color: #eee; 
+     }
+
+
+    .page_row:hover{
+        cursor: pointer;
+        background-color: #666 !important;
+    }

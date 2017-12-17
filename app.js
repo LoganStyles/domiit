@@ -22,6 +22,8 @@ var question = require('./models/question');
 var article = require('./models/article');
 var riddle = require('./models/riddle');
 var pab = require('./models/pab');
+var trend = require('./models/trend');
+var trend_cat = require('./models/trend_cats');
 
 var quest_cat = require('./models/question_cats');
 // var quest_sub1 = require('./models/question_sub1');
@@ -167,20 +169,32 @@ app.use(session({
 }));
 
 
-
+//this always updates the session
 app.use(function(req,res,next){
+    console.log('inside app.use')
     if(req.session && req.session.user){
         user.findOne({email:req.session.user.email},function(err,user){
             if(user){
+                console.log('inside app.use: exiting user found')
                 req.user = user;
-                delete req.user.password; //delete the password from the session
+                // delete user.password; not working//delete the password from the session
                 req.session.user = user; //refresh the session value
                 res.locals.user = user;
+
+                // console.log('user');
+                // console.log(user);
+                // console.log('req.user');
+                // console.log(req.user);
+                // console.log('req.session.user');
+                // console.log(req.session.user);
+                // console.log('res.locals.user');
+                // console.log(res.locals.user);
             }
             // finishing processing the middleware and run the route
             next();
         })
     }else{
+        console.log('inside app.use: no existing req.session')
         next();
     }
 });
@@ -193,16 +207,14 @@ function isLoggedIn(req, res, next) {
     }
 }
 
-app.get('/profile', function(req, res) {
-    console.log(process.env);
+app.get('/profile',isLoggedIn, function(req, res) {
     console.log('inside profile');
-    console.log(req.user); 
-   
+    // console.log(req)   
     
     if(req.user){
         var qualification="",
         designation="",
-        dob="",
+        dob="",age="",
         displayPic="avatar.png",
         backgroundPic="";
 
@@ -217,9 +229,12 @@ app.get('/profile', function(req, res) {
         console.log('designation : '+designation);
 
         if(req.user.dob){
-            dob=moment().diff(new Date(req.user.dob),'years');
+            // console.log('dob : '+req.user.dob);
+            dob=moment(req.user.dob).format('MM/DD/YYYY');
+            age=moment().diff(new Date(req.user.dob),'years');
         }
         console.log('dob : '+dob);
+        console.log('age : '+age);
         if(req.user.displayPic[0]){
             displayPic=req.user.displayPic[req.user.displayPic.length - 1];
         }
@@ -235,6 +250,7 @@ app.get('/profile', function(req, res) {
             url:process.env.URL_ROOT,
             user_info:req.user,
             dob:dob,
+            age:age,
             displayPic:displayPic,
             qualification:qualification,
             designation:designation,
@@ -255,6 +271,48 @@ app.get('/profile', function(req, res) {
         res.redirect('/');
     }
     
+});
+
+app.get('/fetchCats',isLoggedIn,function(req,res){
+    console.log(req.query);
+    var section =req.query.section,
+    cat;
+
+    switch(section){
+        case 'question':
+        cat =quest_cat;
+        break;
+
+        case 'article':
+        cat =art_cat;
+        break;
+
+        case 'riddle':
+        cat =riddle_cat;
+        break;
+    }
+
+    cat.find().sort({value:1}).exec(function(err1,res1){
+        var res_cat=[];
+
+        if(err1){
+            console.log(err1);
+
+            res.json({success:false,
+                msg:"Fetched categories failed",
+                cats:res_cat
+            });
+        }else if(res1){
+            res_cat=res1;
+
+            res.json({
+                success:true,
+                msg:"Fetched categories successfully",
+                cats:res_cat
+            });
+        }
+
+    });        
 });
 
 
@@ -358,7 +416,7 @@ app.get('/', function(req, res) {
         if(error){
             console.log(error)
         }else if(result){
-            console.log(result)
+            // console.log(result)
             res_data=result;
         }
 
@@ -403,44 +461,44 @@ io.on('connection',function(socket){
 var upload = multer({storage:Storage});
 /*process an 'ask a question' post,save & update UI immediately*/
 app.post('/ask_question',upload.single('question_photo'),function(req,res,next){
-    console.log('req.fil')
-    console.log(req.file);
+console.log('req.fil')
+console.log(req.file);
 
-    var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
+var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
 
-    var owner_details={id:req.user._id,
-        displayName:req.user.displayName,
-        displayPic:displayPic,
-        status:req.user.current_appointment};
+var owner_details={id:req.user._id,
+    displayName:req.user.displayName,
+    displayPic:displayPic,
+    status:req.user.current_appointment};
 
-        let ask_quest =new question();
-        ask_quest.body=req.body.question_title;
-        ask_quest.category = req.body.question_category;
-        ask_quest.sub_cat1=req.body.question_sub1;
-        ask_quest.sub_cat2=req.body.question_sub2;
-        ask_quest.description=req.body.question_info;
-        ask_quest.owner=owner_details;
+    let ask_quest =new question();
+    ask_quest.body=req.body.question_title;
+    ask_quest.category = req.body.question_category;
+    ask_quest.sub_cat1=req.body.question_sub1;
+    ask_quest.sub_cat2=req.body.question_sub2;
+    ask_quest.description=req.body.question_info;
+    ask_quest.owner=owner_details;
 
-        if (req.file && req.file.filename != null) {
-            ask_quest.pics.push(req.file.filename);
-        }
+    if (req.file && req.file.filename != null) {
+        ask_quest.pics.push(req.file.filename);
+    }
 
 
-        ask_quest.save(function(err1, ask_quest) {
+    ask_quest.save(function(err1, ask_quest) {
 
-            if(err1){console.log(err1);res.json({success: false,msg:"question submission failed"});
+        if(err1){console.log(err1);res.json({success: false,msg:"question submission failed"});
 
-        }else{   
-        // console.log(ask_quest);         
-            var json = JSON.stringify(ask_quest, null, 2);
-            // console.log(json);
-            io.emit('all_questions', json);
-            io.emit('unanswered_questions', json);
-            res.json({success:true,msg:"Question submission succesful"});
-        }   
-    });
+    }else{   
+    // console.log(ask_quest);         
+        var json = JSON.stringify(ask_quest, null, 2);
+        // console.log(json);
+        io.emit('all_questions', json);
+        io.emit('unanswered_questions', json);
+        res.json({success:true,msg:"Question submission succesful"});
+    }   
+});
 
-    });
+});
 
 
 /*process an 'write an article' post,save & update UI immediately*/
@@ -625,11 +683,11 @@ app.post('/update_edu',function(req,res,next){
         if(u){
             let updateUser=u;
             updateUser.education.push(update_items);//append education items
+            updateUser.date_modified=new Date();
 
             console.log(updateUser);
 
-            user.updateOne({email:req.session.user.email},
-                {$currentDate:{date_modified:true},$set:updateUser},function(err1,res1){
+            user.updateOne({email:req.session.user.email},{$set:updateUser},function(err1,res1){
 
                 if(err1){
                     console.log(err1)
@@ -648,9 +706,6 @@ app.post('/update_edu',function(req,res,next){
 
 /*updates the qualifications on the profile */
 app.post('/update_qual',function(req,res,next){
-    // console.log('about qual');
-    // console.log(req.body.profile_qual_title)
-    // console.log(req.body.profile_qual_year)
 
     var update_items={
         title:req.body.profile_qual_title,
@@ -663,11 +718,11 @@ app.post('/update_qual',function(req,res,next){
         if(u){
             let updateUser=u;
             updateUser.qualification.push(update_items);//append education items
+            updateUser.date_modified=new Date();
 
             console.log(updateUser);
 
-            user.updateOne({email:req.session.user.email},
-                {$currentDate:{date_modified:true},$set:updateUser},function(err1,res1){
+            user.updateOne({email:req.session.user.email},{$set:updateUser},function(err1,res1){
 
                 if(err1){
                     console.log(err1)
@@ -689,19 +744,17 @@ app.post('/update_sch',function(req,res,next){
 
     var update_items={
         title:req.body.profile_sch_title,
-        // body:'',
     }
-
 
     user.findOne({email:req.session.user.email }, function(err, u) {
         if(u){
             let updateUser=u;
             updateUser.schools.push(update_items);//append education items
+            updateUser.date_modified=new Date();
 
             console.log(updateUser);
 
-            user.updateOne({email:req.session.user.email},
-                {$currentDate:{date_modified:true},$set:updateUser},function(err1,res1){
+            user.updateOne({email:req.session.user.email},{$set:updateUser},function(err1,res1){
 
                 if(err1){
                     console.log(err1)
@@ -728,7 +781,7 @@ app.post('/update_bio1',profile_upload,function(req,res,next){
 
     console.log(req.body);
 
-    var dob = moment(req.body.profile_bio1_dob,'MM-DD-YYYY');
+    var dob = moment(req.body.profile_bio1_dob,'MM/DD/YYYY');
     console.log(dob);
 
     designation_updates={
@@ -743,6 +796,7 @@ app.post('/update_bio1',profile_upload,function(req,res,next){
             updateUser.lastname=req.body.profile_bio1_lastname;
             updateUser.dob=dob;
             updateUser.displayName=updateUser.firstname+' '+updateUser.lastname;
+            updateUser.date_modified=new Date();
             updateUser.designation.push(designation_updates);
 
             //store img if it exists
@@ -756,9 +810,8 @@ app.post('/update_bio1',profile_upload,function(req,res,next){
                 updateUser.backgroundPic.push(req.files['profile_bio1_backgroundPic'][0].filename);
             }
             console.log(updateUser);
-
-            user.updateOne({email:req.session.user.email},
-                {$currentDate:{date_modified:true},$set:updateUser},function(err1,res1){
+            //$currentDate:{date_modified:true},
+            user.updateOne({email:req.session.user.email},{$set:updateUser},function(err1,res1){
 
                 if(err1){
                     console.log(err1)
@@ -767,7 +820,7 @@ app.post('/update_bio1',profile_upload,function(req,res,next){
                     res.json({success:true,msg:"Your profile update was successfull"});
                 }
 
-                });
+            });
         }
 
     });
@@ -790,6 +843,10 @@ app.post('/response_item',upload.single('section_response_photo'),function(req,r
         case'article':
         section = article;
         break;
+
+        case'riddle':
+        section = riddle;
+        break;
     }
 
         section.findOne({_id:section_id},function(error,result){//find the question that was responsed
@@ -797,11 +854,13 @@ app.post('/response_item',upload.single('section_response_photo'),function(req,r
                 let updateSection = result;
                 updateSection.answers_len=updateSection.answers_len +1;//incr the no. of ans
                 updateSection.date_modified=new Date();
+                var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
+
                 updateSection.answers.push({
                     body : req.body.section_response_details,
                     responderDisplayName:req.user.displayName,
                     responder_id:req.user._id,
-                    responderDisplayPic:req.user.displayPic,
+                    responderDisplayPic:displayPic,
                     responderStatus:req.user.current_appointment
                 }); 
 
@@ -854,6 +913,320 @@ app.post('/response_item',upload.single('section_response_photo'),function(req,r
 
 
     });
+
+/*delete section post*/
+app.post('/delete_postitem',function(req,res,next){
+    // console.log(req.body)
+
+    var section_type=req.body.section_delete_type;
+    var section_id=req.body.section_delete_id;
+    var section;
+    // console.log('section_type '+section_type)
+    // console.log('section_id '+section_id)
+
+    switch(section_type){
+        case'question':
+        section = question;
+        break;
+
+        case'quest_cat':
+        section = quest_cat;
+        break;
+
+        case'article':
+        section = article;
+        break;
+
+        case'article_cat':
+        section = art_cat;
+        break;
+
+        case'riddle':
+        section = riddle;
+        break;
+
+        case'riddle_cat':
+        section = riddle_cat;
+        break;
+
+        case'trend_cat':
+        section = trend_cat;
+        break;
+
+        case'trend':
+        section = trend;
+        break;
+
+        case'pab':
+        section = pab;
+        break;
+
+        case'pab_cat':
+        section = pab_cat;
+        break;
+    }
+
+    section.findByIdAndRemove(section_id,function(err1,res1){
+        if(err1){
+            // console.log(err1)
+            res.json({success:false,msg:"Your delete operation failed"});
+        }else if(res1){
+            // var json = JSON.stringify(most_recent_response, null, 2);
+            // console.log(json);
+            // io.emit('responded', json);
+            res.json({success:true,msg:"Your delete operation was successfull"});
+        }
+
+    });
+});
+
+
+/*process  section modifications & edits immediately*/
+var section_update_upload = upload.fields([
+    {name: 'section_update_attachment',maxCount:1 },
+    {name: 'section_update_photo',maxCount:1 }]);
+app.post('/update_item',section_update_upload,function(req,res,next){
+    // console.log(req.user)
+    
+    var section_type=req.body.section_update_type;
+    var section_id=req.body.section_update_id;
+    switch(section_type){
+        case'question':
+        section = question;
+        break;
+
+        case'article':
+        section = article;
+        break;
+
+        case'riddle':
+        section = riddle;
+        break;
+    }
+
+        section.findOne({_id:section_id},function(error,result){//find the question that was responsed
+            if(result){
+                var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
+                var owner_details={id:req.user._id,
+                                    displayName:req.user.displayName,
+                                    displayPic:displayPic,
+                                    status:req.user.current_appointment};
+
+                let updateSection = result;
+                updateSection.date_modified=new Date();
+                updateSection.category=req.body.section_update_category;
+                updateSection.sub_cat1=req.body.section_update_sub1;
+                updateSection.sub_cat2=req.body.section_update_sub2;
+                updateSection.body=req.body.section_update_title;
+                updateSection.description=req.body.section_update_info;
+                updateSection.owner=owner_details;
+
+                //store img if exists
+                // if (req.file && req.file.filename != null) {
+                //     updateSection.pics.push(req.file.filename);
+                // }
+
+                //store attachment if it exists
+                if(req.files && req.files['section_update_attachment']){
+                    console.log('filename '+req.files['section_update_attachment'][0].filename)
+                    updateSection.attachment.push(req.files['section_update_attachment'][0].filename);
+                }
+
+                //store photo if it exists
+                if(req.files && req.files['section_update_photo']){
+                    console.log('filename '+req.files['section_update_photo'][0].filename)
+                    updateSection.pics.push(req.files['section_update_photo'][0].filename);
+                }                          
+                
+                let most_recent_response={
+                    _id:section_id,
+                    body : updateSection.body,
+                    category:updateSection.category,
+                    sub_cat1:updateSection.sub_cat1,
+                    sub_cat2:updateSection.sub_cat2,
+                    description:updateSection.description,
+                    date_modified:updateSection.date_modified
+                }
+
+
+                section.updateOne({_id:section_id},{$set:updateSection},function(err1,res1){
+
+                    if(err1){
+                        console.log(err1)
+                        res.json({success:false,msg:"Your update failed"});
+                    }else if(res1){
+                        var json = JSON.stringify(most_recent_response, null, 2);
+                        // console.log(json);
+                        // io.emit('responded', json);
+                        res.json({success:true,msg:"Your update was successfull"});
+                    }
+
+                });             
+            }else{
+                res.json({success:false,msg:"Item not found"});
+            }
+
+        });
+
+
+    });
+
+/*update the followers and followed fields of both users*/
+app.post('/followMember',function(req,res,next){
+    // console.log('follow member')
+    // console.log(req)
+    
+    var section_type=req.body.section;
+    var section_id=req.body.post_id;
+    // console.log('section_type '+section_type);
+    // console.log('section_id '+section_id);
+
+    switch(section_type){
+        case'question':
+        section = question;
+        break;
+
+        case'article':
+        section = article;
+        break;
+
+        case'riddle':
+        section = riddle;
+        break;
+
+        case'Post Books':
+        section = pab;
+        break;
+    }
+
+        section.findOne({_id:section_id},function(error,result){//find the section that was responsed to
+            if(result){
+                var owner_id=result.owner.id;
+                // console.log('owner_id '+owner_id);
+                var logged_user_id=req.user._id;
+                // console.log('logged_user_id '+logged_user_id);
+                //add logged_user_id to owner's followers
+
+                user.findOne({_id:owner_id }, function(err, u) {
+                    if(u){
+                        let updateUser=u;
+                        updateUser.date_modified=new Date();
+                        updateUser.followers.push(logged_user_id);//save logged_user_id
+                        
+                        console.log(updateUser);
+                        user.updateOne({_id:owner_id},{$set:updateUser},function(err1,res1){
+
+                            if(err1){
+                                console.log(err1)
+                                res.json({success:false,msg:"Followers update failed"});
+                            }else if(res1){   
+
+                            //add owner to logged_user_id's followed
+                            user.findOne({_id:logged_user_id }, function(err2, u2) {
+                                if(u2){
+                                    let updateUser=u2;
+                                    updateUser.date_modified=new Date();
+                                        updateUser.followed.push(owner_id);//save owner_id
+
+                                        console.log(updateUser);
+                                        user.updateOne({_id:logged_user_id},{$set:updateUser},function(err3,res3){
+
+                                            if(err3){
+                                                console.log(err3)
+                                                res.json({success:false,msg:"Followed update failed"});
+                                            }else if(res1){  
+                                                res.json({success:true,msg:"Follows update was successfull"});  
+
+                                            }
+
+                                        });
+                                    }else{
+                                       res.json({success:false,msg:"Curr User not found"}); 
+                                    }
+
+                                }); 
+
+                    }
+
+                });
+                    }else{
+                        res.json({success:false,msg:"Current Owner not found"}); 
+                    }
+
+                });
+
+
+            }else{
+                res.json({success:false,msg:"Follower Item not found"});
+            }
+
+        });
+
+
+    });
+
+
+/*update the logged user's bookmarks*/
+app.post('/saveItem',function(req,res,next){
+    console.log('bookmark item')
+    // console.log(req)
+    
+    var section_type=req.body.section;
+    var section_id=req.body.post_id;
+    console.log('section_type '+section_type);
+    console.log('section_id '+section_id);
+
+    switch(section_type){
+        case'question':
+        section = question;
+        break;
+
+        case'article':
+        section = article;
+        break;
+
+        case'riddle':
+        section = riddle;
+        break;
+
+        case'Post Books':
+        section = pab;
+        break;
+    }
+
+    var logged_user_id=req.user._id;
+    console.log('logged_user_id '+logged_user_id);
+    //save post details to user's bookmarks
+
+    user.findOne({_id:logged_user_id }, function(err, u) {
+        if(u){
+            let updateUser=u;
+            updateUser.date_modified=new Date();
+            let saved_info={
+                item_id:section_id,
+                body:section_type,
+                date:new Date()
+            }
+            updateUser.bookmarks.push(saved_info);//save post details
+            
+            console.log(updateUser);
+            user.updateOne({_id:logged_user_id},{$set:updateUser},function(err1,res1){
+
+                if(err1){
+                    console.log(err1)
+                    res.json({success:false,msg:"Bookmarks update failed"});
+                }else if(res1){
+                    res.json({success:true,msg:"Bookmarks update was successfull"});
+                }
+
+            });
+        }else{
+            res.json({success:false,msg:"Current User not found"}); 
+        }
+
+    });
+
+});
 
 server.listen(process.env.PORT || 3000,function(){
     console.log('Server started on port '+process.env.PORT);

@@ -13,6 +13,7 @@ var articleSchema = mongoose.Schema({
 	date_modified: { type: Date, default: Date.now },
 	post_date: { type: Date, default: Date.now },
 	owner:{id:String,displayName:String,displayPic:String,status:String},
+	post_owner:{type:Boolean,default:false},
 	views:{type:Number,default:0},
 	shares:{type:Number,default:0},
 	likes:{type:Number,default:0},

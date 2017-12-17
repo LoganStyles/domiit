@@ -1,3 +1,132 @@
+        <div id="section_delete_modal" class="modal fade" tabindex="-1">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title" id="section_delete_header">Confirm Delete</h4>
+            </div>
+            <div class="modal-body">
+                <h4>Are You Sure You Want To Delete This Item?</h4>
+                <form class="form-horizontal" role="form" id="section_delete_form" action="" method="post">
+                    <span class="form_submission_error"></span>
+                    <span class="form_submission_success"></span>
+
+                    <input type="hidden" name="section_delete_id"  id="section_delete_id" >
+                    <input type="hidden" name="section_delete_type"  id="section_delete_type" >
+
+                   
+
+                <div class="form-actions noborder pull-right">
+                    <input type="submit" class="btn blue" name="submit" value="Delete" />
+                    <button type="button" data-dismiss="modal" class="btn btn-outline dark">Cancel</button>
+                </div>
+                <div class="clearfix"></div>
+                </form>
+
+            </div>
+        
+        </div>
+
+        <div id="section_update_modal" class="modal fade" tabindex="-1">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title" id="section_update_header"></h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" id="section_update_form" action="" method="post" enctype="multipart/form-data">
+                    <span class="form_submission_error"></span>
+                    <span class="form_submission_success"></span>
+
+                    <input type="hidden" name="section_update_id"  id="section_update_id" value="0">
+                    <input type="hidden" name="section_update_type"  id="section_update_type" value="0">
+
+                    <div class="form-body">
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-lg-3 col-sm-12">Category </label>
+                            <div class="col-md-9 col-lg-9 col-sm-12">
+                                <select class="form-control " name="section_update_category" id="section_update_category">                                   
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-lg-3 col-sm-12 control-label">Sub-Category1</label>
+                            <div class="col-md-9 col-lg-9 col-sm-12 ">
+                                <input type="text" name="section_update_sub1" id="section_update_sub1" class="form-control" value="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-lg-3 col-sm-12 control-label">Sub-Category2</label>
+                            <div class="col-md-9 col-lg-9 col-sm-12 ">
+                                <input type="text" name="section_update_sub2" id="section_update_sub2" class="form-control" value="">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-lg-3 col-sm-12 control-label">Edit the question</label>
+                            <div class="col-md-9 col-lg-9 col-sm-12 ">
+                                <textarea  name="section_update_title" id="section_update_title" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
+                            </div>                                
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-lg-3 col-sm-12 control-label">Provide additional information</label>
+                            <div class="col-md-9 col-lg-9 col-sm-12 ">
+                                <textarea  name="section_update_info" id="section_update_info" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
+                            </div>                                
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-3 col-lg-3 col-sm-12"></div>
+                            {{#if quest_status}}
+
+                            <div class="col-md-9 col-lg-9 col-sm-12 ">
+                                <label for="section_update_photo" class="col-md-6 col-lg-6 col-sm-12 control-label custom-file-upload">
+                                    <i class="fa fa-camera"></i> Add Photos
+                                </label>
+                                <div class="col-md-4 col-lg-6 col-sm-12">
+                                    <input id="section_update_photo" name="section_update_photo" type="file" accept="application/x-zip-compressed,image/*"/>
+                                </div>
+                                
+                            </div>  
+                            {{/if}}
+
+                            {{#if art_status}}
+
+                            <div class="col-md-9 col-lg-9 col-sm-12 ">
+                                <label for="section_update_attachment" class="col-md-4 col-lg-4 col-sm-12 control-label custom-file-upload">
+                                    <img src="{{url}}/images/upload_attachment.png" /> Upload Attachment
+                                </label>
+                                <div class="col-md-2 col-lg-2 col-sm-12">
+                                    <input id="section_update_attachment" name="section_update_attachment" type="file" accept="application/x-zip-compressed"/>
+                                </div>
+
+
+                                <label for="section_update_photo" class="col-md-4 col-lg-4 col-sm-12 control-label custom-file-upload">
+                                    <i class="fa fa-camera"></i> Add Photos
+                                </label>
+                                <div class="col-md-2 col-lg-2 col-sm-12">
+                                    <input id="section_update_photo" name="section_update_photo" type="file" accept="application/x-zip-compressed,image/*"/>
+                                </div>
+                                
+                            </div>  
+                            {{/if}}                              
+                        </div>
+
+
+                        <div class="form-actions noborder pull-right">
+                            <input type="submit" class="btn blue" name="submit" value="Submit" />
+                            <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+                        </div>
+                        <div class="clearfix"></div>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
 <!-- BEGIN FOOTER -->
     <div class="page-footer">
         <div class="page-footer-inner"> 2017 &copy; domiit
@@ -23,7 +152,7 @@
         <script src="{{url}}/assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js" type="text/javascript"></script>
         <script src="{{url}}/assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js" type="text/javascript"></script>
 
-        <script src="../assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+        <script src="{{url}}/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
 
         <script src="{{url}}/assets/global/plugins/morris/morris.min.js" type="text/javascript"></script>
         <script src="{{url}}/assets/global/plugins/morris/raphael-min.js" type="text/javascript"></script>
@@ -73,8 +202,6 @@
                 $('#question_form .form_submission_success').text("");
                 $('#question_form .form_submission_error').text("");
             }
-
-
 
             $(document).ready(function(){
             /*show modal for answering a question*/
@@ -134,7 +261,53 @@
                     });
 
                 });
-                
+
+
+                $('body').on('click','.download_button',function(e){
+                    e.preventDefault();
+                    var $this =$(this);
+                    var attachemnt_file=$this.prev('input.download_input_field').val();
+                    console.log('attachment '+attachemnt_file);
+                    var url='{{url}}/members/downloads';
+                    var files={file:attachemnt_file};
+
+                    var old_button_val=$this.text();
+                    $this.prop('disabled', true);
+                    $this.text('...downloading');
+
+                    $.ajax({
+                        url:url,
+                        type:'POST',
+                        data:files,
+                        headers: {'X-My-App-Token': 'loganstyles'},
+                        success:function(response){
+                            console.log(response);
+                            $this.text('...download complete');
+                            if(response.success==true){
+                                alert(response.msg);
+                                setTimeout(function(){
+                                    $this.text(old_button_val);
+                                    $this.prop('disabled', false);
+                                },3000);
+
+                            }else{
+                                console.log('response is false');
+                                alert(response.msg);
+                                setTimeout(function(){
+                                    $this.text(old_button_val);
+                                    $this.prop('disabled', false);
+                                },3000);
+                            }                        
+                            
+                        },
+                        error:function(xhr, status, err){
+                            console.log('error');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(err);
+                        }
+                    });
+                });
 
                 $('body').on('click','.response_button',function(e){
                     //e.preventDefault();
@@ -207,6 +380,224 @@
                         });
 
             });
+
+            //for delete posts:get id,section & display modal
+                $("body").on('click','.delete_section_item',function(e){
+
+                    var parent=$(this).parents('.posted');
+                    var id=parent.find('input#post_id').val();
+                    var section=parent.find('input#post_type').val();
+                    console.log('delete id '+id);
+                    console.log('delete section '+section);
+
+                    //update & show modal
+                    $('#section_delete_modal').modal({backdrop: false, keyboard: false});
+                    $('#section_delete_modal #section_delete_id').val(id);
+                    $('#section_delete_modal #section_delete_type').val(section);
+
+                });
+
+            //for delete posts:get id,section & display modal
+                $("body").on('click','.delete_rowitem',function(e){
+
+                    var curr_id=$('table tr.page_row.active .curr_id').val();
+                    if(curr_id){
+                     console.log('curr_id '+curr_id);
+                    var curr_type=$('table tr.page_row.active .curr_type').val();
+                    console.log('curr_type '+curr_type);
+                
+                    //update & show modal
+                    $('#section_delete_modal').modal({backdrop: false, keyboard: false});
+                    $('#section_delete_modal #section_delete_id').val(curr_id);
+                    $('#section_delete_modal #section_delete_type').val(curr_type);
+                    }
+                   
+
+                });
+
+                /*delete a post*/
+                $("body").on('submit','#section_delete_form',function(e){
+                    e.preventDefault();
+
+                    var sub_button=$(this).find(':submit');
+                    var old_button_val=sub_button.val();
+                    sub_button.prop('disabled', true);
+                    sub_button.val('...deleting');
+
+                    resetFields();
+                    var my_url="{{url}}/delete_postitem";
+                    console.log('url: '+my_url);
+                    
+                    var form_data=$(this).serialize();
+                    console.log(form_data);
+
+                    $.ajax({
+                        url:my_url,
+                        type:'POST',
+                        data:form_data,
+                        headers: {'X-My-App-Token': 'loganstyles'},
+                        success:function(response){
+                            console.log(response);
+                            if(response.success==true){
+                            $('#section_delete_form  .form_submission_success').text(response.msg);
+                            setTimeout(function(){
+                                $('#section_delete_form  .form_submission_success').text('');
+                                sub_button.val(old_button_val);
+                                sub_button.prop('disabled', false);
+                                $('#section_delete_modal').modal('hide');
+                                    location.reload();//temp:later use sockets to update the actual post
+                                },3000);
+
+                        }else{
+                            console.log('response is false');
+                            $('#section_delete_form  .form_submission_error').text(response.msg);
+                            sub_button.val(old_button_val);
+                            sub_button.prop('disabled', false);
+                        }
+
+
+                        },
+                        error:function(xhr, status, err){
+                            console.log('error');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(err);
+                        }
+                    });
+
+                });
+
+        //edit posts
+           $("body").on('click','.edit_section_item',function(e){
+            //get this posts data
+            var parent=$(this).parents('.posted');
+            var id=parent.find('input#post_id').val();
+            var section=parent.find('input#post_type').val();
+            var post_category=parent.find('.post_category').text();
+            var post_sub_cat1=parent.find('.post_sub_cat1').text();
+            var post_sub_cat2=parent.find('.post_sub_cat2').text();
+            var post_body=parent.find('.item-body .post_item').text();
+
+            //append data to modal
+            $('#section_update_modal').modal({backdrop: false, keyboard: false});
+
+            //fetch categories
+            var url='{{url}}/fetchCats';
+
+            $.ajax({
+                url:url,
+                type:'GET',
+                data:{'section':section},
+                headers: {'X-My-App-Token': 'loganstyles'},
+                success:function(response){
+                    console.log(response);
+                    if(response.success==true){
+                        var res_cats=(response.cats);
+                        var options="";
+                        res_cats.forEach((curr_item,index,array)=>{
+                            options+='<option value="'+curr_item.title+'">'+curr_item.title+'</option>';
+                        });
+
+                        $('#section_update_modal #section_update_category').html(options);
+                        $('#section_update_modal #section_update_header').text(section);
+                        $('#section_update_modal #section_update_id').val(id);
+                        $('#section_update_modal #section_update_type').val(section);
+                        $('#section_update_modal #section_update_sub1').val(post_sub_cat1);
+                        $('#section_update_modal #section_update_sub2').val(post_sub_cat2);
+                        $('#section_update_modal #section_update_title').text(post_body.trim());
+                        $('#section_update_modal #section_update_category').val(post_category);
+                    }else{
+                        //console.log('response is false');                            
+                    }                        
+
+                },
+                error:function(xhr, status, err){
+                    console.log('error');
+                    console.log(xhr);
+                    console.log(status);
+                    console.log(err);
+                }
+            });
+
+        });
+
+        $( "#section_update_form" ).validate( {/*validate & submit response details*/
+            rules: {  
+                section_update_details: {
+                    required: true
+                }                    
+            },
+            messages: {                        
+                section_update_details: {
+                    required: "This field is required"
+                }
+            },
+                errorElement: "em",
+                errorPlacement: function ( error, element ) {
+                // Add the `help-block` class to the error element
+                error.addClass( "help-block" );
+
+                if ( element.prop( "type" ) === "checkbox" ) {
+                    error.insertAfter( element.parent( "label" ) );
+                } else {
+                    error.insertAfter( element );
+                }
+            },
+            success: function ( label, element ) {
+                // Add the span element, if doesn't exists, and apply the icon classes to it.
+                if ( !$( element ).next( "span" )[ 0 ] ) {
+                    $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+                }
+            },
+            highlight: function ( element, errorClass, validClass ) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
+            },
+
+            submitHandler: function () {
+                //modify button
+                var sub_button=$(this).find(':submit');
+                var old_button_val=sub_button.val();
+                sub_button.prop('disabled', true);
+                sub_button.val('...updating');
+
+                resetFields();
+                var my_url="{{url}}/update_item";
+
+                $("#section_update_form").ajaxSubmit({
+                    url:my_url,
+                    contentType: 'application/json',
+                    success: function(response){
+                        if(response.success==true){
+                            $('#section_update_form  .form_submission_success').text(response.msg);
+                            setTimeout(function(){
+                                $('#section_update_form  .form_submission_success').text('');
+                                sub_button.val(old_button_val);
+                                sub_button.prop('disabled', false);
+                                $('#section_update_modal').modal('hide');
+                                    location.reload();//temp:later use sockets to update the actual post
+                                },3000);
+
+                        }else{
+                            //console.log('response is false');
+                            $('#section_update_form  .form_submission_error').text(response.msg);
+                            sub_button.val(old_button_val);
+                            sub_button.prop('disabled', false);
+                        }
+
+                    },
+                    error:function(xhr, status, err){
+                        //console.log('error');
+                        //console.log(xhr);
+                        //console.log(status);
+                        //console.log(err);
+                    }
+                });
+                
+            }
+        } );
 
         $('body').on('change','.sel_sub1',function(){/*get sub1s for selected cat*/
                 var selected =$(this).val();

@@ -16,9 +16,11 @@
     "connect": "^3.6.5",
     "cookie-parser": "*",
     "dotenv": "^4.0.0",
+    "download": "^6.2.5",
     "everyauth": "^0.4.9",
     "express": "*",
     "express-handlebars": "^3.0.0",
+    "fs": "0.0.1-security",
     "fs-extra": "^4.0.2",
     "handlebars": "^4.0.11",
     "handlebars.moment": "^1.0.4",
@@ -34,8 +36,10 @@
     "passport-linkedin": "^1.0.0",
     "passport-local": "^1.0.0",
     "passport-twitter": "*",
+    "path": "^0.12.7",
     "request": "^2.83.0",
-    "socket.io": "^2.0.3"
+    "socket.io": "^2.0.3",
+    "url": "^0.11.0"
   },
   "keywords": [
     "knowledge",

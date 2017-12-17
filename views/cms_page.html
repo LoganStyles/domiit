@@ -1,0 +1,347 @@
+{{>header_cms}}
+
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <!-- BEGIN CONTENT BODY -->
+        <div class="page-content">
+            <!-- BEGIN PAGE HEADER-->
+            
+            <!-- BEGIN PAGE BAR -->
+            <div class="page-bar">
+                <ul class="page-breadcrumb">
+                    <li>
+                        <a href="#">Dashboard</a>
+                        <i class="fa fa-circle"></i>
+                    </li>
+                    <li>
+                        <span>{{page_title}}</span>
+                    </li>
+                </ul>
+                
+            </div>
+            <!-- END PAGE BAR -->
+            <!-- BEGIN PAGE TITLE-->
+<!--                <h3 class="page-title"> Dashboard 
+                <small>Unit Prices & statistics</small>
+            </h3>-->
+            <!-- END PAGE TITLE-->
+            <!-- END PAGE HEADER-->
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- BEGIN BORDERED TABLE PORTLET-->
+                    <div class="portlet light portlet-fit ">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <span class="caption-subject font-red sbold uppercase">{{page_title}}</span>&nbsp;&nbsp;
+                            </div>
+                            <div class="row">                                                
+                                <div class="btn-group">
+                                    <a onclick="typeModalLoader('new','{{item}}');" class="btn btn-default">
+                                        <i class="fa fa-plus"></i> New
+                                    </a>
+                                    <a class="btn btn-default edit_rowitem">
+                                        <i class="fa fa-pencil"></i> Edit
+                                    </a>
+                                    <a class="btn btn-default view_rowitem">
+                                        <i class="fa fa-eye"></i> View
+                                        </a> 
+                                    <a class="btn btn-default delete_rowitem">
+                                        <i class="fa fa-trash"></i> Delete
+                                    </a>                                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="table-scrollable table-scrollable-borderless">
+                            {{#if trend_story_status}}
+                                <table class="table table-hover table-light">
+                                    <thead>
+                                        <tr class="uppercase">
+                                            <th> # </th>
+                                            <th> Title </th>
+                                            <th> Category </th>
+                                            <th> Description </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {{#each data_story}}
+                                        <tr class="page_row">
+                                        <input type="hidden" class="curr_id" value="{{_id}}">
+                                        <input type="hidden" class="curr_type" value="{{../item}}">
+                                            <td> {{counter @index}}</td>
+                                            <td class="curr_title"> {{body}} </td>
+                                            <td class="curr_category"> {{category}} </td>
+                                            <td class="curr_desc"> {{description}} </td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                                {{else}}
+                                <table class="table table-hover table-light">
+                                    <thead>
+                                        <tr class="uppercase">
+                                            <th> # </th>
+                                            <th> Title </th>
+                                            <th> Description </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {{#each data_cat}}
+                                        <tr class="page_row">
+                                        <input type="hidden" class="curr_id" value="{{_id}}">
+                                        <input type="hidden" class="curr_type" value="{{../item}}">
+                                            <td> {{counter @index}}</td>
+                                            <td class="curr_title"> {{title}} </td>
+                                            <td class="curr_desc"> {{description}} </td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                                {{/if}}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END BORDERED TABLE PORTLET-->
+                </div>                               
+                
+            </div>
+            
+            <!-- BEGIN MODALS FOR EDIT-->
+
+            <div class="portlet-body form">                                
+                
+                <div id="page_modal" class="modal fade" tabindex="-1">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <h4 class="modal-title" id="page_header">{{title}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form" id="page_form" action="" method="post">
+                            <span class="form_submission_error"></span>
+                            <span class="form_submission_success"></span>
+
+                            <input type="hidden" name="page_id"  id="page_id" value="0">
+                            <input type="hidden" name="page_mode"  id="page_mode" value="insert">
+                            <input type="hidden" name="page_type"  id="page_type" value="{{item}}">
+                            <div class="form-body">
+                            {{#if trend_story_status}}
+                                <div class="form-group">
+                                    <label class="control-label col-md-2 col-lg-2 col-sm-12">Category </label>
+                                    <div class="col-md-10 col-lg-10 col-sm-12">
+                                        <select class="form-control " name="page_category" id="page_category">
+                                            {{#each data_cat}}
+                                            <option value="{{title}}">{{title}}</option>
+                                            {{/each}}   
+
+                                        </select>
+                                    </div>
+                                </div>
+                                {{/if}}
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2 col-lg-2 col-sm-12" for="page_title">Title</label>
+                                    <div class="col-md-10 col-lg-10 col-sm-12 ">
+                                        <input type="text" class="form-control" id="page_title" name="page_title">
+                                    </div>                                   
+                                    
+                                </div>                                                     
+                                
+<div class="form-group ">
+<label class="control-label col-md-2 col-lg-2 col-sm-12" for="form_control_1">Description</label>
+<div class="col-md-10 col-lg-10 col-sm-12 ">
+<textarea class="form-control" rows="3" id="page_description" name="page_description"></textarea>
+</div>
+                                        
+</div>
+                                
+                            </div>
+                            <div class="form-actions noborder pull-right">
+                                <input type="submit" class="btn blue" name="submit" value="Submit" />
+                                <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+                            </div>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+
+                </div>
+
+
+            </div>
+            
+            
+        </div>
+        <!-- END CONTENT BODY -->
+    </div>
+    <!-- END CONTENT -->
+            
+        </div>
+        <!-- END CONTAINER -->
+    
+  
+    {{>footer_cms}}
+
+    
+<script type="text/javascript">
+            
+            function resetFields(){                
+                $('#page_form .form_submission_success').text("");
+                $('#page_form .form_submission_error').text("");
+            }
+           
+
+            $( document ).ready( function () {
+
+                $('body').on('click', '.page_row', function () {
+                    //select or deselect a row
+                    console.log('a row was clicked');
+                    var $this = $(this);
+                    $('.page_row').removeClass('active');
+                    $this.addClass('active');
+                });
+
+                $('body').on('click','.edit_rowitem',function(){
+                    //get the currently selected rowitem & display in a modal
+                    var curr_id=$('table tr.page_row.active .curr_id').val();
+                    console.log('curr_id '+curr_id);
+                    var curr_type=$('table tr.page_row.active .curr_type').val();
+                    console.log('curr_type '+curr_type);
+                    if(curr_id){
+                        var curr_title=$('table tr.page_row.active td.curr_title').text();
+                        console.log('curr_title '+curr_title);
+                        var curr_desc=$('table tr.page_row.active td.curr_desc').text();
+                        console.log('curr_desc '+curr_desc);
+
+                        if(curr_type){
+                            var curr_category=$('table tr.page_row.active td.curr_category').text();
+                        console.log('curr_category '+curr_category);
+                           $('#page_category').val(curr_category.trim()); 
+                        }
+
+
+                        $('#page_id').val(curr_id);
+                        $('#page_title').val(curr_title).attr('readonly',false);
+                        $('#page_description').text(curr_desc.trim()).attr('readonly',false);
+                        $('#page_header').text('Edit');
+                        $('#page_mode').val("edit");
+                        $('#page_modal').modal({backdrop: false, keyboard: false});
+                    }                    
+
+                });
+
+                $('body').on('click','.view_rowitem',function(){
+                    //get the currently selected rowitem & display in a modal in view mode
+                    var curr_id=$('table tr.page_row.active .curr_id').val();
+                    console.log('curr_id '+curr_id);
+                    var curr_type=$('table tr.page_row.active .curr_type').val();
+                    console.log('curr_type '+curr_type);
+
+                    if(curr_id){
+                        var curr_title=$('table tr.page_row.active td.curr_title').text();
+                        console.log('curr_title '+curr_title);
+                        var curr_desc=$('table tr.page_row.active td.curr_desc').text();
+                        console.log('curr_desc '+curr_desc);
+
+                        if(curr_type){
+                            var curr_category=$('table tr.page_row.active td.curr_category').text();
+                        console.log('curr_category '+curr_category);
+                           $('#page_category').val(curr_category); 
+                        }
+
+                        $('#page_id').val(curr_id);
+                        $('#page_title').val(curr_title).attr('readonly',true);
+                        $('#page_description').text(curr_desc.trim()).attr('readonly',true);
+                        $('#page_header').text('View');
+                        $('#page_mode').val("view");
+                        $('#page_modal').modal({backdrop: false, keyboard: false});
+                    }
+                    
+                });
+                
+                $( "#page_form" ).validate( {/*validate & submit category details*/
+                    rules: {  
+                        page_title: {
+                            required: true
+                        }                        
+                    },
+                    messages: {                        
+                        page_title: {
+                            required: "This field is required"
+                        }
+                        
+                    },
+                    errorElement: "em",
+                    errorPlacement: function ( error, element ) {
+                    // Add the `help-block` class to the error element
+                    error.addClass( "help-block" );
+
+                    if ( element.prop( "type" ) === "checkbox" ) {
+                        error.insertAfter( element.parent( "label" ) );
+                    } else {
+                        error.insertAfter( element );
+                    }
+                },
+                success: function ( label, element ) {
+                    // Add the span element, if doesn't exists, and apply the icon classes to it.
+                    if ( !$( element ).next( "span" )[ 0 ] ) {
+                        $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+                    }
+                },
+                highlight: function ( element, errorClass, validClass ) {
+                    $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
+                },
+                submitHandler: function () {
+                    resetFields();
+                    var my_url;
+                    var formData = $('#page_form').serialize();
+                    console.log(formData);
+                    {{#if trend_story_status}}
+                        my_url="{{url}}/cms/post_page/story";//this is a story
+                    {{else}}
+                        my_url="{{url}}/cms/post_page/cat";
+                    {{/if}}
+
+                    $.ajax({
+                        url:my_url,
+                        type:'POST',
+                        data:formData,
+                        dataType:'json',
+                            // contentType: 'application/json', 
+                            headers: {'X-My-App-Token': 'loganstyles'},
+                            success:function(response){
+                                console.log('success');
+                                if(response.success==true){
+                                    console.log('response is true');
+                                    $('#page_form .form_submission_success').text(response.msg);
+                                    setTimeout(function(){
+                                        $('#page_form .form_submission_success').text('');
+                                         // window.location.href="{{url}}/cms/main/{{item}}";
+                                         location.reload();
+                                    },3000);
+                                    
+                                }else{
+                                    console.log('response is false');
+                                    $('#page_form .form_submission_error').text(response.msg);
+                                }
+                            },
+                            error:function(xhr, status, err){
+                                console.log('error');
+                                console.log(xhr);
+                                console.log(status);
+                                console.log(err);
+                            }
+                        });
+                }
+            } );
+
+
+} );
+        </script>
+
+        
+</body>
+
+</html>
+    

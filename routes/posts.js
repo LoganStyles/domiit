@@ -32,23 +32,21 @@ router.get('/section/:item/:type/:id', isLoggedIn,function(req, res) {
     var item = req.params.item;
     var type = req.params.type;
     var id = req.params.id;
-    console.log('item :'+item);
-    console.log('type :'+type);
-    console.log('id :'+id);
-
-    
+    //set status defaults
     let question_status=false,
     home_status=false,
     riddle_status=false,
     pab_status=false,
-    article_status=false;
+    article_status=false,
+    post_owner=false;
 
-    let page_icon=item+'s_icon.png';
+    let page_icon=item+'s_icon.png';//post icon
 
     var selection,section;
     var page='section';
     page_type=item;
 
+    //chk the type of post
     switch(type){
         case 'All':
         selection={};
@@ -80,7 +78,6 @@ router.get('/section/:item/:type/:id', isLoggedIn,function(req, res) {
             page_title='Others';
         }        
         break;
-
     }
 
     switch(item){
@@ -110,13 +107,13 @@ router.get('/section/:item/:type/:id', isLoggedIn,function(req, res) {
         break;
     }
 
-//get required questions
+//get required data
 section.find(selection).sort({post_date:-1}).exec(function(err,items){
 
     var res_items=[];
-    var displayPic='avatar.png';
+    var curr_user_display_pic='avatar.png';//set default pic
         if(req.user.displayPic[0]){
-            displayPic=req.user.displayPic[req.user.displayPic.length - 1];
+            curr_user_display_pic=req.user.displayPic[req.user.displayPic.length - 1];
         }
 
     if(err){console.log(err);}
@@ -129,24 +126,36 @@ section.find(selection).sort({post_date:-1}).exec(function(err,items){
 
         items.forEach((cur_item,index,array)=>{
             var updated_obj={};
-            var promise = getLatestOwnerDetails(cur_item.owner);
+            var promise = getLatestOwnerDetails(cur_item.owner);//fetch data for this person
             promise.then(function(response){
-                var displayPic=(response.displayPic)?(response.displayPic[response.displayPic.length -1]):('avatar.png')
+                var displayPic=(response.displayPic)?(response.displayPic[response.displayPic.length -1]):('avatar.png');
                 updated_obj={
                     id:(response._id).toString(),
                     displayName:response.displayName,
                     displayPic:displayPic
                 };
-                // console.log(updated_obj);
+                // update owner info
                 cur_item.owner=updated_obj;
+                // chk if current viewer is the owner
+                var req_user_id=(req.user._id).toString();
+                var response_id=(response._id).toString();
+
+                if(req_user_id ===response_id){
+                    console.log('user is the owner')
+                    cur_item.post_owner=true;
+                }else{
+                    console.log('user is NOT the owner')
+                }                
+
                 processed_items++;
                 // console.log('process inside:'+processed_items);
-                if(processed_items==array.length){
+                if(processed_items==array.length){//iteration has ended
                     res_items=items;
+                    console.log(res_items);
 
                     res.render(page, {
                         url:process.env.URL_ROOT,
-                        displayPic:displayPic,
+                        displayPic:curr_user_display_pic,
                         user_info:req.user,
                         data:res_items,
                         page_title: page_title,
@@ -168,17 +177,17 @@ section.find(selection).sort({post_date:-1}).exec(function(err,items){
     }else{
         res.render(page, {
             url:process.env.URL_ROOT,
-            displayPic:displayPic,
+            displayPic:curr_user_display_pic,
             user_info:req.user,
             data:res_items,
             page_title: page_title,
-            page_type:item,
+            page_type:page_type,
             page_response:item_response,
             page_icon:page_icon,
             quest_status:question_status,
             art_status:article_status,
-            pab_status:pab_status,
             riddle_status:riddle_status,
+            pab_status:pab_status,
             home_status:home_status
         });
     }

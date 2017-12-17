@@ -4,20 +4,28 @@ var config = require('../config/database');
 var user = require('../models/user');
 
 var quest_cat = require('../models/question_cats');
-// var quest_sub1 = require('../models/question_sub1');
-// var quest_sub2 = require('../models/question_sub2');
-
 var article_cat = require('../models/article_cats');
-// var article_sub1 = require('../models/article_sub1');
-// var article_sub2 = require('../models/article_sub2');
-
 var riddle_cat = require('../models/riddle_cats');
 var pab_cat = require('../models/pab_cats');
-// var riddle_sub1 = require('../models/riddle_sub1');
-// var riddle_sub2 = require('../models/riddle_sub2');
+var trend_cat = require('../models/trend_cats');
+var trend_story = require('../models/trend');
 
 var about = require('../models/about');
 
+//create global variables
+// var story,cat;
+//     quest_status=false;
+//     quest_cat_status=false;
+//     article_status=false;
+//     article_cat_status=false;
+//     riddle_status=false;
+//     riddle_cat_status=false;
+//     pab_status=false;
+//     pab_cat_status=false;
+//     trend_status=false;
+//     trend_cat_status=false;
+//     trend_story_status=false;
+//     about_overview_status=false;
 
 /*check if user is logged in*/
 function isLoggedIn(req, res, next) {
@@ -115,15 +123,11 @@ router.get('/about/:item',isLoggedIn, function(req, res) {
  });
 
 
-/*show category
-get all cats for an item & sort in asc ,
-prepare modal */
-router.get('/main/:item',isLoggedIn, function(req, res) {
-    console.log('inside cms main category');
-    var item = req.params.item;
-    var modal_id="#"+item+"_cat_modal";
+/*show stories:get story categories & story items
+item:trend,news,fashion,featured etc */
+router.get('/main/:item',isLoggedIn,function(req,res){
 
-    let cat;
+var story,cat;
     quest_status=false;
     quest_cat_status=false;
     article_status=false;
@@ -132,39 +136,67 @@ router.get('/main/:item',isLoggedIn, function(req, res) {
     riddle_cat_status=false;
     pab_status=false;
     pab_cat_status=false;
+    trend_status=false;
+    trend_cat_status=false;
+    trend_story_status=false;
     about_overview_status=false;
 
+    console.log('inside main');
+    var item = req.params.item;
+    console.log('item '+item)
+
     switch(item){
-        case'question':
+        case 'trend':
+        cat = trend_cat; //get the cat obj
+        story=trend_story; //get the story obj
+        trend_story_status=true; //set the status
+        trend_status=true;
+        trend_cat_status=false;
+        page_title="trending stories";
+        break;
+
+        case'quest_cat':
         cat = quest_cat;
         quest_status=true;
         quest_cat_status=true;
+        page_title="Question categories";
         break;
 
-        case'article':
+        case'article_cat':
         cat = article_cat;
         article_status=true;
         article_cat_status=true;
+        page_title="Article categories";
         break;
 
-        case'riddle':
+        case'riddle_cat':
         cat = riddle_cat;
         riddle_status=true;
         riddle_cat_status=true;
+        page_title="Riddle categories";
         break;
 
-        case'pab':
+        case'pab_cat':
         cat = pab_cat;
         pab_status=true;
         pab_cat_status=true;
+        page_title="Post A book categories";
         break;
 
+        case'trend_cat':
+        cat = trend_cat;
+        trend_status=true;
+        trend_cat_status=true;
+        trend_story_status=false;
+        page_title="trending categories";
+        break;
     }
-    
-     //get all items
-     cat.find().sort({value:1}).exec(function(err,cat_item){
 
-        var res_cat=[];
+    //get all categories
+    cat.find().sort({value:1}).exec(function(err,cat_item){
+
+        var res_cat=[],
+        res_story=[];
 
         if(err)console.log(err);
         if(cat_item.length > 0){
@@ -172,310 +204,73 @@ router.get('/main/:item',isLoggedIn, function(req, res) {
             console.log(res_cat);            
         }
 
-        res.render('cms_category', {
-            title:item+' Category',
-            url:process.env.URL_ROOT,
-            user_info:req.user,
-            item:item,
-            modal_id:modal_id,
-            data:res_cat,
-            quest_status:quest_status,
-            quest_cat_status:quest_cat_status,
-            article_status:article_status,
-            article_cat_status:article_cat_status,
-            pab_status:pab_status,
-            pab_cat_status:pab_cat_status,
-            riddle_status:riddle_status,
-            riddle_cat_status:riddle_cat_status
-        }); 
+        if(story){
 
-    });
-     
- });
+            //get all stories
+            story.find().sort({value:1}).exec(function(err_story,story_item){
 
-/*show sub1 category
-get all applicable sub1s for an item & sort in asc ,
-get all cats
-prepare modal */
-// router.get('/sub1/:item',isLoggedIn, function(req, res) {
-//     console.log('inside cms sub1 category');
-//     var item = req.params.item;
-//     var modal_id="#"+item+"_sub1_modal";
-    
-//      //get all items
-//      let cat,sub1;
-//      let quest_status=false,
-//      quest_sub1_status=false,
-//      article_status=false,
-//      article_sub1_status=false,
-//      riddle_status=false,
-//      riddle_sub1_status=false;
+                var res_story=[];
 
-//      switch(item){
-//         case'question':
-//         cat = quest_cat;
-//         sub1 = quest_sub1;
-//         quest_status=quest_sub1_status=true;
-//         break;
+                if(err_story)console.log(err_story);
+                if(story_item.length > 0){
+                    res_story=story_item;
+                    console.log(res_story);            
+                }
 
-//         case'article':
-//         cat = article_cat;
-//         sub1 = article_sub1;
-//         article_status=article_sub1_status=true;
-//         break;
+                res.render('cms_page', {
+                    // title:item+'ing Stories',
+                    url:process.env.URL_ROOT,
+                    user_info:req.user,
+                    item:item,
+                    page_title:page_title,
+                    data_story:res_story,
+                    data_cat:res_cat,
+                    
+                    quest_status:quest_status,
+                    quest_cat_status:quest_cat_status,
+                    article_status:article_status,
+                    article_cat_status:article_cat_status,
+                    pab_status:pab_status,
+                    pab_cat_status:pab_cat_status,
+                    riddle_status:riddle_status,
+                    riddle_cat_status:riddle_cat_status,
+                    trend_status:trend_status,
+                    trend_cat_status:trend_cat_status,
+                    trend_story_status:trend_story_status
+                }); 
 
-//         case'riddle':
-//         cat = riddle_cat;
-//         sub1 = riddle_sub1;
-//         riddle_status=riddle_sub1_status=true;
-//         break;
+            });
 
-//     }
+        }else{
 
-//     cat.find().sort({value:1}).exec(function(err,cat_item){
+            res.render('cms_page', {
+                    // title:item+'ing Stories',
+                    url:process.env.URL_ROOT,
+                    user_info:req.user,
+                    item:item,
+                    page_title:page_title,
+                    data_story:res_story,
+                    data_cat:res_cat,
+                    
+                    quest_status:quest_status,
+                    quest_cat_status:quest_cat_status,
+                    article_status:article_status,
+                    article_cat_status:article_cat_status,
+                    pab_status:pab_status,
+                    pab_cat_status:pab_cat_status,
+                    riddle_status:riddle_status,
+                    riddle_cat_status:riddle_cat_status,
+                    trend_status:trend_status,
+                    trend_cat_status:trend_cat_status,
+                    trend_story_status:trend_story_status
+                });
+        }
 
-//         var res_cat=[],
-//         res_sub1=[];
-
-//         if(err)console.log(err);
-//         if(cat_item.length > 0){
-//             res_cat=cat_item;
-//             console.log(cat_item);
-//         }
-
-//             sub1.find().sort({value:1}).exec(function(err1,sub1_item){
-
-//                 if(err1)console.log(err1);
-//                 if(sub1_item.length > 0){
-//                     console.log(sub1_item);
-//                     res_sub1=sub1_item;
-//                 }
-
-//                 res.render('cms_sub1_category', {
-//                         title:item+' Sub Category',
-//                         url:process.env.URL_ROOT,
-//                         user_info:req.user,
-//                         item:item,
-//                         modal_id:modal_id,
-//                         cat:res_cat,
-//                         data:res_sub1,
-//                         quest_status:quest_status,
-//                         quest_sub1_status:quest_sub1_status,
-//                         article_status:article_status,
-//                         article_sub1_status:article_sub1_status,
-//                         riddle_status:riddle_status,
-//                         riddle_sub1_status:riddle_sub1_status
-
-//                     }); 
-
-//             });         
-        
-//     });
-
-// });
-
-
-/*show sub2 category
-get all applicable sub2s for an item & sort in asc ,
-get all cats
-get all sub1s
-prepare modal */
-// router.get('/sub2/:item',isLoggedIn, function(req, res) {
-//     console.log('inside cms sub2 category');
-//     var item = req.params.item;
-//     var modal_id="#"+item+"_sub2_modal";
-    
-//      //get all items
-//      let cat,sub1,sub2;
-//      let quest_status=false,
-//      quest_sub2_status=false,
-//      article_status=false,
-//      article_sub2_status=false,
-//      riddle_status=false,
-//      riddle_sub2_status=false;
-
-//      switch(item){
-//         case'question':
-//         cat = quest_cat;
-//         sub1 = quest_sub1;
-//         sub2 = quest_sub2;
-//         quest_sub2_status=quest_status=true;
-//         break;
-
-//         case'article':
-//         cat = article_cat;
-//         sub1 = article_sub1;
-//         sub2 = article_sub2;
-//         article_status=article_sub2_status=true;
-//         break;
-
-//         case'riddle':
-//         cat = riddle_cat;
-//         sub1 = riddle_sub1;
-//         sub2 = riddle_sub2;
-//         riddle_status=riddle_sub2_status=true;
-//         break;
-
-//     }
-
-//     cat.find().sort({value:1}).exec(function(err,cat_item){
-
-//         var res_cat=[];
-//         var res_sub1=[];
-//         var res_sub2=[];
-
-//         if(err)console.log(err);
-//         if(cat_item){//items were found
-//             res_cat=cat_item;
-//         }
-//             var first_cat=(res_cat.length >0)?(res_cat[0].value):(0);
-
-//             console.log(res_cat);
-//             console.log(first_cat);
-
-//             sub1.find({'category':first_cat}).sort({value:1}).exec(function(err1,sub1_item){
-
-//                 if(err1)console.log(err1);
-//                 if(sub1_item){
-//                     res_sub1=sub1_item;
-//                 }
-//                     var first_sub1=(res_sub1.length >0)?(res_sub1[0].value):(0);
-
-//                     sub2.find().sort({value:1}).exec(function(err2,sub2_item){
-
-//                         if(err2)console.log(err2);
-//                         if(sub2_item){
-//                             res_sub2=sub2_item; 
-//                         }
-//                         res.render('cms_sub2_category', {
-//                             title:item+' Sub Category-2',
-//                             url:process.env.URL_ROOT,
-//                             user_info:req.user,
-//                             item:item,
-//                             modal_id:modal_id,
-//                             cat:res_cat,
-//                             sub1_data:res_sub1,
-//                             sub2_data:res_sub2,
-//                             quest_status:quest_status,
-//                             quest_sub2_status:quest_sub2_status,
-//                             article_status:article_status,
-//                             article_sub2_status:article_sub2_status,
-//                             riddle_status:riddle_status,
-//                             riddle_sub2_status:riddle_sub2_status
-//                         }); 
-
-//                     }); 
-                
-
-//             });
-            
         
 
-//     });
+    });    
 
-// });
-
-
-/*show selected_cat category
-get all applicable sub1s for a cat & sort in asc ,
-prepare modal */
-// router.get('/selected_cat/:type/:item',isLoggedIn, function(req, res) {
-//     console.log('inside cms selected category');
-//     var category = req.params.item;
-//     var type = req.params.type;
-//     console.log(' category '+category);
-//     console.log('type '+type);
-    
-//      //get all items
-//      let cat,sub1,sub2;
-     
-
-//      switch(type){
-//         case'question':
-//         sub1 = quest_sub1;
-//         sub2 = quest_sub2;
-//         break;
-
-//         case'article':
-//         sub1 = article_sub1;
-//         sub2 = article_sub2;
-//         break;
-
-//         case'riddle':
-//         sub1 = riddle_sub1;
-//         sub2 = riddle_sub2;
-//         break;
-
-//     }
-
-//     sub1.find({'category':category}).sort({value:1}).exec(function(err1,sub1_item){
-//         let res_sub1,res_sub2=[];
-
-//         if(err1)console.log(err1);
-//         if(sub1_item){
-//             console.log(sub1_item);
-//             res_sub1=sub1_item;  
-//             var first_sub1=(res_sub1.length >0)?(res_sub1[0].value):(0);     
-
-//             sub2.find({'sub1':first_sub1}).sort({value:1}).exec(function(err2,sub2_item){
-
-//                 if(err2)console.log(err2);
-//                 if(sub2_item){
-//                     res_sub2=sub2_item; 
-//                             // console.log('sub2 item: ');
-//                             // console.log(res_sub2);
-//                         }
-//                         res.send({
-//                             sub1_data:res_sub1,
-//                             sub2_data:res_sub2
-//                         });  
-//                     });       
-
-//         }
-
-//     });
-
-// });
-
-
-/*show selected_sub2 item
-get all applicable sub2s for a sub1 & sort in asc ,
-prepare modal */
-// router.get('/selected_sub1/:type/:item',isLoggedIn, function(req, res) {
-//     console.log('inside cms selected sub1');
-//     var sub1 = req.params.item;
-//     var type = req.params.type;
-    
-//      //get all items
-//      let sub2,res_sub2;
-     
-
-//      switch(type){
-//         case'question':
-//         sub2 = quest_sub2;
-//         break;
-
-//         case'article':
-//         sub2 = article_sub2;
-//         break;
-
-//         case'riddle':
-//         sub2 = riddle_sub2;
-//         break;
-//     }
-
-//     sub2.find({'sub1':sub1}).sort({value:1}).exec(function(err2,sub2_item){
-
-//         if(err2)console.log(err2);
-//         if(sub2_item){
-//             res_sub2=sub2_item; 
-//                 }
-//                 res.send({
-//                     sub2_data:res_sub2
-//                 });  
-//             }); 
-
-// });
+});
 
 
 /*save an about item
@@ -581,153 +376,129 @@ router.post('/post_about_subitem/:type',function(req,res,next){
 });
 
 
-/*save category
-get all submitted cat info for an item,
-save a cat */
-router.post('/post_cat/:type',function(req,res,next){
+/*save category or story
+ */
+ router.post('/post_page/:type',function(req,res,next){
 
-    var type = req.params.type;
-    let cat;
+    var type = req.params.type;//story or cat
+    let obj,
+    mode =req.body.page_mode, //new,edit
+    page_id=req.body.page_id, //
+    page_type=req.body.page_type; //trend,news,question etc
 
-    switch(type){
-        case 'question':
-        cat = new quest_cat();
-        cat.title = (req.body.question_cat_title).trim();
-        cat.value = (req.body.question_cat_title).trim().replace(/[^A-Za-z0-9]/g, "_");
-        cat.description=req.body.question_cat_description;
-        break;
+    console.log('page_id '+page_id);
+    console.log('mode '+mode);
+    console.log('page_type '+page_type);
 
-        case 'article':
-        cat = new article_cat();
-        cat.title = (req.body.article_cat_title).trim();
-        cat.value = (req.body.article_cat_title).trim().replace(/[^A-Za-z0-9]/g, "_");
-        cat.description=req.body.article_cat_description;
-        break;
+    if(mode=="insert"){
 
-        case 'riddle':
-        cat = new riddle_cat();
-        cat.title = (req.body.riddle_cat_title).trim();
-        cat.value = (req.body.riddle_cat_title).trim().replace(/[^A-Za-z0-9]/g, "_");
-        cat.description=req.body.riddle_cat_description;
-        break;
+        if(type=="cat"){
 
-        case 'pab':
-        cat = new pab_cat();
-        cat.title = (req.body.pab_cat_title).trim();
-        cat.value = (req.body.pab_cat_title).trim().replace(/[^A-Za-z0-9]/g, "_");
-        cat.description=req.body.pab_cat_description;
-        break;
+            switch(page_type){
+                case 'quest_cat':
+                obj = new quest_cat();
+                break;
 
-    }   
+                case 'article_cat':
+                obj = new article_cat();
+                break;
 
-    cat.save(function(err,quest){
-        if(err){console.log(err);res.json({success:false,msg:type+" category update failed"});
-    }else{
-        res.json({success:true,msg:type+" category submission succesful"});
-        var json = JSON.stringify(cat,null,2);
-        // console.log(json);
+                case 'riddle_cat':
+                obj = new riddle_cat();
+                break;
 
+                case 'pab_cat':
+                obj = new pab_cat();
+                break;
+
+                case 'trend_cat':
+                obj = new trend_cat();        
+                break;
+            }   
+            obj.title = (req.body.page_title).trim();
+            obj.value = (req.body.page_title).trim().replace(/[^A-Za-z0-9]/g, "_");
+            obj.description=req.body.page_description;
+
+        }else if(type=="story"){
+
+            switch(page_type){            
+                case 'trend':
+                obj = new trend_story();        
+                break;
+            }   
+            obj.body = (req.body.page_title).trim();
+            obj.description=(req.body.page_description).trim();
+            obj.category=req.body.page_category
+        }
+
+        obj.save(function(err,quest){
+            if(err){console.log(err);res.json({success:false,msg:" update failed"});
+        }else{
+            res.json({success:true,msg:" submission succesful"});
+            var json = JSON.stringify(obj,null,2);
+        }
+    });
+
+    }else if(mode=="edit"){
+
+        if(type=="cat"){
+
+            switch(page_type){
+                case'quest_cat':
+                obj = quest_cat;
+                break;
+
+                case'article_cat':
+                obj = article_cat;
+                break;
+
+                case'riddle_cat':
+                obj = riddle_cat;
+                break;
+
+                case'pab_cat':
+                obj = pab_cat;
+                break;
+
+                case'trend_cat':
+                obj = trend_cat;                
+                break;
+
+            }
+            update_param={
+                title : req.body.page_title.trim(),
+                value : req.body.page_title.trim().replace(/[^A-Za-z0-9]/g, "_"),
+                description:req.body.page_description
+            }
+
+        }else if(type=="story"){
+            switch(page_type){            
+                case 'trend':
+                obj = trend_story;        
+                break;
+            }
+
+            update_param={
+                body : req.body.page_title.trim(),
+                description:req.body.page_description,
+                category:req.body.page_category,
+            }
+        }
+
+        //update a obj
+        obj.findOneAndUpdate({_id:page_id},{$set:update_param},function(err1,res1){
+
+            if(err1){
+                console.log(err1)
+                res.json({success:false,msg:" update failed"});
+            }else if(res1){
+                res.json({success:true,msg:" update was successfull"});
+            }
+
+        });
     }
-})
+    
 });
 
-
-/*create sub categories
-get posted data for sub cat,
-save sub cat
-*/
-// router.post('/post_sub1/:type',function(req,res,next){
-
-//     var type = req.params.type;
-//     let sub1;
-
-//     switch(type){
-//         case 'question':
-//         sub1 = new quest_sub1();
-//         sub1.title = (req.body.question_sub1_title).trim();
-//         sub1.value = (req.body.question_sub1_title).trim().replace(/[^A-Za-z0-9]/g, "_");
-//         sub1.category = req.body.question_sub1_category;
-//         sub1.description=req.body.question_sub1_description;
-//         break;
-
-//         case 'article':
-//         sub1 = new article_sub1();
-//         sub1.title = (req.body.article_sub1_title).trim();
-//         sub1.value = (req.body.article_sub1_title).trim().replace(/[^A-Za-z0-9]/g, "_");
-//         sub1.category = req.body.article_sub1_category;
-//         sub1.description=req.body.article_sub1_description;
-//         break;
-
-//         case 'riddle':
-//         sub1 = new riddle_sub1();
-//         sub1.title = (req.body.riddle_sub1_title).trim();
-//         sub1.value = (req.body.riddle_sub1_title).trim().replace(/[^A-Za-z0-9]/g, "_");
-//         sub1.category = req.body.riddle_sub1_category;
-//         sub1.description=req.body.riddle_sub1_description;
-//         break;
-
-//     }   
-
-//     sub1.save(function(err,quest){
-//         if(err){console.log(err);res.json({success:false,msg:type+" sub1 category update failed"});
-//     }else{
-//         res.json({success:true,msg:type+" sub1 category update succesful"});
-//         var json = JSON.stringify(sub1,null,2);
-//         // console.log(json);
-
-//     }
-// })
-// });
-
-
-/*create sub2 categories
-get posted data for sub2 cat,
-save sub2 cat
-*/
-// router.post('/post_sub2/:type',function(req,res,next){
-
-//     var type = req.params.type;
-//     let sub2;
-
-//     switch(type){
-//         case 'question':
-//         sub2 = new quest_sub2();
-//         sub2.title = (req.body.question_sub2_title).trim();
-//         sub2.value = (req.body.question_sub2_title).trim().replace(/[^A-Za-z0-9]/g, "_");
-//         sub2.category = req.body.question_sub2_category;
-//         sub2.sub1 = req.body.question_sub2_sub1;
-//         sub2.description=req.body.question_sub2_description;
-//         break;
-
-//         case 'article':
-//         sub2 = new article_sub2();
-//         sub2.title = (req.body.article_sub2_title).trim();
-//         sub2.value = (req.body.article_sub2_title).trim().replace(/[^A-Za-z0-9]/g, "_");
-//         sub2.category = req.body.article_sub2_category;
-//         sub2.sub1 = req.body.article_sub2_sub1;
-//         sub2.description=req.body.article_sub2_description;
-//         break;
-
-//         case 'riddle':
-//         sub2 = new riddle_sub2();
-//         sub2.title = (req.body.riddle_sub2_title).trim();
-//         sub2.value = (req.body.riddle_sub2_title).trim().replace(/[^A-Za-z0-9]/g, "_");
-//         sub2.category = req.body.riddle_sub2_category;
-//         sub2.sub1 = req.body.riddle_sub2_sub1;
-//         sub2.description=req.body.riddle_sub2_description;
-//         break;
-
-//     }   
-
-//     sub2.save(function(err,quest){
-//         if(err){console.log(err);res.json({success:false,msg:type+" sub category update failed"});
-//     }else{
-//         res.json({success:true,msg:type+" sub category update succesful"});
-//         var json = JSON.stringify(sub2,null,2);
-//         // console.log(json);
-
-//     }
-// })
-// });
 
 module.exports  = router;

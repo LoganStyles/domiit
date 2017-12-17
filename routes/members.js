@@ -2,10 +2,15 @@ var express = require('express');
 var router = express.Router();
 var config = require('../config/database');
 var user = require('../models/user');
+var path =require('path');
+var fs =require('fs');
+var url =require('url');
+var http =require('http');
 // var question = require('../models/question');
 var auth = require('../config/auth');
 
 var passport = require('passport'); 
+var download = require('download'); 
 
 // //Register
 router.post('/register',function(req,res,next){
@@ -79,6 +84,52 @@ router.get('/logout',function(req,res){
         console.log('session destroyed');
     });
     res.redirect('/');
+});
+
+
+//downloads articles & files
+router.post('/downloads',function(req,res,next){
+    
+    var file_url=req.body.file;
+    console.log(file_url)
+    let sourcefile=process.env.URL_ROOT+'/uploads/'+req.body.file;
+    
+    var DOWNLOAD_DIR = path.join(process.env.HOME || process.env.USERPROFILE,'Downloads/');
+    console.log(DOWNLOAD_DIR);    
+    
+    // var options = {
+    //     host: 'localhost',
+    //     port: 80,
+    //     path: filepath_dwnload
+    // };
+
+    // var file_name = url.parse(file_url).pathname.split('/').pop();
+    // var file_path = path.join(DOWNLOAD_DIR,file_url);
+    // var file = fs.createWriteStream(file_path);
+
+    // console.log(options.host);
+    // console.log(options.port);
+    // console.log(options.path);
+    // http.get(options,function(resp){
+    //     resp.on('data',function(data){
+    //         console.log('about to write');
+    //         file.write(data);
+    //     }).on('end',function(){
+    //         console.log('about to end');
+    //         file.end();
+    //         res.send(file_name +' downloaded to '+DOWNLOAD_DIR);
+    //     });
+    // })
+
+    download(sourcefile,DOWNLOAD_DIR).then(() => {
+        console.log('download complete');
+        res.json({success:true,msg:"Your download completed successfully"});
+    });
+
+    // download(sourcefile).then(data=>{
+    //     fs.writeFileSync(file_path,data);
+    // })
+
 });
 
 

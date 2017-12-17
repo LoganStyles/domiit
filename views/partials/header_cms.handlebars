@@ -31,6 +31,7 @@
         <!-- BEGIN THEME GLOBAL STYLES -->
         <link href="{{url}}/assets/global/css/components-md.min.css" rel="stylesheet" id="style_components" type="text/css" />
         <link href="{{url}}/assets/global/css/plugins-md.min.css" rel="stylesheet" type="text/css" />
+        <link href="{{url}}/assets/global/css/styles.css" rel="stylesheet" type="text/css" />
         
         <!-- END THEME GLOBAL STYLES -->
        
@@ -204,7 +205,7 @@
                             </a>
                             <ul class="sub-menu">
                                 <li class="nav-item  {{#if quest_cat_status}}active open{{/if}}">
-                                    <a href="{{url}}/cms/main/question" class="nav-link ">
+                                    <a href="{{url}}/cms/main/quest_cat" class="nav-link ">
                                         <span class="title">Categories</span>
                                     </a>
                                 </li>
@@ -221,7 +222,7 @@
                             </a>
                             <ul class="sub-menu">
                                 <li class="nav-item  {{#if article_cat_status}}active open{{/if}}">
-                                    <a href="{{url}}/cms/main/article" class="nav-link ">
+                                    <a href="{{url}}/cms/main/article_cat" class="nav-link ">
                                         <span class="title">Categories</span>
                                     </a>
                                 </li>
@@ -236,7 +237,7 @@
                             </a>
                             <ul class="sub-menu">
                                 <li class="nav-item  {{#if riddle_cat_status}}active open{{/if}}">
-                                    <a href="{{url}}/cms/main/riddle" class="nav-link ">
+                                    <a href="{{url}}/cms/main/riddle_cat" class="nav-link ">
                                         <span class="title">Categories</span>
                                     </a>
                                 </li>                                
@@ -251,8 +252,28 @@
                             </a>
                             <ul class="sub-menu">
                                 <li class="nav-item  {{#if pab_cat_status}}active open{{/if}}">
-                                    <a href="{{url}}/cms/main/pab" class="nav-link ">
+                                    <a href="{{url}}/cms/main/pab_cat" class="nav-link ">
                                         <span class="title">Categories</span>
+                                    </a>
+                                </li>                                
+                            </ul>
+                        </li>
+
+                        <li class="nav-item  {{#if trend_status}}active open{{/if}}">
+                            <a href="javascript:;" class="nav-link nav-toggle">
+                                <i class="fa fa-edit"></i>
+                                <span class="title">Trending</span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class="nav-item  {{#if trend_cat_status}}active open{{/if}}">
+                                    <a href="{{url}}/cms/main/trend_cat" class="nav-link ">
+                                        <span class="title">Categories</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item  {{#if trend_story_status}}active open{{/if}}">
+                                    <a href="{{url}}/cms/main/trend" class="nav-link ">
+                                        <span class="title">Stories</span>
                                     </a>
                                 </li>                                
                             </ul>

@@ -59,18 +59,18 @@
 
                 <div class="portlet-title">
                     <div class="caption caption-md">
-                        <img alt="" class="icon_size" src="{{../url}}/images/{{../page_icon}}">
-                        <span class="caption-subject  bold uppercase" style="color: #86be25">{{../page_type}}</span>
+                        <!-- <img alt="" class="icon_size" src="{{../url}}/images/{{../page_icon}}"> -->
+                        <span class="caption-subject  bold uppercase" style="color: #86be25">{{../page_type}}</span>&nbsp;|
                         {{#if category}}
-                        <span class="caption-helper">{{category}}</span>&nbsp;
+                        <span class="caption-helper post_category">{{category}}</span>&nbsp;
                         {{/if}}
 
                         {{#if sub_cat1}}
-                        |&nbsp;<span class="caption-helper">{{sub_cat1}}</span>&nbsp;
+                        |&nbsp;<span class="caption-helper post_sub_cat1">{{sub_cat1}}</span>&nbsp;
                         {{/if}}
 
                         {{#if sub_cat2}}
-                        |&nbsp;<span class="caption-helper">{{sub_cat2}}</span>&nbsp;
+                        |&nbsp;<span class="caption-helper post_sub_cat2">{{sub_cat2}}</span>&nbsp;
                         {{/if}}
                         
                     </div>                       
@@ -108,30 +108,51 @@
                                             <div style="display: inline-block;margin-right: 20%;">
                                                 <img src="{{url}}/images/group.png">
                                             </div>
-                                             <div class="actions" style="display: inline-block;">
-                                                    <div class="btn-group">
-                                                        <span class="item-status" data-toggle="dropdown" style="cursor: pointer;">
-                                                            <i class="fa fa-ellipsis-v"></i>
-                                                        </span>
-                                                        <ul class="dropdown-menu pull-right">
-                                                            <li>
-                                                                <a href="javascript:;">
-                                                                    <i class="fa fa-pencil"></i> Edit </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="javascript:;">
-                                                                    <i class="fa fa-trash-o"></i> Delete </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="javascript:;">
-                                                                    <i class="fa fa-ban"></i> Share </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="javascript:;"> Request Answer </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                            </div>
+                                             {{#if post_owner}}
+                                                 <div class="actions" style="display: inline-block;">
+                                                        <div class="btn-group">
+                                                            <span class="item-status" data-toggle="dropdown" style="cursor: pointer;">
+                                                                <i class="fa fa-ellipsis-v"></i>
+                                                            </span>
+                                                            <ul class="dropdown-menu pull-right">
+                                                                <li class="edit_section_item">
+                                                                    <a href="javascript:;">
+                                                                        <i class="fa fa-pencil"></i> Edit </a>
+                                                                </li>
+                                                                <li class="delete_section_item">
+                                                                    <a href="javascript:;">
+                                                                        <i class="fa fa-trash-o"></i> Delete </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="javascript:;">
+                                                                        <i class="fa fa-ban"></i> Request for answer </a>
+                                                                </li>                            
+                                                            </ul>
+                                                        </div>                                           
+                                                </div>
+                                                {{else}}
+                                                <div class="actions" style="display: inline-block;">
+                                                        <div class="btn-group">
+                                                            <span class="item-status" data-toggle="dropdown" style="cursor: pointer;">
+                                                                <i class="fa fa-ellipsis-v"></i>
+                                                            </span>
+                                                            <ul class="dropdown-menu pull-right">
+                                                                <li>
+                                                                    <a href="javascript:;">
+                                                                        <i class="fa fa-pencil"></i> Follow </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="javascript:;">
+                                                                        <i class="fa fa-trash-o"></i> Bookmark </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="javascript:;">
+                                                                        <i class="fa fa-ban"></i> Report Abuse </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>                                           
+                                                </div>
+                                                {{/if}}
                                         </div><!--end float right-->
                                         <div class="clearfix"></div>
                                     </div>
@@ -237,30 +258,51 @@
                                                 <div style="display: inline-block;margin-right: 20%;">
                                                     <img src="{{url}}/images/group.png">
                                                 </div>
+                                                 {{#if post_owner}}
                                                  <div class="actions" style="display: inline-block;">
                                                         <div class="btn-group">
                                                             <span class="item-status" data-toggle="dropdown" style="cursor: pointer;">
                                                                 <i class="fa fa-ellipsis-v"></i>
                                                             </span>
                                                             <ul class="dropdown-menu pull-right">
-                                                                <li>
-                                                                    <a href="javascript:;">
+                                                                <li class="edit_section_item">
+                                                                    <a href="#">
                                                                         <i class="fa fa-pencil"></i> Edit </a>
                                                                 </li>
-                                                                <li>
-                                                                    <a href="javascript:;">
+                                                                <li class="delete_section_item">
+                                                                    <a href="#">
                                                                         <i class="fa fa-trash-o"></i> Delete </a>
                                                                 </li>
                                                                 <li>
                                                                     <a href="javascript:;">
-                                                                        <i class="fa fa-ban"></i> Share </a>
+                                                                        <i class="fa fa-ban"></i> Request for answer </a>
+                                                                </li>                            
+                                                            </ul>
+                                                        </div>                                           
+                                                </div>
+                                                {{else}}
+                                                <div class="actions" style="display: inline-block;">
+                                                        <div class="btn-group">
+                                                            <span class="item-status" data-toggle="dropdown" style="cursor: pointer;padding: 0 1%">
+                                                                <i class="fa fa-ellipsis-v"></i>
+                                                            </span>
+                                                            <ul class="dropdown-menu pull-right">
+                                                                <li class="follow_section_item">
+                                                                    <a href="#">
+                                                                        <i class="fa fa-plus"></i> Follow </a>
+                                                                </li>
+                                                                <li class="bookmark_section_item">
+                                                                    <a href="#">
+                                                                        <i class="fa fa-bookmark"></i> Bookmark </a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="javascript:;"> Request Answer </a>
+                                                                    <a href="javascript:;">
+                                                                        <i class="fa fa-ban"></i> Report Abuse </a>
                                                                 </li>
                                                             </ul>
-                                                        </div>
+                                                        </div>                                           
                                                 </div>
+                                                {{/if}}
                                             </div><!--end float right-->
                                             <div class="clearfix"></div>
                                         </div>
@@ -595,44 +637,7 @@
                         </form>
                     </div>
 
-                </div>                                       
-
-                <!-- <div id="section_answer_modal" class="modal fade" tabindex="-1">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                        <h4 class="modal-title" id="section_answer_header">Answer</h4>
-                    </div>
-                    <div class="modal-body">
-                 <form role="form" id="section_answer_form" action="" method="post" enctype="multipart/form-data">
-                        <span class="form_submission_error"></span>
-                        <span class="form_submission_success"></span>
-
-                            <input type="hidden" name="section_answer_id"  id="section_answer_id" >
-                            <input type="hidden" name="section_answer_type"  id="section_answer_type" >
-
-                            <h5 id="section_answer_body">Answer</h5>                           
-
-                            <div class="form-group">
-                                <textarea  name="section_answer_details" id="section_answer_details" class="form-control" rows="3" style="font-weight: 500"></textarea>
-                                <label for="form_control_1">Write your answer</label>
-                            </div>
-                            
-                            <div class="form-group">
-                             <label for="section_answer_photo" class="custom-file-upload">
-                                    <i class="fa fa-camera"></i> Add Photo
-                                </label>
-                                <input id="section_answer_photo" type="file" accept="application/x-zip-compressed,image/*"/>
-                                <p class="help-block"> Optional </p>
-                            </div>
-                            <div class="form-actions noborder">
-                                <input type="submit" class="btn blue" name="submit" value="Answer" />
-                                <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
-                            </div>
-                        </form>
-                    </div>
-
-                </div> -->
-
+                </div>
                
             </div>
 
