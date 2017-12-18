@@ -338,3 +338,8 @@
         cursor: pointer;
         background-color: #666 !important;
     }
+
+    .portlet_domiit{
+    background-color: #fff;
+    padding: 0 1%;
+}
