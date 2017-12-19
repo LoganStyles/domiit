@@ -35,12 +35,17 @@
 
         <div class="col-md-6">                                        
             <!-- BEGIN PORTLET -->
-            <div class="portlet portlet_domiit ">
+            <div class="panel panel-default portlet" {{#unless page_response}} style="display: none;"{{/unless}}>
+              <div class="panel-body">
+                <span style="font-size: 1.1em;font-weight: 600;">{{page_title}}</span>                
+              </div>
+            </div> 
+            <!-- <div class="portlet portlet_domiit ">
                 <div class="" style="border-bottom: 0px;">
                     <h3>{{page_title}}</h3>
                 </div>                                                                                  
                 <div class="clearfix"></div> 
-            </div>
+            </div> -->
 
             <div class="post_responses question_all_post_area">
 
@@ -52,7 +57,7 @@
 
                 <div class="portlet-title">
                     <div class="caption caption-md">
-                        <!-- <img alt="" class="icon_size" src="{{../url}}/images/{{../page_icon}}"> -->
+                        <!-- <img alt="" class="icon_size_50" src="{{../url}}/images/{{../page_icon}}"> -->
                         <span class="caption-subject  bold uppercase" style="color: #86be25">{{../page_type}}</span>&nbsp;|
                         {{#if category}}
                         <span class="caption-helper post_category">{{category}}</span>&nbsp;
@@ -76,22 +81,29 @@
 
                                 <div style="width: 100%;"><!--main block-->
                                     <div class="posts_partition"><!--1st partition-->
-                                    <span> 
-                                    
-                                    <img class="icon_size img-circle" src="{{url}}/uploads/{{owner.displayPic}}">
-                                        
-
-                                            <a style="color: #000;" href="" class="item-name primary-link">{{owner.displayName}}</a>
-
-                                        {{#if owner.status}}
-                                            <span>{{owner.status}}</span>
+                                        <div style="width: 100%;">
+                                            <div class="section_posts_avatar">
+                                             <img class="icon_size_50 img-circle" src="{{../url}}/uploads/{{owner.displayPic}}">
+                                         </div>
+                                         <div class="section_posts_text">
+                                            <div> 
+                                               <a style="color: #000;" href="" class="item-name primary-link">{{owner.displayName}}</a>
+                                           </div>
+                                           {{#if owner.status}}
+                                           <div>
+                                            {{owner.status}}
+                                            </div>
                                         {{/if}}
-                                        </span>
+
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        </div>
+
                                     </div>
 
                                     <div class="posts_partition_middle"><!--2nd partition-->
                                         <span style="">
-                                            <img class="icon_size_40" src="{{url}}/images/add_person.png">
+                                            <img class="icon_size_50" src="{{url}}/images/add_person.png">
                                         </span>
                                     </div>
 
@@ -226,22 +238,29 @@
 
                                     <div style="width: 100%;"><!--main block: display the latest answer-->
                                         <div class="posts_partition"><!--1st partition-->
-                                        <span> 
-                                        
-                                            <img class="icon_size img-circle" src="{{url}}/uploads/{{responderDisplayPic}}">
+                                        <div style="width: 100%;">
+                                                <div class="section_posts_avatar">
+                                                   <img class="icon_size_50 img-circle" src="{{../url}}/uploads/{{responderDisplayPic}}">
+                                                </div>
+                                                <div class="section_posts_text">
+                                                    <div> 
+                                                     <a style="color: #000;" href="" class="item-name primary-link">{{responderDisplayName}}</a>
+                                                     </div>
+                                                     {{#if responderStatus}}
+                                                        <div>
+                                                        {{responderStatus}}
+                                                        </div>
+                                                      {{/if}}
+                                                    
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
 
-
-                                                <a style="color: #000;" href="" class="item-name primary-link">{{responderDisplayName}}</a>
-
-                                                <span>{{responderStatus}}</span>
-
-                                                                                    
-                                            </span>
                                         </div>
 
                                         <div class="posts_partition_middle"><!--2nd partition-->
                                             <span style="">
-                                                <img class="icon_size_40" src="{{url}}/images/add_person.png">
+                                                <img class="icon_size_50" src="{{url}}/images/add_person.png">
                                             </span>
                                         </div>
 
@@ -349,7 +368,7 @@
 
 
                     <!-- END PORTLET -->
-                    <div class="response_votes" style="margin: 2%;">
+                    <div class="response_votes" style="margin: 0%;">
                         <input type="hidden" id="post_response_id" value="{{_id}}">
 
                         <a class="btn btn-link post_upvotes"  style="color: #000;font-size: 0.8em">
@@ -374,15 +393,15 @@
                         </a>
                     </div>
 
-                    <div style="width: 100%; border:1px solid #ddd;padding: 10px">
+                    <div style="width: 100%; border:1px solid #ddd;padding: 0px;font-size: 1em;">
                         <a href="{{url}}/posts/section/{{../../page_type}}/all_responses/{{../_id}}">
-                            <div style="width: 45%;display: inline-block;text-align: center;border-right: 1px solid;">
+                            <div style="width: 45%;display: inline-block;text-align: center;border-right: 1px solid;color:#444;">
                             View Other {{../../page_response}}s                            
                         </div>
                         </a>
 
                         <a href="#" class="response_button">
-                            <div style="width: 45%;display: inline-block;text-align: center;">Add Your {{../../page_response}}                            
+                            <div style="width: 45%;display: inline-block;text-align: center;color:#444;">Add Your {{../../page_response}}                            
                             </div>
                         </a>
 

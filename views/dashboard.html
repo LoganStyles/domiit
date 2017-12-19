@@ -57,32 +57,20 @@
                                                     <!-- END BEGIN PROFILE SIDEBAR -->
                                                 </div>
 
-                                                <div class="col-md-6">                                        
-                                                    <!-- BEGIN PORTLET -->
-                                                    <div class="portlet light ">
-                                                        <div class="portlet-title" style="border-bottom: 0px;">
-                                                            <div class=" ">
-                                                                <div class="row">
-                                                                    <a style="color: #000;text-decoration: none;padding: 1px;" data-toggle="modal" onclick="modalLoader('question','new','');" class="dark btn-outline sbold col-md-3">Ask a question</a>
+                                                <div class="col-md-6">
+                                                    <div class="panel panel-default portlet">
+                                                      <div class="panel-body">
+                                                        <a class="page_top_actions" onclick="modalLoader('question','new','');">Ask a question</a>&nbsp;|&nbsp;
 
-                                                                    <a style="color: #000;text-decoration: none;padding: 1px;" data-toggle="modal" onclick="modalLoader('article','new','');" class="  sbold col-md-3">|&nbsp;Write an article</a>
+                                                        <a class="page_top_actions" onclick="modalLoader('article','new','');">Write an article</a>&nbsp;|&nbsp;
 
-                                                                    <a style="color: #000;text-decoration: none;padding: 1px;"data-toggle="modal" onclick="modalLoader('riddle','new','');" class="dark btn-outline sbold col-md-3">|&nbsp;Post a riddle</a>
+                                                        <a class="page_top_actions" onclick="modalLoader('riddle','new','');">Post a riddle</a>&nbsp;|&nbsp;
 
-                                                                    <a style="color: #000;text-decoration: none;padding: 1px;" data-toggle="modal" onclick="modalLoader('pab','new','');" class=" dark btn-outline sbold col-md-3">|&nbsp;Post a book</a>
-
-                                                                    <!-- <button type="button" class="btn btn-link col-md-3">Link</button> -->
-
-
-                                                                </div><br>
-                                                                <div class="row">
-                                                                    
-                                                                </div>                                                      
-
-                                                            </div> 
-                                                        </div>                                                                                  
-                                                        <div class="clearfix"></div> 
-                                                    </div>
+                                                        <a class="page_top_actions" onclick="modalLoader('pab','new','');">Post a book</a>
+                                                        
+                                                      </div>
+                                                    </div>                                        
+                                                    
 
                                                     <div class="post_area">                                            
 
@@ -400,17 +388,27 @@
 
                         <div class="form-group">
                           <label class="col-md-3 col-lg-3 col-sm-12 control-label">Sub-Category1</label>
-                          <div class="col-md-9 col-lg-9 col-sm-12 ">
-                            <input type="text" name="article_sub1" id="article_sub1" class="form-control" value="">
+                            <div class="col-md-9 col-lg-9 col-sm-12 ">
+                                <input type="text" name="article_sub1" id="article_sub1" class="form-control" value="">
+                                <p class="help-block" style="font-size: 0.8em; font-style: italics !important;"> Optional </p>
+                            </div>
                         </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 col-lg-3 col-sm-12 control-label">Sub-Category2</label>
+                        <div class="col-md-9 col-lg-9 col-sm-12 ">
+                         <input type="text" name="article_sub2" id="article_sub2" class="form-control" value="">
+                         <p class="help-block" style="font-size: 0.8em; font-style: italics !important;"> Optional </p>
+                        </div>
+
                     </div>
 
                     <div class="form-group">
-                      <label class="col-md-3 col-lg-3 col-sm-12 control-label">Sub-Category2</label>
-                      <div class="col-md-9 col-lg-9 col-sm-12 ">
-                        <input type="text" name="article_sub2" id="article_sub2" class="form-control" value="">
+                        <label class="col-md-3 col-lg-3 col-sm-12 control-label">Topic</label>
+                        <div class="col-md-9 col-lg-9 col-sm-12 ">
+                         <input type="text" name="article_topic" id="article_topic" class="form-control" value="">
+                        </div>
                     </div>
-                </div>
 
 
                 <div class="form-group">
@@ -420,12 +418,12 @@
                     </div>                                
                 </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="col-md-3 col-lg-3 col-sm-12 control-label">Provide additional information</label>
                     <div class="col-md-9 col-lg-9 col-sm-12 ">
                         <textarea  name="article_info" id="article_info" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
                     </div>                                
-                </div>
+                </div> -->
 
                 <div class="form-group">
                     <div class="col-md-3 col-lg-3 col-sm-12"></div>

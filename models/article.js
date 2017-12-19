@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 
 var articleSchema = mongoose.Schema({
 	id:String,
+	topic:String,
 	body:String,
 	category:String,
 	sub_cat1:{type:String,default:''},

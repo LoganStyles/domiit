@@ -272,6 +272,20 @@
           border: 0px solid #fff;
      }
 
+     .section_posts_avatar{
+        width: 60px;
+        float: left;
+     }
+
+     .section_posts_text{
+        float: left;
+     }
+
+     .page_top_actions{
+        color: #000;
+        font-size: 1.1em;
+     }
+
      /*toggle cntent*/
      .morecontent span {
      	display: none;
@@ -305,6 +319,11 @@
      .icon_size_40{
      	width: 40px;
      	height: 40px;
+     }
+
+      .icon_size_50{
+        width: 50px;
+        height: 50px;
      }
 
      .swap_icons img:last-child{display:none}

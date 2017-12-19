@@ -517,6 +517,7 @@ app.post('/ask_article',article_upload,function(req,res,next){
 
         let write_art =new article();
         write_art.body=req.body.article_title;
+        write_art.topic=req.body.article_topic;
         write_art.category = req.body.article_category;
         write_art.sub_cat1=req.body.article_sub1;
         write_art.sub_cat2=req.body.article_sub2;

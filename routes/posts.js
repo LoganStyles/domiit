@@ -20,7 +20,7 @@ function isLoggedIn(req, res, next) {
 
 /*get owner details*/
 function getLatestOwnerDetails(arr){
-    var promise=user.findOne({_id:arr.id},{displayName:1,displayPic:1}).exec();
+    var promise=user.findOne({_id:arr.id},{displayName:1,displayPic:1,designation:1}).exec();
     return promise;
 }
 
@@ -129,10 +129,13 @@ section.find(selection).sort({post_date:-1}).exec(function(err,items){
             var promise = getLatestOwnerDetails(cur_item.owner);//fetch data for this person
             promise.then(function(response){
                 var displayPic=(response.displayPic)?(response.displayPic[response.displayPic.length -1]):('avatar.png');
+                var status=(response.designation)?((response.designation[response.designation.length -1]).title):('');
+        
                 updated_obj={
                     id:(response._id).toString(),
                     displayName:response.displayName,
-                    displayPic:displayPic
+                    displayPic:displayPic,
+                    status:status
                 };
                 // update owner info
                 cur_item.owner=updated_obj;
