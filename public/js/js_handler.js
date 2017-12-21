@@ -39,7 +39,7 @@ function modalLoader(type, mode,cat_type) {
     console.log('mode: ' + mode);
     // console.log('cat_type: ' + cat_type);
         
-        // var form_action = "#" + type + "_action";
+        var form_action = "#" + type + "_action";
         var formid = "#" + type + "_form";
         var header = "#" + type + "_header";
         var submit_but = formid + " input[type='submit']";
@@ -51,7 +51,7 @@ function modalLoader(type, mode,cat_type) {
         
 
         var itemid = "#" + type + "_id";
-        // console.log('form_action: ' + form_action);
+        console.log('form_action: ' + form_action);
         console.log('formid: ' + formid);
         console.log('submit_but: ' + submit_but);
         console.log('modal: ' + modal);
@@ -61,7 +61,7 @@ function modalLoader(type, mode,cat_type) {
             console.log('inside mode new: ');
                 $(itemid).val(0);
                 $(formid).trigger('reset');
-                // $(form_action).val("insert");
+                $(form_action).val("insert");
                 $(modal).modal({backdrop: false, keyboard: false});
                 $(header).text('Add');
                 break;

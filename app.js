@@ -669,36 +669,55 @@ app.post('/update_desc',function(req,res,next){
 });
 
 
-/*updates the education on the profile */
+/*adds/edits the education items on the profile */
 app.post('/update_edu',function(req,res,next){
 
-    var update_items={
-        title:req.body.profile_edu_title,
-        // body:'',
-        from_year:req.body.profile_edu_from,
-        to_year:req.body.profile_edu_to
-    }
-
+    var action=req.body.profile_edu_action;
+    
 
     user.findOne({email:req.session.user.email }, function(err, u) {
         if(u){
             let updateUser=u;
-            updateUser.education.push(update_items);//append education items
-            updateUser.date_modified=new Date();
 
-            console.log(updateUser);
-
-            user.updateOne({email:req.session.user.email},{$set:updateUser},function(err1,res1){
-
-                if(err1){
-                    console.log(err1)
-                    res.json({success:false,msg:"Your profile update failed"});
-                }else if(res1){                        
-                    res.json({success:true,msg:"Your profile update was successfull"});
+            //chk for either inserts/edits
+            if(req.body.profile_edu_action=="insert"){
+                var update_items={
+                    title:req.body.profile_edu_title,
+                    from_year:req.body.profile_edu_from,
+                    to_year:req.body.profile_edu_to
                 }
 
-            });
+                updateUser.education.push(update_items);//append education items
+                updateUser.date_modified=new Date();
+                console.log(updateUser);
 
+                user.updateOne({email:req.session.user.email},{$set:updateUser},function(err1,res1){
+
+                    if(err1){
+                        console.log(err1)
+                        res.json({success:false,msg:"Your profile update failed"});
+                    }else if(res1){                        
+                        res.json({success:true,msg:"Your profile update was successfull"});
+                    }
+
+                });
+
+            }else if(req.body.profile_edu_action=="edit" && (req.body.profile_edu_id)){
+                updateUser.update({'education._id':req.body.profile_edu_id},
+                    {'$set':{
+                        'education.$.title':req.body.profile_edu_title,
+                        'education.$.to_year':req.body.profile_edu_to,
+                        'education.$.from_year':req.body.profile_edu_from
+                }},function(err2,res2){
+                    if(err2){
+                        console.log(err2)
+                        res.json({success:false,msg:"Your education update failed"});
+                    }else if(res2){                        
+                        res.json({success:true,msg:"Your education update was successfull"});
+                    }
+                });
+            }
+            
         }
 
     });

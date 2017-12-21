@@ -37,7 +37,7 @@
             <!-- BEGIN PORTLET -->
             <div class="panel panel-default portlet" {{#unless page_response}} style="display: none;"{{/unless}}>
               <div class="panel-body">
-                <span style="font-size: 1.1em;font-weight: 600;">{{page_title}}</span>                
+                <span class="posts_page_title">{{page_title}}</span>                
               </div>
             </div> 
             <!-- <div class="portlet portlet_domiit ">
@@ -58,7 +58,7 @@
                 <div class="portlet-title">
                     <div class="caption caption-md">
                         <!-- <img alt="" class="icon_size_50" src="{{../url}}/images/{{../page_icon}}"> -->
-                        <span class="caption-subject  bold uppercase" style="color: #86be25">{{../page_type}}</span>&nbsp;|
+                        <span class="caption-subject  bold post_box_name">{{../page_type}}</span>&nbsp;|
                         {{#if category}}
                         <span class="caption-helper post_category">{{category}}</span>&nbsp;
                         {{/if}}
@@ -109,14 +109,15 @@
 
                                     <div class="posts_partition"><!--3rd partition-->
                                         <div style="margin-left: 60%;">
-                                            <div style="color: #ccc;">{{moment post_date "fromNow"}}</div>
-                                            <div style="display: inline-block;margin-right: 20%;">
+                                            <div class="fromnow">{{moment post_date "fromNow"}}</div>
+                                            <div class="clearfix"></div>
+                                            <div class="post_actions_button_left">
                                                 <img src="{{url}}/images/group.png">
                                             </div>
                                              {{#if post_owner}}
-                                                 <div class="actions" style="display: inline-block;">
+                                                 <div class="actions post_actions_button">
                                                         <div class="btn-group">
-                                                            <span class="item-status" data-toggle="dropdown" style="cursor: pointer;">
+                                                            <span class="item-status cursor_dropper" data-toggle="dropdown">
                                                                 <i class="fa fa-ellipsis-v"></i>
                                                             </span>
                                                             <ul class="dropdown-menu pull-right">
@@ -138,7 +139,7 @@
                                                 {{else}}
                                                 <div class="actions" style="display: inline-block;">
                                                         <div class="btn-group">
-                                                            <span class="item-status" data-toggle="dropdown" style="cursor: pointer;">
+                                                            <span class="item-status cursor_dropper" data-toggle="dropdown">
                                                                 <i class="fa fa-ellipsis-v"></i>
                                                             </span>
                                                             <ul class="dropdown-menu pull-right">
@@ -169,6 +170,11 @@
                                 </div>
 
                                 <div class="item-body"> 
+                                    {{#if topic}}
+                                        <div style="color: #000;font-size: 1.3em;" class="post_item">
+                                            {{topic}}
+                                        </div>
+                                    {{/if}}
                                     {{#if pics.length }}
                                         <div style="margin-bottom: 3%;">                                                                    
                                             <img class="img-responsive" src="{{url}}/uploads/{{pics.[0]}}">
@@ -185,20 +191,20 @@
 
                                         <div class="posts_partition_right"><!--3rd partition-->
 
-                                            <a class="btn btn-link post_likes"  style="color: #000;font-size: 0.8em;">
+                                            <a class="btn btn-link post_likes grey_button" >
                                             <span>
                                                 <span class="social_value">{{likes}}</span>&nbsp;
                                                 <i class="fa fa-heart-o"></i>&nbsp;Likes
                                             </span>
                                             </a>&nbsp;
 
-                                            <span style="color: #000;font-size: 0.8em;">
+                                            <span class="grey_button">
                                                     <span class="social_value">{{answers_len}}</span>&nbsp;
                                                     <i class="fa fa-comment-o"></i>&nbsp;
-                                                    Answers
+                                                    {{../page_response}}s
                                                 </span>
 
-                                            <a class="btn btn-link post_shares" style="color: #000;font-size: 0.8em;">
+                                            <a class="btn btn-link post_shares grey_button">
                                                 <span class="item-label">
                                                     <span class="social_value">{{shares}}</span>&nbsp;
                                                     <i class="fa fa-share-alt"></i>&nbsp;
@@ -209,7 +215,8 @@
                                         </div>
 
                                     <div class="clearfix"></div>
-                                </div><hr>
+                                </div>
+                                <!-- <hr> -->
 
 
                             </div>
@@ -222,11 +229,11 @@
                     {{#each answers}}
 
                         {{#if @last}}
+                        <div style="border: 1px solid #ddd;padding: 1%;">
 
                     <div>
                         <div class="caption caption-md">
-                            <!-- <i class="fa fa-question"></i> -->
-                            <span class="caption-subject  bold uppercase" style="color: #86be25">New Answer</span>
+                            <span class="caption-subject  bold post_box_name">New {{../../page_response}}</span>
                             
                         </div>                       
                     </div>
@@ -266,14 +273,15 @@
 
                                         <div class="posts_partition"><!--3rd partition-->
                                             <div style="margin-left: 60%;">
-                                                <div style="color: #ccc;">{{moment post_date "fromNow"}}</div>
-                                                <div style="display: inline-block;margin-right: 20%;">
+                                                <div class="fromnow">{{moment post_date "fromNow"}}</div>
+                                                <div class="clearfix"></div>
+                                                <div class="post_actions_button_left">
                                                     <img src="{{url}}/images/group.png">
                                                 </div>
                                                  {{#if post_owner}}
-                                                 <div class="actions" style="display: inline-block;">
+                                                 <div class="actions post_actions_button">
                                                         <div class="btn-group">
-                                                            <span class="item-status" data-toggle="dropdown" style="cursor: pointer;">
+                                                            <span class="item-status cursor_dropper" data-toggle="dropdown">
                                                                 <i class="fa fa-ellipsis-v"></i>
                                                             </span>
                                                             <ul class="dropdown-menu pull-right">
@@ -293,9 +301,9 @@
                                                         </div>                                           
                                                 </div>
                                                 {{else}}
-                                                <div class="actions" style="display: inline-block;">
+                                                <div class="actions post_actions_button" style="">
                                                         <div class="btn-group">
-                                                            <span class="item-status" data-toggle="dropdown" style="cursor: pointer;padding: 0 1%">
+                                                            <span class="item-status cursor_dropper" data-toggle="dropdown">
                                                                 <i class="fa fa-ellipsis-v"></i>
                                                             </span>
                                                             <ul class="dropdown-menu pull-right">
@@ -315,6 +323,7 @@
                                                         </div>                                           
                                                 </div>
                                                 {{/if}}
+                                                <div class="clearfix"></div>
                                             </div><!--end float right-->
                                             <div class="clearfix"></div>
                                         </div>
@@ -343,65 +352,68 @@
                                             <div class="posts_partition_right"><!--3rd partition-->
 
                                                 
-                                                <a class="btn btn-link " style="color: #000;font-size: 0.8em;">
+                                                <a class="btn btn-link grey_button">
                                                     <span>
                                                         <span class="social_value">{{views}}</span>&nbsp;&nbsp;
                                                         Views
                                                     </span>
                                                 </a>&nbsp;|
 
-                                                <a class="btn btn-link post_shares" style="color: #000;font-size: 0.8em;color: orange">About this post
+                                                <a class="btn btn-link post_shares orange_link">About this post
                                                     
                                                 </a>
 
                                             </div>
 
                                         <div class="clearfix"></div>
-                                    </div><hr>
+                                    </div>
+                                    <!-- <hr> -->
 
 
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    </div>
                             
 
 
                     <!-- END PORTLET -->
-                    <div class="response_votes" style="margin: 0%;">
+                    <div class="response_votes div_vote_comments">
                         <input type="hidden" id="post_response_id" value="{{_id}}">
 
-                        <a class="btn btn-link post_upvotes"  style="color: #000;font-size: 0.8em">
+                        <a class="btn btn-link post_upvotes grey_button" >
                         <span>
-                            <span class="social_value">{{upvotes}}</span>&nbsp;
+                            <span class="social_value">{{upvotes}}</span>
                             <img src="{{url}}/images/up_vote.png">&nbsp;Upvotes
                         </span>
                         </a>&nbsp;&nbsp;
 
-                        <a class="btn btn-link post_downvotes" style="color: #000;font-size: 0.8em">
+                        <a class="btn btn-link post_downvotes grey_button" >
                             <span>
-                                <span class="social_value">{{downvotes}}</span>&nbsp;
+                                <span class="social_value">{{downvotes}}</span>
                                 <img src="{{url}}/images/down_vote.png">&nbsp;Downvotes
                             </span>
                         </a>&nbsp;&nbsp;
 
-                        <a class="btn btn-link " style="color: #000;font-size: 0.8em">
+                        <a class="btn btn-link grey_button">
                             <span class="">
-                                <span class="social_value">{{comments.length}}</span>&nbsp;
+                                <span class="social_value">{{comments.length}}</span>
                                 <img src="{{url}}/images/comments.png">&nbsp;Comments
                             </span>
                         </a>
                     </div>
 
-                    <div style="width: 100%; border:1px solid #ddd;padding: 0px;font-size: 1em;">
+                    <div class="div_other_add_buttons">
                         <a href="{{url}}/posts/section/{{../../page_type}}/all_responses/{{../_id}}">
-                            <div style="width: 45%;display: inline-block;text-align: center;border-right: 1px solid;color:#444;">
+                        <div class="other_add_buttons" style="border-right: 1px solid #666;">
                             View Other {{../../page_response}}s                            
                         </div>
                         </a>
 
                         <a href="#" class="response_button">
-                            <div style="width: 45%;display: inline-block;text-align: center;color:#444;">Add Your {{../../page_response}}                            
+                            <div class="other_add_buttons">Add Your {{../../page_response}}                            
                             </div>
                         </a>
 

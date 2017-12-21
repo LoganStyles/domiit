@@ -104,6 +104,7 @@
                                               <div class="profile_text_body">
                                                 <div class="profile_text_title"><strong>{{title}}</strong></div>
                                                 <div class="profile_text_duration"><span class="from_year">{{from_year}}</span> - <span class="to_year">{{to_year}}</span></div>
+                                                <input type="hidden" class="subitem_id" value="{{_id}}">
                                               </div>
 
                                               <div class="profile_text_body_icons">     
@@ -481,6 +482,9 @@
               <span class="form_submission_error"></span>
               <span class="form_submission_success"></span>
 
+              <input type="hidden" name="profile_edu_id"  id="profile_edu_id" >
+              <input type="hidden" name="profile_edu_action"  id="profile_edu_action" >
+
             <div class="form-body">
               <div class="form-group">
                 <label class="col-md-2 col-lg-2 col-sm-12 control-label">Title</label>
@@ -500,9 +504,7 @@
                   </select>
 
                 </div>
-              </div>
-
-              
+              </div>              
 
               <div class="form-group">
                 <label class="col-md-2 col-lg-2 col-sm-12 control-label">To Year</label>
@@ -1172,11 +1174,15 @@
           console.log('from '+from);
           var to = $this.parents('.profile_subitem').find('.profile_text_body .profile_text_duration .to_year').text();
           console.log('to '+to);
+          var subitem_id = $this.parents('.profile_subitem').find('.subitem_id').val();
+
           $('#profile_edu_modal').modal({backdrop: false, keyboard: false});
           $('#profile_edu_header').text('Edit');
           $('#profile_edu_title').val(title);
           $('#profile_edu_from').val(from);
           $('#profile_edu_to').val(to);
+          $('#profile_edu_action').val('edit');
+          $('#profile_edu_id').val(subitem_id);
         });
 
 
