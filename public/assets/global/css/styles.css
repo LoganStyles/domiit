@@ -62,6 +62,23 @@
      width: 100%;
 }
 
+.post_item_topic{
+    color: #000;
+    font-size: 1.4em;
+    text-transform: capitalize;
+}
+
+.post_item_more_info{
+    color: #444;
+    font-size: 1.1em;
+    font-style: italic;
+}
+
+.post_item_body{
+    color: #444;
+    font-size: 1.1em;
+}
+
 /*profile*/
 .profile_area{
 	background-color: #fff;
@@ -281,6 +298,8 @@
 
      .section_posts_text{
         float: left;
+        text-transform: capitalize;
+        color: #000 !important;
      }
 
      .page_top_actions{
@@ -383,7 +402,14 @@
 
 .grey_button{
     color: #666 !important;
+    font-size: 0.9em !important;
+    text-transform: capitalize;
+}
+
+.grey_cats{
+    color: #666 !important;
     font-size: 0.8em !important;
+    text-transform: capitalize;
 }
 
 .div_vote_comments{

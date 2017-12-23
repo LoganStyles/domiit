@@ -12,20 +12,21 @@ var trend_story = require('../models/trend');
 
 var about = require('../models/about');
 
-//create global variables
-// var story,cat;
-//     quest_status=false;
-//     quest_cat_status=false;
-//     article_status=false;
-//     article_cat_status=false;
-//     riddle_status=false;
-//     riddle_cat_status=false;
-//     pab_status=false;
-//     pab_cat_status=false;
-//     trend_status=false;
-//     trend_cat_status=false;
-//     trend_story_status=false;
-//     about_overview_status=false;
+var multer = require('multer');
+var mime = require('mime-lib');
+
+var Storage =multer.diskStorage({
+    destination:function(req,file,cb){
+        cb(null,'./public/uploads')//set the destination
+
+    },
+    filename:function(req,file,cb){
+        console.log('filename ext '+file.mimetype);
+        console.log(mime.extension(file.mimetype));
+        cb(null, Date.now() + '.'+mime.extension(file.mimetype)[mime.extension(file.mimetype).length-1]);
+
+    }
+});
 
 /*check if user is logged in*/
 function isLoggedIn(req, res, next) {
@@ -378,7 +379,11 @@ router.post('/post_about_subitem/:type',function(req,res,next){
 
 /*save category or story
  */
- router.post('/post_page/:type',function(req,res,next){
+ var upload = multer({storage:Storage});
+ router.post('/post_page/:type',upload.single('page_photo'),function(req,res,next){
+
+    console.log('req.fil')
+console.log(req.file);
 
     var type = req.params.type;//story or cat
     let obj,
@@ -426,15 +431,20 @@ router.post('/post_about_subitem/:type',function(req,res,next){
                 obj = new trend_story();        
                 break;
             }   
-            obj.body = (req.body.page_title).trim();
+            obj.body = (req.body.page_title).trim();            
             obj.description=(req.body.page_description).trim();
+            obj.excerpt = (obj.description).substr(0,100);
             obj.category=req.body.page_category
         }
+
+        if (req.file && req.file.filename != null) {
+                obj.pics.push(req.file.filename);
+            }
 
         obj.save(function(err,quest){
             if(err){console.log(err);res.json({success:false,msg:" update failed"});
         }else{
-            res.json({success:true,msg:" submission succesful"});
+            res.json({success:true,msg:" submission successful"});
             var json = JSON.stringify(obj,null,2);
         }
     });
@@ -465,11 +475,10 @@ router.post('/post_about_subitem/:type',function(req,res,next){
                 break;
 
             }
-            update_param={
-                title : req.body.page_title.trim(),
-                value : req.body.page_title.trim().replace(/[^A-Za-z0-9]/g, "_"),
-                description:req.body.page_description
-            }
+            
+            obj.title=req.body.page_title.trim();
+            obj.value=req.body.page_title.trim().replace(/[^A-Za-z0-9]/g, "_");
+            obj.description=req.body.page_description;
 
         }else if(type=="story"){
             switch(page_type){            
@@ -478,15 +487,18 @@ router.post('/post_about_subitem/:type',function(req,res,next){
                 break;
             }
 
-            update_param={
-                body : req.body.page_title.trim(),
-                description:req.body.page_description,
-                category:req.body.page_category,
-            }
+            obj.body=req.body.page_title.trim();
+            obj.category=req.body.page_category;            
+            obj.description=req.body.page_description;
+            obj.excerpt = (obj.description).substr(0,100);
         }
 
+        if (req.file && req.file.filename != null) {
+                obj.pics.push(req.file.filename);
+            }
+
         //update a obj
-        obj.findOneAndUpdate({_id:page_id},{$set:update_param},function(err1,res1){
+        obj.findOneAndUpdate({_id:page_id},{$set:obj},function(err1,res1){
 
             if(err1){
                 console.log(err1)

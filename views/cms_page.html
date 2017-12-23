@@ -116,7 +116,7 @@
                         <h4 class="modal-title" id="page_header">{{title}}</h4>
                     </div>
                     <div class="modal-body">
-                        <form class="form-horizontal" role="form" id="page_form" action="" method="post">
+                        <form class="form-horizontal" role="form" id="page_form" action="" method="post" enctype="multipart/form-data">
                             <span class="form_submission_error"></span>
                             <span class="form_submission_success"></span>
 
@@ -153,6 +153,20 @@
 </div>
                                         
 </div>
+
+        <div class="form-group">
+            <div class="col-md-2 col-lg-2 col-sm-12"></div>
+
+            <div class="col-md-10 col-lg-10 col-sm-12 ">
+                <label for="page_photo" class="col-md-6 col-lg-6 col-sm-12 control-label custom-file-upload">
+                    <i class="fa fa-camera"></i> Add Photo
+                </label>
+                <div class="col-md-4 col-lg-6 col-sm-12">
+                    <input id="page_photo" name="page_photo" type="file" accept="application/x-zip-compressed,image/*"/>
+                </div>
+                
+            </div>                                
+        </div>
                                 
                             </div>
                             <div class="form-actions noborder pull-right">
@@ -295,44 +309,83 @@
                 submitHandler: function () {
                     resetFields();
                     var my_url;
-                    var formData = $('#page_form').serialize();
-                    console.log(formData);
+                    // var formData = $('#page_form').serialize();
+                    // console.log(formData);
                     {{#if trend_story_status}}
                         my_url="{{url}}/cms/post_page/story";//this is a story
                     {{else}}
                         my_url="{{url}}/cms/post_page/cat";
                     {{/if}}
 
-                    $.ajax({
-                        url:my_url,
-                        type:'POST',
-                        data:formData,
-                        dataType:'json',
-                            // contentType: 'application/json', 
-                            headers: {'X-My-App-Token': 'loganstyles'},
-                            success:function(response){
-                                console.log('success');
-                                if(response.success==true){
-                                    console.log('response is true');
-                                    $('#page_form .form_submission_success').text(response.msg);
-                                    setTimeout(function(){
-                                        $('#page_form .form_submission_success').text('');
-                                         // window.location.href="{{url}}/cms/main/{{item}}";
-                                         location.reload();
-                                    },3000);
-                                    
-                                }else{
-                                    console.log('response is false');
-                                    $('#page_form .form_submission_error').text(response.msg);
-                                }
-                            },
-                            error:function(xhr, status, err){
-                                console.log('error');
-                                console.log(xhr);
-                                console.log(status);
-                                console.log(err);
+                    //modify button
+                var sub_button=$("#page_form").find(':submit');
+                var old_button_val=sub_button.val();
+                sub_button.prop('disabled', true);
+                sub_button.val('...processing');
+
+                // resetFields();
+                // var my_url="{{url}}/ask_question";
+                $("#page_form").ajaxSubmit({
+                    url:my_url,
+                       contentType: 'application/json',
+                       success: function(response){
+                        if(response.success==true){
+                                console.log('image uploaded and form submitted');
+                                $('#page_form  .form_submission_success').text(response.msg);
+                                setTimeout(function(){
+                                    $('#page_form  .form_submission_success').text('');
+                                    sub_button.val(old_button_val);
+                                    sub_button.prop('disabled', false);
+                                    location.reload();
+                                },3000);
+                                
+                            }else{
+                                console.log('response is false');
+                                $('#page_form  .form_submission_error').text(response.msg);
+                                sub_button.val(old_button_val);
+                                sub_button.prop('disabled', false);
                             }
-                        });
+                              
+                       },
+                       error:function(xhr, status, err){
+                            console.log('error');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(err);
+                        }
+                   });
+                
+
+                    // $.ajax({
+                    //     url:my_url,
+                    //     type:'POST',
+                    //     data:formData,
+                    //     dataType:'json',
+                    //         // contentType: 'application/json', 
+                    //         headers: {'X-My-App-Token': 'loganstyles'},
+                    //         success:function(response){
+                    //             console.log('success');
+                    //             if(response.success==true){
+                    //                 console.log('response is true');
+                    //                 $('#page_form .form_submission_success').text(response.msg);
+                    //                 setTimeout(function(){
+                    //                     $('#page_form .form_submission_success').text('');
+                    //                      // window.location.href="{{url}}/cms/main/{{item}}";
+                    //                      location.reload();
+                    //                 },3000);
+                                    
+                    //             }else{
+                    //                 console.log('response is false');
+                    //                 $('#page_form .form_submission_error').text(response.msg);
+                    //             }
+                    //         },
+                    //         error:function(xhr, status, err){
+                    //             console.log('error');
+                    //             console.log(xhr);
+                    //             console.log(status);
+                    //             console.log(err);
+                    //         }
+                    //     });
                 }
             } );
 

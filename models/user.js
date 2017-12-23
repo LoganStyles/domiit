@@ -27,6 +27,7 @@ var userSchema = mongoose.Schema({
     friend_ids:[String],
     followers:[String],
     followed:[String],
+    trend_followed:[String],
     bookmarks:[{item_id:String,body:String,date:{type:Date,default:Date.now}}],
     upvotes:{type:Number,default:0},
     downvotes:{type:Number,default:0},

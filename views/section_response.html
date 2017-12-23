@@ -40,12 +40,7 @@
                 <span class="posts_page_title">{{page_title}}</span>                
               </div>
             </div> 
-            <!-- <div class="portlet portlet_domiit ">
-                <div class="" style="border-bottom: 0px;">
-                    <h3>{{page_title}}</h3>
-                </div>                                                                                  
-                <div class="clearfix"></div> 
-            </div> -->
+            
 
             <div class="post_responses question_all_post_area">
 
@@ -57,18 +52,17 @@
 
                 <div class="portlet-title">
                     <div class="caption caption-md">
-                        <!-- <img alt="" class="icon_size_50" src="{{../url}}/images/{{../page_icon}}"> -->
                         <span class="caption-subject  bold post_box_name">{{../page_type}}</span>&nbsp;|
                         {{#if category}}
-                        <span class="caption-helper post_category">{{category}}</span>&nbsp;
+                        <span class="caption-helper post_category grey_cats">{{category}}</span>&nbsp;
                         {{/if}}
 
                         {{#if sub_cat1}}
-                        |&nbsp;<span class="caption-helper post_sub_cat1">{{sub_cat1}}</span>&nbsp;
+                        |&nbsp;<span class="caption-helper post_sub_cat1 grey_cats">{{sub_cat1}}</span>&nbsp;
                         {{/if}}
 
                         {{#if sub_cat2}}
-                        |&nbsp;<span class="caption-helper post_sub_cat2">{{sub_cat2}}</span>&nbsp;
+                        |&nbsp;<span class="caption-helper post_sub_cat2 grey_cats">{{sub_cat2}}</span>&nbsp;
                         {{/if}}
                         
                     </div>                       
@@ -83,7 +77,7 @@
                                     <div class="posts_partition"><!--1st partition-->
                                         <div style="width: 100%;">
                                             <div class="section_posts_avatar">
-                                             <img class="icon_size_50 img-circle" src="{{../url}}/uploads/{{owner.displayPic}}">
+                                             <img class="icon_size_50 img-circle" src="{{../url}}/{{owner.displayPic}}">
                                          </div>
                                          <div class="section_posts_text">
                                             <div> 
@@ -102,13 +96,24 @@
                                     </div>
 
                                     <div class="posts_partition_middle"><!--2nd partition-->
-                                        <span style="">
-                                            <img class="icon_size_50" src="{{url}}/images/add_person.png">
-                                        </span>
-                                    </div>
+                                            <span style="">
+                                            {{#if ../trend_status}}<!--trend post-->
+                                                    {{#unless trend_followed}}
+                                                        <a href="javascript:;" class="btn blue">
+                                                        <i class="fa fa-plus"></i>&nbsp; Follow</a>
+                                                    {{/unless}}
+                                            {{else}}<!--other post:questio etc-->
+                                                    {{#unless post_owner}}
+                                                        <img class="icon_size_50" src="{{url}}/images/add_person.png">
+                                                    {{/unless}}
+
+                                            {{/if}}
+                                            
+                                            </span>
+                                        </div>
 
                                     <div class="posts_partition"><!--3rd partition-->
-                                        <div style="margin-left: 60%;">
+                                        <div class="pull-right">
                                             <div class="fromnow">{{moment post_date "fromNow"}}</div>
                                             <div class="clearfix"></div>
                                             <div class="post_actions_button_left">
@@ -137,7 +142,7 @@
                                                         </div>                                           
                                                 </div>
                                                 {{else}}
-                                                <div class="actions" style="display: inline-block;">
+                                                <div class="actions post_actions_button">
                                                         <div class="btn-group">
                                                             <span class="item-status cursor_dropper" data-toggle="dropdown">
                                                                 <i class="fa fa-ellipsis-v"></i>
@@ -171,7 +176,7 @@
 
                                 <div class="item-body"> 
                                     {{#if topic}}
-                                        <div style="color: #000;font-size: 1.3em;" class="post_item">
+                                        <div class="post_item post_item_topic">
                                             {{topic}}
                                         </div>
                                     {{/if}}
@@ -180,9 +185,16 @@
                                             <img class="img-responsive" src="{{url}}/uploads/{{pics.[0]}}">
                                         </div>
                                     {{/if}}
-                                        <div style="color: #337ab7;" class="post_item">
+                                        <div class="post_item post_item_topic">
                                             {{body}}
                                         </div>
+
+                                        {{#if description}}
+
+                                        <div class="post_item post_item_more_info">
+                                            {{description}}
+                                        </div>
+                                        {{/if}}
                                     
                                 </div>  
 
@@ -191,8 +203,8 @@
 
                                         <div class="posts_partition_right"><!--3rd partition-->
 
-                                            <a class="btn btn-link post_likes grey_button" >
-                                            <span>
+                                            <a class="btn btn-link post_likes" >
+                                            <span class="grey_button">
                                                 <span class="social_value">{{likes}}</span>&nbsp;
                                                 <i class="fa fa-heart-o"></i>&nbsp;Likes
                                             </span>
@@ -204,8 +216,8 @@
                                                     {{../page_response}}s
                                                 </span>
 
-                                            <a class="btn btn-link post_shares grey_button">
-                                                <span class="item-label">
+                                            <a class="btn btn-link post_shares">
+                                                <span class="item-label grey_button">
                                                     <span class="social_value">{{shares}}</span>&nbsp;
                                                     <i class="fa fa-share-alt"></i>&nbsp;
                                                     Shares                                
@@ -233,7 +245,7 @@
 
                     <div>
                         <div class="caption caption-md">
-                            <span class="caption-subject  bold post_box_name">New {{../../page_response}}</span>
+                            <span class="caption-subject bold post_box_name">New {{../../page_response}}</span>
                             
                         </div>                       
                     </div>
@@ -247,7 +259,7 @@
                                         <div class="posts_partition"><!--1st partition-->
                                         <div style="width: 100%;">
                                                 <div class="section_posts_avatar">
-                                                   <img class="icon_size_50 img-circle" src="{{../url}}/uploads/{{responderDisplayPic}}">
+                                                   <img class="icon_size_50 img-circle" src="{{../../url}}/uploads/{{responderDisplayPic}}">
                                                 </div>
                                                 <div class="section_posts_text">
                                                     <div> 
@@ -267,12 +279,23 @@
 
                                         <div class="posts_partition_middle"><!--2nd partition-->
                                             <span style="">
-                                                <img class="icon_size_50" src="{{url}}/images/add_person.png">
+                                            {{#if ../trend_status}}<!--trend post-->
+                                                    {{#unless trend_followed}}
+                                                        <a href="javascript:;" class="btn blue">
+                                                        <i class="fa fa-plus"></i>&nbsp; Follow</a>
+                                                    {{/unless}}
+                                            {{else}}<!--other post:questio etc-->
+                                                    {{#unless post_owner}}
+                                                        <img class="icon_size_50" src="{{url}}/images/add_person.png">
+                                                    {{/unless}}
+
+                                            {{/if}}
+                                            
                                             </span>
                                         </div>
 
                                         <div class="posts_partition"><!--3rd partition-->
-                                            <div style="margin-left: 60%;">
+                                            <div class="pull-right">
                                                 <div class="fromnow">{{moment post_date "fromNow"}}</div>
                                                 <div class="clearfix"></div>
                                                 <div class="post_actions_button_left">
@@ -301,7 +324,7 @@
                                                         </div>                                           
                                                 </div>
                                                 {{else}}
-                                                <div class="actions post_actions_button" style="">
+                                                <div class="actions post_actions_button">
                                                         <div class="btn-group">
                                                             <span class="item-status cursor_dropper" data-toggle="dropdown">
                                                                 <i class="fa fa-ellipsis-v"></i>
@@ -340,7 +363,7 @@
                                                 <img class="img-responsive" src="{{url}}/uploads/{{pics.[0]}}">
                                             </div>
                                         {{/if}}
-                                            <div style="color: #000;" class="post_response">
+                                            <div class="post_response post_item_body">
                                                 {{body}}
                                             </div>
                                         

@@ -5,7 +5,6 @@ if(process.env.NODE_ENV !== 'production'){
 var http = require('http');
 var express = require('express');
 var bodyParser = require('body-parser');
-// var fs = require('fs-extra');
 var moment = require('moment');
 var session = require('client-sessions');
 var path = require('path');
@@ -26,13 +25,7 @@ var trend = require('./models/trend');
 var trend_cat = require('./models/trend_cats');
 
 var quest_cat = require('./models/question_cats');
-// var quest_sub1 = require('./models/question_sub1');
-// var quest_sub2 = require('./models/question_sub2');
-
 var art_cat = require('./models/article_cats');
-// var art_sub1 = require('./models/article_sub1');
-// var art_sub2 = require('./models/article_sub2');
-
 var riddle_cat = require('./models/riddle_cats');
 var pab_cat = require('./models/pab_cats');
 
@@ -167,7 +160,7 @@ app.use(session({
     secure:true,
     ephemeral:true
 }));
-
+    
 
 //this always updates the session
 app.use(function(req,res,next){
@@ -180,15 +173,6 @@ app.use(function(req,res,next){
                 // delete user.password; not working//delete the password from the session
                 req.session.user = user; //refresh the session value
                 res.locals.user = user;
-
-                // console.log('user');
-                // console.log(user);
-                // console.log('req.user');
-                // console.log(req.user);
-                // console.log('req.session.user');
-                // console.log(req.session.user);
-                // console.log('res.locals.user');
-                // console.log(res.locals.user);
             }
             // finishing processing the middleware and run the route
             next();
@@ -336,6 +320,7 @@ app.get('/dashboard',isLoggedIn, function(req, res) {
         var res_quest_cat=[],
         res_article_cat=[],
         res_pab_cat=[],
+        res_item_trend=[],
         res_riddle_cat=[];
 
         if(err_quest){console.log(err_quest);}
@@ -360,26 +345,36 @@ app.get('/dashboard',isLoggedIn, function(req, res) {
 
                 pab_cat.find().sort({value:1}).exec(function(err_pab,cat_pab){
 
-                    if(err_pab)console.log(err_rid);
+                    if(err_pab)console.log(err_pab);
                     if(cat_pab){
                         res_pab_cat=cat_pab;
                     }
 
-                    res.render('dashboard', {
-                        title:'Dashboard',
-                        url:process.env.URL_ROOT,
-                        user_info:req.user,
-                        displayPic:displayPic,
+                    trend.find().sort({date_created:1}).exec(function(err_trend,item_trend){
 
-                        data_quest:res_quest_cat,
-                        data_art:res_article_cat,
-                        data_riddle:res_riddle_cat,
-                        data_pab:res_pab_cat,
+                    if(err_trend)console.log(err_trend);
+                    if(item_trend){
+                        res_item_trend=item_trend;
+                    }
 
-                        quest_status:question_status,
-                        art_status:article_status,
-                        riddle_status:riddle_status,
-                        home_status:home_status
+                        res.render('dashboard', {
+                            title:'Dashboard',
+                            url:process.env.URL_ROOT,
+                            user_info:req.user,
+                            displayPic:displayPic,
+
+                            data_quest:res_quest_cat,
+                            data_art:res_article_cat,
+                            data_riddle:res_riddle_cat,
+                            data_pab:res_pab_cat,
+                            data_trend:res_item_trend,
+
+                            quest_status:question_status,
+                            art_status:article_status,
+                            riddle_status:riddle_status,
+                            home_status:home_status
+                        });
+
                     });
 
                 });
@@ -556,7 +551,6 @@ app.post('/ask_article',article_upload,function(req,res,next){
     });
 
     });
-
 
 
 /*process an 'ask a riddle' post,save & update UI immediately*/

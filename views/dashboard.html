@@ -19,7 +19,7 @@
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="col-md-3">
+                                    <div class="col-md-3" style="padding-right: 0px;">
                                         <!-- BEGIN PROFILE SIDEBAR -->
                                         <div class="profile-sidebar">
                                             <!-- PORTLET MAIN -->
@@ -97,74 +97,34 @@
                         <div class="tab-pane active" id="tab_1_1">
                             <div class="scroller" style="height: 320px;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
                                 <ul class="feeds">
+                                {{#each data_trend}}
                                     <li>
+                                        <a href="{{url}}/posts/section/trend/single/{{_id}}">
                                         <div class="col1">
                                             <div class="cont">
                                                 <div class="cont-col1">
                                                     <div class="label label-sm">
-                                                        <img alt="" class="icon_size" src="{{url}}/images/trending.png">
+
+                                                    {{#if pics}}
+                                                        <img class="icon_size" src="{{url}}/uploads/{{pics.[0]}}">
+                                                        {{else}}
+                                                        <img class="icon_size" src="{{url}}/images/trending.png">
+                                                    {{/if}}
+                                                        
                                                     </div>
                                                 </div>
                                                 <div class="cont-col2">
-                                                    <div class="desc"> Tech industry gets new valuation today ...(more) </div>
+                                                    <div class="desc"> {{excerpt}} ...(more) </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col2">
-                                            <div class="date"> - Technology </div>
+                                            <div class="date" style="text-transform: capitalize;"> - {{category}} </div>
                                         </div>
+                                        </a>
                                     </li>
-                                    <li>
-                                        <div class="col1">
-                                            <div class="cont">
-                                                <div class="cont-col1">
-                                                    <div class="label label-sm ">
-                                                        <img alt="" class="icon_size" src="{{url}}/images/trending.png">
-                                                    </div>
-                                                </div>
-                                                <div class="cont-col2">
-                                                    <div class="desc"> Uber's Founder Tranck kalanics resigned today...(more) </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col2">
-                                            <div class="date"> - Startups </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="col1">
-                                            <div class="cont">
-                                                <div class="cont-col1">
-                                                    <div class="label label-sm ">
-                                                        <img alt="" class="icon_size" src="{{url}}/images/trending.png">
-                                                    </div>
-                                                </div>
-                                                <div class="cont-col2">
-                                                    <div class="desc"> 2 young Nigerian start-ups get funding...(more) </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col2">
-                                            <div class="date"> - Startups </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="col1">
-                                            <div class="cont">
-                                                <div class="cont-col1">
-                                                    <div class="label label-sm ">
-                                                        <img alt="" class="icon_size" src="{{url}}/images/trending.png">
-                                                    </div>
-                                                </div>
-                                                <div class="cont-col2">
-                                                    <div class="desc">Trump visits France for G20 Summit...(more) </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col2">
-                                            <div class="date"> - Politics </div>
-                                        </div>
-                                    </li>                                                               
+                                    {{/each}}
+                                                                                                 
 
                                 </ul>
                             </div>
