@@ -20,7 +20,7 @@
                         <div class="row">
                             <div class="col-md-12 col-lg-12 col-sm-12">
                             <div class="col-md-2 col-lg-2"></div>
-                            <div class="col-md-8 col-lg-8 profile_top profile_area" style="">                                        
+                            <div class="col-md-7 col-lg-7 profile_top profile_area" style="">                                        
 
                                 <div class="profile_bgimg_container"><!--background img-->
                                     <div class="pro_bgimage">
@@ -49,7 +49,7 @@
 
                                 <div class="profile_hr">
                                     <div class="profile_img_text">
-                                        <div style="font-size: 1.2em;">{{user_info.displayName}}</div>  
+                                        <div style="font-weight: 600;">{{user_info.displayName}}</div>  
                                         <div>{{designation}}</div>
                                         <div>{{qualification}}</div>                                   
                                     </div>
@@ -146,6 +146,7 @@
                                               <div class="profile_text_body">
                                                 <div class="profile_text_title"><strong>{{title}}</strong></div>
                                                 <div class="profile_text_duration"><span class="year">{{year}}</span> </div>
+                                                <input type="hidden" class="subitem_id" value="{{_id}}">
                                               </div>
 
                                               <div class="profile_text_body_icons">
@@ -251,7 +252,7 @@
                       <div class="row">
                         <div class="col-md-12 col-lg-12 col-sm-12">
                           <div class="col-md-2 col-lg-2"></div>
-                          <div class="col-md-8 col-lg-8 profile_top profile_area">                                        
+                          <div class="col-md-7 col-lg-7 profile_top profile_area">                                        
 
                            <div class="col-md-12 col-lg-12 col-sm-12 ">
                              <div class="profile_section_top_button">
@@ -336,7 +337,7 @@
                       <div class="row">
                         <div class="col-md-12 col-lg-12 col-sm-12">
                           <div class="col-md-2 col-lg-2"></div>
-                          <div class="col-md-8 col-lg-8 profile_top profile_area">                                        
+                          <div class="col-md-7 col-lg-7 profile_top profile_area">                                        
 
                            <div class="col-md-12 col-lg-12 col-sm-12 ">
                              <div class="profile_section_top_button">
@@ -542,6 +543,9 @@
            <form class="form-horizontal" role="form" id="profile_qual_form" action="" method="post">
               <span class="form_submission_error"></span>
               <span class="form_submission_success"></span>
+
+              <input type="hidden" name="profile_qual_id"  id="profile_qual_id" >
+              <input type="hidden" name="profile_qual_action"  id="profile_qual_action" >
 
             <div class="form-body">
               <div class="form-group">
@@ -1193,11 +1197,14 @@
           console.log('title '+title);
           var year = $this.parents('.profile_subitem').find('.profile_text_body .profile_text_duration .year').text();
           console.log('year '+year);
+          var subitem_id = $this.parents('.profile_subitem').find('.subitem_id').val();
           
           $('#profile_qual_modal').modal({backdrop: false, keyboard: false});
           $('#profile_qual_header').text('Edit');
           $('#profile_qual_title').val(title);
           $('#profile_qual_year').val(year);
+          $('#profile_qual_action').val('edit');
+          $('#profile_qual_id').val(subitem_id);
         });
 
 

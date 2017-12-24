@@ -667,7 +667,6 @@ app.post('/update_desc',function(req,res,next){
 app.post('/update_edu',function(req,res,next){
 
     var action=req.body.profile_edu_action;
-    
 
     user.findOne({email:req.session.user.email }, function(err, u) {
         if(u){
@@ -689,29 +688,32 @@ app.post('/update_edu',function(req,res,next){
 
                     if(err1){
                         console.log(err1)
-                        res.json({success:false,msg:"Your profile update failed"});
+                        res.json({success:false,msg:"Your education details update failed"});
                     }else if(res1){                        
-                        res.json({success:true,msg:"Your profile update was successfull"});
+                        res.json({success:true,msg:"Your education details update was successfull"});
                     }
 
                 });
 
             }else if(req.body.profile_edu_action=="edit" && (req.body.profile_edu_id)){
-                updateUser.update({'education._id':req.body.profile_edu_id},
-                    {'$set':{
-                        'education.$.title':req.body.profile_edu_title,
-                        'education.$.to_year':req.body.profile_edu_to,
-                        'education.$.from_year':req.body.profile_edu_from
-                }},function(err2,res2){
-                    if(err2){
-                        console.log(err2)
-                        res.json({success:false,msg:"Your education update failed"});
-                    }else if(res2){                        
-                        res.json({success:true,msg:"Your education update was successfull"});
-                    }
-                });
+                //modify existing items
+                user.updateOne({_id:req.session.user._id,"education._id":req.body.profile_edu_id},
+                    {$set:
+                        {"education.$.title":req.body.profile_edu_title,
+                        "education.$.to_year":req.body.profile_edu_to,
+                        "education.$.from_year":req.body.profile_edu_from}},
+                        function(err2,res2){
+                            if(err2){
+                                console.log(err2)
+                                res.json({success:false,msg:"Your education details update failed"});
+                            }else if(res2){                        
+                                res.json({success:true,msg:"Your education details update was successfull"});
+                            }
+                        });
             }
             
+        }else{
+           res.json({success:false,msg:"User not found!"}); 
         }
 
     });
@@ -721,35 +723,55 @@ app.post('/update_edu',function(req,res,next){
 /*updates the qualifications on the profile */
 app.post('/update_qual',function(req,res,next){
 
-    var update_items={
-        title:req.body.profile_qual_title,
-        // body:'',
-        year:req.body.profile_qual_year
-    }
-
-
     user.findOne({email:req.session.user.email }, function(err, u) {
         if(u){
             let updateUser=u;
-            updateUser.qualification.push(update_items);//append education items
-            updateUser.date_modified=new Date();
 
-            console.log(updateUser);
+            //chk for either inserts/edits
+            if(req.body.profile_qual_action=="insert"){
 
-            user.updateOne({email:req.session.user.email},{$set:updateUser},function(err1,res1){
-
-                if(err1){
-                    console.log(err1)
-                    res.json({success:false,msg:"Your profile update failed"});
-                }else if(res1){                        
-                    res.json({success:true,msg:"Your profile update was successfull"});
+                var update_items={
+                    title:req.body.profile_qual_title,
+                    year:req.body.profile_qual_year
                 }
 
-            });
+                updateUser.qualification.push(update_items);//append education items
+                updateUser.date_modified=new Date();
+                console.log(updateUser);
 
-        }
+                user.updateOne({email:req.session.user.email},{$set:updateUser},function(err1,res1){
 
-    });
+                    if(err1){
+                        console.log(err1)
+                        res.json({success:false,msg:"Your qualifications update failed"});
+                    }else if(res1){                        
+                        res.json({success:true,msg:"Your qualifications update was successfull"});
+                    }
+
+                });
+
+            }else if(req.body.profile_qual_action=="edit" && (req.body.profile_qual_id)){
+
+                //modify existing items
+                user.updateOne({_id:req.session.user._id,"qualification._id":req.body.profile_qual_id},
+                    {$set:
+                        {"qualification.$.title":req.body.profile_qual_title,
+                        "qualification.$.year":req.body.profile_qual_year}},
+                        function(err2,res2){
+                            if(err2){
+                                console.log(err2)
+                                res.json({success:false,msg:"Your qualifications details update failed"});
+                            }else if(res2){                        
+                                res.json({success:true,msg:"Your qualifications details update was successfull"});
+                            }
+                        });
+            }
+
+        }else{
+         res.json({success:false,msg:"User not found!"}); 
+     }
+
+ });
     
 });
 
@@ -846,29 +868,32 @@ app.post('/update_bio1',profile_upload,function(req,res,next){
 app.post('/response_item',upload.single('section_response_photo'),function(req,res,next){
     // console.log(req.user)
 
-    
-    var section_type=req.body.section_response_type;
-    var section_id=req.body.section_response_id;
-    switch(section_type){
-        case'question':
-        section = question;
-        break;
+    if( (req.user.displayPic).length ===0 || req.user.displayName =="User" || req.user.displayName ==""){
+        console.log("user has not updated profile")
+        res.json({success:false,msg:"Your post failed, please update your profile first"});
+    }else{
+        var section_type=req.body.section_response_type;
+        var section_id=req.body.section_response_id;
+        switch(section_type){
+            case'question':
+            section = question;
+            break;
 
-        case'article':
-        section = article;
-        break;
+            case'article':
+            section = article;
+            break;
 
-        case'riddle':
-        section = riddle;
-        break;
-    }
+            case'riddle':
+            section = riddle;
+            break;
+        }
 
         section.findOne({_id:section_id},function(error,result){//find the question that was responsed
             if(result){
                 let updateSection = result;
                 updateSection.answers_len=updateSection.answers_len +1;//incr the no. of ans
                 updateSection.date_modified=new Date();
-                var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
+                var displayPic=(req.user.displayPic[0])?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
 
                 updateSection.answers.push({
                     body : req.body.section_response_details,
@@ -924,9 +949,9 @@ app.post('/response_item',upload.single('section_response_photo'),function(req,r
             }
 
         });
+    }
 
-
-    });
+});
 
 /*delete section post*/
 app.post('/delete_postitem',function(req,res,next){
