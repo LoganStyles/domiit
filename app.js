@@ -213,7 +213,6 @@ app.get('/profile',isLoggedIn, function(req, res) {
         console.log('designation : '+designation);
 
         if(req.user.dob){
-            // console.log('dob : '+req.user.dob);
             dob=moment(req.user.dob).format('MM/DD/YYYY');
             age=moment().diff(new Date(req.user.dob),'years');
         }
@@ -240,6 +239,9 @@ app.get('/profile',isLoggedIn, function(req, res) {
             designation:designation,
             backgroundPic:backgroundPic,
             friends_count:req.user.friend_ids.length,
+            followers_count:req.user.followers.length,
+            followed_count:req.user.followed.length,
+            bookmarks_count:req.user.bookmarks.length,
             requests_count:req.user.request_ids.length,
             questions_count:req.user.question_ids.length,
             answers_count:req.user.answer_ids.length,
@@ -456,44 +458,49 @@ io.on('connection',function(socket){
 var upload = multer({storage:Storage});
 /*process an 'ask a question' post,save & update UI immediately*/
 app.post('/ask_question',upload.single('question_photo'),function(req,res,next){
-console.log('req.fil')
-console.log(req.file);
+    console.log('req.fil')
+    console.log(req.file);
 
-var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
+    if( (req.user.displayPic).length ===0 || req.user.displayName =="User" || req.user.displayName ==""){
+        console.log("user has not updated profile")
+        res.json({success:false,msg:"Your post failed, please update your profile first"});
+    }else{
 
-var owner_details={id:req.user._id,
-    displayName:req.user.displayName,
-    displayPic:displayPic,
-    status:req.user.current_appointment};
+        var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
 
-    let ask_quest =new question();
-    ask_quest.body=req.body.question_title;
-    ask_quest.category = req.body.question_category;
-    ask_quest.sub_cat1=req.body.question_sub1;
-    ask_quest.sub_cat2=req.body.question_sub2;
-    ask_quest.description=req.body.question_info;
-    ask_quest.owner=owner_details;
+        var owner_details={id:req.user._id,
+            displayName:req.user.displayName,
+            displayPic:displayPic,
+            status:req.user.current_appointment};
 
-    if (req.file && req.file.filename != null) {
-        ask_quest.pics.push(req.file.filename);
-    }
+            let ask_quest =new question();
+            ask_quest.body=req.body.question_title;
+            ask_quest.category = req.body.question_category;
+            ask_quest.sub_cat1=req.body.question_sub1;
+            ask_quest.sub_cat2=req.body.question_sub2;
+            ask_quest.description=req.body.question_info;
+            ask_quest.owner=owner_details;
 
+            if (req.file && req.file.filename != null) {
+                ask_quest.pics.push(req.file.filename);
+            }
 
-    ask_quest.save(function(err1, ask_quest) {
+            ask_quest.save(function(err1, ask_quest) {
 
-        if(err1){console.log(err1);res.json({success: false,msg:"question submission failed"});
+                if(err1){console.log(err1);res.json({success: false,msg:"question submission failed"});
 
-    }else{   
-    // console.log(ask_quest);         
-        var json = JSON.stringify(ask_quest, null, 2);
-        // console.log(json);
-        io.emit('all_questions', json);
-        io.emit('unanswered_questions', json);
-        res.json({success:true,msg:"Question submission succesful"});
-    }   
-});
+            }else{   
+                var json = JSON.stringify(ask_quest, null, 2);
+                    // console.log(json);
+                    io.emit('all_questions', json);
+                    io.emit('unanswered_questions', json);
+                    res.json({success:true,msg:"Question submission succesful"});
+                }   
+            });
 
-});
+        }
+
+    });
 
 
 /*process an 'write an article' post,save & update UI immediately*/
@@ -503,25 +510,26 @@ var article_upload = upload.fields([
 app.post('/ask_article',article_upload,function(req,res,next){
     console.log(req.files)
 
-    var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
+    if( (req.user.displayPic).length ===0 || req.user.displayName =="User" || req.user.displayName ==""){
+        console.log("user has not updated profile")
+        res.json({success:false,msg:"Your post failed, please update your profile first"});
+    }else{
 
-    var owner_details={id:req.user._id,
-        displayName:req.user.displayName,
-        displayPic:displayPic,
-        status:req.user.current_appointment};
+        var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
 
-        let write_art =new article();
-        write_art.body=req.body.article_title;
-        write_art.topic=req.body.article_topic;
-        write_art.category = req.body.article_category;
-        write_art.sub_cat1=req.body.article_sub1;
-        write_art.sub_cat2=req.body.article_sub2;
-        write_art.description=req.body.article_info;
-        write_art.owner=owner_details;
+        var owner_details={id:req.user._id,
+            displayName:req.user.displayName,
+            displayPic:displayPic,
+            status:req.user.current_appointment};
 
-        // if (req.file && req.file.filename != null) {
-        //     write_art.pics.push(req.file.filename);
-        // }
+            let write_art =new article();
+            write_art.body=req.body.article_title;
+            write_art.topic=req.body.article_topic;
+            write_art.category = req.body.article_category;
+            write_art.sub_cat1=req.body.article_sub1;
+            write_art.sub_cat2=req.body.article_sub2;
+            write_art.description=req.body.article_info;
+            write_art.owner=owner_details;
 
         //store attachment if it exists
         if(req.files && req.files['article_attachment']){
@@ -540,17 +548,15 @@ app.post('/ask_article',article_upload,function(req,res,next){
 
             if(err1){console.log(err1);res.json({success: false,msg:"Article submission failed"});
 
-        }else{   
-        // console.log(ask_quest);         
-            var json = JSON.stringify(write_art, null, 2);
-            // console.log(json);
-            // io.emit('all_questions', json);
-            // io.emit('unanswered_questions', json);
-            res.json({success:true,msg:"Article submission succesful"});
-        }   
-    });
+            }else{
+                var json = JSON.stringify(write_art, null, 2);
+                res.json({success:true,msg:"Article submission succesful"});
+            }   
+        });
 
-    });
+    }    
+
+});
 
 
 /*process an 'ask a riddle' post,save & update UI immediately*/
@@ -558,86 +564,90 @@ app.post('/ask_riddle',upload.single('riddle_photo'),function(req,res,next){
     console.log('req.fil')
     console.log(req.file)
 
-    var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
+    if( (req.user.displayPic).length ===0 || req.user.displayName =="User" || req.user.displayName ==""){
+        console.log("user has not updated profile")
+        res.json({success:false,msg:"Your post failed, please update your profile first"});
+    }else{
+        var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
 
-    var owner_details={id:req.user._id,
-        displayName:req.user.displayName,
-        displayPic:displayPic,
-        status:req.user.current_appointment};
+        var owner_details={id:req.user._id,
+            displayName:req.user.displayName,
+            displayPic:displayPic,
+            status:req.user.current_appointment};
 
-        let ask_riddle =new riddle();
-        ask_riddle.body=req.body.riddle_title;
-        ask_riddle.category = req.body.riddle_category;
-        ask_riddle.sub_cat1=req.body.riddle_sub1;
-        ask_riddle.sub_cat2=req.body.riddle_sub2;
-        ask_riddle.owner=owner_details;
+            let ask_riddle =new riddle();
+            ask_riddle.body=req.body.riddle_title;
+            ask_riddle.category = req.body.riddle_category;
+            ask_riddle.sub_cat1=req.body.riddle_sub1;
+            ask_riddle.sub_cat2=req.body.riddle_sub2;
+            ask_riddle.owner=owner_details;
 
-        if (req.file && req.file.filename != null) {
-            ask_riddle.pics.push(req.file.filename);
+            if (req.file && req.file.filename != null) {
+                ask_riddle.pics.push(req.file.filename);
+            }
+
+            ask_riddle.save(function(err1, saved_ridd) {
+
+                if(err1){console.log(err1);res.json({success: false,msg:"Riddle submission failed"});
+
+            }else{   
+                var json = JSON.stringify(saved_ridd, null, 2);
+                res.json({success:true,msg:"Riddle submission successful"});
+            }   
+        });
+
         }
-
-
-        ask_riddle.save(function(err1, saved_ridd) {
-
-            if(err1){console.log(err1);res.json({success: false,msg:"Riddle submission failed"});
-
-        }else{   
-        // console.log(ask_quest);         
-            var json = JSON.stringify(saved_ridd, null, 2);
-            // console.log(json);
-            // io.emit('all_questions', json);
-            // io.emit('unanswered_questions', json);
-            res.json({success:true,msg:"Riddle submission successful"});
-        }   
-    });
 
     });
 
 
 /*process an 'post a book' post,save & update UI immediately*/
 app.post('/ask_pab',upload.single('pab_photo'),function(req,res,next){
-    console.log('req.fil')
-    console.log(req.file)
 
-    var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
+    if( (req.user.displayPic).length ===0 || req.user.displayName =="User" || req.user.displayName ==""){
+        console.log("user has not updated profile")
+        res.json({success:false,msg:"Your post failed, please update your profile first"});
+    }else{
 
-    var owner_details={id:req.user._id,
-        displayName:req.user.displayName,
-        displayPic:displayPic,
-        status:req.user.current_appointment};
+        var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
 
-        let ask_pab =new pab();
-        ask_pab.body=req.body.pab_title;
-        ask_pab.category = req.body.pab_category;
-        ask_pab.author=req.body.pab_author;
-        ask_pab.amount=req.body.pab_amount;
-        ask_pab.isbn=req.body.pab_isbn;
-        ask_pab.pages=req.body.pab_pages;
-        ask_pab.publishers=req.body.pab_publishers;
-        ask_pab.bookshop=req.body.pab_bookshop;
-        ask_pab.url=req.body.pab_url;
-        ask_pab.synopsis=req.body.pab_synopsis;
-        ask_pab.about_author=req.body.pab_about_author;
-        ask_pab.owner=owner_details;
+        var owner_details={id:req.user._id,
+            displayName:req.user.displayName,
+            displayPic:displayPic,
+            status:req.user.current_appointment};
 
-        if (req.file && req.file.filename != null) {
-            ask_pab.pics.push(req.file.filename);
+            let ask_pab =new pab();
+            ask_pab.body=req.body.pab_title;
+            ask_pab.category = req.body.pab_category;
+            ask_pab.author=req.body.pab_author;
+            ask_pab.amount=req.body.pab_amount;
+            ask_pab.isbn=req.body.pab_isbn;
+            ask_pab.pages=req.body.pab_pages;
+            ask_pab.publishers=req.body.pab_publishers;
+            ask_pab.bookshop=req.body.pab_bookshop;
+            ask_pab.url=req.body.pab_url;
+            ask_pab.synopsis=req.body.pab_synopsis;
+            ask_pab.about_author=req.body.pab_about_author;
+            ask_pab.owner=owner_details;
+
+            if (req.file && req.file.filename != null) {
+                ask_pab.pics.push(req.file.filename);
+            }
+
+
+            ask_pab.save(function(err1, saved) {
+
+                if(err1){console.log(err1);res.json({success: false,msg:"Book post failed"});
+
+            }else{   
+                var json = JSON.stringify(saved, null, 2);
+                res.json({success:true,msg:"Book post successful"});
+            }   
+        });
+            
         }
 
 
-        ask_pab.save(function(err1, saved) {
-
-            if(err1){console.log(err1);res.json({success: false,msg:"Book post failed"});
-
-        }else{   
-        // console.log(ask_quest);         
-            var json = JSON.stringify(saved, null, 2);
-            // console.log(json);
-            // io.emit('all_questions', json);
-            // io.emit('unanswered_questions', json);
-            res.json({success:true,msg:"Book post successful"});
-        }   
-    });
 
     });
 
@@ -778,32 +788,52 @@ app.post('/update_qual',function(req,res,next){
 /*updates the schools on the profile */
 app.post('/update_sch',function(req,res,next){
 
-    var update_items={
-        title:req.body.profile_sch_title,
-    }
-
     user.findOne({email:req.session.user.email }, function(err, u) {
         if(u){
             let updateUser=u;
-            updateUser.schools.push(update_items);//append education items
-            updateUser.date_modified=new Date();
+            //chk for either inserts/edits
+            if(req.body.profile_sch_action=="insert"){
 
-            console.log(updateUser);
-
-            user.updateOne({email:req.session.user.email},{$set:updateUser},function(err1,res1){
-
-                if(err1){
-                    console.log(err1)
-                    res.json({success:false,msg:"Your profile update failed"});
-                }else if(res1){                        
-                    res.json({success:true,msg:"Your profile update was successfull"});
+                var update_items={
+                    title:req.body.profile_sch_title,
                 }
 
-            });
+                updateUser.schools.push(update_items);//append education items
+                updateUser.date_modified=new Date();
+                console.log(updateUser);
 
-        }
+                user.updateOne({email:req.session.user.email},{$set:updateUser},function(err1,res1){
 
-    });
+                    if(err1){
+                        console.log(err1)
+                        res.json({success:false,msg:"Your school details update failed"});
+                    }else if(res1){                        
+                        res.json({success:true,msg:"Your school details update was successfull"});
+                    }
+
+                });
+
+            }else if(req.body.profile_sch_action=="edit" && (req.body.profile_sch_id)){
+
+                //modify existing items
+                user.updateOne({_id:req.session.user._id,"schools._id":req.body.profile_sch_id},
+                    {$set:
+                        {"schools.$.title":req.body.profile_sch_title}},
+                        function(err2,res2){
+                            if(err2){
+                                console.log(err2)
+                                res.json({success:false,msg:"Your school details update failed"});
+                            }else if(res2){                        
+                                res.json({success:true,msg:"Your school details update was successfull"});
+                            }
+                        });
+            }
+
+        }else{
+           res.json({success:false,msg:"User not found!"}); 
+       }
+
+   });
     
 });
 

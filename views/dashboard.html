@@ -697,7 +697,7 @@
                 sub_button.prop('disabled', true);
                 sub_button.val('...processing');
 
-                resetFields();
+                resetFields("#question_form");
                 var my_url="{{url}}/ask_question";
                 $("#question_form").ajaxSubmit({
                     url:my_url,
@@ -782,7 +782,7 @@
                 sub_button.prop('disabled', true);
                 sub_button.val('...processing');
 
-                resetFields();
+                resetFields("#article_form");
                 var my_url="{{url}}/ask_article";
                 $("#article_form").ajaxSubmit({
                     url:my_url,
@@ -866,7 +866,7 @@
                 sub_button.prop('disabled', true);
                 sub_button.val('...processing');
 
-                resetFields();
+                resetFields("#riddle_form");
                 var my_url="{{url}}/ask_riddle";
                 $("#riddle_form").ajaxSubmit({
                     url:my_url,
@@ -951,7 +951,7 @@
                 sub_button.prop('disabled', true);
                 sub_button.val('...processing');
 
-                resetFields();
+                resetFields("#pab_form");
                 var my_url="{{url}}/ask_pab";
                 $("#pab_form").ajaxSubmit({
                     url:my_url,

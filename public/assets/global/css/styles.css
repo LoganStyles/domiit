@@ -159,8 +159,9 @@
 .profile_text_section.line_space .profile_text_body{
 	width: 60%;
 	float: left;
-	text-align: left;
+	text-align: center;
 	display: inline-block;
+
 }
 
 .profile_text_section.multiple .profile_text_head{
@@ -225,6 +226,8 @@
 
      .profile_text_body{
      	margin-left: 6%;
+        text-transform: capitalize;
+        color: #444;
      }
 
      .bottom_see_more,.profile_editicon{

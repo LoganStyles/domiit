@@ -79,6 +79,11 @@
                                         </div>
 
                                         <div class="profile_text_section thin_border_top">
+                                          <span class="profile_text_head">Gender:</span>
+                                          <span class="profile_text_body">{{user_info.gender}}</span>          
+                                        </div>
+
+                                        <div class="profile_text_section thin_border_top">
                                           <span class="profile_text_head">Email:</span>
                                           <span class="profile_text_body">{{user_info.email}}</span>          
                                         </div>
@@ -187,7 +192,7 @@
 
                                               <div class="profile_text_body">
                                                 <div class="profile_text_title"><strong>{{title}}</strong></div>
-                                                
+                                                <input type="hidden" class="subitem_id" value="{{_id}}">
                                               </div>
 
                                               <div class="profile_text_body_icons">
@@ -215,14 +220,20 @@
                                           </div>
 
                                           <div class="profile_text_section line_space">
+                                            <div class="profile_text_head">Groups:</div>
+                                            <div class="profile_text_body">{{groups_count}}</div>  
+                                            <div class="clearfix"></div>     
+                                          </div>
+
+                                          <div class="profile_text_section line_space">
                                             <div class="profile_text_head">Follows:</div>
-                                            <div class="profile_text_body">{{user_info.follows}}</div>
+                                            <div class="profile_text_body">{{followed_count}}</div>
                                             <div class="clearfix"></div>       
                                           </div>
 
                                           <div class="profile_text_section line_space">
                                             <div class="profile_text_head">Followed:</div>
-                                            <div class="profile_text_body">{{user_info.followed}}</div>
+                                            <div class="profile_text_body">{{followers_count}}</div>
                                             <div class="clearfix"></div>         
                                           </div>
 
@@ -234,6 +245,12 @@
 
                                           <div class="profile_text_section line_space">
                                             <div class="profile_text_head">Downvotes:</div>
+                                            <div class="profile_text_body">{{user_info.downvotes}}</div>
+                                            <div class="clearfix"></div>        
+                                          </div>
+
+                                          <div class="profile_text_section line_space">
+                                            <div class="profile_text_head">Bookmarks:</div>
                                             <div class="profile_text_body">{{user_info.downvotes}}</div>
                                             <div class="clearfix"></div>        
                                           </div>
@@ -593,6 +610,9 @@
            <form class="form-horizontal" role="form" id="profile_sch_form" action="" method="post">
               <span class="form_submission_error"></span>
               <span class="form_submission_success"></span>
+
+              <input type="hidden" name="profile_sch_id"  id="profile_sch_id" >
+              <input type="hidden" name="profile_sch_action"  id="profile_sch_action" >
 
             <div class="form-body">
               <div class="form-group">
@@ -1215,10 +1235,13 @@
           console.log('title '+title);
           var year = $this.parents('.profile_subitem').find('.profile_text_body .profile_text_duration .year').text();
           console.log('year '+year);
+          var subitem_id = $this.parents('.profile_subitem').find('.subitem_id').val();
           
           $('#profile_sch_modal').modal({backdrop: false, keyboard: false});
           $('#profile_sch_header').text('Edit');
           $('#profile_sch_title').val(title);
+          $('#profile_sch_action').val('edit');
+          $('#profile_sch_id').val(subitem_id);
         });
 
 
