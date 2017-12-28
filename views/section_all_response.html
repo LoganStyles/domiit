@@ -53,15 +53,15 @@
                     <div class="caption caption-md">
                         <span class="caption-subject  bold post_box_name">{{../page_type}}</span>&nbsp;|
                         {{#if category}}
-                        <span class="caption-helper post_category">{{category}}</span>&nbsp;
+                        <span class="caption-helper post_category grey_cats">{{category}}</span>&nbsp;
                         {{/if}}
 
                         {{#if sub_cat1}}
-                        |&nbsp;<span class="caption-helper post_sub_cat1">{{sub_cat1}}</span>&nbsp;
+                        |&nbsp;<span class="caption-helper post_sub_cat1 grey_cats">{{sub_cat1}}</span>&nbsp;
                         {{/if}}
 
                         {{#if sub_cat2}}
-                        |&nbsp;<span class="caption-helper post_sub_cat2">{{sub_cat2}}</span>&nbsp;
+                        |&nbsp;<span class="caption-helper post_sub_cat2 grey_cats">{{sub_cat2}}</span>&nbsp;
                         {{/if}}
 
                     </div>                       
@@ -174,7 +174,7 @@
 
                                             <div class="item-body">
                                             {{#if topic}}
-                                                <div class="post_item post_item_body">
+                                                <div class="post_item post_item_topic">
                                                     {{topic}}
                                                 </div>
                                             {{/if}}
@@ -184,7 +184,7 @@
                                                     <img class="img-responsive" src="{{url}}/uploads/{{pics.[0]}}">
                                                 </div>
                                                 {{/if}}
-                                                <div class="post_item post_item_body">
+                                                <div class="post_item post_item_topic">
                                                     {{body}}
                                                 </div>
 
@@ -350,7 +350,7 @@
                                         <img class="img-responsive" src="{{url}}/uploads/{{pics.[0]}}">
                                     </div>
                                     {{/if}}
-                                    <div style="color: #000;" class="post_question">
+                                    <div style="color: #000;" class="post_question post_item_body">
                                         {{body}}
                                     </div>
 

@@ -37,6 +37,24 @@ function isLoggedIn(req, res, next) {
     }
 }
 
+function convertToSentencCase(text_data){
+    var n = text_data.split(".");
+    var vfinal="";
+
+    for(i=0;i<n.length;i++){
+        var spaceput="";
+        var space_count=n[i].replace(/^(\s*).*$/,"$1").length;
+        n[i]=n[i].replace(/^\s+/,"");
+        var newstring =n[i].charAt(n[i]).toUpperCase()+n[i].slice(1);
+
+        for(j=0;j<space_count;j++)
+            spaceput=spaceput+" ";
+        vfinal=vfinal+spaceput+newstring+".";
+    }
+    vfinal=vfinal.substring(0,vfinal.length - 1);
+    return vfinal;
+}
+
 /*show about
 get a specific about item,
 and display */
@@ -431,8 +449,8 @@ console.log(req.file);
                 obj = new trend_story();        
                 break;
             }   
-            obj.body = (req.body.page_title).trim();            
-            obj.description=(req.body.page_description).trim();
+            obj.body = convertToSentencCase((req.body.page_title).trim());
+            obj.description=convertToSentencCase((req.body.page_description).trim());
             obj.excerpt = (obj.description).substr(0,100);
             obj.category=req.body.page_category
         }
@@ -487,9 +505,9 @@ console.log(req.file);
                 break;
             }
 
-            obj.body=req.body.page_title.trim();
+            obj.body=convertToSentencCase(req.body.page_title.trim());
             obj.category=req.body.page_category;            
-            obj.description=req.body.page_description;
+            obj.description=convertToSentencCase(req.body.page_description);
             obj.excerpt = (obj.description).substr(0,100);
         }
 

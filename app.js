@@ -191,6 +191,24 @@ function isLoggedIn(req, res, next) {
     }
 }
 
+function convertToSentencCase(text_data){
+    var n = text_data.split(".");
+    var vfinal="";
+
+    for(i=0;i<n.length;i++){
+        var spaceput="";
+        var space_count=n[i].replace(/^(\s*).*$/,"$1").length;
+        n[i]=n[i].replace(/^\s+/,"");
+        var newstring =n[i].charAt(n[i]).toUpperCase()+n[i].slice(1);
+
+        for(j=0;j<space_count;j++)
+            spaceput=spaceput+" ";
+        vfinal=vfinal+spaceput+newstring+".";
+    }
+    vfinal=vfinal.substring(0,vfinal.length - 1);
+    return vfinal;
+}
+
 app.get('/profile',isLoggedIn, function(req, res) {
     console.log('inside profile');
     // console.log(req)   
@@ -474,7 +492,7 @@ app.post('/ask_question',upload.single('question_photo'),function(req,res,next){
             status:req.user.current_appointment};
 
             let ask_quest =new question();
-            ask_quest.body=req.body.question_title;
+            ask_quest.body=convertToSentencCase(req.body.question_title);
             ask_quest.category = req.body.question_category;
             ask_quest.sub_cat1=req.body.question_sub1;
             ask_quest.sub_cat2=req.body.question_sub2;
@@ -523,8 +541,8 @@ app.post('/ask_article',article_upload,function(req,res,next){
             status:req.user.current_appointment};
 
             let write_art =new article();
-            write_art.body=req.body.article_title;
-            write_art.topic=req.body.article_topic;
+            write_art.body=convertToSentencCase(req.body.article_title);
+            write_art.topic=convertToSentencCase(req.body.article_topic);
             write_art.category = req.body.article_category;
             write_art.sub_cat1=req.body.article_sub1;
             write_art.sub_cat2=req.body.article_sub2;
@@ -576,7 +594,7 @@ app.post('/ask_riddle',upload.single('riddle_photo'),function(req,res,next){
             status:req.user.current_appointment};
 
             let ask_riddle =new riddle();
-            ask_riddle.body=req.body.riddle_title;
+            ask_riddle.body=convertToSentencCase(req.body.riddle_title);
             ask_riddle.category = req.body.riddle_category;
             ask_riddle.sub_cat1=req.body.riddle_sub1;
             ask_riddle.sub_cat2=req.body.riddle_sub2;
@@ -617,7 +635,7 @@ app.post('/ask_pab',upload.single('pab_photo'),function(req,res,next){
             status:req.user.current_appointment};
 
             let ask_pab =new pab();
-            ask_pab.body=req.body.pab_title;
+            ask_pab.body=convertToSentencCase(req.body.pab_title);
             ask_pab.category = req.body.pab_category;
             ask_pab.author=req.body.pab_author;
             ask_pab.amount=req.body.pab_amount;
@@ -926,7 +944,7 @@ app.post('/response_item',upload.single('section_response_photo'),function(req,r
                 var displayPic=(req.user.displayPic[0])?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
 
                 updateSection.answers.push({
-                    body : req.body.section_response_details,
+                    body : convertToSentencCase(req.body.section_response_details),
                     responderDisplayName:req.user.displayName,
                     responder_id:req.user._id,
                     responderDisplayPic:displayPic,
@@ -1086,8 +1104,8 @@ app.post('/update_item',section_update_upload,function(req,res,next){
                 updateSection.category=req.body.section_update_category;
                 updateSection.sub_cat1=req.body.section_update_sub1;
                 updateSection.sub_cat2=req.body.section_update_sub2;
-                updateSection.body=req.body.section_update_title;
-                updateSection.description=req.body.section_update_info;
+                updateSection.body=convertToSentencCase(req.body.section_update_title);
+                updateSection.description=convertToSentencCase(req.body.section_update_info);
                 updateSection.owner=owner_details;
 
                 //store img if exists

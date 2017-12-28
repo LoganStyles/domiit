@@ -190,10 +190,19 @@
 
         <script type="text/javascript">
 
-        
-
-
             $(document).ready(function(){
+
+            //convert text to sentence case
+                
+                $(".post_item_topic,.post_item_more_info,.post_item_body,#section_response_body,#section_response_body").each(function(index,element){
+
+                    var string =$(this).text();
+                    console.log('initial string '+string)
+                    var string_converted=convertToSentencCase(string);
+                    console.log('converted string '+string_converted)
+                    $(this).text(string_converted);
+                });
+
             /*show modal for answering a question*/
 
              /*update social buttons*/

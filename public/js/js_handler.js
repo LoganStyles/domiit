@@ -117,3 +117,21 @@ function answerModalLoader(type, mode,cat_type) {
         break;
     }
 }
+
+function convertToSentencCase(text_data){
+    var n = text_data.split(".");
+    var vfinal="";
+
+    for(i=0;i<n.length;i++){
+        var spaceput="";
+        var space_count=n[i].replace(/^(\s*).*$/,"$1").length;
+        n[i]=n[i].replace(/^\s+/,"");
+        var newstring =n[i].charAt(n[i]).toUpperCase()+n[i].slice(1);
+
+        for(j=0;j<space_count;j++)
+            spaceput=spaceput+" ";
+        vfinal=vfinal+spaceput+newstring+".";
+    }
+    vfinal=vfinal.substring(0,vfinal.length - 1);
+    return vfinal;
+}

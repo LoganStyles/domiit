@@ -642,9 +642,11 @@ $( "#login_member" ).validate( {
         if($(this).hasClass("less")) {
             $(this).removeClass("less");
             $(this).html(moretext);
+            $(this).parents('.more').find('.moreellipses').text("...");
         } else {
             $(this).addClass("less");
             $(this).html(lesstext);
+            $(this).parents('.more').find('.moreellipses').text("");
         }
         $(this).parent().prev().toggle();
         $(this).prev().toggle();
