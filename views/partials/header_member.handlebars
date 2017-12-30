@@ -95,11 +95,18 @@
 
                  <li class="dropdown">
                   <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                   <span>
+                  <!--  <span>
                         <img alt="" class="icon_size" src="{{url}}/images/advert_white.png">
                     </span>
-                    <span class="badge badge-default ">0</span>
-                    <span style="display: block;">Adverts</span>
+                    <span style="display: block;">Adverts</span> -->
+
+                    <div style="width: 100%;">
+                        <i class="fa fa-bullhorn font_icon_style">
+                          <!-- <span class="badge badge-default ">0</span> -->
+                        </i>
+                    </div>                    
+                    <div style="">Adverts</div>
+
                    </a>
                    <ul class="dropdown-menu">
                     <!-- <li><a href="#">Overview</a></li>
@@ -112,11 +119,13 @@
 
                 <li class="dropdown">
                   <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                   <span>
-                        <img alt="" class="icon_size" src="{{url}}/images/categories_white.png">
-                    </span>
-                    <span class="badge badge-default ">0</span>
-                    <span style="display: block;">Categories</span>
+
+                    <div style="width: 100%;">
+                        <i class="icon-list font_icon_style">
+                          <!-- <span class="badge badge-default ">0</span> -->
+                        </i>
+                    </div>                    
+                    <div style="">Categories</div>
                    </a>
                    <ul class="dropdown-menu">
                    <!-- <li><a href="#">Overview</a></li>
@@ -132,11 +141,12 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                   <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                   <span>
-                        <img alt="" class="icon_size" src="{{url}}/images/messages_white.png">
-                    </span>
-                    <span class="badge badge-default ">0</span>
-                    <span style="display: block;">Messages</span>
+                   <div style="width: 100%;">
+                        <i class="icon-envelope font_icon_style">
+                          <!-- <span class="badge badge-default ">0</span> -->
+                        </i>
+                    </div>                    
+                    <div style="">Messages</div>
                    </a>
                    <ul class="dropdown-menu">
                    <!-- <li><a href="#">Overview</a></li>
@@ -150,11 +160,13 @@
                 
                 <li class="dropdown">
                   <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                   <span>
-                        <img alt="" class="icon_size" src="{{url}}/images/notification_white.png">
-                    </span>
-                    <span class="badge badge-default ">0</span>
-                    <span style="display: block;">Notifications</span>
+                   
+                    <div style="width: 100%;">
+                        <i class="icon-bell font_icon_style">
+                          <!-- <span class="badge badge-default ">0</span> -->
+                        </i>
+                    </div>                    
+                    <div style="">Notifications</div>
                    </a>
                    <ul class="dropdown-menu">
                    <!-- <li><a href="#">Overview</a></li>
@@ -167,11 +179,14 @@
 
                 <li class="dropdown">
                   <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                   <span>
-                        <img alt="" class="icon_size" src="{{url}}/images/friends_white.png">
-                    </span>
-                    <span class="badge badge-default ">0</span>
-                    <span style="display: block;">Friends</span>
+                   
+                    <div style="width: 100%;">
+                        <i class="icon-users font_icon_style">
+                          <!-- <span class="badge badge-default ">0</span> -->
+                        </i>
+                    </div>                    
+                    <div>Friends</div>
+
                    </a>
                    <ul class="dropdown-menu">
                    <!-- <li><a href="#">Overview</a></li>
@@ -185,11 +200,14 @@
                 
                  <li class="dropdown">
                   <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                  <span> <img alt="" class="icon_size img-circle" src="{{url}}/uploads/{{displayPic}}"></span>
-                  <!-- <span class="caret"></span> -->
-                  <span style="display: block;">{{user_info.displayName}}</span></a>
+                  
+                  <div style="width: 100%;">
+                    <img alt="" class="icon_size img-circle" style="margin: 0 30%;width: 35% !important;height: 2em;" src="{{url}}/uploads/{{displayPic}}">
+                  </div>
+                  <div style="text-transform: capitalize;">{{user_info.displayName}}</div>
+                  </a>
                   <ul class="dropdown-menu">
-                    <li><a href="{{url}}/profile" target="_blank">
+                    <li><a href="{{url}}/profile">
                     <i class="icon-user"></i> My Profile</a></li>
                     <li><a href="{{url}}/members/logout">
                     <i class="icon-key"></i> Logout</a></li>

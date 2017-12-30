@@ -294,6 +294,10 @@ app.get('/fetchCats',isLoggedIn,function(req,res){
         case 'riddle':
         cat =riddle_cat;
         break;
+
+        case 'Post Books':
+        cat =pab_cat;
+        break;
     }
 
     cat.find().sort({value:1}).exec(function(err1,res1){
@@ -1104,14 +1108,23 @@ app.post('/update_item',section_update_upload,function(req,res,next){
                 updateSection.category=req.body.section_update_category;
                 updateSection.sub_cat1=req.body.section_update_sub1;
                 updateSection.sub_cat2=req.body.section_update_sub2;
-                updateSection.body=convertToSentencCase(req.body.section_update_title);
-                updateSection.description=convertToSentencCase(req.body.section_update_info);
-                updateSection.owner=owner_details;
 
-                //store img if exists
-                // if (req.file && req.file.filename != null) {
-                //     updateSection.pics.push(req.file.filename);
-                // }
+                switch(section_type){
+                    case 'question':
+                    updateSection.body=convertToSentencCase(req.body.section_update_title);
+                    updateSection.description=convertToSentencCase(req.body.section_update_info);
+                    break;
+                    case 'article':
+                    updateSection.topic=convertToSentencCase(req.body.section_update_title);
+                    updateSection.body=convertToSentencCase(req.body.section_update_info);
+                    break;
+                    case 'riddle':
+                    updateSection.body=convertToSentencCase(req.body.section_update_title);
+                    break;
+                }
+                
+                updateSection.owner=owner_details;
+                
 
                 //store attachment if it exists
                 if(req.files && req.files['section_update_attachment']){
@@ -1131,6 +1144,78 @@ app.post('/update_item',section_update_upload,function(req,res,next){
                     category:updateSection.category,
                     sub_cat1:updateSection.sub_cat1,
                     sub_cat2:updateSection.sub_cat2,
+                    description:updateSection.description,
+                    date_modified:updateSection.date_modified
+                }
+
+
+                section.updateOne({_id:section_id},{$set:updateSection},function(err1,res1){
+
+                    if(err1){
+                        console.log(err1)
+                        res.json({success:false,msg:"Your update failed"});
+                    }else if(res1){
+                        var json = JSON.stringify(most_recent_response, null, 2);
+                        // console.log(json);
+                        // io.emit('responded', json);
+                        res.json({success:true,msg:"Your update was successfull"});
+                    }
+
+                });             
+            }else{
+                res.json({success:false,msg:"Item not found"});
+            }
+
+        });
+
+
+    });
+
+/*process  pab section modifications & edits immediately*/
+var section_update_upload = upload.fields([    
+    {name: 'section_pab_photo',maxCount:1 }]);
+app.post('/update_pab_item',section_update_upload,function(req,res,next){
+    // console.log(req.user)
+    
+    var section_type=req.body.section_pab_type;
+    var section_id=req.body.section_pab_id;
+    section = pab;
+
+        section.findOne({_id:section_id},function(error,result){//find the pab that was responsed
+            if(result){
+                var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
+                var owner_details={id:req.user._id,
+                                    displayName:req.user.displayName,
+                                    displayPic:displayPic,
+                                    status:req.user.current_appointment};
+
+                let updateSection = result;
+                updateSection.date_modified=new Date();
+                updateSection.category=req.body.section_pab_category;
+                updateSection.body=convertToSentencCase(req.body.section_pab_title);
+                updateSection.author=req.body.section_pab_author;
+                updateSection.amount=req.body.section_pab_amount;
+                updateSection.isbn=req.body.section_pab_isbn;
+                updateSection.pages=req.body.section_pab_pages;
+                updateSection.publishers=req.body.section_pab_publishers;
+                updateSection.bookshop=req.body.section_pab_bookshop;
+                updateSection.url=req.body.section_pab_url;
+                updateSection.synopsis=req.body.section_pab_synopsis;
+                updateSection.about_author=req.body.section_pab_about_author;
+                
+                updateSection.owner=owner_details;
+
+                //store photo if it exists
+                if(req.files && req.files['section_pab_photo']){
+                    console.log('filename '+req.files['section_pab_photo'][0].filename)
+                    updateSection.pics.push(req.files['section_pab_photo'][0].filename);
+                }                          
+                
+                let most_recent_response={
+                    _id:section_id,
+                    body : updateSection.body,
+                    category:updateSection.category,
+                    
                     description:updateSection.description,
                     date_modified:updateSection.date_modified
                 }

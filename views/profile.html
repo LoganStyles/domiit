@@ -85,7 +85,7 @@
 
                                         <div class="profile_text_section thin_border_top">
                                           <span class="profile_text_head">Email:</span>
-                                          <span class="profile_text_body">{{user_info.email}}</span>          
+                                          <span style="text-transform: lowercase;" class="profile_text_body">{{user_info.email}}</span>          
                                         </div>
 
                                           <div class="profile_text_section thin_border_top multiple">
@@ -277,14 +277,15 @@
                              </div>
                              
                              <div class="profile_activities">               
-                              <div class="profile_text_section line_space">
-                                <span class="profile_text_head">Questions asked:</span>
-                                <span class="profile_text_body">{{questions_count}}</span>          
+                              <div class="profile_text_section bottom_line_space">
+                                <div class="profile_text_head">Questions asked:</div>
+                                <div class="profile_text_body">{{questions_count}}</div>
+                                <div class="clearfix"></div>          
                               </div>
 
-                              <div class="profile_text_section line_space">
-                                <span class="profile_text_head">Answers provided:</span>
-                                <span class="profile_text_body">{{answers_count}}</span>          
+                              <div class="profile_text_section bottom_line_space">
+                                <div class="profile_text_head">Answers provided:</div>
+                                <div class="profile_text_body">{{answers_count}}</div>          
                               </div>
                               <div class="bottom_see_more">
                                 <button type="button" style="color: #86be25;" onclick="modalLoader('question','new','');" class="btn btn-default">SEE MORE</button>
@@ -295,32 +296,15 @@
                               </div>
                             </div>
 
-                            <div class="profile_activities thin_border_top">               
-                              <div class="profile_text_section line_space">
-                                <span class="profile_text_head">Articles posted:</span>
-                                <span class="profile_text_body">{{articles_count}}</span>          
+                            <div class="profile_activities thin_border_activity">               
+                              <div class="profile_text_section bottom_line_space">
+                                <div class="profile_text_head">Articles posted:</div>
+                                <div class="profile_text_body">{{articles_count}}</div>          
                               </div>
 
-                              <div class="profile_text_section line_space">
-                                <span class="profile_text_head">Articles reviewed:</span>
-                                <span class="profile_text_body">{{reviews_count}}</span>          
-                              </div>
-                              <div class="bottom_see_more">
-                                <button type="button" style="color: #86be25;" class="btn btn-default">SEE MORE</button>
-                              </div>
-
-                              <div class="clearfix"></div>
-                            </div>
-
-                            <div class="profile_activities thin_border_top">               
-                              <div class="profile_text_section line_space">
-                                <span class="profile_text_head">Riddles posted:</span>
-                                <span class="profile_text_body">{{riddles_count}}</span>          
-                              </div>
-
-                              <div class="profile_text_section line_space">
-                                <span class="profile_text_head">Solutions provided:</span>
-                                <span class="profile_text_body">{{solutions_count}}</span>          
+                              <div class="profile_text_section bottom_line_space">
+                                <div class="profile_text_head">Articles reviewed:</div>
+                                <div class="profile_text_body">{{reviews_count}}</div>          
                               </div>
                               <div class="bottom_see_more">
                                 <button type="button" style="color: #86be25;" class="btn btn-default">SEE MORE</button>
@@ -329,11 +313,28 @@
                               <div class="clearfix"></div>
                             </div>
 
-                            <div class="profile_activities thin_border_top">              
+                            <div class="profile_activities thin_border_activity">               
+                              <div class="profile_text_section bottom_line_space">
+                                <div class="profile_text_head">Riddles posted:</div>
+                                <div class="profile_text_body">{{riddles_count}}</div>          
+                              </div>
 
-                              <div class="profile_text_section line_space">
-                                <span class="profile_text_head">Books posted:</span>
-                                <span class="profile_text_body">{{postedbooks_count}}</span>          
+                              <div class="profile_text_section bottom_line_space">
+                                <div class="profile_text_head">Solutions provided:</div>
+                                <div class="profile_text_body">{{solutions_count}}</div>          
+                              </div>
+                              <div class="bottom_see_more">
+                                <button type="button" style="color: #86be25;" class="btn btn-default">SEE MORE</button>
+                              </div>
+
+                              <div class="clearfix"></div>
+                            </div>
+
+                            <div class="profile_activities thin_border_activity">              
+
+                              <div class="profile_text_section bottom_line_space">
+                                <div class="profile_text_head">Books posted:</div>
+                                <div class="profile_text_body">{{postedbooks_count}}</div>          
                               </div>
                               <div class="bottom_see_more">
                                 <button type="button" style="color: #86be25;" class="btn btn-default">SEE MORE</button>
@@ -363,7 +364,7 @@
                              
                              <div class="profile_activities">               
                               <div class="profile_text_section">
-                                <span class="profile_text_head">No report of violations</span>
+                                <div class="profile_text_head">No report of violations</div>
                               </div>
                             </div>                           
                             

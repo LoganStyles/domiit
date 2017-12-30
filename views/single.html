@@ -58,17 +58,17 @@
                 <div class="portlet-title">
                     <div class="caption caption-md">
                         
-                        <span class="caption-subject  bold post_box_name">{{../page_type}}</span>&nbsp;|
+                        <span class="caption-subject  bold post_box_name">{{../page_type}}</span>
                         {{#if category}}
-                        <span class="caption-helper post_category grey_cats">{{category}}</span>&nbsp;
+                        <span class="caption-helper post_category grey_cats left_border">{{category}}</span>
                         {{/if}}
 
                         {{#if sub_cat1}}
-                        |&nbsp;<span class="caption-helper post_sub_cat1 grey_cats">{{sub_cat1}}</span>&nbsp;
+                        <span class="caption-helper post_sub_cat1 grey_cats left_border">{{sub_cat1}}</span>
                         {{/if}}
 
                         {{#if sub_cat2}}
-                        |&nbsp;<span class="caption-helper post_sub_cat2 grey_cats">{{sub_cat2}}</span>&nbsp;
+                        <span class="caption-helper post_sub_cat2 grey_cats left_border">{{sub_cat2}}</span>
                         {{/if}}
                         
                     </div>                       
@@ -83,11 +83,11 @@
                                     <div class="posts_partition"><!--1st partition-->
                                         <div style="width: 100%;">
                                             <div class="section_posts_avatar">
-                                             <img class="icon_size_50 img-circle" src="{{../url}}/{{owner.displayPic}}">
+                                             <img class="icon_size_50 img-circle" src="{{../url}}{{owner.displayPic}}">
                                          </div>
                                          <div class="section_posts_text">
                                             <div> 
-                                               <a style="color: #000;" href="" class="item-name primary-link">{{owner.displayName}}</a>
+                                               <a style="font-weight: 600;" href="" class="item-name">{{owner.displayName}}</a>
                                            </div>
                                            {{#if owner.status}}
                                            <div>
@@ -103,8 +103,15 @@
 
                                     <div class="posts_partition_middle"><!--2nd partition-->
                                         <span style="">
-                                            <a href="javascript:;" class="btn blue">
-                                             <i class="fa fa-plus"></i>&nbsp; Follow</a>
+                                             {{#if ../trend_status}}<!--trend post-->
+                                                {{#if trend_followed}}
+                                                    <img class="icon_size_50 " src="{{../url}}/images/filler.png">
+                                                {{else}}
+                                                <a href="javascript:;" class="btn blue">
+                                                    <i class="fa fa-plus"></i>&nbsp; Follow</a>
+
+                                                {{/if}}
+                                            {{/if}}
                                         </span>
                                     </div>
 
@@ -113,7 +120,7 @@
                                             <div class="fromnow">{{moment post_date "fromNow"}}</div>
                                             <div class="clearfix"></div>
                                             <div class="post_actions_button_left">
-                                                <img src="{{url}}/images/group.png">
+                                                <img class="icon_size_20" src="{{../url}}/images/mask.png">
                                             </div>
                                              {{#if post_owner}}
                                                  <div class="actions post_actions_button">
@@ -173,7 +180,7 @@
                                 <div class="item-body"> 
                                    
                                     {{#if pics.length }}
-                                        <div style="margin-bottom: 3%;">                                                                    
+                                        <div style="margin-bottom: 3%;">                                                                 
                                             <img class="img-responsive" src="{{url}}/uploads/{{pics.[0]}}">
                                         </div>
                                     {{/if}}
@@ -187,7 +194,7 @@
                                             {{description}}
                                         </div>
                                     
-                                </div>  
+                                </div>  <br>
 
                                     <div style="width: 100%;"><!--main block-->
                                     
@@ -196,7 +203,7 @@
 
                                                 <a class="btn btn-link grey_button">
                                                     <span>
-                                                        <span class="social_value">{{views}}</span>&nbsp;&nbsp;
+                                                        <span class="social_value">{{views}}</span>&nbsp;
                                                         Views
                                                     </span>
                                                 </a>
@@ -222,14 +229,14 @@
                             <span class="social_value">{{upvotes}}</span>
                             <img src="{{url}}/images/up_vote.png">&nbsp;Upvotes
                         </span>
-                        </a>&nbsp;&nbsp;
+                        </a>
 
                         <a class="btn btn-link post_downvotes grey_button" >
                             <span>
                                 <span class="social_value">{{downvotes}}</span>
                                 <img src="{{url}}/images/down_vote.png">&nbsp;Downvotes
                             </span>
-                        </a>&nbsp;&nbsp;
+                        </a>
 
                         <a class="btn btn-link grey_button">
                             <span class="">
@@ -465,11 +472,15 @@
                             <input type="hidden" name="section_response_id"  id="section_response_id" >
                             <input type="hidden" name="section_response_type"  id="section_response_type" >
 
-                            <h5 id="section_response_body">{{page_response}}s</h5>                           
+                            <!-- <h5 id="section_response_body">{{page_response}}s</h5> -->
+                            <div class="post_item_topic" id="section_response_topic"></div>
+                            <div class="post_item_body" id="section_response_body"></div>
+                            <div class="post_item_more_info" id="section_response_more_info"></div>                           
 
                             <div class="form-group">
                                 <textarea  name="section_response_details" id="section_response_details" class="form-control" rows="3" style="font-weight: 500"></textarea>
-                                <label for="form_control_1">Write your {{page_response}}</label>
+                                <label for="form_control_1">
+                                <i class="fa fa-edit"></i>&nbsp;Write your {{page_response}}</label>
                             </div>
                             
 

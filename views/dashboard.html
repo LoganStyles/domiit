@@ -106,9 +106,9 @@
                                                     <div class="label label-sm">
 
                                                     {{#if pics}}
-                                                        <img class="icon_size" src="{{url}}/uploads/{{pics.[0]}}">
+                                                        <img class="icon_size" src="{{../url}}/uploads/{{pics.[0]}}">
                                                         {{else}}
-                                                        <img class="icon_size" src="{{url}}/images/trending.png">
+                                                        <img class="icon_size" src="{{../url}}/images/trending.png">
                                                     {{/if}}
                                                         
                                                     </div>
@@ -261,20 +261,23 @@
                                         {{/each}}   
 
                                     </select>
+                                    <span class="req_opt">*required</span>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                              <label class="col-md-3 col-lg-3 col-sm-12 control-label">Sub-Category1</label>
+                              <label class="col-md-3 col-lg-3 col-sm-12 control-label">Category-1</label>
                                 <div class="col-md-9 col-lg-9 col-sm-12 ">
                                     <input type="text" name="question_sub1" id="question_sub1" class="form-control" value="">
+                                    <span class="req_opt">*optional</span>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                              <label class="col-md-3 col-lg-3 col-sm-12 control-label">Sub-Category2</label>
+                              <label class="col-md-3 col-lg-3 col-sm-12 control-label">Category-2</label>
                                 <div class="col-md-9 col-lg-9 col-sm-12 ">
                                     <input type="text" name="question_sub2" id="question_sub2" class="form-control" value="">
+                                    <span class="req_opt">*optional</span>
                                 </div>
                             </div>
 
@@ -309,7 +312,7 @@
 
 
                             <div class="form-actions noborder pull-right">
-                                <input type="submit" class="btn blue" name="submit" value="Submit" />
+                                <input type="submit" class="btn blue" name="submit" value="Post" />
                                 <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
                             </div>
                             <div class="clearfix"></div>
@@ -343,24 +346,25 @@
                                     {{/each}}   
 
                                 </select>
+                                <span class="req_opt">*required</span>
                             </div>
                         </div>
 
                         <div class="form-group">
-                          <label class="col-md-3 col-lg-3 col-sm-12 control-label">Sub-Category1</label>
+                          <label class="col-md-3 col-lg-3 col-sm-12 control-label">Category-1</label>
                             <div class="col-md-9 col-lg-9 col-sm-12 ">
                                 <input type="text" name="article_sub1" id="article_sub1" class="form-control" value="">
-                                <p class="help-block" style="font-size: 0.8em; font-style: italics !important;"> Optional </p>
+                                <span class="req_opt">*optional</span>
                             </div>
+                            
                         </div>
 
                     <div class="form-group">
-                        <label class="col-md-3 col-lg-3 col-sm-12 control-label">Sub-Category2</label>
+                        <label class="col-md-3 col-lg-3 col-sm-12 control-label">Category-2</label>
                         <div class="col-md-9 col-lg-9 col-sm-12 ">
                          <input type="text" name="article_sub2" id="article_sub2" class="form-control" value="">
-                         <p class="help-block" style="font-size: 0.8em; font-style: italics !important;"> Optional </p>
+                         <span class="req_opt">*optional</span>
                         </div>
-
                     </div>
 
                     <div class="form-group">
@@ -377,13 +381,6 @@
                         <textarea  name="article_title" id="article_title" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
                     </div>                                
                 </div>
-
-                <!-- <div class="form-group">
-                    <label class="col-md-3 col-lg-3 col-sm-12 control-label">Provide additional information</label>
-                    <div class="col-md-9 col-lg-9 col-sm-12 ">
-                        <textarea  name="article_info" id="article_info" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
-                    </div>                                
-                </div> -->
 
                 <div class="form-group">
                     <div class="col-md-3 col-lg-3 col-sm-12"></div>
@@ -409,7 +406,7 @@
 
 
                 <div class="form-actions noborder pull-right">
-                    <input type="submit" class="btn blue" name="submit" value="Submit" />
+                    <input type="submit" class="btn blue" name="submit" value="Post" />
                     <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
                 </div>
                 <div class="clearfix"></div>
@@ -444,21 +441,26 @@
                             {{/each}}   
 
                         </select>
+                        <span class="req_opt">*required</span>                        
                     </div>
                 </div>
 
                 <div class="form-group">
-                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Sub-Category1</label>
+                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Category-1</label>
                   <div class="col-md-9 col-lg-9 col-sm-12 ">
                     <input type="text" name="riddle_sub1" id="riddle_sub1" class="form-control" value="">
+                    <span class="req_opt">*optional</span>
                 </div>
+                
             </div>
 
             <div class="form-group">
-              <label class="col-md-3 col-lg-3 col-sm-12 control-label">Sub-Category2</label>
+              <label class="col-md-3 col-lg-3 col-sm-12 control-label">Category-2</label>
               <div class="col-md-9 col-lg-9 col-sm-12 ">
                 <input type="text" name="riddle_sub2" id="riddle_sub2" class="form-control" value="">
+                <span class="req_opt">*optional</span>
             </div>
+            
         </div>
 
 
@@ -488,7 +490,7 @@
 
 
         <div class="form-actions noborder pull-right">
-            <input type="submit" class="btn blue" name="submit" value="Submit" />
+            <input type="submit" class="btn blue" name="submit" value="Post" />
             <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
         </div>
         <div class="clearfix"></div>
@@ -522,6 +524,7 @@
                             {{/each}}   
 
                         </select>
+                        <span class="req_opt">*required</span>
                     </div>
                 </div>
 
@@ -616,7 +619,7 @@
 
 
             <div class="form-actions noborder pull-right">
-                <input type="submit" class="btn blue" name="submit" value="Submit" />
+                <input type="submit" class="btn blue" name="submit" value="Post" />
                 <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
             </div>
             <div class="clearfix"></div>

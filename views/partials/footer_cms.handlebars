@@ -25,6 +25,135 @@
         
         </div>
 
+    <div id="section_pab_modal" class="modal fade" tabindex="-1">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title" id="section_pab_sub1_header">Post a book</h4>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" role="form" id="section_pab_form" action="" method="post" enctype="multipart/form-data">
+            <span class="form_submission_error"></span>
+            <span class="form_submission_success"></span>
+
+            <input type="hidden" name="section_pab_id"  id="section_pab_id" value="0">
+            <input type="hidden" name="section_pab_type"  id="section_pab_type" value="0">
+
+            <div class="form-body">
+
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-lg-3 col-sm-12">Genre </label>
+                    <div class="col-md-9 col-lg-9 col-sm-12">
+                        <select class="form-control " name="section_pab_category" id="section_pab_category">
+
+                        </select>
+                        <span class="req_opt">*required</span>
+                    </div>
+                </div>
+
+
+            <div class="form-group">
+                <div class="col-md-3 col-lg-3 col-sm-12"></div>
+
+                <div class="col-md-9 col-lg-9 col-sm-12 ">
+
+                    <label for="section_pab_photo" class="col-md-10 col-lg-10 col-sm-12 control-label custom-file-upload">
+                        <i class="fa fa-camera"></i> Upload Picture of book cover
+                    </label>
+                    <div class="col-md-2 col-lg-2 col-sm-12">
+                        <input id="section_pab_photo" name="section_pab_photo" type="file" accept="application/x-zip-compressed,image/*"/>
+                    </div>
+
+                </div>                                
+            </div>
+
+            <div class="form-group">
+                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Title of the book</label>
+                  <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <input type="text" name="section_pab_title" id="section_pab_title" class="form-control" value="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Author</label>
+                  <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <input type="text" name="section_pab_author" id="section_pab_author" class="form-control" value="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Amount</label>
+                  <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <input type="number" name="section_pab_amount" id="section_pab_amount" class="form-control" value="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">ISBN</label>
+                  <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <input type="text" name="section_pab_isbn" id="section_pab_isbn" class="form-control" value="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Number of pages</label>
+                  <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <input type="number" name="section_pab_pages" id="section_pab_pages" class="form-control" value="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Publishers</label>
+                  <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <input type="text" name="section_pab_publishers" id="section_pab_publishers" class="form-control" value="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Bookshop or Contact</label>
+                  <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <input type="text" name="section_pab_bookshop" id="section_pab_bookshop" class="form-control" value="">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-md-3 col-lg-3 col-sm-12 control-label">Url</label>
+                <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <input type="text" name="section_pab_url" id="section_pab_url" class="form-control" value="">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-md-3 col-lg-3 col-sm-12 control-label">Synopsis</label>
+                <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <textarea  name="section_pab_synopsis" id="section_pab_synopsis" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
+                </div>                                
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3 col-lg-3 col-sm-12 control-label">About the author</label>
+                <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <textarea  name="section_pab_about_author" id="section_pab_about_author" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
+                </div>                                
+            </div>
+
+
+
+            <div class="form-actions noborder pull-right">
+                <input type="submit" class="btn blue" name="submit" value="Post" />
+                <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+            </div>
+            <div class="clearfix"></div>
+
+        </div>
+    </form>
+    </div>
+
+</div>
+
+
+
         <div id="section_update_modal" class="modal fade" tabindex="-1">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
@@ -45,33 +174,36 @@
                             <div class="col-md-9 col-lg-9 col-sm-12">
                                 <select class="form-control " name="section_update_category" id="section_update_category">                                   
                                 </select>
+                                <span class="req_opt">*required</span>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-3 col-lg-3 col-sm-12 control-label">Sub-Category1</label>
+                            <label class="col-md-3 col-lg-3 col-sm-12 control-label">Category-1</label>
                             <div class="col-md-9 col-lg-9 col-sm-12 ">
                                 <input type="text" name="section_update_sub1" id="section_update_sub1" class="form-control" value="">
+                                <span class="req_opt">*optional</span>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-3 col-lg-3 col-sm-12 control-label">Sub-Category2</label>
+                            <label class="col-md-3 col-lg-3 col-sm-12 control-label">Category-2</label>
                             <div class="col-md-9 col-lg-9 col-sm-12 ">
                                 <input type="text" name="section_update_sub2" id="section_update_sub2" class="form-control" value="">
+                                <span class="req_opt">*optional</span>
                             </div>
                         </div>
 
 
                         <div class="form-group">
-                            <label class="col-md-3 col-lg-3 col-sm-12 control-label">Edit the question</label>
+                            <label class="col-md-3 col-lg-3 col-sm-12 control-label edit_itemtopic">Edit the question</label>
                             <div class="col-md-9 col-lg-9 col-sm-12 ">
                                 <textarea  name="section_update_title" id="section_update_title" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
                             </div>                                
                         </div>
 
-                        <div class="form-group">
-                            <label class="col-md-3 col-lg-3 col-sm-12 control-label">Provide additional information</label>
+                        <div class="form-group hiddle_for_riddle">
+                            <label class="col-md-3 col-lg-3 col-sm-12 control-label edit_iteminfo">Provide additional information</label>
                             <div class="col-md-9 col-lg-9 col-sm-12 ">
                                 <textarea  name="section_update_info" id="section_update_info" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
                             </div>                                
@@ -116,7 +248,7 @@
 
 
                         <div class="form-actions noborder pull-right">
-                            <input type="submit" class="btn blue" name="submit" value="Submit" />
+                            <input type="submit" class="btn blue" name="submit" value="Post" />
                             <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
                         </div>
                         <div class="clearfix"></div>
@@ -194,7 +326,7 @@
 
             //convert text to sentence case
                 
-                $(".post_item_topic,.post_item_more_info,.post_item_body,#section_response_body,#section_response_body").each(function(index,element){
+                $(".post_item_topic,.post_item_more_info,.post_item_body,#section_response_body,#section_response_body,#synopsis,#about_author").each(function(index,element){
 
                     var string =$(this).text();
                     console.log('initial string '+string)
@@ -314,17 +446,23 @@
                     var $this=$(this);
                     var selected_id=$this.parents('.posted').find('#post_id').val();
                     var selected_type=$this.parents('.posted').find('#post_type').val();
-                    var selected_item=($this.parents('.posted').find('.post_item').text()).trim();
+                    var selected_item_topic=($this.parents('.posted').find('.post_item_topic').text()).trim();
+                    var selected_item_body=($this.parents('.posted').find('.post_item_body').text()).trim();
+                    var selected_item_more_info=($this.parents('.posted').find('.post_item_more_info').text()).trim();
 
                     console.log('this '+selected_id);
                     console.log('selected_type '+selected_type);
-                    console.log('selected_item '+selected_item);
+                    console.log('selected_item_topic '+selected_item_topic);
+                    console.log('selected_item_body '+selected_item_body);
+                    console.log('selected_item_more_info '+selected_item_more_info);
                     $('#section_response_form').trigger('reset');
 
 
                     $('#section_response_id').val(selected_id);
                     $('#section_response_type').val(selected_type);
-                    $('#section_response_body').text(selected_item);
+                    $('#section_response_topic').text(selected_item_topic);
+                    $('#section_response_body').text(selected_item_body);
+                    $('#section_response_more_info').text(selected_item_more_info);
                     $('#section_response_details').focus();
                     $('#section_response_modal').modal({backdrop: false, keyboard: false});
                     
@@ -468,15 +606,28 @@
 
         //edit posts
            $("body").on('click','.edit_section_item',function(e){
+           
+            
             //get this posts data
             var parent=$(this).parents('.posted');
             var id=parent.find('input#post_id').val();
             var section=parent.find('input#post_type').val();
+            console.log('section '+section)
+
             var post_category=parent.find('.post_category').text();
             var post_sub_cat1=parent.find('.post_sub_cat1').text();
             var post_sub_cat2=parent.find('.post_sub_cat2').text();
-            var post_body=parent.find('.item-body .post_item').text();
 
+            if(section !="Post Books"){ 
+            $("#section_update_modal #section_update_form").trigger('reset');           
+            var post_item_topic=parent.find('.item-body .post_item_topic').text();
+            var post_item_body=parent.find('.item-body .post_item_body').text();
+            var post_item_more_info=parent.find('.item-body .post_item_more_info').text();
+            console.log('post_item_topic '+post_item_topic)
+            console.log('post_item_body '+post_item_body)
+            console.log('post_item_more_info '+post_item_more_info)
+            
+            
             //append data to modal
             $('#section_update_modal').modal({backdrop: false, keyboard: false});
 
@@ -503,7 +654,30 @@
                         $('#section_update_modal #section_update_type').val(section);
                         $('#section_update_modal #section_update_sub1').val(post_sub_cat1);
                         $('#section_update_modal #section_update_sub2').val(post_sub_cat2);
-                        $('#section_update_modal #section_update_title').text(post_body.trim());
+                        $('#section_update_modal #section_update_title').text(post_item_topic.trim());
+
+                        switch(section){
+                        case 'question':
+                            $('#section_update_modal .hiddle_for_riddle').show();
+                            $('#section_update_modal #section_update_info').text(post_item_more_info.trim());
+                            $('#section_update_modal .edit_itemtopic').text('Edit the question');
+                            $('#section_update_modal .edit_iteminfo').text('Provide additional information');
+                            break;
+
+                         case 'article':
+                            $('#section_update_modal .hiddle_for_riddle').show();
+                            $('#section_update_modal #section_update_info').text(post_item_body.trim());
+                            $('#section_update_modal .edit_itemtopic').text('Edit Topic');
+                            $('#section_update_modal .edit_iteminfo').text('Edit Article');
+                            break;
+
+                        case 'riddle':
+                            $('#section_update_modal .hiddle_for_riddle').hide();
+                            $('#section_update_modal .edit_itemtopic').text('Edit Riddle');
+                            break;
+
+                        }
+
                         $('#section_update_modal #section_update_category').val(post_category);
                     }else{
                         //console.log('response is false');                            
@@ -517,6 +691,94 @@
                     console.log(err);
                 }
             });
+
+            }else{
+            $("#section_pab_modal #section_pab_form").trigger('reset');
+            var pab_title=parent.find('.item-body .pab_ititle').text();
+            console.log('pab_title '+pab_title);
+
+            var pab_author=parent.find('.item-body .pab_iauthor').text();
+            console.log('pab_author '+pab_author);
+
+            var pab_pages=parent.find('.item-body .pab_ipages').text();
+            console.log('pab_pages '+pab_pages);
+
+            var pab_amount=parent.find('.item-body .pab_iamount').text().replace("N","");
+            console.log('pab_amount '+pab_amount);
+            //remove the 'N'
+
+            var pab_ISBN=parent.find('.item-body .pab_iISBN').text();
+            console.log('pab_ISBN '+pab_ISBN);
+
+            var pab_publishers=parent.find('.item-body .pab_ipublishers').text();
+            console.log('pab_publishers '+pab_publishers);
+
+            var pab_bookshop=parent.find('.item-body .pab_ibookshop').text();
+            console.log('pab_bookshop '+pab_bookshop);
+
+            var pab_url=parent.find('.item-body .pab_iurl').text();
+            console.log('pab_url '+pab_url);
+
+            var pab_synopsis=parent.find('.item-body .pab_isynopsis').text();
+            console.log('pab_synopsis '+pab_synopsis);
+
+            var pab_about_author=parent.find('.item-body .pab_iabout_author').text();
+            console.log('pab_about_author '+pab_about_author);
+
+            //append data to modal
+            $('#section_pab_modal').modal({backdrop: false, keyboard: false});
+
+            //fetch categories
+            var url='{{url}}/fetchCats';
+
+            $.ajax({
+                url:url,
+                type:'GET',
+                data:{'section':section},
+                headers: {'X-My-App-Token': 'loganstyles'},
+                success:function(response){
+                    console.log(response);
+                    if(response.success==true){
+                        var res_cats=(response.cats);
+                        var options="";
+                        res_cats.forEach((curr_item,index,array)=>{
+                            options+='<option value="'+curr_item.title+'">'+curr_item.title+'</option>';
+                        });
+
+                        $('#section_pab_modal #section_pab_category').html(options);
+                        $('#section_pab_modal #section_pab_sub1_header').text(section);
+                        $('#section_pab_modal #section_pab_id').val(id);
+                        $('#section_pab_modal #section_pab_type').val(section);
+                        $('#section_pab_modal #section_pab_author').val(pab_author);
+                        $('#section_pab_modal #section_pab_amount').val(pab_amount);
+                        $('#section_pab_modal #section_pab_title').val(pab_title.trim());
+                        $('#section_pab_modal #section_pab_isbn').val(pab_ISBN);
+                        $('#section_pab_modal #section_pab_pages').val(pab_pages);
+                        $('#section_pab_modal #section_pab_publishers').val(pab_publishers);
+                        $('#section_pab_modal #section_pab_bookshop').val(pab_bookshop);
+                        $('#section_pab_modal #section_pab_url').val(pab_url);
+                        $('#section_pab_modal #section_pab_synopsis').val(pab_synopsis);
+                        $('#section_pab_modal #section_pab_about_author').val(pab_about_author);
+
+                        
+                        $('#section_pab_modal #section_pab_category').val(post_category);
+                    }else{
+                        console.log('pab cat response is false');                            
+                    }                        
+
+                },
+                error:function(xhr, status, err){
+                    console.log('error');
+                    console.log(xhr);
+                    console.log(status);
+                    console.log(err);
+                }
+            });
+
+
+
+            }
+            
 
         });
 
@@ -582,6 +844,84 @@
                         }else{
                             //console.log('response is false');
                             $('#section_update_form  .form_submission_error').text(response.msg);
+                            sub_button.val(old_button_val);
+                            sub_button.prop('disabled', false);
+                        }
+
+                    },
+                    error:function(xhr, status, err){
+                        //console.log('error');
+                        //console.log(xhr);
+                        //console.log(status);
+                        //console.log(err);
+                    }
+                });
+                
+            }
+        } );
+
+        $( "#section_pab_form" ).validate( {/*validate & submit response details*/
+            rules: {  
+                section_pab_title: {
+                    required: true
+                }                    
+            },
+            messages: {                        
+                section_pab_title: {
+                    required: "This field is required"
+                }
+            },
+                errorElement: "em",
+                errorPlacement: function ( error, element ) {
+                // Add the `help-block` class to the error element
+                error.addClass( "help-block" );
+
+                if ( element.prop( "type" ) === "checkbox" ) {
+                    error.insertAfter( element.parent( "label" ) );
+                } else {
+                    error.insertAfter( element );
+                }
+            },
+            success: function ( label, element ) {
+                // Add the span element, if doesn't exists, and apply the icon classes to it.
+                if ( !$( element ).next( "span" )[ 0 ] ) {
+                    $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+                }
+            },
+            highlight: function ( element, errorClass, validClass ) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
+            },
+
+            submitHandler: function () {
+                //modify button
+                var sub_button=$(this).find(':submit');
+                var old_button_val=sub_button.val();
+                sub_button.prop('disabled', true);
+                sub_button.val('...updating');
+
+                resetFields();
+                var my_url="{{url}}/update_pab_item";
+
+                $("#section_pab_form").ajaxSubmit({
+                    url:my_url,
+                    contentType: 'application/json',
+                    success: function(response){
+                        if(response.success==true){
+                            $('#section_pab_form  .form_submission_success').text(response.msg);
+                            setTimeout(function(){
+                                $('#section_pab_form  .form_submission_success').text('');
+                                sub_button.val(old_button_val);
+                                sub_button.prop('disabled', false);
+                                $('#section_update_modal').modal('hide');
+                                    location.reload();//temp:later use sockets to update the actual post
+                                },3000);
+
+                        }else{
+                            //console.log('response is false');
+                            $('#section_pab_form  .form_submission_error').text(response.msg);
                             sub_button.val(old_button_val);
                             sub_button.prop('disabled', false);
                         }

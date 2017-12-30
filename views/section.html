@@ -52,18 +52,18 @@
 
                 <div class="portlet-title">
                     <div class="caption caption-md">
-                        <!-- <img alt="" class="icon_size" src="{{../url}}/images/{{../page_icon}}"> -->
-                        <span class="caption-subject  bold post_box_name">{{../page_type}}</span>&nbsp;|
+                        
+                        <span class="caption-subject  bold post_box_name">{{../page_type}}</span>
                         {{#if category}}
-                        <span class="caption-helper post_category grey_cats">{{category}}</span>&nbsp;
+                        <span class="caption-helper post_category grey_cats left_border">{{category}}</span>
                         {{/if}}
 
                         {{#if sub_cat1}}
-                        |&nbsp;<span class="caption-helper post_sub_cat1 grey_cats">{{sub_cat1}}</span>&nbsp;
+                        <span class="caption-helper post_sub_cat1 grey_cats left_border">{{sub_cat1}}</span>
                         {{/if}}
 
                         {{#if sub_cat2}}
-                        |&nbsp;<span class="caption-helper post_sub_cat2 grey_cats">{{sub_cat2}}</span>&nbsp;
+                        <span class="caption-helper post_sub_cat2 grey_cats left_border">{{sub_cat2}}</span>
                         {{/if}}
                         
                     </div>
@@ -84,10 +84,10 @@
                                                 </div>
                                                 <div class="section_posts_text">
                                                     <div> 
-                                                     <a href="" class="item-name">{{owner.displayName}}</a>
+                                                     <a style="font-weight: 600;" href="" class="item-name">{{owner.displayName}}</a>
                                                      </div>
                                                      {{#if owner.status}}
-                                                        <div>
+                                                        <div class="post_item_body_status">
                                                         {{owner.status}}
                                                         </div>
                                                       {{/if}}
@@ -99,16 +99,21 @@
                                         </div>
 
                                          <div class="posts_partition_middle"><!--2nd partition-->
-                                            <span style="">
+                                            <span>
                                             {{#if ../trend_status}}<!--trend post-->
-                                                    {{#unless trend_followed}}
-                                                        <a href="javascript:;" class="btn blue">
+                                                    {{#if trend_followed}}
+                                                        <img class="icon_size_50 " src="{{../url}}/images/filler.png">
+                                                    {{else}}
+                                                    <a href="javascript:;" class="btn blue">
                                                         <i class="fa fa-plus"></i>&nbsp; Follow</a>
-                                                    {{/unless}}
+
+                                                    {{/if}}
                                             {{else}}<!--other post:questio etc-->
-                                                    {{#unless post_owner}}
-                                                        <img class="icon_size_50" src="{{url}}/images/add_person.png">
-                                                    {{/unless}}
+                                                    {{#if post_owner}}
+                                                        <img class="icon_size_50 " src="{{../url}}/images/filler.png">
+                                                        {{else}}
+                                                        <img class="icon_size_50 " src="{{../url}}/images/add_person.png">
+                                                    {{/if}}
 
                                             {{/if}}
                                             
@@ -119,7 +124,7 @@
                                                  <div class="fromnow">{{moment post_date "fromNow"}}</div>
                                                     <div class="clearfix"></div>
                                                     <div class="post_actions_button_left">
-                                                        <img src="{{url}}/images/group.png">
+                                                        <img class="icon_size_20" src="{{../url}}/images/mask.png">
                                                     </div>
                                                 {{#if post_owner}}
                                                  <div class="actions post_actions_button" >
@@ -182,9 +187,9 @@
 
                         <div class="posts_pab_itemimage">
                         {{#if pics}}
-                            <img class="img-responsive" src="{{url}}/uploads/{{pics.[0]}}">
+                            <img class="img-responsive" src="{{../url}}/uploads/{{pics.[0]}}">
                             {{else}}
-                            <img class="img-responsive" src="{{url}}/uploads/default_img.png">
+                            <img class="img-responsive" src="{{../url}}/uploads/default_img.png">
                         {{/if}}
                         
                         </div>
@@ -194,53 +199,53 @@
                             {{#if body}}
                             <div class="posts_pab_itemright_row">
                                 <div class="posts_pab_itemtitle">Title:</div>
-                                <div class="posts_pab_itemdetails">{{body}}</div>
+                                <div class="posts_pab_itemdetails pab_ititle">{{body}}</div>
                             </div>
                             {{/if}}
                             {{#if author}}
                             <div class="posts_pab_itemright_row">
                                 <div class="posts_pab_itemtitle">Author:</div>
-                                <div class="posts_pab_itemdetails">{{author}}</div>
+                                <div class="posts_pab_itemdetails pab_iauthor">{{author}}</div>
                             </div>
                             {{/if}}
                             {{#if pages}}
                             <div class="posts_pab_itemright_row">
                                 <div class="posts_pab_itemtitle">Pages:</div>
-                                <div class="posts_pab_itemdetails">{{pages}}</div>
+                                <div class="posts_pab_itemdetails pab_ipages">{{pages}}</div>
                             </div>
                             {{/if}}
                             {{#if amount}}
                             <div class="posts_pab_itemright_row">
                                 <div class="posts_pab_itemtitle">Price:</div>
-                                <div class="posts_pab_itemdetails">N{{amount}}</div>
+                                <div class="posts_pab_itemdetails pab_iamount">N{{amount}}</div>
                             </div>
                             {{/if}}
 
                             {{#if isbn}}
                             <div class="posts_pab_itemright_row">
                                 <div class="posts_pab_itemtitle">ISBN:</div>
-                                <div class="posts_pab_itemdetails">{{isbn}}</div>
+                                <div class="posts_pab_itemdetails pab_iISBN">{{isbn}}</div>
                             </div>
                             {{/if}}
 
                             {{#if publishers}}
                             <div class="posts_pab_itemright_row">
                                 <div class="posts_pab_itemtitle">Publisher:</div>
-                                <div class="posts_pab_itemdetails">{{publishers}}</div>
+                                <div class="posts_pab_itemdetails pab_ipublishers">{{publishers}}</div>
                             </div>
                             {{/if}}
 
                             {{#if bookshop}}
                             <div class="posts_pab_itemright_row">
                                 <div class="posts_pab_itemtitle">Bookshop:</div>
-                                <div class="posts_pab_itemdetails">{{bookshop}}</div>
+                                <div class="posts_pab_itemdetails pab_ibookshop">{{bookshop}}</div>
                             </div>
                             {{/if}}
 
                             {{#if url}}
                             <div class="posts_pab_itemright_row">
                                 <div class="posts_pab_itemtitle">Url:</div>
-                                <div class="posts_pab_itemdetails">{{url}}</div>
+                                <div class="posts_pab_itemdetails pab_iurl">{{url}}</div>
                             </div>
                             {{/if}}
 
@@ -256,17 +261,17 @@
   
 
                                               <ul class="nav nav-tabs navbar-right">
-                                                <li class="active"><a data-toggle="tab" href="#home">SYNOPSIS</a></li>
-                                                <li><a data-toggle="tab" href="#menu1">ABOUT THE AUTHOR</a></li>
+                                                <li class="active"><a data-toggle="tab" href="#synopsis{{@index}}">SYNOPSIS</a></li>
+                                                <li><a data-toggle="tab" href="#about_author{{@index}}">ABOUT THE AUTHOR</a></li>
                                               </ul>
                                               <div class="clearfix"></div>
 
                                               <div class="tab-content">
-                                                <div id="home" class="tab-pane fade in active">
-                                                  <p>{{synopsis}}</p>
+                                                <div id="synopsis{{@index}}" class="tab-pane fade in active">
+                                                  <p class="pab_isynopsis">{{synopsis}}</p>
                                                 </div>
-                                                <div id="menu1" class="tab-pane fade">
-                                                  <p>{{about_author}}</p>
+                                                <div id="about_author{{@index}}" class="tab-pane fade">
+                                                  <p class="pab_iabout_author">{{about_author}}</p>
                                                 </div>
                                                 
                                               </div>
@@ -290,18 +295,26 @@
                                                     <img class="img-responsive" src="{{url}}/uploads/{{pics.[0]}}">
                                                 </div>
                                             {{/if}}
+
+                                                {{#if ../art_status}}
+                                                <hr class="short_length">
+                                                <div class="post_item post_item_body">
+                                                {{else}}
                                                 <div class="post_item post_item_topic">
+                                                {{/if}}
                                                     {{body}}
+                                                
                                                 </div>
+                                                
 
                                                 {{#if description}}
-
+                                                <hr class="short_length">
                                                 <div class="post_item post_item_more_info">
                                                     {{description}}
                                                 </div>
                                                 {{/if}}
                                             
-                                        </div> 
+                                        </div> <br>
 
 
                                     {{/if}}
@@ -327,27 +340,44 @@
 
                                                 <a class="btn btn-link post_likes">
                                                 <span class="grey_button">
-                                                    <span class="social_value ">{{likes}}</span>&nbsp;
+                                                    <span class="social_value ">{{likes}}</span>
                                                     <i class="fa fa-heart-o"></i>&nbsp;Likes
                                                 </span>
-                                                </a>&nbsp;
+                                                </a>
 
+                                                <a class="btn btn-link ">
                                                 <span class="grey_button">
-                                                    <span class="social_value">{{answers_len}}</span>&nbsp;
-                                                     {{#if ../quest_status}}
-                                                    <i class="fa fa-comment-o"></i>&nbsp;
+                                                    {{#if ../quest_status}}
+                                                     <span class="social_value">{{answers_len}}</span>
+                                                    <!-- <i class="fa fa-comment-o"></i>&nbsp; -->
+                                                    <img src="{{../url}}/images/comments.png">&nbsp;
                                                     Answers
                                                     {{/if}}
 
+                                                    {{#if ../pab_status}}
+                                                    <span class="social_value">{{comments_len}}</span>
+                                                    <!-- <i class="fa fa-comment-o"></i>&nbsp; -->
+                                                    <img src="{{../url}}/images/comments.png">&nbsp;Comments
+                                                    {{/if}}
+
                                                     {{#if ../art_status}}
+                                                    <span class="social_value">{{answers_len}}</span>
                                                     <img alt="" class="icon_size_15" src="{{../url}}/images/{{../page_icon}}">&nbsp;
                                                     Reviews
                                                     {{/if}}
+
+                                                    {{#if ../riddle_status}}
+                                                    <span class="social_value">{{answers_len}}</span>
+                                                    <img src="{{../url}}/images/comments.png">
+                                                    <!-- <img alt="" class="icon_size_15" src="{{../url}}/images/solution.png">&nbsp; -->
+                                                    Solution
+                                                    {{/if}}
                                                 </span>
+                                                </a>
 
                                                 <a class="btn btn-link post_shares">
                                                     <span class="item-label grey_button">
-                                                        <span class="social_value">{{shares}}</span>&nbsp;
+                                                        <span class="social_value">{{shares}}</span>
                                                         <i class="fa fa-share-alt"></i>&nbsp;
                                                         Shares                                
                                                     </span>
@@ -356,7 +386,7 @@
                                             </div>
 
                                         <div class="clearfix"></div>
-                                    </div><hr style="margin:1% 0;">
+                                    </div><hr style="margin:0;">
 
 
                                 </div>
@@ -368,7 +398,8 @@
                     <div class="task-footer" style="">
                         <div class="btn-arrow-link ">
                         {{#unless ../pab_status}}
-                            <a class=" sbold grey_button response_button">Write your {{../page_response}}</a>                            
+                            <a class=" sbold grey_button response_button">
+                            <i class="fa fa-edit"></i>&nbsp;Write your {{../page_response}}</a>                            
                         {{/unless}}
 
                         
@@ -591,11 +622,14 @@
                             <input type="hidden" name="section_response_id"  id="section_response_id" >
                             <input type="hidden" name="section_response_type"  id="section_response_type" >
 
-                            <h5 class="post_item_topic" id="section_response_body">{{page_response}}s</h5>                           
+                            <div class="post_item_topic" id="section_response_topic"></div>
+                            <div class="post_item_body" id="section_response_body"></div>
+                            <div class="post_item_more_info" id="section_response_more_info"></div>                           
 
                             <div class="form-group">
                                 <textarea  name="section_response_details" id="section_response_details" class="form-control " rows="3" style="font-weight: 500"></textarea>
-                                <label for="form_control_1">Write your {{page_response}}</label>
+                                <label for="form_control_1">
+                                <i class="fa fa-edit"></i>&nbsp;Write your {{page_response}}</label>
                             </div>
                             
 
