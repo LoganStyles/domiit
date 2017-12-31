@@ -415,7 +415,7 @@ router.post('/post_about_subitem/:type',function(req,res,next){
  router.post('/post_page/:type',upload.single('page_photo'),function(req,res,next){
 
     console.log('req.fil')
-console.log(req.file);
+    console.log(req.file);
 
     var type = req.params.type;//story or cat
     let obj,
@@ -470,12 +470,14 @@ console.log(req.file);
             obj.body = convertToSentencCase((req.body.page_title).trim());
             obj.description=convertToSentencCase((req.body.page_description).trim());
             obj.excerpt = (obj.description).substr(0,100);
-            obj.category=req.body.page_category
-        }
+            obj.category=req.body.page_category;
 
-        if (req.file && req.file.filename != null) {
+            if (req.file && req.file.filename != null) {
                 obj.pics.push(req.file.filename);
             }
+        }
+
+        
 
         obj.save(function(err,quest){
             if(err){console.log(err);res.json({success:false,msg:" update failed"});
@@ -486,6 +488,8 @@ console.log(req.file);
     });
 
     }else if(mode=="edit"){
+
+        var update_items={};
 
         if(type=="cat"){
 
@@ -515,9 +519,22 @@ console.log(req.file);
                 break;
             }
             
-            obj.title=req.body.page_title.trim();
-            obj.value=req.body.page_title.trim().replace(/[^A-Za-z0-9]/g, "_");
-            obj.description=req.body.page_description;
+            update_items.title=req.body.page_title.trim();
+            update_items.value=req.body.page_title.trim().replace(/[^A-Za-z0-9]/g, "_");
+            update_items.description=req.body.page_description;
+
+            //update a obj
+            obj.findOneAndUpdate({_id:page_id},{$set:update_items},function(err1,res1){
+
+                if(err1){
+                    console.log(err1)
+                    res.json({success:false,msg:" update failed"});
+                }else if(res1){
+                    res.json({success:true,msg:" update was successfull"});
+                }
+
+            });
+
 
         }else if(type=="story"){
             switch(page_type){            
@@ -526,27 +543,34 @@ console.log(req.file);
                 break;
             }
 
-            obj.body=convertToSentencCase(req.body.page_title.trim());
-            obj.category=req.body.page_category;            
-            obj.description=convertToSentencCase(req.body.page_description);
-            obj.excerpt = (obj.description).substr(0,100);
+            obj.findOne({_id:page_id},function(err,story){
+                if(story){
+                    let update_items=story;
+
+                    update_items.body=convertToSentencCase(req.body.page_title.trim());
+                    update_items.category=req.body.page_category;            
+                    update_items.description=convertToSentencCase(req.body.page_description);
+                    update_items.excerpt = (update_items.description).substr(0,100);
+
+                    if (req.file && req.file.filename != null) {
+                        update_items.pics.push(req.file.filename);
+                    }
+
+                    obj.updateOne({_id:page_id},{$set:update_items},function(err1,res1){
+
+                        if(err1){
+                            console.log(err1)
+                            res.json({success:false,msg:" update failed"});
+                        }else if(res1){
+                            res.json({success:true,msg:" update was successfull"});
+                        }
+
+                    });
+                }
+            });
+            
         }
-
-        if (req.file && req.file.filename != null) {
-                obj.pics.push(req.file.filename);
-            }
-
-        //update a obj
-        obj.findOneAndUpdate({_id:page_id},{$set:obj},function(err1,res1){
-
-            if(err1){
-                console.log(err1)
-                res.json({success:false,msg:" update failed"});
-            }else if(res1){
-                res.json({success:true,msg:" update was successfull"});
-            }
-
-        });
+        
     }
     
 });

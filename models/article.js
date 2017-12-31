@@ -2,6 +2,8 @@ var mongoose = require('mongoose');
 
 var articleSchema = mongoose.Schema({
 	id:String,
+	post_type:String,
+	access:Number,
 	topic:String,
 	body:String,
 	category:String,
@@ -63,3 +65,11 @@ var articleSchema = mongoose.Schema({
 
 var Art = mongoose.model('Art', articleSchema);
 module.exports = Art;
+
+/*
+access types:
+public:1
+friends of friends:2
+friends:3
+only me:4
+*/

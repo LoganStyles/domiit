@@ -2,6 +2,8 @@ var mongoose = require('mongoose');
 
 var trendSchema = mongoose.Schema({
 	id:String,
+	post_type:String,
+	access:Number,
 	body:String,
 	excerpt:String,
 	category:String,

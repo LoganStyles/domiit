@@ -2,6 +2,8 @@ var mongoose = require('mongoose');
 
 var noticeSchema = mongoose.Schema({
 	id:String,
+	post_type:String,
+	access:Number,
 	topic:String,
 	body:String,
 	category:String,

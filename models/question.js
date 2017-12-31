@@ -2,6 +2,8 @@ var mongoose = require('mongoose');
 
 var questionSchema = mongoose.Schema({
 	id:String,
+	post_type:String,
+	access:Number,
 	body:String,
 	category:String,
 	sub_cat1:{type:String,default:''},

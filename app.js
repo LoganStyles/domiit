@@ -22,12 +22,13 @@ var article = require('./models/article');
 var riddle = require('./models/riddle');
 var pab = require('./models/pab');
 var trend = require('./models/trend');
-var trend_cat = require('./models/trend_cats');
 
+var trend_cat = require('./models/trend_cats');
 var quest_cat = require('./models/question_cats');
 var art_cat = require('./models/article_cats');
 var riddle_cat = require('./models/riddle_cats');
 var pab_cat = require('./models/pab_cats');
+var notice_cat = require('./models/notice_cats');
 
 var about = require('./models/about');
 
@@ -1008,6 +1009,7 @@ app.post('/response_item',upload.single('section_response_photo'),function(req,r
 /*delete section post*/
 app.post('/delete_postitem',function(req,res,next){
     // console.log(req.body)
+    //rem:delete files
 
     var section_type=req.body.section_delete_type;
     var section_id=req.body.section_delete_id;
@@ -1038,6 +1040,10 @@ app.post('/delete_postitem',function(req,res,next){
 
         case'riddle_cat':
         section = riddle_cat;
+        break;
+
+        case'notice_cat':
+        section = notice_cat;
         break;
 
         case'trend_cat':

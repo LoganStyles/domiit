@@ -42,7 +42,7 @@ function stipInputCase(param){
     return categ;
 }
 
-
+    
 /*get all posted questions,*/
 router.get('/section/:item/:type/:id', isLoggedIn,function(req, res) {
     console.log('inside all sections');

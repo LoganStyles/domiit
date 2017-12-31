@@ -2,6 +2,8 @@ var mongoose = require('mongoose');
 
 var pabSchema = mongoose.Schema({
 	id:String,
+	post_type:String,
+	access:Number,
 	body:String,
 	category:{type:String,default:''},
 	author:{type:String,default:''},
