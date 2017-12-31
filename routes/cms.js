@@ -7,6 +7,7 @@ var quest_cat = require('../models/question_cats');
 var article_cat = require('../models/article_cats');
 var riddle_cat = require('../models/riddle_cats');
 var pab_cat = require('../models/pab_cats');
+var notice_cat = require('../models/notice_cats');
 var trend_cat = require('../models/trend_cats');
 var trend_story = require('../models/trend');
 
@@ -155,6 +156,8 @@ var story,cat;
     riddle_cat_status=false;
     pab_status=false;
     pab_cat_status=false;
+    notice_status=false;
+    notice_cat_status=false;
     trend_status=false;
     trend_cat_status=false;
     trend_story_status=false;
@@ -200,6 +203,13 @@ var story,cat;
         pab_status=true;
         pab_cat_status=true;
         page_title="Post A book categories";
+        break;
+
+        case'notice_cat':
+        cat = notice_cat;
+        notice_status=true;
+        notice_cat_status=true;
+        page_title="Notice Board categories";
         break;
 
         case'trend_cat':
@@ -253,6 +263,8 @@ var story,cat;
                     pab_cat_status:pab_cat_status,
                     riddle_status:riddle_status,
                     riddle_cat_status:riddle_cat_status,
+                    notice_status:notice_status,
+                    notice_cat_status:notice_cat_status,
                     trend_status:trend_status,
                     trend_cat_status:trend_cat_status,
                     trend_story_status:trend_story_status
@@ -279,6 +291,8 @@ var story,cat;
                     pab_cat_status:pab_cat_status,
                     riddle_status:riddle_status,
                     riddle_cat_status:riddle_cat_status,
+                    notice_status:notice_status,
+                    notice_cat_status:notice_cat_status,
                     trend_status:trend_status,
                     trend_cat_status:trend_cat_status,
                     trend_story_status:trend_story_status
@@ -437,6 +451,10 @@ console.log(req.file);
                 case 'trend_cat':
                 obj = new trend_cat();        
                 break;
+
+                case 'notice_cat':
+                obj = new notice_cat();        
+                break;
             }   
             obj.title = (req.body.page_title).trim();
             obj.value = (req.body.page_title).trim().replace(/[^A-Za-z0-9]/g, "_");
@@ -492,6 +510,9 @@ console.log(req.file);
                 obj = trend_cat;                
                 break;
 
+                case'notice_cat':
+                obj = notice_cat;                
+                break;
             }
             
             obj.title=req.body.page_title.trim();

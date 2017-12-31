@@ -7,6 +7,7 @@ var question = require('../models/question');
 var article = require('../models/article');
 var riddle = require('../models/riddle');
 var pab = require('../models/pab');
+var notice = require('../models/notice');
 var trend = require('../models/trend');
 
 
@@ -55,6 +56,7 @@ router.get('/section/:item/:type/:id', isLoggedIn,function(req, res) {
     riddle_status=false,
     pab_status=false,
     article_status=false,
+    notice_status=false,
     trend_status=false,
     post_owner=false;
 
@@ -137,6 +139,12 @@ router.get('/section/:item/:type/:id', isLoggedIn,function(req, res) {
         pab_status=true;
         item_response='';
         page_type='Post Books';
+        break;
+
+        case'notice':
+        section = notice;
+        notice_status=true;
+        item_response='';
         break;
 
         case'trend':

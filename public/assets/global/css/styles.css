@@ -413,6 +413,14 @@
         height: 0.9em;
      }
 
+     .font_icon_style_leftbar{
+        font-size: 2.2em;
+        padding-top: 6px;
+        /*text-align: center !important;
+        width: 100% !important;
+        height: 0.9em;*/
+     }
+
      
 
      /*file upload*/
