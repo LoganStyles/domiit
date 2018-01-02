@@ -31,6 +31,7 @@ function getLatestOwnerDetails(arr){
     return promise;
 }
 
+/*get trend story details*/
 function getStoryDetails(arr){
     var promise=trend.findOne({_id:arr._id},{category:1,excerpt:1,pics:1}).exec();
     return promise;
@@ -195,13 +196,14 @@ section.find(selection).sort({post_date:-1}).exec(function(err,items){
                     res_id=(response._id)?((response._id).toString()):('');
                     //check if this is a followed trend
                     //cur_item._id=trend id
-                    //response.trend_followed is array of trend ids
-                    for(var it=0,len=trend_followed.length;it <len;it++){
-                        if(cur_item._id.indexOf(trend_followed[it]) !==-1){
-                            trend_followed=true;
-                            break;
-                        }
-                    }
+                    //response.trend_followed is array of trend ids which cur 
+                    
+                    // for(var it=0,len=response.trend_followed.length;it <len;it++){
+                    //     if(cur_item._id.indexOf(response.trend_followed[it]) !==-1){
+                    //         trend_followed=true;
+                    //         break;
+                    //     }
+                    // }
                     cur_item.trend_followed=trend_followed;
 
                 }else{
@@ -280,6 +282,7 @@ section.find(selection).sort({post_date:-1}).exec(function(err,items){
             quest_status:question_status,
             art_status:article_status,
             riddle_status:riddle_status,
+            notice_status:notice_status,
             pab_status:pab_status,
             trend_status:trend_status,
             home_status:home_status

@@ -22,6 +22,7 @@ var article = require('./models/article');
 var riddle = require('./models/riddle');
 var pab = require('./models/pab');
 var trend = require('./models/trend');
+var notice = require('./models/notice');
 
 var trend_cat = require('./models/trend_cats');
 var quest_cat = require('./models/question_cats');
@@ -31,7 +32,7 @@ var pab_cat = require('./models/pab_cats');
 var notice_cat = require('./models/notice_cats');
 
 var about = require('./models/about');
-
+var async = require('async');
 var multer = require('multer');
 var mime = require('mime-lib');
 
@@ -210,6 +211,99 @@ function convertToSentencCase(text_data){
     return vfinal;
 }
 
+/*get owner details*/
+function getLatestOwnerDetails(arr){
+    var promise=user.findOne({_id:arr.id},{
+        displayName:1,
+        displayPic:1,
+        designation:1,
+        trend_followed:1
+    }).exec();
+    return promise;
+}
+
+function getStoryDetails(arr){
+    var promise=trend.findOne({_id:arr._id},{category:1,excerpt:1,pics:1}).exec();
+    return promise;
+}
+
+function processPagePosts(items,user_id){
+    var promise,trend_followed=false,
+    displayPic="",
+    status="",
+    display_name="",
+    res_id="",
+    processed_items=0,
+    res_items=[];
+
+    items.forEach((cur_item,index,array)=>{
+        var updated_obj={};
+        if(cur_item.post_type=="trend"){
+            promise = getStoryDetails(cur_item);//fetch data for this story
+        }else{
+            promise = getLatestOwnerDetails(cur_item.owner);//fetch data for this person
+        }
+
+        promise.then(function(response){
+            // console.log(response);
+            if(cur_item.post_type=="trend"){
+                displayPic=(response.pics[0])?('/uploads/'+response.pics[response.pics.length -1]):('/images/trending.png');
+                display_name=(response.category)?(response.category):('');
+                res_id=(response._id)?((response._id).toString()):('');
+                //check if this is a followed trend
+                //cur_item._id=trend id
+                //response.trend_followed is array of trend ids
+                //LOGIC ISSUES HERE
+                // for(var it=0,len=trend_followed.length;it <len;it++){
+                //     if(cur_item._id.indexOf(trend_followed[it]) !==-1){
+                //         trend_followed=true;
+                //         break;
+                //     }
+                // }
+                cur_item.trend_followed=trend_followed;
+
+            }else{
+                displayPic=(response.displayPic[0])?('/uploads/'+response.displayPic[response.displayPic.length -1]):('/uploads/avatar.png');
+                status=(response.designation[0])?((response.designation[response.designation.length -1]).title):('');
+                display_name=(response.displayName)?(response.displayName):('');
+                res_id=(response._id)?((response._id).toString()):('');
+            }
+
+            updated_obj={
+                id:res_id,
+                displayName:display_name,
+                displayPic:displayPic,
+                status:status
+            };
+
+                // update owner info
+                cur_item.owner=updated_obj;
+                // chk if current viewer is the owner
+                var req_user_id=(user_id).toString();
+                var response_id=(response._id).toString();
+
+                if(req_user_id ===response_id){
+                    console.log('user is the owner')
+                    cur_item.post_owner=true;
+                }else{
+                    console.log('user is NOT the owner')
+                }                
+
+                processed_items++;
+                // console.log('process inside:'+processed_items);
+                if(processed_items==array.length){//iteration has ended
+                    res_items=items;
+                    console.log(res_items);
+                    //return res_items;
+                }
+
+            });
+
+    });
+    //return res_items;
+
+}
+
 app.get('/profile',isLoggedIn, function(req, res) {
     console.log('inside profile');
     // console.log(req)   
@@ -297,6 +391,7 @@ app.get('/fetchCats',isLoggedIn,function(req,res){
         break;
 
         case 'Post Books':
+        case 'pab':
         cat =pab_cat;
         break;
     }
@@ -324,9 +419,190 @@ app.get('/fetchCats',isLoggedIn,function(req,res){
     });        
 });
 
+/*
+fetch at most 5 rows from each section,
+sort them by date_created
+*/
+app.get('/dashboard',isLoggedIn,function(req,res){
+    console.log('inside dashboard');
+    var selection={},
+    skip_val=0,
+    limit_val=2,
+    page='dashboard',
+    page_title='',
+    // page_type='',
+    page_results=[];
+
+    //set paqe status defaults
+    let question_status=false,
+    home_status=true,
+    riddle_status=false,
+    pab_status=false,
+    article_status=false,
+    notice_status=false,
+    trend_status=false,
+    post_owner=false;
+
+
+    var curr_user_display_pic='avatar.png';//set default pic
+    if(req.user.displayPic[0]){
+        curr_user_display_pic=req.user.displayPic[req.user.displayPic.length - 1];
+    }
+    
+    //using async
+    async.concat([question,article],function(model,callback){
+        //get the last 5 results from each collection
+        var query = model.find(selection).sort({"date_created":-1}).skip(skip_val).limit(limit_val);
+        query.exec(function (err,docs){
+            if(err){
+                console.log('err in query');
+                console.log(err);
+            }else if(docs){
+               callback(err,docs); 
+           }      
+
+       });
+    },
+    function(err2,res_items){
+        if (err2){
+            console.log('err2 ')
+        }else if(res_items){
+            //results are merged so sort by date
+            page_results=res_items.sort(function(a,b){
+                return (a.date_created < b.date_created)? 1:(a.date_created > b.date_created)? -1:0;
+            });
+            console.log('sorted page_results')
+            console.log(page_results);
+        }
+
+        if(page_results.length >0){
+            
+            //page_results=processPagePosts(page_results,req.user._id);
+
+            var promise,trend_followed=false,
+            displayPic="",
+            status="",
+            display_name="",
+            res_id="",
+            processed_items=0,
+            res_items=[];
+
+    page_results.forEach((cur_item,index,array)=>{
+        var updated_obj={};
+        if(cur_item.post_type=="trend"){
+            promise = getStoryDetails(cur_item);//fetch data for this story
+        }else{
+            promise = getLatestOwnerDetails(cur_item.owner);//fetch data for this person
+        }
+
+        promise.then(function(response){
+            // console.log(response);
+            if(cur_item.post_type=="trend"){
+                displayPic=(response.pics[0])?('/uploads/'+response.pics[response.pics.length -1]):('/images/trending.png');
+                display_name=(response.category)?(response.category):('');
+                res_id=(response._id)?((response._id).toString()):('');
+                //check if this is a followed trend
+                //cur_item._id=trend id
+                //response.trend_followed is array of trend ids
+                //LOGIC ISSUES HERE
+                // for(var it=0,len=trend_followed.length;it <len;it++){
+                //     if(cur_item._id.indexOf(trend_followed[it]) !==-1){
+                //         trend_followed=true;
+                //         break;
+                //     }
+                // }
+                cur_item.trend_followed=trend_followed;
+
+            }else{
+                displayPic=(response.displayPic[0])?('/uploads/'+response.displayPic[response.displayPic.length -1]):('/uploads/avatar.png');
+                status=(response.designation[0])?((response.designation[response.designation.length -1]).title):('');
+                display_name=(response.displayName)?(response.displayName):('');
+                res_id=(response._id)?((response._id).toString()):('');
+            }
+
+            updated_obj={
+                id:res_id,
+                displayName:display_name,
+                displayPic:displayPic,
+                status:status
+            };
+
+                // update owner info
+                cur_item.owner=updated_obj;
+                // chk if current viewer is the owner
+                var req_user_id=(req.user._id).toString();
+                var response_id=(response._id).toString();
+
+                if(req_user_id ===response_id){
+                    console.log('user is the owner')
+                    cur_item.post_owner=true;
+                }else{
+                    console.log('user is NOT the owner')
+                }                
+
+                processed_items++;
+                // console.log('process inside:'+processed_items);
+                if(processed_items==array.length){//iteration has ended
+                    res_items=page_results;
+                    console.log(res_items);
+                    //return res_items;
+
+                    console.log('DISPLAYING RESULT5T')
+
+                        res.render(page,{
+                        url:process.env.URL_ROOT,
+                        displayPic:curr_user_display_pic,
+                        user_info:req.user,
+                        data:page_results,
+                        page_title: page_title,
+                        // page_type:page_type,
+
+                        quest_status:question_status,
+                        art_status:article_status,
+                        riddle_status:riddle_status,
+                        notice_status:notice_status,
+                        pab_status:pab_status,
+                        trend_status:trend_status,
+                        home_status:home_status
+                    });
+                }
+
+            });//END promise
+
+    });//end foreach
+
+            
+
+        }else{
+            console.log('NOT DISPLAYING RESULT5T')
+            res.render(page,{
+            url:process.env.URL_ROOT,
+            displayPic:curr_user_display_pic,
+            user_info:req.user,
+            data:page_results,
+            page_title: page_title,
+            page_type:page_type,
+
+            quest_status:question_status,
+            art_status:article_status,
+            riddle_status:riddle_status,
+            notice_status:notice_status,
+            pab_status:pab_status,
+            trend_status:trend_status,
+            home_status:home_status
+        });
+       
+        }
+        
+        
+    });
+
+
+});
+
 
 /*fetch question,articles cats & sub cats*/
-app.get('/dashboard',isLoggedIn, function(req, res) {
+app.get('/dashboard2',isLoggedIn, function(req, res) {
     console.log('inside dashboard');   
     let question_status=false,
     article_status=false,
@@ -497,6 +773,9 @@ app.post('/ask_question',upload.single('question_photo'),function(req,res,next){
             status:req.user.current_appointment};
 
             let ask_quest =new question();
+            ask_quest.post_type="question";
+            ask_quest.access=1;//default :public access
+            ask_quest.status.question=true;
             ask_quest.body=convertToSentencCase(req.body.question_title);
             ask_quest.category = req.body.question_category;
             ask_quest.sub_cat1=req.body.question_sub1;
@@ -546,6 +825,8 @@ app.post('/ask_article',article_upload,function(req,res,next){
             status:req.user.current_appointment};
 
             let write_art =new article();
+            write_art.post_type="article";
+            write_art.access=1;//default :public access
             write_art.body=convertToSentencCase(req.body.article_title);
             write_art.topic=convertToSentencCase(req.body.article_topic);
             write_art.category = req.body.article_category;
@@ -599,6 +880,8 @@ app.post('/ask_riddle',upload.single('riddle_photo'),function(req,res,next){
             status:req.user.current_appointment};
 
             let ask_riddle =new riddle();
+            ask_riddle.post_type="riddle";
+            ask_riddle.access=1;//default :public access
             ask_riddle.body=convertToSentencCase(req.body.riddle_title);
             ask_riddle.category = req.body.riddle_category;
             ask_riddle.sub_cat1=req.body.riddle_sub1;
@@ -640,6 +923,8 @@ app.post('/ask_pab',upload.single('pab_photo'),function(req,res,next){
             status:req.user.current_appointment};
 
             let ask_pab =new pab();
+            ask_pab.post_type="pab";
+            ask_pab.access=1;//default :public access
             ask_pab.body=convertToSentencCase(req.body.pab_title);
             ask_pab.category = req.body.pab_category;
             ask_pab.author=req.body.pab_author;

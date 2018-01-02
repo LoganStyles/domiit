@@ -14,6 +14,16 @@ var trendSchema = mongoose.Schema({
 	post_date: { type: Date, default: Date.now },
 	owner:{id:String,displayName:String,displayPic:String,status:String},
 	post_owner:{type:Boolean,default:false},
+	status:[{
+		question:{type:Boolean,default:false},
+		article:{type:Boolean,default:false},
+		riddle:{type:Boolean,default:false},
+		pab:{type:Boolean,default:false},
+		notice:{type:Boolean,default:false},
+		trend:{type:Boolean,default:true},
+		home:{type:Boolean,default:false}
+	}],
+	page_response:{type:String,default:''},
 	trend_followed:{type:Boolean,default:false},
 	views:{type:Number,default:0},
 	shares:{type:Number,default:0},

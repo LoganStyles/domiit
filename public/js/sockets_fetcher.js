@@ -2,8 +2,8 @@ var total_messages = 5;
 var delay_amount = 0;
 var fade_speed = 200;
 var socket = io();
-var URL_ROOT="https://ancient-falls-19080.herokuapp.com";
-// var URL_ROOT="http://localhost:8000";
+// var URL_ROOT="https://ancient-falls-19080.herokuapp.com";
+var URL_ROOT="http://localhost:8000";
 
 // Connect to Socket.io
 socket.connect(URL_ROOT);
