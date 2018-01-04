@@ -83,7 +83,7 @@
 
             <div class="portlet light posted">
              <input type="hidden" id="post_id" value="{{_id}}">
-             <input type="hidden" id="post_type" value="{{../page_type}}">
+             <input type="hidden" id="post_type" value="{{post_type}}">
 
                 <div class="portlet-title">
                     <div class="caption caption-md">
@@ -134,7 +134,7 @@
 
                         <div class="posts_partition_middle"><!--2nd partition-->
                             <span>
-                                {{#if ../trend_status}}<!--trend post-->
+                                {{#if trend_status}}<!--trend post-->
                                         {{#if trend_followed}}
                                             <img class="icon_size_50 " src="{{../url}}/images/filler.png">
                                         {{else}}
@@ -214,7 +214,7 @@
                                         
 
                     </div>
-                        {{#if ../pab_status}}
+                        {{#if pab_status}}
 
                     <div class="item-body"> 
                     <div style="width: 100%; color: #000;">
@@ -330,7 +330,7 @@
                         </div>
                     {{/if}}
 
-                    {{#if ../art_status}}
+                    {{#if art_status}}
                     <hr class="short_length">
                     <div class="post_item post_item_body">
                     {{else}}
@@ -357,7 +357,7 @@
 
     <div class="pull-left">
 
-    {{#if ../art_status}}
+    {{#if art_status}}
         <!--if page is article, chek for attachemnt-->
         {{#if attachment}}
         <input type="hidden" class="download_input_field" value="{{attachment}}">
@@ -381,25 +381,25 @@
 
         <a class="btn btn-link ">
         <span class="grey_button">
-            {{#if status.question}}
+            {{#if question_status}}
              <span class="social_value">{{answers_len}}</span>
             <!-- <i class="fa fa-comment-o"></i>&nbsp; -->
             <img src="{{../url}}/images/comments.png">&nbsp;
             Answers
             {{/if}}
 
-            {{#if status.pab}}
+            {{#if pab_status}}
             <span class="social_value">{{comments_len}}</span>
             <img src="{{../url}}/images/comments.png">&nbsp;Comments
             {{/if}}
 
-            {{#if status.article}}
+            {{#if art_status}}
             <span class="social_value">{{answers_len}}</span>
             <img alt="" class="icon_size_15" src="{{../url}}/images/articles_icon.png">&nbsp;
             Reviews
             {{/if}}
 
-            {{#if status.riddle}}
+            {{#if riddle_status}}
             <span class="social_value">{{answers_len}}</span>
             <img src="{{../url}}/images/comments.png">
             <!-- <img alt="" class="icon_size_15" src="{{../url}}/images/solution.png">&nbsp; -->
@@ -430,9 +430,9 @@
    
     <div class="task-footer" style="">
         <div class="btn-arrow-link ">
-        {{#unless ../pab_status}}
+        {{#unless pab_status}}
             <a class=" sbold grey_button response_button">
-            <i class="fa fa-edit"></i>&nbsp;Write your {{../page_response}}</a>                            
+            <i class="fa fa-edit"></i>&nbsp;Write your {{page_response}}</a>                            
         {{/unless}}
 
         
@@ -449,9 +449,9 @@
         </div><!--end question_all_post_area-->
 
 
-                                                </div>
+            </div>
 
-                                                <div class="col-md-3"><!--third-->
+        <div class="col-md-3"><!--third-->
         <div class="row">
             <!-- BEGIN PORTLET -->
             <div class="portlet light ">
@@ -627,9 +627,7 @@
                                 <label class="control-label col-md-3 col-lg-3 col-sm-12">Category </label>
                                 <div class="col-md-9 col-lg-9 col-sm-12">
                                     <select class="form-control " name="question_category" id="question_category">
-                                        {{#each data_quest}}
-                                        <option value="{{title}}">{{title}}</option>
-                                        {{/each}}   
+                                           
 
                                     </select>
                                     <span class="req_opt">*required</span>
@@ -712,9 +710,7 @@
                             <label class="control-label col-md-3 col-lg-3 col-sm-12">Category </label>
                             <div class="col-md-9 col-lg-9 col-sm-12">
                                 <select class="form-control " name="article_category" id="article_category">
-                                    {{#each data_art}}
-                                    <option value="{{title}}">{{title}}</option>
-                                    {{/each}}   
+                                      
 
                                 </select>
                                 <span class="req_opt">*required</span>
@@ -807,9 +803,7 @@
                     <label class="control-label col-md-3 col-lg-3 col-sm-12">Category </label>
                     <div class="col-md-9 col-lg-9 col-sm-12">
                         <select class="form-control " name="riddle_category" id="riddle_category">
-                            {{#each data_riddle}}
-                            <option value="{{title}}">{{title}}</option>
-                            {{/each}}   
+                              
 
                         </select>
                         <span class="req_opt">*required</span>                        
@@ -890,9 +884,6 @@
                     <label class="control-label col-md-3 col-lg-3 col-sm-12">Genre </label>
                     <div class="col-md-9 col-lg-9 col-sm-12">
                         <select class="form-control " name="pab_category" id="pab_category">
-                            {{#each data_pab}}
-                            <option value="{{title}}">{{title}}</option>
-                            {{/each}}   
 
                         </select>
                         <span class="req_opt">*required</span>

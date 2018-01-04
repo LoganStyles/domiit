@@ -84,7 +84,7 @@
                                                <a style="font-weight: 600;" href="" class="item-name">{{owner.displayName}}</a>
                                            </div>
                                            {{#if owner.status}}
-                                           <div>
+                                           <div class="post_item_body_status">
                                             {{owner.status}}
                                             </div>
                                         {{/if}}
@@ -97,7 +97,7 @@
 
                                     <div class="posts_partition_middle"><!--2nd partition-->
                                             <span style="">
-                                            {{#if ../trend_status}}<!--trend post-->
+                                            {{#if trend_status}}<!--trend post-->
                                                     {{#if trend_followed}}
                                                         <img class="icon_size_50 " src="{{../url}}/images/filler.png">
                                                     {{else}}
@@ -187,10 +187,10 @@
                                     {{/if}}
                                     {{#if pics.length }}
                                         <div style="margin-bottom: 3%;">                                                                    
-                                            <img class="img-responsive" src="{{url}}/uploads/{{pics.[0]}}">
+                                            <img class="img-responsive" src="{{../url}}/uploads/{{pics.[0]}}">
                                         </div>
                                     {{/if}}
-                                        {{#if ../art_status}}
+                                        {{#if art_status}}
                                             <hr class="short_length">
                                                 <div class="post_item post_item_body">
                                                 {{else}}
@@ -200,14 +200,14 @@
                                                 
                                                 </div>
 
-                                        {{#if description}}
-                                        <hr class="short_length">
-                                        <div class="post_item post_item_more_info">
-                                            {{description}}
-                                        </div>
-                                        {{/if}}
-                                    
-                                </div>  <br>
+                                                    {{#if description}}
+                                                    <hr class="short_length">
+                                                    <div class="post_item post_item_more_info">
+                                                        {{description}}
+                                                    </div>
+                                                    {{/if}}
+                                                
+                                            </div>  <br>
 
                                     <div style="width: 100%;"><!--main block-->
                                     
@@ -294,13 +294,13 @@
                                         <div class="posts_partition_middle"><!--2nd partition-->
                                             <span style="">
                                             {{#if ../trend_status}}<!--trend post-->
-                                                    {{#unless trend_followed}}
+                                                    {{#unless ../trend_followed}}
                                                         <a href="javascript:;" class="btn blue">
                                                         <i class="fa fa-plus"></i>&nbsp; Follow</a>
                                                     {{/unless}}
                                             {{else}}<!--other post:questio etc-->
-                                                    {{#unless post_owner}}
-                                                        <img class="icon_size_50" src="{{url}}/images/add_person.png">
+                                                    {{#unless ../post_owner}}
+                                                        <img class="icon_size_50" src="{{../../url}}/images/add_person.png">
                                                     {{/unless}}
 
                                             {{/if}}
@@ -313,7 +313,7 @@
                                                 <div class="fromnow">{{moment post_date "fromNow"}}</div>
                                                 <div class="clearfix"></div>
                                                 <div class="post_actions_button_left">
-                                                    <img class="icon_size_20" src="{{../url}}/images/mask.png">
+                                                    <img class="icon_size_20" src="{{../../url}}/images/mask.png">
                                                 </div>
                                                  {{#if post_owner}}
                                                  <div class="actions post_actions_button">
@@ -374,7 +374,7 @@
                                     <div class="item-body"> 
                                         {{#if pics.length }}
                                             <div style="margin-bottom: 3%;">                                                               
-                                                <img class="img-responsive" src="{{url}}/uploads/{{pics.[0]}}">
+                                                <img class="img-responsive" src="{{../../url}}/uploads/{{pics.[0]}}">
                                             </div>
                                         {{/if}}
                                             <div class="post_response post_item_body">
@@ -441,13 +441,13 @@
                         <a class="btn btn-link grey_button">
                             <span class="grey_button">
                                 <span class="social_value">{{comments.length}}</span>
-                                <img src="{{../url}}/images/comments.png">&nbsp;Comments
+                                <img src="{{../../url}}/images/comments.png">&nbsp;Comments
                             </span>
                         </a>
                     </div>
 
                     <div class="div_other_add_buttons">
-                        <a href="{{url}}/posts/section/{{../../page_type}}/all_responses/{{../_id}}">
+                        <a href="{{../../url}}/posts/section/{{../../page_type}}/all_responses/{{../_id}}">
                         <div class="other_add_buttons" style="border-right: 1px solid #666;">
                             View Other {{../../page_response}}s                            
                         </div>

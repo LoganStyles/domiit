@@ -10,6 +10,8 @@ var pab = require('../models/pab');
 var notice = require('../models/notice');
 var trend = require('../models/trend');
 
+var process_posts=require('../config/processor');
+
 
 /*chk loggedin*/
 function isLoggedIn(req, res, next) {
@@ -21,21 +23,21 @@ function isLoggedIn(req, res, next) {
 }
 
 /*get owner details*/
-function getLatestOwnerDetails(arr){
-    var promise=user.findOne({_id:arr.id},{
-        displayName:1,
-        displayPic:1,
-        designation:1,
-        trend_followed:1
-    }).exec();
-    return promise;
-}
+// function getLatestOwnerDetails(arr){
+//     var promise=user.findOne({_id:arr.id},{
+//         displayName:1,
+//         displayPic:1,
+//         designation:1,
+//         trend_followed:1
+//     }).exec();
+//     return promise;
+// }
 
-/*get trend story details*/
-function getStoryDetails(arr){
-    var promise=trend.findOne({_id:arr._id},{category:1,excerpt:1,pics:1}).exec();
-    return promise;
-}
+// /*get trend story details*/
+// function getStoryDetails(arr){
+//     var promise=trend.findOne({_id:arr._id},{category:1,excerpt:1,pics:1}).exec();
+//     return promise;
+// }
 
 function stipInputCase(param){
     var categ=param.replace("all_","");
@@ -53,13 +55,13 @@ router.get('/section/:item/:type/:id', isLoggedIn,function(req, res) {
     var id = req.params.id;
     //set status defaults
     let question_status=false,
-    home_status=false,
-    riddle_status=false,
-    pab_status=false,
-    article_status=false,
-    notice_status=false,
-    trend_status=false,
-    post_owner=false;
+        home_status=false,
+        riddle_status=false,
+        pab_status=false,
+        article_status=false,
+        notice_status=false,
+        trend_status=false,
+        post_owner=false;
 
     let page_icon=item+'s_icon.png';//post icon
 
@@ -155,115 +157,42 @@ router.get('/section/:item/:type/:id', isLoggedIn,function(req, res) {
         page_type='Trending';
         break;
     }
-    // console.log('section '+section.collection.collectionName)
 
 //get required data
 section.find(selection).sort({post_date:-1}).exec(function(err,items){
 
     var res_items=[];
     var curr_user_display_pic='avatar.png';//set default pic
-        if(req.user.displayPic[0]){
-            curr_user_display_pic=req.user.displayPic[req.user.displayPic.length - 1];
-        }
+    if(req.user.displayPic[0]){
+        curr_user_display_pic=req.user.displayPic[req.user.displayPic.length - 1];
+    }
 
     if(err){console.log(err);}
     else if(items){
     //items were found
     /*for each item update owner details such as displayPic & displayName
     since these may have changed*/
-    // console.log(items)
-    var processed_items=0;
     if(items.length >0){
-        var promise,trend_followed=false,
-            displayPic="",
-            status="",
-            display_name="",
-            res_id="";
 
-        items.forEach((cur_item,index,array)=>{
-            var updated_obj={};
-            if(item=="trend"){
-                promise = getStoryDetails(cur_item);//fetch data for this story
-            }else{
-                promise = getLatestOwnerDetails(cur_item.owner);//fetch data for this person
-            }
-             
-            promise.then(function(response){
-                // console.log(response);
-                if(item=="trend"){
-                    displayPic=(response.pics[0])?('/uploads/'+response.pics[response.pics.length -1]):('/images/trending.png');
-                    display_name=(response.category)?(response.category):('');
-                    res_id=(response._id)?((response._id).toString()):('');
-                    //check if this is a followed trend
-                    //cur_item._id=trend id
-                    //response.trend_followed is array of trend ids which cur 
-                    
-                    // for(var it=0,len=response.trend_followed.length;it <len;it++){
-                    //     if(cur_item._id.indexOf(response.trend_followed[it]) !==-1){
-                    //         trend_followed=true;
-                    //         break;
-                    //     }
-                    // }
-                    cur_item.trend_followed=trend_followed;
+        process_posts(items,req.user._id,function(processed_response){
 
-                }else{
-                    displayPic=(response.displayPic[0])?('/uploads/'+response.displayPic[response.displayPic.length -1]):('/uploads/avatar.png');
-                    status=(response.designation[0])?((response.designation[response.designation.length -1]).title):('');
-                    display_name=(response.displayName)?(response.displayName):('');
-                    res_id=(response._id)?((response._id).toString()):('');
-                }
-                // console.log(displayPic)
-                // console.log(display_name)
-                // console.log(res_id)
-
-                
-        
-                updated_obj={
-                    id:res_id,
-                    displayName:display_name,
-                    displayPic:displayPic,
-                    status:status
-                };
-
-                // update owner info
-                cur_item.owner=updated_obj;
-                // chk if current viewer is the owner
-                var req_user_id=(req.user._id).toString();
-                var response_id=(response._id).toString();
-
-                if(req_user_id ===response_id){
-                    console.log('user is the owner')
-                    cur_item.post_owner=true;
-                }else{
-                    console.log('user is NOT the owner')
-                }                
-
-                processed_items++;
-                // console.log('process inside:'+processed_items);
-                if(processed_items==array.length){//iteration has ended
-                    res_items=items;
-                    console.log(res_items);
-
-                    res.render(page, {
-                        url:process.env.URL_ROOT,
-                        displayPic:curr_user_display_pic,
-                        user_info:req.user,
-                        data:res_items,
-                        data_item:item,
-                        page_title: page_title,
-                        page_type:page_type,
-                        page_response:item_response,
-                        page_icon:page_icon,
-                        quest_status:question_status,
-                        art_status:article_status,
-                        riddle_status:riddle_status,
-                        notice_status:notice_status,
-                        pab_status:pab_status,
-                        trend_status:trend_status,
-                        home_status:home_status
-                    });
-
-                }
+            res.render(page, {
+                url:process.env.URL_ROOT,
+                displayPic:curr_user_display_pic,
+                user_info:req.user,
+                data:processed_response,
+                data_item:item,
+                page_title: page_title,
+                page_type:page_type,
+                page_response:item_response,
+                page_icon:page_icon,
+                quest_status:question_status,
+                art_status:article_status,
+                riddle_status:riddle_status,
+                notice_status:notice_status,
+                pab_status:pab_status,
+                trend_status:trend_status,
+                home_status:home_status
             });
 
         });
@@ -287,8 +216,8 @@ section.find(selection).sort({post_date:-1}).exec(function(err,items){
             trend_status:trend_status,
             home_status:home_status
         });
+
     }
-    
     
 }
 

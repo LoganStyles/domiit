@@ -468,6 +468,7 @@ router.post('/post_about_subitem/:type',function(req,res,next){
                 break;
             }   
             obj.body = convertToSentencCase((req.body.page_title).trim());
+            obj.post_type="trend";
             obj.description=convertToSentencCase((req.body.page_description).trim());
             obj.excerpt = (obj.description).substr(0,100);
             obj.category=req.body.page_category;

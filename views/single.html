@@ -90,7 +90,7 @@
                                                <a style="font-weight: 600;" href="" class="item-name">{{owner.displayName}}</a>
                                            </div>
                                            {{#if owner.status}}
-                                           <div>
+                                           <div class="post_item_body_status">
                                             {{owner.status}}
                                             </div>
                                         {{/if}}
@@ -103,7 +103,7 @@
 
                                     <div class="posts_partition_middle"><!--2nd partition-->
                                         <span style="">
-                                             {{#if ../trend_status}}<!--trend post-->
+                                             {{#if trend_status}}<!--trend post-->
                                                 {{#if trend_followed}}
                                                     <img class="icon_size_50 " src="{{../url}}/images/filler.png">
                                                 {{else}}
@@ -221,33 +221,37 @@
                 </div>
 
                     <!-- END PORTLET -->
-                    <div class="response_votes div_vote_comments">
+                     <div class="response_votes div_vote_comments">
                         <input type="hidden" id="post_response_id" value="{{_id}}">
 
-                        <a class="btn btn-link post_upvotes grey_button" >
-                        <span>
+                        <a class="btn btn-link post_upvotes" >
+                        <span class="grey_button">
                             <span class="social_value">{{upvotes}}</span>
-                            <img src="{{url}}/images/up_vote.png">&nbsp;Upvotes
+                            <i class="fa fa-long-arrow-up"></i>
+                            <!-- <img src="{{../url}}/images/up_vote.png">&nbsp; -->
+                            Upvotes
                         </span>
                         </a>
 
                         <a class="btn btn-link post_downvotes grey_button" >
-                            <span>
+                            <span class="grey_button">
                                 <span class="social_value">{{downvotes}}</span>
-                                <img src="{{url}}/images/down_vote.png">&nbsp;Downvotes
+                                <i class="fa fa-long-arrow-down "></i>
+                                <!-- <img src="{{../url}}/images/down_vote.png"> -->
+                                Downvotes
                             </span>
                         </a>
 
                         <a class="btn btn-link grey_button">
-                            <span class="">
+                            <span class="grey_button">
                                 <span class="social_value">{{comments.length}}</span>
-                                <img src="{{url}}/images/comments.png">&nbsp;Comments
+                                <img src="{{../../url}}/images/comments.png">&nbsp;Comments
                             </span>
                         </a>
                     </div>
 
                     <div class="div_other_add_buttons">
-                        <a href="{{url}}/posts/section/{{../item}}/all_{{category}}/{{_id}}">
+                        <a href="{{../url}}/posts/section/{{../data_item}}/all_{{category}}/{{_id}}">
                         <div class="other_add_buttons">
                             View Related Trends                            
                         </div>

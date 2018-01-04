@@ -100,7 +100,7 @@
 
                                          <div class="posts_partition_middle"><!--2nd partition-->
                                             <span>
-                                            {{#if ../trend_status}}<!--trend post-->
+                                            {{#if trend_status}}<!--trend post-->
                                                     {{#if trend_followed}}
                                                         <img class="icon_size_50 " src="{{../url}}/images/filler.png">
                                                     {{else}}
@@ -180,7 +180,7 @@
                                         
 
                                     </div>
-                                    {{#if ../pab_status}}
+                                    {{#if pab_status}}
 
                                     <div class="item-body"> 
                     <div style="width: 100%; color: #000;">
@@ -189,7 +189,7 @@
                         {{#if pics}}
                             <img class="img-responsive" src="{{../url}}/uploads/{{pics.[0]}}">
                             {{else}}
-                            <img class="img-responsive" src="{{../url}}/uploads/default_img.png">
+                            <img class="img-responsive" src="{{../url}}/images/default_img.png">
                         {{/if}}
                         
                         </div>
@@ -292,11 +292,11 @@
 
                                             {{#if pics.length }}
                                                 <div style="margin-bottom: 3%;">                                                                  
-                                                    <img class="img-responsive" src="{{url}}/uploads/{{pics.[0]}}">
+                                                    <img class="img-responsive" src="{{../url}}/uploads/{{pics.[0]}}">
                                                 </div>
                                             {{/if}}
 
-                                                {{#if ../art_status}}
+                                                {{#if art_status}}
                                                 <hr class="short_length">
                                                 <div class="post_item post_item_body">
                                                 {{else}}
@@ -323,7 +323,7 @@
 
                                         <div class="pull-left">
 
-                                        {{#if ../art_status}}
+                                        {{#if art_status}}
                                             <!--if page is article, chek for attachemnt-->
                                             {{#if attachment}}
                                             <input type="hidden" class="download_input_field" value="{{attachment}}">
@@ -347,25 +347,25 @@
 
                                                 <a class="btn btn-link ">
                                                 <span class="grey_button">
-                                                    {{#if ../quest_status}}
+                                                    {{#if question_status}}
                                                      <span class="social_value">{{answers_len}}</span>
                                                     <!-- <i class="fa fa-comment-o"></i>&nbsp; -->
                                                     <img src="{{../url}}/images/comments.png">&nbsp;
                                                     Answers
                                                     {{/if}}
 
-                                                    {{#if ../pab_status}}
+                                                    {{#if pab_status}}
                                                     <span class="social_value">{{comments_len}}</span>
                                                     <img src="{{../url}}/images/comments.png">&nbsp;Comments
                                                     {{/if}}
 
-                                                    {{#if ../art_status}}
+                                                    {{#if art_status}}
                                                     <span class="social_value">{{answers_len}}</span>
                                                     <img alt="" class="icon_size_15" src="{{../url}}/images/articles_icon.png">&nbsp;
                                                     Reviews
                                                     {{/if}}
 
-                                                    {{#if ../riddle_status}}
+                                                    {{#if riddle_status}}
                                                     <span class="social_value">{{answers_len}}</span>
                                                     <img src="{{../url}}/images/comments.png">
                                                     <!-- <img alt="" class="icon_size_15" src="{{../url}}/images/solution.png">&nbsp; -->
@@ -396,9 +396,9 @@
                    
                     <div class="task-footer" style="">
                         <div class="btn-arrow-link ">
-                        {{#unless ../pab_status}}
+                        {{#unless pab_status}}
                             <a class=" sbold grey_button response_button">
-                            <i class="fa fa-edit"></i>&nbsp;Write your {{../page_response}}</a>                            
+                            <i class="fa fa-edit"></i>&nbsp;Write your {{page_response}}</a>                            
                         {{/unless}}
 
                         

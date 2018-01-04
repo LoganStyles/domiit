@@ -83,7 +83,7 @@
                                                      <a style="font-weight: 600;" href="" class="item-name">{{owner.displayName}}</a>
                                                      </div>
                                                      {{#if owner.status}}
-                                                        <div>
+                                                        <div class="post_item_body_status">
                                                         {{owner.status}}
                                                         </div>
                                                       {{/if}}
@@ -95,7 +95,7 @@
 
                                         <div class="posts_partition_middle"><!--2nd partition-->
                                             <span style="">
-                                            {{#if ../trend_status}}<!--trend post-->
+                                            {{#if trend_status}}<!--trend post-->
                                                     {{#if trend_followed}}
                                                         <img class="icon_size_50 " src="{{../url}}/images/filler.png">
                                                     {{else}}
@@ -186,12 +186,29 @@
 
                                                 {{#if pics.length }}
                                                 <div style="margin-bottom: 3%;">                                                                    
-                                                    <img class="img-responsive" src="{{url}}/uploads/{{pics.[0]}}">
+                                                    <img class="img-responsive" src="{{../url}}/uploads/{{pics.[0]}}">
                                                 </div>
                                                 {{/if}}
+
+
+                                                {{#if art_status}}
+                                            <hr class="short_length">
+                                                <div class="post_item post_item_body">
+                                                {{else}}
                                                 <div class="post_item post_item_topic">
+                                                {{/if}}
                                                     {{body}}
+                                                
                                                 </div>
+
+                                                    {{#if description}}
+                                                    <hr class="short_length">
+                                                    <div class="post_item post_item_more_info">
+                                                        {{description}}
+                                                    </div>
+                                                    {{/if}}
+                                                
+                                             <br>
 
                                             </div>  
 
@@ -275,7 +292,7 @@
                                             <div class="posts_partition_middle"><!--2nd partition-->
                                                 <span style="">
                                                 {{#if ../trend_status}}<!--trend post-->
-                                                    {{#if trend_followed}}
+                                                    {{#if ../trend_followed}}
                                                         <img class="icon_size_50 " src="{{../url}}/images/filler.png">
                                                     {{else}}
                                                     <a href="javascript:;" class="btn blue">
@@ -298,8 +315,9 @@
                                 <div class="pull-right">
                                     <div class="fromnow">{{moment post_date "fromNow"}}</div>
                                     <div class="clearfix"></div>
+                                    
                                     <div class="post_actions_button_left">
-                                        <img src="{{url}}/images/group.png">
+                                        <img class="icon_size_20" src="{{../url}}/images/mask.png">
                                     </div>
                                     {{#if post_owner}}
                                      <div class="actions post_actions_button">
@@ -359,7 +377,7 @@
                                 <div class="item-body"> 
                                     {{#if pics.length }}
                                     <div style="margin-bottom: 3%;">                                                                    
-                                        <img class="img-responsive" src="{{url}}/uploads/{{pics.[0]}}">
+                                        <img class="img-responsive" src="{{../../url}}/uploads/{{pics.[0]}}">
                                     </div>
                                     {{/if}}
                                     <div style="color: #000;" class="post_question post_item_body">
@@ -396,7 +414,7 @@
                         <a class="btn btn-link ">
                             <span class="grey_button">
                                 <span class="social_value">{{comments.length}}</span>
-                                <img src="{{url}}/images/comments.png">&nbsp;Comments
+                                <img src="{{../../url}}/images/comments.png">&nbsp;Comments
                             </span>
                         </a>
                     </div>

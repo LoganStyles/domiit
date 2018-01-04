@@ -49,6 +49,8 @@ var Storage =multer.diskStorage({
     }
 });
 
+var process_posts=require('./config/processor');
+
 
 
 
@@ -211,98 +213,7 @@ function convertToSentencCase(text_data){
     return vfinal;
 }
 
-/*get owner details*/
-function getLatestOwnerDetails(arr){
-    var promise=user.findOne({_id:arr.id},{
-        displayName:1,
-        displayPic:1,
-        designation:1,
-        trend_followed:1
-    }).exec();
-    return promise;
-}
 
-function getStoryDetails(arr){
-    var promise=trend.findOne({_id:arr._id},{category:1,excerpt:1,pics:1}).exec();
-    return promise;
-}
-
-function processPagePosts(items,user_id){
-    var promise,trend_followed=false,
-    displayPic="",
-    status="",
-    display_name="",
-    res_id="",
-    processed_items=0,
-    res_items=[];
-
-    items.forEach((cur_item,index,array)=>{
-        var updated_obj={};
-        if(cur_item.post_type=="trend"){
-            promise = getStoryDetails(cur_item);//fetch data for this story
-        }else{
-            promise = getLatestOwnerDetails(cur_item.owner);//fetch data for this person
-        }
-
-        promise.then(function(response){
-            // console.log(response);
-            if(cur_item.post_type=="trend"){
-                displayPic=(response.pics[0])?('/uploads/'+response.pics[response.pics.length -1]):('/images/trending.png');
-                display_name=(response.category)?(response.category):('');
-                res_id=(response._id)?((response._id).toString()):('');
-                //check if this is a followed trend
-                //cur_item._id=trend id
-                //response.trend_followed is array of trend ids
-                //LOGIC ISSUES HERE
-                // for(var it=0,len=trend_followed.length;it <len;it++){
-                //     if(cur_item._id.indexOf(trend_followed[it]) !==-1){
-                //         trend_followed=true;
-                //         break;
-                //     }
-                // }
-                cur_item.trend_followed=trend_followed;
-
-            }else{
-                displayPic=(response.displayPic[0])?('/uploads/'+response.displayPic[response.displayPic.length -1]):('/uploads/avatar.png');
-                status=(response.designation[0])?((response.designation[response.designation.length -1]).title):('');
-                display_name=(response.displayName)?(response.displayName):('');
-                res_id=(response._id)?((response._id).toString()):('');
-            }
-
-            updated_obj={
-                id:res_id,
-                displayName:display_name,
-                displayPic:displayPic,
-                status:status
-            };
-
-                // update owner info
-                cur_item.owner=updated_obj;
-                // chk if current viewer is the owner
-                var req_user_id=(user_id).toString();
-                var response_id=(response._id).toString();
-
-                if(req_user_id ===response_id){
-                    console.log('user is the owner')
-                    cur_item.post_owner=true;
-                }else{
-                    console.log('user is NOT the owner')
-                }                
-
-                processed_items++;
-                // console.log('process inside:'+processed_items);
-                if(processed_items==array.length){//iteration has ended
-                    res_items=items;
-                    console.log(res_items);
-                    //return res_items;
-                }
-
-            });
-
-    });
-    //return res_items;
-
-}
 
 app.get('/profile',isLoggedIn, function(req, res) {
     console.log('inside profile');
@@ -425,49 +336,46 @@ sort them by date_created
 */
 app.get('/dashboard',isLoggedIn,function(req,res){
     console.log('inside dashboard');
-    var selection={},
-    skip_val=0,
-    limit_val=2,
+    //page defaults
+    var skip_val=0,
+    limit_val=5,
     page='dashboard',
     page_title='',
-    // page_type='',
-    page_results=[];
+    page_results=[],
+    res_item_trend=[];
 
-    //set paqe status defaults
-    let question_status=false,
-    home_status=true,
-    riddle_status=false,
-    pab_status=false,
-    article_status=false,
-    notice_status=false,
-    trend_status=false,
-    post_owner=false;
+    //get trending stories for sidebar headlines
+    trend.find().sort({date_created:1}).exec(function(err_trend,item_trend){
 
+        if(err_trend)console.log(err_trend);
+        if(item_trend){
+            res_item_trend=item_trend;
+        }
+    });
 
     var curr_user_display_pic='avatar.png';//set default pic
     if(req.user.displayPic[0]){
         curr_user_display_pic=req.user.displayPic[req.user.displayPic.length - 1];
     }
     
-    //using async
+    //using async get the last 5 results from each collection
     async.concat([question,article],function(model,callback){
-        //get the last 5 results from each collection
-        var query = model.find(selection).sort({"date_created":-1}).skip(skip_val).limit(limit_val);
+        var query = model.find({}).sort({"date_created":-1}).skip(skip_val).limit(limit_val);
         query.exec(function (err,docs){
             if(err){
                 console.log('err in query');
                 console.log(err);
             }else if(docs){
-               callback(err,docs); 
-           }      
+             callback(err,docs); 
+         }      
 
-       });
+     });
     },
     function(err2,res_items){
         if (err2){
             console.log('err2 ')
         }else if(res_items){
-            //results are merged so sort by date
+            //results are now merged so sort by date
             page_results=res_items.sort(function(a,b){
                 return (a.date_created < b.date_created)? 1:(a.date_created > b.date_created)? -1:0;
             });
@@ -476,218 +384,56 @@ app.get('/dashboard',isLoggedIn,function(req,res){
         }
 
         if(page_results.length >0){
-            
-            //page_results=processPagePosts(page_results,req.user._id);
+            //update other details needed by the post
+            process_posts(page_results,req.user._id,function(processed_response){
 
-            var promise,trend_followed=false,
-            displayPic="",
-            status="",
-            display_name="",
-            res_id="",
-            processed_items=0,
-            res_items=[];
+                res.render(page,{
+                    url:process.env.URL_ROOT,
+                    displayPic:curr_user_display_pic,
+                    user_info:req.user,
+                    data:processed_response,
+                    data_trend:res_item_trend,
+                    page_title: page_title,
 
-    page_results.forEach((cur_item,index,array)=>{
-        var updated_obj={};
-        if(cur_item.post_type=="trend"){
-            promise = getStoryDetails(cur_item);//fetch data for this story
-        }else{
-            promise = getLatestOwnerDetails(cur_item.owner);//fetch data for this person
-        }
-
-        promise.then(function(response){
-            // console.log(response);
-            if(cur_item.post_type=="trend"){
-                displayPic=(response.pics[0])?('/uploads/'+response.pics[response.pics.length -1]):('/images/trending.png');
-                display_name=(response.category)?(response.category):('');
-                res_id=(response._id)?((response._id).toString()):('');
-                //check if this is a followed trend
-                //cur_item._id=trend id
-                //response.trend_followed is array of trend ids
-                //LOGIC ISSUES HERE
-                // for(var it=0,len=trend_followed.length;it <len;it++){
-                //     if(cur_item._id.indexOf(trend_followed[it]) !==-1){
-                //         trend_followed=true;
-                //         break;
-                //     }
-                // }
-                cur_item.trend_followed=trend_followed;
-
-            }else{
-                displayPic=(response.displayPic[0])?('/uploads/'+response.displayPic[response.displayPic.length -1]):('/uploads/avatar.png');
-                status=(response.designation[0])?((response.designation[response.designation.length -1]).title):('');
-                display_name=(response.displayName)?(response.displayName):('');
-                res_id=(response._id)?((response._id).toString()):('');
-            }
-
-            updated_obj={
-                id:res_id,
-                displayName:display_name,
-                displayPic:displayPic,
-                status:status
-            };
-
-                // update owner info
-                cur_item.owner=updated_obj;
-                // chk if current viewer is the owner
-                var req_user_id=(req.user._id).toString();
-                var response_id=(response._id).toString();
-
-                if(req_user_id ===response_id){
-                    console.log('user is the owner')
-                    cur_item.post_owner=true;
-                }else{
-                    console.log('user is NOT the owner')
-                }                
-
-                processed_items++;
-                // console.log('process inside:'+processed_items);
-                if(processed_items==array.length){//iteration has ended
-                    res_items=page_results;
-                    console.log(res_items);
-                    //return res_items;
-
-                    console.log('DISPLAYING RESULT5T')
-
-                        res.render(page,{
-                        url:process.env.URL_ROOT,
-                        displayPic:curr_user_display_pic,
-                        user_info:req.user,
-                        data:page_results,
-                        page_title: page_title,
-                        // page_type:page_type,
-
-                        quest_status:question_status,
-                        art_status:article_status,
-                        riddle_status:riddle_status,
-                        notice_status:notice_status,
-                        pab_status:pab_status,
-                        trend_status:trend_status,
-                        home_status:home_status
-                    });
-                }
-
-            });//END promise
-
-    });//end foreach
-
-            
-
-        }else{
-            console.log('NOT DISPLAYING RESULT5T')
-            res.render(page,{
-            url:process.env.URL_ROOT,
-            displayPic:curr_user_display_pic,
-            user_info:req.user,
-            data:page_results,
-            page_title: page_title,
-            page_type:page_type,
-
-            quest_status:question_status,
-            art_status:article_status,
-            riddle_status:riddle_status,
-            notice_status:notice_status,
-            pab_status:pab_status,
-            trend_status:trend_status,
-            home_status:home_status
-        });
-       
-        }
-        
-        
-    });
-
-
-});
-
-
-/*fetch question,articles cats & sub cats*/
-app.get('/dashboard2',isLoggedIn, function(req, res) {
-    console.log('inside dashboard');   
-    let question_status=false,
-    article_status=false,
-    riddle_status=false,
-    pab_status=false,
-    home_status=true;
-
-    var displayPic='avatar.png';
-    if(req.user.displayPic[0]){
-        displayPic=req.user.displayPic[req.user.displayPic.length - 1];
-    }
-
-
-    //get all items
-    quest_cat.find().sort({value:1}).exec(function(err_quest,cat_quest){
-        var res_quest_cat=[],
-        res_article_cat=[],
-        res_pab_cat=[],
-        res_item_trend=[],
-        res_riddle_cat=[];
-
-        if(err_quest){console.log(err_quest);}
-        else if(cat_quest){
-            res_quest_cat=cat_quest;
-        }
-
-        art_cat.find().sort({value:1}).exec(function(err_art,cat_art){
-
-            if(err_art)console.log(err_art);
-            if(cat_art){
-                res_article_cat=cat_art;
-            }
-
-            riddle_cat.find().sort({value:1}).exec(function(err_rid,cat_rid){
-
-                if(err_rid)console.log(err_rid);
-                if(cat_rid){
-                    res_riddle_cat=cat_rid;
-                }
-
-
-                pab_cat.find().sort({value:1}).exec(function(err_pab,cat_pab){
-
-                    if(err_pab)console.log(err_pab);
-                    if(cat_pab){
-                        res_pab_cat=cat_pab;
-                    }
-
-                    trend.find().sort({date_created:1}).exec(function(err_trend,item_trend){
-
-                    if(err_trend)console.log(err_trend);
-                    if(item_trend){
-                        res_item_trend=item_trend;
-                    }
-
-                        res.render('dashboard', {
-                            title:'Dashboard',
-                            url:process.env.URL_ROOT,
-                            user_info:req.user,
-                            displayPic:displayPic,
-
-                            data_quest:res_quest_cat,
-                            data_art:res_article_cat,
-                            data_riddle:res_riddle_cat,
-                            data_pab:res_pab_cat,
-                            data_trend:res_item_trend,
-
-                            quest_status:question_status,
-                            art_status:article_status,
-                            riddle_status:riddle_status,
-                            home_status:home_status
-                        });
-
-                    });
-
+                    quest_page_status:false,
+                    art_page_status:false,
+                    riddle_page_status:false,
+                    notice_page_status:false,
+                    pab_page_status:false,
+                    trend_page_status:false,
+                    home_page_status:true
                 });
 
-            });             
+            });           
 
-        });
+        }else{
+            console.log('PAGE RESULTS INITIALLY EMPTY')
+            
+            res.render(page,{
+                url:process.env.URL_ROOT,
+                displayPic:curr_user_display_pic,
+                user_info:req.user,
+                data:page_results,
+                data_trend:res_item_trend,
+                page_title: page_title,
 
+                quest_page_status:false,
+                art_page_status:false,
+                riddle_page_status:false,
+                notice_page_status:false,
+                pab_page_status:false,
+                trend_page_status:false,
+                home_page_status:true
+            });
+
+        }
+        
+        
     });
 
 
 });
+
 
 app.get('/admin',isLoggedIn, function(req, res) {
     console.log('inside cms');
@@ -773,15 +519,14 @@ app.post('/ask_question',upload.single('question_photo'),function(req,res,next){
             status:req.user.current_appointment};
 
             let ask_quest =new question();
-            ask_quest.post_type="question";
-            ask_quest.access=1;//default :public access
-            ask_quest.status.question=true;
-            ask_quest.body=convertToSentencCase(req.body.question_title);
-            ask_quest.category = req.body.question_category;
-            ask_quest.sub_cat1=req.body.question_sub1;
-            ask_quest.sub_cat2=req.body.question_sub2;
-            ask_quest.description=req.body.question_info;
-            ask_quest.owner=owner_details;
+                ask_quest.post_type="question";
+                ask_quest.access=1;//default :public access
+                ask_quest.body=convertToSentencCase(req.body.question_title);
+                ask_quest.category = req.body.question_category;
+                ask_quest.sub_cat1=req.body.question_sub1;
+                ask_quest.sub_cat2=req.body.question_sub2;
+                ask_quest.description=req.body.question_info;
+                ask_quest.owner=owner_details;
 
             if (req.file && req.file.filename != null) {
                 ask_quest.pics.push(req.file.filename);
