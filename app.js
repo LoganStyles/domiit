@@ -359,7 +359,7 @@ app.get('/dashboard',isLoggedIn,function(req,res){
     }
     
     //using async get the last 5 results from each collection
-    async.concat([question,article],function(model,callback){
+    async.concat([question,article,riddle,pab,trend],function(model,callback){
         var query = model.find({}).sort({"date_created":-1}).skip(skip_val).limit(limit_val);
         query.exec(function (err,docs){
             if(err){
