@@ -55,12 +55,12 @@
 
 <body class="page-container-bg-solid page-md">
     <!-- BEGIN HEADER -->
-    <div class="page-header">
+    <div class="page-header " style="/*height: 140px;*/">
                           <!-- BEGIN HEADER MENU -->
         <div>
 
-         <nav class="navbar navbar-default" style="background-color: #000;">
-          <div class="container-fluid">
+         <nav class="navbar navbar-default" style="background-color: #000;margin-bottom: 0px;">
+          <div class="container-fluid" style="padding: 0 3%;">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#domiit_notifs_navbar" aria-expanded="false">
@@ -94,12 +94,7 @@
               <ul class="nav navbar-nav">
 
                  <li class="dropdown">
-                  <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                  <!--  <span>
-                        <img alt="" class="icon_size" src="{{url}}/images/advert_white.png">
-                    </span>
-                    <span style="display: block;">Adverts</span> -->
-
+                  <a href="javascript:;">
                     <div style="width: 100%;">
                         <i class="fa fa-bullhorn font_icon_style">
                           <!-- <span class="badge badge-default ">0</span> -->
@@ -108,17 +103,10 @@
                     <div style="">Adverts</div>
 
                    </a>
-                   <ul class="dropdown-menu">
-                    <!-- <li><a href="#">Overview</a></li>
-                    <li><a href="#">New Entry</a></li> -->
-                    <li role="separator" class="divider"></li>
-                    <li><a href="#">View All</a></li>
-                  </ul>
-                 
                 </li>
 
                 <li class="dropdown">
-                  <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <a href="javascript:;">
 
                     <div style="width: 100%;">
                         <i class="icon-list font_icon_style">
@@ -127,12 +115,6 @@
                     </div>                    
                     <div style="">Categories</div>
                    </a>
-                   <ul class="dropdown-menu">
-                   <!-- <li><a href="#">Overview</a></li>
-                    <li><a href="#">New Entry</a></li> -->
-                    <li role="separator" class="divider"></li>
-                    <li><a href="#">View All</a></li>
-                  </ul>
                  
                 </li>
 
@@ -140,26 +122,19 @@
               </ul>
               <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                  <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <a href="javascript:;">
                    <div style="width: 100%;">
                         <i class="icon-envelope font_icon_style">
                           <!-- <span class="badge badge-default ">0</span> -->
                         </i>
                     </div>                    
                     <div style="">Messages</div>
-                   </a>
-                   <ul class="dropdown-menu">
-                   <!-- <li><a href="#">Overview</a></li>
-                    <li><a href="#">New Entry</a></li> -->
-                    <li role="separator" class="divider"></li>
-                    <li><a href="#">View All</a></li>
-                  </ul>
-                 
+                   </a>                 
                 </li>
 
                 
                 <li class="dropdown">
-                  <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <a href="javascript:;">
                    
                     <div style="width: 100%;">
                         <i class="icon-bell font_icon_style">
@@ -167,18 +142,11 @@
                         </i>
                     </div>                    
                     <div style="">Notifications</div>
-                   </a>
-                   <ul class="dropdown-menu">
-                   <!-- <li><a href="#">Overview</a></li>
-                    <li><a href="#">New Entry</a></li> -->
-                    <li role="separator" class="divider"></li>
-                    <li><a href="#">View All</a></li>
-                  </ul>
-                 
+                   </a>                 
                 </li>
 
                 <li class="dropdown">
-                  <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <a href="javascript:;">
                    
                     <div style="width: 100%;">
                         <i class="icon-users font_icon_style">
@@ -187,14 +155,7 @@
                     </div>                    
                     <div>Friends</div>
 
-                   </a>
-                   <ul class="dropdown-menu">
-                   <!-- <li><a href="#">Overview</a></li>
-                    <li><a href="#">New Entry</a></li> -->
-                    <li role="separator" class="divider"></li>
-                    <li><a href="#">View All</a></li>
-                  </ul>
-                 
+                   </a>                 
                 </li>
 
                 
@@ -202,7 +163,8 @@
                   <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                   
                   <div style="width: 100%;">
-                    <img alt="" class="icon_size img-circle" style="margin: 0 30%;width: 35% !important;height: 2em;" src="{{url}}/uploads/{{displayPic}}">
+                    <img alt="" class="icon_size_18 img-circle" src="{{url}}/uploads/{{displayPic}}">
+                    <!--<img alt="" class="icon_size img-circle" style="margin: 0 30%;width: 35% !important;height: 2em;" src="{{url}}/uploads/{{displayPic}}">-->
                   </div>
                   <div style="text-transform: capitalize;">{{user_info.displayName}}</div>
                   </a>
@@ -220,167 +182,180 @@
 
         </div>
 
-        
-        <div class="page-header-menu" style="background-color: #fff;">
-            <div class="container">
+        <div><!--begin 2nd-->
 
-                <!-- BEGIN MEGA MENU -->
-                <!-- DOC: Apply "hor-menu-light" class after the "hor-menu" class below to have a horizontal menu with white background -->
-                <!-- DOC: Remove data-hover="dropdown" and data-close-others="true" attributes below to disable the dropdown opening on mouse hover -->
-                <div class="hor-menu  ">
-                    <ul class="nav navbar-nav">
-                        <li class="menu-dropdown classic-menu-dropdown {{#if home_status}}active{{/if}}">
-                            <a href="{{url}}/dashboard" class="swap_icons"> 
-                                <div style="margin-left: 30%;">
-                                <img alt="" class="icon_size" src="{{url}}/images/home.png">
-                                <img alt="" class="icon_size" src="{{url}}/images/home.png"></div>
-                                <div>Home</div>
-                                <span class="arrow"></span>
-                            </a>
-                        </li>
-                        
-
-                    </ul>
-                </div>
-
-                <div class="hor-menu ">
-                    <ul class="nav navbar-nav">
-                        
-                        <li class="menu-dropdown classic-menu-dropdown  {{#if quest_status}}active{{/if}}">
-
-                            <a href="javascript:;" class="swap_icons">
-                                <div style="margin-left: 30%;">
-                                <img alt="" class="icon_size" src="{{url}}/images/Question_and_Answer.png">
-                                <img alt="" class="icon_size" src="{{url}}/images/Question_and_Answer_white.png"></div>
-                                    <div>Questions & Answers</div>
-                                    <span class="arrow"></span>
-                            </a>
-                            <ul class="dropdown-menu pull-left">
-                                <li>
-                                    <a href="{{url}}/posts/section/question/All/0"> All </a>
-                                </li>
-                                <li>
-                                    <a href="{{url}}/posts/section/question/Unanswered/0"> Unanswered Questions </a>
-                                </li>
-                                <li>
-                                    <a href="{{url}}/posts/section/question/Answered/0"> Answered Questions </a>
-                                </li>
-                            </ul>
-
-                        </li>
-                        <li class="menu-dropdown classic-menu-dropdown {{#if art_status}}active{{/if}}">
-                            <a href="javascript:;" class="swap_icons">
-                                <div style="margin-left: 30%;">
-                                <img alt="" class="icon_size" src="{{url}}/images/articles_icon.png">
-                                <img alt="" class="icon_size" src="{{url}}/images/articles_icon.png">
-                                </div>
-                                <div> Articles & Reviews</div>
-                                <span class="arrow"></span>
-                            </a>
-                            <ul class="dropdown-menu pull-left">
-                                <li class=" ">
-                                    <a href="{{url}}/posts/section/article/All/0" class="nav-link  "> All </a>
-                                </li>
-                                <li class=" ">
-                                    <a href="{{url}}/posts/section/article/Unreviewed/0" class="nav-link  "> Unreviewed Articles </a>
-                                </li>
-                                <li class=" ">
-                                    <a href="{{url}}/posts/section/article/Reviewed/0" class="nav-link  "> Reviewed Articles </a>
-                                </li>
-
-                            </ul>
-                        </li>
-                        <li class="menu-dropdown classic-menu-dropdown  {{#if riddle_status}}active{{/if}}">
-
-                            <a href="javascript:;" class="swap_icons">
-                                <div style="margin-left: 30%;">
-                                <img alt="" class="icon_size" src="{{url}}/images/riddles_solutions.png">
-                                <img alt="" class="icon_size" src="{{url}}/images/riddles_solutions_white.png"></div>
-                                    <div>Riddles & Solutions</div>
-                                    <span class="arrow"></span>
-                            </a>
-                            <ul class="dropdown-menu pull-left">
-                                <li class=" ">
-                                    <a href="{{url}}/posts/section/riddle/All/0" class="nav-link  "> All </a>
-                                </li>
-                                <li class=" ">
-                                    <a href="{{url}}/posts/section/riddle/Unresolved/0" class="nav-link  "> Unresolved Riddles </a>
-                                </li>
-                                <li class=" ">
-                                    <a href="{{url}}/posts/section/riddle/Solved/0" class="nav-link  "> Solved Riddles </a>
-                                </li>
-
-                            </ul>
-
-                        </li>
-                        
-
-                        <li class="menu-dropdown classic-menu-dropdown {{#if pab_status}}active{{/if}}">
-                            <a href="{{url}}/posts/section/pab/All/0" class="swap_icons">
-                                <div style="margin-left: 30%;">
-                                <img alt="" class="icon_size" src="{{url}}/images/books.png">
-                                <img alt="" class="icon_size" src="{{url}}/images/books_white.png"></div>
-
-                                <div> Posted Books</div>
-                                <span class="arrow"></span>
-                            </a>                                
-                        </li>
-                        <li class="menu-dropdown classic-menu-dropdown ">
-                            <a href="javascript:;" class="swap_icons">
-                                <div style="margin-left: 30%;">
-                                <i class="fa fa-share-square-o font_icon_style_leftbar"></i>
-                                <!-- <img alt="" class="icon_size" src="{{url}}/images/my_requests.png">
-                                <img alt="" class="icon_size" src="{{url}}/images/my_requests_white.png"> -->
-
-                                </div>
-                                <div> Requests</div>
-                                <span class="arrow"></span>
-                            </a>
-                            <ul class="dropdown-menu pull-left">
-                                <li class=" ">
-                                    <a href="#" class="nav-link  "> Requests For Answers </a>
-                                </li>
-                                <li class=" ">
-                                    <a href="#" class="nav-link  "> Requests For Review </a>
-                                </li>
-                                <li class=" ">
-                                    <a href="#" class="nav-link  "> Requests For Solutions</a>
-                                </li>
-
-                            </ul>
-                        </li>
-                                               
-                         <li class="menu-dropdown classic-menu-dropdown ">
-
-                            <a href="{{url}}/posts/section/notice/All/0" class="swap_icons">
-                                <div style="margin-left: 30%;">
-                                <img alt="" class="icon_size" src="{{url}}/images/notice_board.png">
-                                <img alt="" class="icon_size" src="{{url}}/images/notice_board_white.png"></div>
-                                    <div>Notice Board</div>
-                                    <span class="arrow"></span>
-                            </a>                            
-
-                        </li>
-
-                        <li class="menu-dropdown classic-menu-dropdown ">
-
-                            <a href="javascript:;" class="swap_icons">
-                                <div style="margin-left: 30%;">
-                                <img alt="" class="icon_size" src="{{url}}/images/user_group.png">
-                                <img alt="" class="icon_size" src="{{url}}/images/user_group_white.png"></div>
-                                    <div>User Groups</div>
-                                    <span class="arrow"></span>
-                            </a>                            
-
-                        </li>
-
-                    </ul>
-                </div>
-                    <!-- END MEGA MENU -->
-                    <div class="clearfix"></div>
+         <nav class="navbar navbar-default" style="background-color: #fff;/*height:80px;*/width: 100%;">
+          <div class="container-fluid" style="padding: 0 1%;">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#domiit_notifs_navbar_main" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
             </div>
-        </div>
-            <!-- END HEADER MENU -->
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="domiit_notifs_navbar_main">
+              <ul class="nav navbar-nav">
+
+                <li class="dropdown nav_button_spacing {{#if home_status}}active{{/if}}" >
+                  <a href="{{url}}/dashboard">
+
+                    <div style="width: 100%;">
+                      <div class="icon_centralise">
+                        <img alt="" class="icon_size" src="{{url}}/images/home.png">
+                      </div>
+
+                    </div>
+                    <div class="icon_text">Home</div>
+                  </a>
+                </li>
+
+                <li class="dropdown nav_button_spacing {{#if quest_status}}active{{/if}}">
+                  <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+
+                    <div style="width: 100%;">
+                      <div class="icon_centralise">
+                        <img alt="" class="icon_size" src="{{url}}/images/Question_and_Answer.png">
+                      </div>
+
+                    </div>
+                    <div class="icon_text">Questions & Answers</div>
+                  </a>
+
+                  <ul class="dropdown-menu">
+                    <li><a href="{{url}}/posts/section/question/All/0">All</a></li>
+                    <li>
+                      <a href="{{url}}/posts/section/question/Unanswered/0">Unanswered Questions</a></li>
+                      <li>
+                        <a href="{{url}}/posts/section/question/Answered/0">Answered Questions</a></li>
+
+                      </ul>
+                    </li>
+
+                    <li class="dropdown nav_button_spacing {{#if art_status}}active{{/if}}">
+                      <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+
+                        <div style="width: 100%;">
+                          <div class="icon_centralise">
+                            <img alt="" class="icon_size" src="{{url}}/images/articles_icon.png">
+                          </div>
+
+                        </div>
+                        <div class="icon_text">Articles & Reviews</div>
+                      </a>
+
+                      <ul class="dropdown-menu">
+                        <li><a href="{{url}}/posts/section/article/All/0">All</a></li>
+                        <li>
+                          <a href="{{url}}/posts/section/article/Unreviewed/0">Unreviewed Articles </a></li>
+                          <li>
+                            <a href="{{url}}/posts/section/article/Reviewed/0">Reviewed Articles</a></li>
+
+                          </ul>
+                        </li>
+
+                        <li class="dropdown nav_button_spacing {{#if riddle_status}}active{{/if}}">
+                          <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+
+                            <div style="width: 100%;">
+                              <div class="icon_centralise">
+                                <img alt="" class="icon_size" src="{{url}}/images/riddles_solutions.png">
+                              </div>
+
+                            </div>
+                            <div class="icon_text">Riddles & Solutions</div>
+                          </a>
+
+                          <ul class="dropdown-menu">
+                            <li><a href="{{url}}/posts/section/riddle/All/0">All</a></li>
+                            <li>
+                              <a href="{{url}}/posts/section/riddle/Unresolved/0">Unresolved Riddles </a></li>
+                              <li>
+                                <a href="{{url}}/posts/section/riddle/Solved/0">Solved Riddles</a></li>
+
+                              </ul>
+                            </li>
+
+                            <li class="dropdown nav_button_spacing {{#if pab_status}}active{{/if}}">
+                              <a href="{{url}}/posts/section/pab/All/0">
+
+                                <div style="width: 100%;">
+                                  <div class="icon_centralise">
+                                    <img alt="" class="icon_size" src="{{url}}/images/books.png">
+                                  </div>
+
+                                </div>
+                                <div class="icon_text">Posted Books</div>
+                              </a>
+                            </li>
+                            <li class="dropdown nav_button_spacing {{#if request_status}}active{{/if}}">
+                              <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+
+                                <div style="width: 100%;">
+                                  <div class="icon_centralise">
+                                    <i class="fa fa-share-square-o font_icon_style_leftbar"></i>
+                                  </div>
+
+                                </div>
+                                <div class="icon_text">Requests</div>
+                              </a>
+
+                              <ul class="dropdown-menu">
+                              <li><a href="javascript:;">Requests For Answers</a></li>
+                                <li>
+                                  <a href="javascript:;">Requests For Review </a></li>
+                                  <li>
+                                    <a href="javascript:;">Requests For Solutions</a></li>
+
+                                  </ul>
+                                </li>
+
+                                <li class="dropdown nav_button_spacing {{#if notice_status}}active{{/if}}">
+                              <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+
+                                <div style="width: 100%;">
+                                  <div class="icon_centralise">
+                                    <img alt="" class="icon_size" src="{{url}}/images/notice_board.png">
+                                  </div>
+
+                                </div>
+                                <div class="icon_text">Notice Board</div>
+                              </a>
+
+                              <ul class="dropdown-menu">
+                              <li><a href="javascript:;">Post Notice</a></li>
+                                <li>
+                                  <a href="javascript:;">View Notices</a></li>
+
+                                  </ul>
+                                </li>
+
+                                <li class="dropdown nav_button_spacing {{#if usergroup_status}}active{{/if}}">
+                              <a href="javascript:;">
+
+                                <div style="width: 100%;">
+                                  <div class="icon_centralise">
+                                    <img alt="" class="icon_size" src="{{url}}/images/user_group.png">
+                                  </div>
+
+                                </div>
+                                <div class="icon_text">User Groups</div>
+                              </a>
+                            </li>
+                              </ul>
+
+                            </div><!-- /.navbar-collapse -->
+                          </div><!-- /.container-fluid -->
+                        </nav>
+
+                      </div><!--end second-->
+
+        
+        
     </div>
         <!-- END HEADER -->
 

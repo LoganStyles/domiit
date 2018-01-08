@@ -1,121 +1,309 @@
 var total_messages = 5;
-var delay_amount = 0;
+var delay_amount = 1000;
 var fade_speed = 200;
 var socket = io();
-var URL_ROOT="https://ancient-falls-19080.herokuapp.com";
-// var URL_ROOT="http://localhost:8000";
+// var URL_ROOT="https://ancient-falls-19080.herokuapp.com";
+var URL_ROOT="http://localhost:8000";
 
 // Connect to Socket.io
 socket.connect(URL_ROOT);
-// console.log('fetcher is loaded');
 
-socket.on('all_questions',function(json){
-	console.log('inside question posts socket');
-	var oldest_post = $('.posted').first();
+var oldest_post;
+console.log('inside sockets');
+
+socket.on('new_unanswered_posts',function(json){
+
+	console.log('new_unanswered_posts');
+	oldest_post = $('.posted').last();
 	//get count of posts before appending another
 	var count = $('.posted').length;
-	console.log('count is '+count);
-
-	//remove oldest post from the DOM
-	function removePost(){
-		//fade post out
-		oldest_post.animate({opacity:0},fade_speed,function(){
-			//remove post from DOM
-			oldest_post.remove();
-		});
-	}
-
-	//add new post to the DOM
-	function addPost(){
-		//constuct HTML to append
-		$('.question_all_post_area').prepend($(post_type));//append html
-		//fade post in
-		$('.posted').last().animate({opacity:1},fade_speed,function(){
-			//animation is complete
-			console.log('animation is complete');
-		});
-	}
-
-	//if there are more than 'total messages', start removing from the top
+	console.log('total current page posts is '+count);
+	
+	//if there are more than 'total messages', start removing from the bottom
 	if(count >= total_messages){
 		//delay for fading elements in and out
 		delay_amount = fade_speed +1;
 		//remove the post from the DOM
 		console.log('removing post');
-		removePost();
+		removePost(oldest_post);
 	}
 
-	var parsed = JSON.parse(json);
+	displayPost('.dashboard_page',json);
+	displayPost('.section_page',json);
 
-	var post_type='<div class="portlet light posted">';
-		post_type+='<div class="portlet-title">';
-		post_type+='<div class="caption caption-md">';
-		post_type+='<i class="fa fa-question"></i><span class="caption-subject  bold uppercase" style="color: #86be25">Question</span>';
+});
+
+//remove oldest post from the DOM
+function removePost(post){
+	//fade post out
+	post.animate({opacity:0},fade_speed,function(){
+		//remove post from DOM
+		post.remove();
+	});
+}
+
+//add new post to the DOM
+function addPost(selected_class,content){
+	//constuct HTML to append
+	$(selected_class).prepend($(content));//append html
+	//fade post in
+	// $('.question_all_post_area').prepend($(post_type));//append html
+	$('.posted').first().animate({opacity:1},fade_speed,function(){
+		//animation is complete
+		console.log('animation is complete');
+	});
+}
+
+function displayPost(selected_class,json){
+	var parsed = JSON.parse(json);
+	//create content
+                       
+	var post_content='<div class="portlet light posted">';
+		post_content+='<input type="hidden" id="post_id" value="'+parsed._id+'">';
+		post_content+='<input type="hidden" id="post_type" value="'+parsed.post_type+'">';
+		post_content+='<div class="portlet-title"><div class="caption caption-md">';
+		post_content+='<span class="caption-subject  bold post_box_name">'+parsed.post_type+'&nbsp;</span>';
 		if(parsed.category){
-			post_type+='&nbsp;<span class="caption-helper">'+parsed.category+'</span>&nbsp;';
+			post_content+='<span class="caption-helper post_category grey_cats left_border">'+parsed.category+'&nbsp;</span>';
 		}
 		if(parsed.sub_cat1){
-			post_type+='|&nbsp;<span class="caption-helper">'+parsed.sub_cat1+'</span> &nbsp;';
+			post_content+='<span class="caption-helper post_sub_cat1 grey_cats left_border">'+parsed.sub_cat1+'&nbsp;</span>';
 		}
-
 		if(parsed.sub_cat2){
-			post_type+='|&nbsp;<span class="caption-helper">'+parsed.sub_cat2+'</span>';	
+			post_content+='<span class="caption-helper post_sub_cat2 grey_cats left_border">'+parsed.sub_cat2+'&nbsp;</span>';
 		}
 		
-		
-		post_type+='</div><div class="actions">';
-		post_type+='<div class="btn-group">';
-		post_type+='<span class="item-status" data-toggle="dropdown" style="cursor: pointer;">';
-		post_type+='<i class="fa fa-ellipsis-v"></i></span>';
-		post_type+='<ul class="dropdown-menu pull-right">';
-		post_type+='<li><a href="javascript:;"><i class="fa fa-pencil"></i> Edit </a></li>';
-		post_type+='<li><a href="javascript:;"><i class="fa fa-trash-o"></i> Delete </a></li>';
-		post_type+='<li><a href="javascript:;"><i class="fa fa-ban"></i> Share </a></li>';
-		post_type+='<li><a href="javascript:;"> Request Answer </a></li></ul></div></div></div>';
-		post_type+='<div class="portlet-body"><div class="scroller"  data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">';
-		post_type+='<div class="general-item-list"><div class="item"><div class="item-head"><div class="item-details">';
-		if(parsed.owner.displayPic){
-			post_type+='<img class="item-pic" src="'+URL_ROOT+'/uploads/'+parsed.owner.displayPic+'">';	
-		}
-		
-		post_type+='<a href="" class="item-name primary-link">'+parsed.owner.displayName+'</a>';
-		
+		post_content+='</div></div>';
+		post_content+='<div class="portlet-body" style="padding-top: 0px;">';
+		post_content+='<div class="" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">';
+		post_content+='<div class="general-item-list">';
+		post_content+='<div class="item"><div class="item-head">';
+		post_content+='<div style="width: 100%;"><!--main block-->';
+		post_content+='<div class="posts_partition"><!--1st partition-->';
+		post_content+='<div style="width: 100%;"><div class="section_posts_avatar">';
+		post_content+='<img class="icon_size_50 img-circle" src="'+URL_ROOT+'/uploads/'+parsed.owner.displayPic+'">';
+		post_content+='</div><div class="section_posts_text">';
+		post_content+='<div><a style="font-weight: 600;" href="" class="item-name">'+parsed.owner.displayName+'</a></div>';
 		if(parsed.owner.status){
-			post_type+='<span>, '+parsed.owner.status+'</span>';	
+			 post_content+='<div class="post_item_body_status">'+parsed.owner.status+'</div>';
 		}
-		post_type+='<span class="item-label">just now</span>';		
-		post_type+='</div></div><div class="item-body">';
+		post_content+='</div><div class="clearfix"></div></div></div>';
+		post_content+='<div class="posts_partition_middle"><!--2nd partition-->';
+		post_content+='<span>';
+		if(parsed.trend_status){
+			if(parsed.trend_followed){
+				post_content+='<img class="icon_size_50 " src="'+URL_ROOT+'/images/filler.png">';
+			}else{
+				post_content+='<a href="javascript:;" class="btn blue"><i class="fa fa-plus"></i>&nbsp; Follow</a>';
+			}
+
+		}else{//other post:questio etc-->
+			if(parsed.post_owner){
+				post_content+='<img class="icon_size_50 " src="'+URL_ROOT+'/images/filler.png">';
+			}else{
+				post_content+='<img class="icon_size_50 " src="'+URL_ROOT+'/images/add_person.png">';
+			}
+		}
+		post_content+='</span></div>';
+		post_content+='<div class="posts_partition"><!--3rd partition-->';
+		post_content+='<div class="pull-right">';
+		var item_date=moment(parsed.post_date).fromNow();
+		post_content+='<div class="fromnow">'+item_date+'</div>';
+		post_content+='<div class="clearfix"></div>';
+		post_content+='<div class="post_actions_button_left">';
+		post_content+='<img class="icon_size_20" src="'+URL_ROOT+'/images/mask.png">';
+		post_content+='</div>';
+		if(parsed.post_owner){
+			post_content+='<div class="actions post_actions_button">';
+			post_content+='<div class="btn-group"><span class="item-status cursor_dropper" data-toggle="dropdown">';
+			post_content+='<i class="fa fa-ellipsis-v"></i> </span>';
+			post_content+='<ul class="dropdown-menu pull-right">';
+			post_content+='<li class="edit_section_item">';
+			post_content+='<a href="#"><i class="fa fa-pencil"></i> Edit </a></li>';
+			post_content+='<li class="delete_section_item"><a href="#">';
+			post_content+='<i class="fa fa-trash-o"></i> Delete </a></li>';
+			post_content+='<li><a href="javascript:;">';
+			post_content+='<i class="fa fa-ban"></i> Request for answer </a>';
+			post_content+='</li></ul></div></div>';
+                                
+            }else{
+            post_content+='<div class="actions post_actions_button">';
+			post_content+='<div class="btn-group">';
+			post_content+='<span class="item-status cursor_dropper" data-toggle="dropdown">';
+			post_content+='<i class="fa fa-ellipsis-v"></i></span>';
+            post_content+='<ul class="dropdown-menu pull-right">';
+            post_content+='<li class="follow_section_item">';
+            post_content+='<a href="#">';
+            post_content+='<i class="fa fa-plus"></i> Follow </a>';
+            post_content+=' </li>';
+            post_content+='<li class="bookmark_section_item">';
+            post_content+='<a href="#">';
+            post_content+='<i class="fa fa-bookmark"></i> Bookmark </a>';
+            post_content+='</li>';
+            post_content+='<li>';
+            post_content+='<a href="javascript:;">';
+            post_content+='<i class="fa fa-ban"></i> Report Abuse </a>';
+            post_content+='</li></ul></div></div>';                                
+            post_content+='';
+            }
+		post_content+='</div><!--end float right--><div class="clearfix"></div></div><div class="clearfix"></div></div>';
+		post_content+='</div>';
+		if(parsed.pab_status){
+			post_content+='<div class="item-body"><div style="width: 100%; color: #000;">';
+			post_content+='<div class="posts_pab_itemimage">';
+			if(parsed.pics){
+				post_content+='<img class="img-responsive" src="'+URL_ROOT+'/uploads/'+parsed.pics[0]+'">';
+			}else{
+				post_content+='<img class="img-responsive" src="'+URL_ROOT+'/images/default_img.png">';
+			}
+
+		post_content+='</div>';
+		post_content+='<div class="posts_pab_itemright"><div>';
+		if(parsed.body){
+			post_content+='<div class="posts_pab_itemright_row">';
+			post_content+='<div class="posts_pab_itemtitle">Title:</div>';
+			post_content+='<div class="posts_pab_itemdetails pab_ititle">'+parsed.body+'</div></div>';
+
+		}
+		if(parsed.author){
+			post_content+='<div class="posts_pab_itemright_row">';
+			post_content+='<div class="posts_pab_itemtitle">Author:</div>';
+			post_content+='<div class="posts_pab_itemdetails pab_iauthor">'+parsed.author+'</div></div>';
+		}
+		if(parsed.pages){
+			post_content+='<div class="posts_pab_itemright_row">';
+			post_content+='<div class="posts_pab_itemtitle">Pages:</div>';
+			post_content+='<div class="posts_pab_itemdetails pab_ipages">'+parsed.pages+'</div></div>';
+		}
+		if(parsed.amount){
+			post_content+='<div class="posts_pab_itemright_row">';
+			post_content+='<div class="posts_pab_itemtitle">Price:</div>';
+			post_content+='<div class="posts_pab_itemdetails pab_iamount">N'+parsed.amount+'</div></div>';
+		}
+		if(parsed.isbn){
+			post_content+='<div class="posts_pab_itemright_row">';
+			post_content+='<div class="posts_pab_itemtitle">ISBN:</div>';
+			post_content+='<div class="posts_pab_itemdetails pab_iISBN">N'+parsed.isbn+'</div></div>';
+		}
+		if(parsed.publishers){
+			post_content+='<div class="posts_pab_itemright_row">';
+			post_content+='<div class="posts_pab_itemtitle">Publisher:</div>';
+			post_content+='<div class="posts_pab_itemdetails pab_ipublishers">'+parsed.publishers+'</div></div>';
+		}
+		if(parsed.bookshop){
+			post_content+='<div class="posts_pab_itemright_row">';
+			post_content+='<div class="posts_pab_itemtitle">Bookshop:</div>';
+			post_content+='<div class="posts_pab_itemdetails pab_ibookshop">'+parsed.bookshop+'</div></div>';
+		}
+		if(parsed.url){
+			post_content+='<div class="posts_pab_itemright_row">';
+			post_content+='<div class="posts_pab_itemtitle">Url:</div>';
+			post_content+='<div class="posts_pab_itemdetails pab_iurl">'+parsed.url+'</div></div>';
+		}
+		post_content+='</div></div><div class="clearfix"></div></div>';
+		post_content+='<div style="width: 100%; color: #000;padding: 2%;">';
+		post_content+='<div class=""><ul class="nav nav-tabs navbar-right">';
+		var content_id=count++;
+		post_content+='<li class="active"><a data-toggle="tab" href="#synopsis'+content_id+'">SYNOPSIS</a></li>';
+		post_content+='<li><a data-toggle="tab" href="#about_author'+content_id+'">ABOUT THE AUTHOR</a></li>';
+		post_content+='</ul><div class="clearfix"></div><div class="tab-content">';
+		post_content+='<div id="synopsis'+content_id+'" class="tab-pane fade in active">';
+		post_content+='<p class="pab_isynopsis">'+parsed.synopsis+'</p>';
+		post_content+='</div><div id="about_author'+content_id+'" class="tab-pane fade">';
+		post_content+='<p class="pab_iabout_author">'+parsed.about_author+'</p></div></div></div></div></div>';
+	}else{
+		post_content+='<div class="item-body">';
+		if(parsed.topic){
+			post_content+='<div class="post_item post_item_topic">'+parsed.topic+'</div>';
+		}
 		if(parsed.pics.length >0){
-			post_type+='<div style="margin-bottom: 3%;"><img class="img-responsive" src="'+URL_ROOT+'/uploads/'+parsed.pics[0]+'"></div>';
+			post_content+='<div style="margin-bottom: 3%;">';
+			post_content+='<img class="img-responsive" src="'+URL_ROOT+'/uploads/'+parsed.pics[0]+'"></div>';
 		}
-		
-		post_type+='<div style="color: #000;">'+parsed.body+'</div>';
-		post_type+='</div></div></div></div></div>';
-		post_type+='<div class="task-footer" style="margin: 2%;">';
-		post_type+='<a class="btn btn-circle btn-default" href="javascript:;">';
-		post_type+='<span><i class="fa fa-heart-o"></i><span>&nbsp;0</span>&nbsp;Likes</span></a>';
-		post_type+='<a class="btn btn-circle btn-default" href="javascript:;">';
-		post_type+='&nbsp;&nbsp;<span><i class="fa fa-comment-o"></i><span>&nbsp;0</span>&nbsp;comments</span></a>';
-		post_type+='<a class="btn btn-circle btn-default" href="javascript:;">';
-		post_type+='&nbsp;&nbsp;<span><i class="fa fa-share-alt"></i><span>&nbsp;0</span>&nbsp;Share</span></a>';
-		post_type+='</div><div class="task-footer" style="margin: 2%;"><div class="btn-arrow-link ">';
-		post_type+='<button type="button" class="btn dark btn-outline sbold uppercase"><i class="icon-pencil"></i>Write your answer</button>';
-		post_type+='</div></div><div class="clearfix"></div></div>';
+		if(parsed.art_status){
+			post_content+='<hr class="short_length"><div class="post_item post_item_body">';
+		}else{
+			post_content+='<div class="post_item post_item_topic">';
+		}
+		post_content+=parsed.body;
+		post_content+='</div>';
+		if(parsed.description){
+			post_content+='<hr class="short_length"><div class="post_item post_item_more_info">'+parsed.description+'</div>';
+		}
+		post_content+='</div> <br>';
+            
+	}
+
+	post_content+='<div style="width: 100%;"><!--main block-->';
+	post_content+='<div class="pull-left">';
+	if(parsed.art_status && parsed.attachemnt){
+		//if page is article, chek for attachemnt
+		post_content+='<input type="hidden" class="download_input_field" value="'+parsed.attachemnt+'">';
+		post_content+='<a type="button" class="btn dark btn-outline sbold uppercase download_button">';
+		post_content+='<i class="fa fa-cloud-download"></i>&nbsp;Download</a>';
+        }
+        post_content+='</div>';
+
+    post_content+='<div class="posts_partition_right"><!--3rd partition-->';
+    post_content+='<a class="btn btn-link post_likes">';
+    post_content+='<span class="grey_button"><span class="social_value ">'+parsed.likes+'&nbsp;</span>';
+    post_content+='<i class="fa fa-heart-o"></i>&nbsp;Likes</span></a>';
+
+    post_content+='<a class="btn btn-link "><span class="grey_button">';
+
+    if(parsed.question_status){
+    	post_content+='<span class="social_value">'+parsed.answers_len+'&nbsp;</span>';
+    	post_content+='<img src="'+URL_ROOT+'/images/comments.png">&nbsp;Answers';            
+    }
+    if(parsed.pab_status){
+    	post_content+='<span class="social_value">'+parsed.comments_len+'&nbsp;</span>';
+        post_content+='<img src="'+URL_ROOT+'/images/comments.png">&nbsp;Comments';
+    }
+    if(parsed.trend_status){
+    	post_content+='<span class="social_value">'+parsed.comments_len+'&nbsp;</span>';
+        post_content+='<img src="'+URL_ROOT+'/images/comments.png">&nbsp;Comments';
+    }
+	if(parsed.art_status){
+		post_content+='<span class="social_value">'+parsed.answers_len+'&nbsp;</span>';
+		post_content+='<img alt="" class="icon_size_15" src="'+URL_ROOT+'/images/articles_icon.png">&nbsp;Reviews';
+	}
+	if(parsed.riddle_status){
+		post_content+='<span class="social_value">'+parsed.answers_len+'&nbsp;</span>';
+		post_content+='<img src="'+URL_ROOT+'/images/comments.png">Solution';
+	}
+
+	post_content+='</span></a><a class="btn btn-link post_shares">';
+	post_content+='<span class="item-label grey_button">';
+	post_content+='<span class="social_value">'+parsed.shares+'&nbsp;</span>';
+	post_content+='<i class="fa fa-share-alt"></i>&nbsp;Shares</span></a></div>';
+	post_content+='<div class="clearfix"></div></div><hr style="margin:0;">';
+	post_content+='</div></div></div></div>';
+	post_content+='<!-- END PORTLET --><div class="task-footer" style="">';
+	post_content+='<div class="btn-arrow-link ">';
+	if(!parsed.pab_status){
+		post_content+='<a class=" sbold grey_button response_button">';
+		post_content+='<i class="fa fa-edit"></i>&nbsp;Write your '+parsed.page_response+'</a> ';
+	}
+	post_content+='</div></div><div class="clearfix"></div></div'
+        
+    post_content+='</div><!--end post-->';
+
 
 		//delay adding post to allow fading of deleted array
-	setTimeout(function(){
-		addPost();},delay_amount);
+		setTimeout(function(){
+			addPost(selected_class,post_content);},delay_amount);
+}
 
-	});
 
 
-/*handles responses for questions,articles etc:updates relevant pages in real time*/
-socket.on('responded',function(json){
 
-	console.log('a new response has been posted');
-	var parsed = JSON.parse(json);
-	var response_content="";
-	console.log('item_id '+parsed.item_id);
+	/*handles responses for questions,articles etc:updates relevant pages in real time*/
+	socket.on('responded',function(json){
+
+		console.log('a new response has been posted');
+		var parsed = JSON.parse(json);
+		var response_content="";
+		console.log('item_id '+parsed.item_id);
 	//find the right question
 	$('.post_responses .posted').each(function(key,value){
 		var post_id=$(this).find('#post_id').val();

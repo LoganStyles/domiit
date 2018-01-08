@@ -385,7 +385,7 @@ app.get('/dashboard',isLoggedIn,function(req,res){
 
         if(page_results.length >0){
             //update other details needed by the post
-            process_posts(page_results,req.user._id,function(processed_response){
+            process_posts.processPagePosts(page_results,req.user,function(processed_response){
 
                 res.render(page,{
                     url:process.env.URL_ROOT,
@@ -512,11 +512,14 @@ app.post('/ask_question',upload.single('question_photo'),function(req,res,next){
     }else{
 
         var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
+        var status=(req.user.designation[0])?((req.user.designation[req.user.designation.length -1]).title):('');
+        var display_name=(req.user.displayName)?(req.user.displayName):('');
+        var res_id=(req.user._id)?((req.user._id).toString()):('');
 
-        var owner_details={id:req.user._id,
-            displayName:req.user.displayName,
+        var owner_details={id:res_id,
+            displayName:display_name,
             displayPic:displayPic,
-            status:req.user.current_appointment};
+            status:status};
 
             let ask_quest =new question();
                 ask_quest.post_type="question";
@@ -538,9 +541,10 @@ app.post('/ask_question',upload.single('question_photo'),function(req,res,next){
 
             }else{   
                 var json = JSON.stringify(ask_quest, null, 2);
-                    // console.log(json);
-                    io.emit('all_questions', json);
-                    io.emit('unanswered_questions', json);
+                    console.log(json);//update dashboard,all questions & unanswered quests
+                    console.log('emitting...')
+                    io.emit('new_unanswered_posts', json);
+                    // io.emit('unanswered_questions', json);
                     res.json({success:true,msg:"Question submission succesful"});
                 }   
             });
@@ -563,11 +567,14 @@ app.post('/ask_article',article_upload,function(req,res,next){
     }else{
 
         var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
+        var status=(req.user.designation[0])?((req.user.designation[req.user.designation.length -1]).title):('');
+        var display_name=(req.user.displayName)?(req.user.displayName):('');
+        var res_id=(req.user._id)?((req.user._id).toString()):('');
 
-        var owner_details={id:req.user._id,
-            displayName:req.user.displayName,
+        var owner_details={id:res_id,
+            displayName:display_name,
             displayPic:displayPic,
-            status:req.user.current_appointment};
+            status:status};
 
             let write_art =new article();
             write_art.post_type="article";
@@ -618,11 +625,14 @@ app.post('/ask_riddle',upload.single('riddle_photo'),function(req,res,next){
         res.json({success:false,msg:"Your post failed, please update your profile first"});
     }else{
         var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
+        var status=(req.user.designation[0])?((req.user.designation[req.user.designation.length -1]).title):('');
+        var display_name=(req.user.displayName)?(req.user.displayName):('');
+        var res_id=(req.user._id)?((req.user._id).toString()):('');
 
-        var owner_details={id:req.user._id,
-            displayName:req.user.displayName,
+        var owner_details={id:res_id,
+            displayName:display_name,
             displayPic:displayPic,
-            status:req.user.current_appointment};
+            status:status};
 
             let ask_riddle =new riddle();
             ask_riddle.post_type="riddle";
@@ -661,14 +671,17 @@ app.post('/ask_pab',upload.single('pab_photo'),function(req,res,next){
     }else{
 
         var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
+        var status=(req.user.designation[0])?((req.user.designation[req.user.designation.length -1]).title):('');
+        var display_name=(req.user.displayName)?(req.user.displayName):('');
+        var res_id=(req.user._id)?((req.user._id).toString()):('');
 
-        var owner_details={id:req.user._id,
-            displayName:req.user.displayName,
+        var owner_details={id:res_id,
+            displayName:display_name,
             displayPic:displayPic,
-            status:req.user.current_appointment};
+            status:status};
 
             let ask_pab =new pab();
-            ask_pab.post_type="pab";
+            ask_pab.post_type="Post Books";
             ask_pab.access=1;//default :public access
             ask_pab.body=convertToSentencCase(req.body.pab_title);
             ask_pab.category = req.body.pab_category;
@@ -983,7 +996,7 @@ app.post('/response_item',upload.single('section_response_photo'),function(req,r
                     responderDisplayName:req.user.displayName,
                     responder_id:req.user._id,
                     responderDisplayPic:displayPic,
-                    responderStatus:req.user.current_appointment
+                    responderStatus:req.user.designation
                 }); 
 
                 //store img if exists
@@ -1134,10 +1147,14 @@ app.post('/update_item',section_update_upload,function(req,res,next){
         section.findOne({_id:section_id},function(error,result){//find the question that was responsed
             if(result){
                 var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
-                var owner_details={id:req.user._id,
-                                    displayName:req.user.displayName,
-                                    displayPic:displayPic,
-                                    status:req.user.current_appointment};
+                var status=(req.user.designation[0])?((req.user.designation[req.user.designation.length -1]).title):('');
+                var display_name=(req.user.displayName)?(req.user.displayName):('');
+                var res_id=(req.user._id)?((req.user._id).toString()):('');
+
+                var owner_details={id:res_id,
+                    displayName:display_name,
+                    displayPic:displayPic,
+                    status:status};
 
                 let updateSection = result;
                 updateSection.date_modified=new Date();
@@ -1220,10 +1237,14 @@ app.post('/update_pab_item',section_update_upload,function(req,res,next){
         section.findOne({_id:section_id},function(error,result){//find the pab that was responsed
             if(result){
                 var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
-                var owner_details={id:req.user._id,
-                                    displayName:req.user.displayName,
-                                    displayPic:displayPic,
-                                    status:req.user.current_appointment};
+                var status=(req.user.designation[0])?((req.user.designation[req.user.designation.length -1]).title):('');
+                var display_name=(req.user.displayName)?(req.user.displayName):('');
+                var res_id=(req.user._id)?((req.user._id).toString()):('');
+
+                var owner_details={id:res_id,
+                    displayName:display_name,
+                    displayPic:displayPic,
+                    status:status};
 
                 let updateSection = result;
                 updateSection.date_modified=new Date();

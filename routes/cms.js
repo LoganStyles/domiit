@@ -468,7 +468,7 @@ router.post('/post_about_subitem/:type',function(req,res,next){
                 break;
             }   
             obj.body = convertToSentencCase((req.body.page_title).trim());
-            obj.post_type="trend";
+            obj.post_type="trending";
             obj.description=convertToSentencCase((req.body.page_description).trim());
             obj.excerpt = (obj.description).substr(0,100);
             obj.category=req.body.page_category;
@@ -552,6 +552,7 @@ router.post('/post_about_subitem/:type',function(req,res,next){
                     update_items.category=req.body.page_category;            
                     update_items.description=convertToSentencCase(req.body.page_description);
                     update_items.excerpt = (update_items.description).substr(0,100);
+                    update_items.post_type="trending";
 
                     if (req.file && req.file.filename != null) {
                         update_items.pics.push(req.file.filename);

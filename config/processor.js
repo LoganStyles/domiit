@@ -2,29 +2,31 @@ var mongoose = require('mongoose');
 var user = require('../models/user');
 var trend = require('../models/trend');
 
+var methods={};
+
 /*get owner details*/
-function getLatestOwnerDetails(arr){
+methods.getLatestOwnerDetails=function (arr){
     var promise=user.findOne({_id:arr.id},{
         displayName:1,
         displayPic:1,
         designation:1,
-        trend_followed:1
+        trend_followed:1//string of ids
     }).exec();
     return promise;
-}
+};
 
-function getStoryDetails(arr){
-    var promise=trend.findOne({_id:arr._id},{category:1,excerpt:1,pics:1}).exec();
+methods.getStoryDetails=function (arr){
+    var promise=trend.findOne({_id:arr._id},{category:1,excerpt:1,pics:1,trend_followed:1}).exec();
     return promise;
-}
+};
 
 /*
 perform some operations on the posts such as updating display pics etc
-.chk type of post since some operations defer based on this
+.::chk type of post since some operations defer based on this
 .
 */
 
-module.exports=function processPagePosts(items,user_id,callback){
+methods.processPagePosts=function (items,user,callback){
     var promise,trend_followed=false,
     displayPic="",
     status="",
@@ -34,31 +36,30 @@ module.exports=function processPagePosts(items,user_id,callback){
 
     items.forEach((cur_item,index,array)=>{
         var updated_obj={};
-        if(cur_item.post_type=="trend"){
-            promise = getStoryDetails(cur_item);//fetch data for this story
+        if(cur_item.post_type=="trending"){
+            promise = this.getStoryDetails(cur_item);//fetch data for this story
         }else{
-            promise = getLatestOwnerDetails(cur_item.owner);//fetch data for this person
+            promise = this.getLatestOwnerDetails(cur_item.owner);//fetch data for this person
         }
 
         promise.then(function(response){
-            // console.log(response);
-            if(cur_item.post_type=="trend"){
+            console.log(response);
+            if(response && (cur_item.post_type=="trending")){
                 displayPic=(response.pics[0])?('/uploads/'+response.pics[response.pics.length -1]):('/images/trending.png');
                 display_name=(response.category)?(response.category):('');
                 res_id=(response._id)?((response._id).toString()):('');
                 //check if the current user is following this trend
                 //cur_item._id=trend id
-                //response.trend_followed is array of trend ids
-                //LOGIC ISSUES HERE
-                // for(var it=0,len=trend_followed.length;it <len;it++){
-                //     if(cur_item._id.indexOf(trend_followed[it]) !==-1){
-                //         trend_followed=true;
-                //         break;
-                //     }
-                // }
+                var user_trend_follows=user.trend_follows //is array of followed trend ids by user
+                for(var it=0,len=user_trend_follows.length;it <len;it++){
+                    if(cur_item._id.indexOf(user_trend_follows[it]) !==-1){
+                        trend_followed=true;
+                        break;
+                    }
+                }
                 cur_item.trend_followed=trend_followed;
 
-            }else{
+            }else if(response){
                 displayPic=(response.displayPic[0])?('/uploads/'+response.displayPic[response.displayPic.length -1]):('/uploads/avatar.png');
                 status=(response.designation[0])?((response.designation[response.designation.length -1]).title):('');
                 display_name=(response.displayName)?(response.displayName):('');
@@ -75,8 +76,8 @@ module.exports=function processPagePosts(items,user_id,callback){
                 // update owner info
                 cur_item.owner=updated_obj;
                 // chk if current viewer is the owner
-                var req_user_id=(user_id).toString();
-                var response_id=(response._id).toString();
+                var req_user_id=(user._id).toString();
+                var response_id=(response)?((response._id).toString()):('');
 
                 if(req_user_id ===response_id){
                     console.log('user is the owner')
@@ -100,4 +101,6 @@ module.exports=function processPagePosts(items,user_id,callback){
             });
 
         });
-}
+};
+
+module.exports=methods;

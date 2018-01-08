@@ -1,3 +1,389 @@
+<div class="portlet-body form">
+<div id="question_modal" class="modal fade" tabindex="-1">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title" id="question_sub1_header">Ask A Question</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" id="question_form" action="" method="post" enctype="multipart/form-data">
+                        <span class="form_submission_error"></span>
+                        <span class="form_submission_success"></span>
+
+                        <input type="hidden" name="question_id"  id="question_id" value="0">
+
+                        <div class="form-body">
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-lg-3 col-sm-12">Category </label>
+                                <div class="col-md-9 col-lg-9 col-sm-12">
+                                    <select class="form-control " name="question_category" id="question_category">
+                                           
+
+                                    </select>
+                                    <span class="req_opt">*required</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-md-3 col-lg-3 col-sm-12 control-label">Category-1</label>
+                                <div class="col-md-9 col-lg-9 col-sm-12 ">
+                                    <input type="text" name="question_sub1" id="question_sub1" class="form-control" value="">
+                                    <span class="req_opt">*optional</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-md-3 col-lg-3 col-sm-12 control-label">Category-2</label>
+                                <div class="col-md-9 col-lg-9 col-sm-12 ">
+                                    <input type="text" name="question_sub2" id="question_sub2" class="form-control" value="">
+                                    <span class="req_opt">*optional</span>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-md-3 col-lg-3 col-sm-12 control-label">Write your question</label>
+                                <div class="col-md-9 col-lg-9 col-sm-12 ">
+                                    <textarea  name="question_title" id="question_title" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
+                                </div>                                
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 col-lg-3 col-sm-12 control-label">Provide additional information</label>
+                                <div class="col-md-9 col-lg-9 col-sm-12 ">
+                                    <textarea  name="question_info" id="question_info" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
+                                </div>                                
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3 col-lg-3 col-sm-12"></div>
+
+                                <div class="col-md-9 col-lg-9 col-sm-12 ">
+                                    <label for="question_photo" class="col-md-6 col-lg-6 col-sm-12 control-label custom-file-upload">
+                                        <i class="fa fa-camera"></i> Add Photos
+                                    </label>
+                                    <div class="col-md-4 col-lg-6 col-sm-12">
+                                        <input id="question_photo" name="question_photo" type="file" accept="application/x-zip-compressed,image/*"/>
+                                    </div>
+                                    
+                                </div>                                
+                            </div>
+
+
+                            <div class="form-actions noborder pull-right">
+                                <input type="submit" class="btn blue" name="submit" value="Post" />
+                                <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+                            </div>
+                            <div class="clearfix"></div>
+
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+    <div id="article_modal" class="modal fade" tabindex="-1">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title" id="article_sub1_header">Write An Article</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" id="article_form" action="" method="post" enctype="multipart/form-data">
+                    <span class="form_submission_error"></span>
+                    <span class="form_submission_success"></span>
+
+                    <input type="hidden" name="article_id"  id="article_id" value="0">
+
+                    <div class="form-body">
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-lg-3 col-sm-12">Category </label>
+                            <div class="col-md-9 col-lg-9 col-sm-12">
+                                <select class="form-control " name="article_category" id="article_category">
+                                      
+
+                                </select>
+                                <span class="req_opt">*required</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label class="col-md-3 col-lg-3 col-sm-12 control-label">Category-1</label>
+                            <div class="col-md-9 col-lg-9 col-sm-12 ">
+                                <input type="text" name="article_sub1" id="article_sub1" class="form-control" value="">
+                                <span class="req_opt">*optional</span>
+                            </div>
+                            
+                        </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 col-lg-3 col-sm-12 control-label">Category-2</label>
+                        <div class="col-md-9 col-lg-9 col-sm-12 ">
+                         <input type="text" name="article_sub2" id="article_sub2" class="form-control" value="">
+                         <span class="req_opt">*optional</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 col-lg-3 col-sm-12 control-label">Topic</label>
+                        <div class="col-md-9 col-lg-9 col-sm-12 ">
+                         <input type="text" name="article_topic" id="article_topic" class="form-control" value="">
+                        </div>
+                    </div>
+
+
+                <div class="form-group">
+                    <label class="col-md-3 col-lg-3 col-sm-12 control-label">Write your article</label>
+                    <div class="col-md-9 col-lg-9 col-sm-12 ">
+                        <textarea  name="article_title" id="article_title" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
+                    </div>                                
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-3 col-lg-3 col-sm-12"></div>
+
+                    <div class="col-md-9 col-lg-9 col-sm-12 ">
+                        <label for="article_attachment" class="col-md-4 col-lg-4 col-sm-12 control-label custom-file-upload">
+                            <img src="{{url}}/images/upload_attachment.png" /> Upload Attachment
+                        </label>
+                        <div class="col-md-2 col-lg-2 col-sm-12">
+                            <input id="article_attachment" name="article_attachment" type="file" accept="application/x-zip-compressed"/>
+                        </div>
+
+
+                        <label for="article_photo" class="col-md-4 col-lg-4 col-sm-12 control-label custom-file-upload">
+                            <i class="fa fa-camera"></i> Add Photos
+                        </label>
+                        <div class="col-md-2 col-lg-2 col-sm-12">
+                            <input id="article_photo" name="article_photo" type="file" accept="application/x-zip-compressed,image/*"/>
+                        </div>
+                        
+                    </div>                                
+                </div>
+
+
+                <div class="form-actions noborder pull-right">
+                    <input type="submit" class="btn blue" name="submit" value="Post" />
+                    <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+                </div>
+                <div class="clearfix"></div>
+
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<div id="riddle_modal" class="modal fade" tabindex="-1">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title" id="riddle_sub1_header">Write A Riddle</h4>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" role="form" id="riddle_form" action="" method="post" enctype="multipart/form-data">
+            <span class="form_submission_error"></span>
+            <span class="form_submission_success"></span>
+
+            <input type="hidden" name="riddle_id"  id="riddle_id" value="0">
+
+            <div class="form-body">
+
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-lg-3 col-sm-12">Category </label>
+                    <div class="col-md-9 col-lg-9 col-sm-12">
+                        <select class="form-control " name="riddle_category" id="riddle_category">
+                              
+
+                        </select>
+                        <span class="req_opt">*required</span>                        
+                    </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Category-1</label>
+                  <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <input type="text" name="riddle_sub1" id="riddle_sub1" class="form-control" value="">
+                    <span class="req_opt">*optional</span>
+                </div>
+                
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 col-lg-3 col-sm-12 control-label">Category-2</label>
+              <div class="col-md-9 col-lg-9 col-sm-12 ">
+                <input type="text" name="riddle_sub2" id="riddle_sub2" class="form-control" value="">
+                <span class="req_opt">*optional</span>
+            </div>
+            
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-md-3 col-lg-3 col-sm-12 control-label">Write your riddle</label>
+            <div class="col-md-9 col-lg-9 col-sm-12 ">
+                <textarea  name="riddle_title" id="riddle_title" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
+            </div>                                
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-3 col-lg-3 col-sm-12"></div>
+
+            <div class="col-md-9 col-lg-9 col-sm-12 ">
+
+                <label for="riddle_photo" class="col-md-6 col-lg-6 col-sm-12 control-label custom-file-upload">
+                    <i class="fa fa-camera"></i> Add Photos
+                </label>
+                <div class="col-md-2 col-lg-2 col-sm-12">
+                    <input id="riddle_photo" name="riddle_photo" type="file" accept="application/x-zip-compressed,image/*"/>
+                </div>
+
+            </div>                                
+        </div>
+
+
+        <div class="form-actions noborder pull-right">
+            <input type="submit" class="btn blue" name="submit" value="Post" />
+            <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+        </div>
+        <div class="clearfix"></div>
+
+    </div>
+</form>
+</div>
+
+</div>
+
+
+<div id="pab_modal" class="modal fade" tabindex="-1">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title" id="pab_sub1_header">Post a book</h4>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" role="form" id="pab_form" action="" method="post" enctype="multipart/form-data">
+            <span class="form_submission_error"></span>
+            <span class="form_submission_success"></span>
+
+            <input type="hidden" name="pab_id"  id="pab_id" value="0">
+
+            <div class="form-body">
+
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-lg-3 col-sm-12">Genre </label>
+                    <div class="col-md-9 col-lg-9 col-sm-12">
+                        <select class="form-control " name="pab_category" id="pab_category">
+
+                        </select>
+                        <span class="req_opt">*required</span>
+                    </div>
+                </div>
+
+
+            <div class="form-group">
+                <div class="col-md-3 col-lg-3 col-sm-12"></div>
+
+                <div class="col-md-9 col-lg-9 col-sm-12 ">
+
+                    <label for="pab_photo" class="col-md-10 col-lg-10 col-sm-12 control-label custom-file-upload">
+                        <i class="fa fa-camera"></i> Upload Picture of book cover
+                    </label>
+                    <div class="col-md-2 col-lg-2 col-sm-12">
+                        <input id="pab_photo" name="pab_photo" type="file" accept="application/x-zip-compressed,image/*"/>
+                    </div>
+
+                </div>                                
+            </div>
+
+            <div class="form-group">
+                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Title of the book</label>
+                  <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <input type="text" name="pab_title" id="pab_title" class="form-control" value="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Author</label>
+                  <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <input type="text" name="pab_author" id="pab_author" class="form-control" value="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Amount</label>
+                  <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <input type="number" name="pab_amount" id="pab_amount" class="form-control" value="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">ISBN</label>
+                  <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <input type="text" name="pab_isbn" id="pab_isbn" class="form-control" value="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Number of pages</label>
+                  <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <input type="number" name="pab_pages" id="pab_pages" class="form-control" value="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Publishers</label>
+                  <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <input type="text" name="pab_publishers" id="pab_publishers" class="form-control" value="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Bookshop or Contact</label>
+                  <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <input type="text" name="pab_bookshop" id="pab_bookshop" class="form-control" value="">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-md-3 col-lg-3 col-sm-12 control-label">Url</label>
+                <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <input type="text" name="pab_url" id="pab_url" class="form-control" value="">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-md-3 col-lg-3 col-sm-12 control-label">Synopsis</label>
+                <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <textarea  name="pab_synopsis" id="pab_synopsis" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
+                </div>                                
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3 col-lg-3 col-sm-12 control-label">About the author</label>
+                <div class="col-md-9 col-lg-9 col-sm-12 ">
+                    <textarea  name="pab_about_author" id="pab_about_author" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
+                </div>                                
+            </div>
+
+
+
+            <div class="form-actions noborder pull-right">
+                <input type="submit" class="btn blue" name="submit" value="Post" />
+                <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+            </div>
+            <div class="clearfix"></div>
+
+        </div>
+    </form>
+    </div>
+
+</div>
+
+</div>
+
         <div id="section_delete_modal" class="modal fade" tabindex="-1">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>

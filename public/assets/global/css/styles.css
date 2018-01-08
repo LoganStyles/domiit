@@ -44,6 +44,21 @@
      text-align: left;
 }
 
+/*action bar*/
+.posts_top_actions_left{
+     float: left;
+     /*background-color: #fff;*/
+     font-weight: 600;
+     width: 50%;
+}
+
+.posts_top_actions_right{
+     float: left;
+     width: 50%;
+     text-align: right;
+}
+/**/
+
 .posts_pab_itemimage{
      width: 30%;
      display: inline-block;
@@ -250,6 +265,11 @@
      .object-fit_cover {
      	-o-object-fit: cover;
      	object-fit: cover;
+        
+        /*-webkit-background-size:cover;
+        -moz-background-size:cover;
+        -o-background-size:cover;
+        background-size:cover;*/
      }
 
      .profile_bios{
@@ -380,6 +400,13 @@
      
      }
 
+     .icon_size_18{
+        width: 18px;
+        /*max-width: 100%;*/
+        height: 18px;
+     
+     }
+
      .icon_size_20{
         /*width: 20px;*/
         max-width: 100%;
@@ -406,7 +433,7 @@
      .swap_icons:hover img:last-child{display:inline-block}
 
      .font_icon_style{
-        font-size: 2.2em;
+        font-size: 1.6em;
         text-align: center !important;
         /*margin: 0 auto;*/
         width: 100% !important;
@@ -414,13 +441,35 @@
      }
 
      .font_icon_style_leftbar{
-        font-size: 2.2em;
+        font-size: 1.6em;
         padding-top: 6px;
         /*text-align: center !important;
         width: 100% !important;
         height: 0.9em;*/
      }
 
+.icon_centralise{
+    margin: 0 auto;
+    width:30%;
+}
+
+.icon_text{
+    text-transform: capitalize;
+    color:#000;
+    font-weight: 600;
+}
+
+.non_scrolling_header{
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    z-index: 50;
+    left: 0;
+}
+
+.nav_button_spacing{
+    margin:0 10px;
+}
      
 
      /*file upload*/

@@ -1,0 +1,160 @@
+<div class="page-header-menu" style="background-color: #fff;">
+            <div class="container">
+
+                <!-- BEGIN MEGA MENU -->
+                <!-- DOC: Apply "hor-menu-light" class after the "hor-menu" class below to have a horizontal menu with white background -->
+                <!-- DOC: Remove data-hover="dropdown" and data-close-others="true" attributes below to disable the dropdown opening on mouse hover -->
+                <div class="hor-menu  ">
+                    <ul class="nav navbar-nav">
+                        <li class="menu-dropdown classic-menu-dropdown {{#if home_status}}active{{/if}}">
+                            <a href="{{url}}/dashboard" class="swap_icons"> 
+                                <div style="margin-left: 30%;">
+                                <img alt="" class="icon_size" src="{{url}}/images/home.png">
+                                <img alt="" class="icon_size" src="{{url}}/images/home.png"></div>
+                                <div>Home</div>
+                                <span class="arrow"></span>
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+                </div>
+
+                <div class="hor-menu ">
+                    <ul class="nav navbar-nav">
+                        
+                        <li class="menu-dropdown classic-menu-dropdown  {{#if quest_status}}active{{/if}}">
+
+                            <a href="javascript:;" class="swap_icons">
+                                <div style="margin-left: 30%;">
+                                <img alt="" class="icon_size" src="{{url}}/images/Question_and_Answer.png">
+                                <img alt="" class="icon_size" src="{{url}}/images/Question_and_Answer_white.png"></div>
+                                    <div>Articles & Reviews</div>
+                                    <span class="arrow"></span>
+                            </a>
+                            <ul class="dropdown-menu pull-left">
+                                <li>
+                                    <a href="{{url}}/posts/section/question/All/0"> All </a>
+                                </li>
+                                <li>
+                                    <a href="{{url}}/posts/section/question/Unanswered/0"> Unanswered Questions </a>
+                                </li>
+                                <li>
+                                    <a href="{{url}}/posts/section/question/Answered/0"> Answered Questions </a>
+                                </li>
+                            </ul>
+
+                        </li>
+                        <li class="menu-dropdown classic-menu-dropdown {{#if art_status}}active{{/if}}">
+                            <a href="javascript:;" class="swap_icons">
+                                <div style="margin-left: 30%;">
+                                <img alt="" class="icon_size" src="{{url}}/images/articles_icon.png">
+                                <img alt="" class="icon_size" src="{{url}}/images/articles_icon.png">
+                                </div>
+                                <div> Articles & Reviews</div>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="dropdown-menu pull-left">
+                                <li class=" ">
+                                    <a href="{{url}}/posts/section/article/All/0" class="nav-link  "> All </a>
+                                </li>
+                                <li class=" ">
+                                    <a href="{{url}}/posts/section/article/Unreviewed/0" class="nav-link  "> Unreviewed Articles </a>
+                                </li>
+                                <li class=" ">
+                                    <a href="{{url}}/posts/section/article/Reviewed/0" class="nav-link  "> Reviewed Articles </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <li class="menu-dropdown classic-menu-dropdown  {{#if riddle_status}}active{{/if}}">
+
+                            <a href="javascript:;" class="swap_icons">
+                                <div style="margin-left: 30%;">
+                                <img alt="" class="icon_size" src="{{url}}/images/riddles_solutions.png">
+                                <img alt="" class="icon_size" src="{{url}}/images/riddles_solutions_white.png"></div>
+                                    <div>Riddles & Solutions</div>
+                                    <span class="arrow"></span>
+                            </a>
+                            <ul class="dropdown-menu pull-left">
+                                <li class=" ">
+                                    <a href="{{url}}/posts/section/riddle/All/0" class="nav-link  "> All </a>
+                                </li>
+                                <li class=" ">
+                                    <a href="{{url}}/posts/section/riddle/Unresolved/0" class="nav-link  "> Unresolved Riddles </a>
+                                </li>
+                                <li class=" ">
+                                    <a href="{{url}}/posts/section/riddle/Solved/0" class="nav-link  "> Solved Riddles </a>
+                                </li>
+
+                            </ul>
+
+                        </li>
+                        
+
+                        <li class="menu-dropdown classic-menu-dropdown {{#if pab_status}}active{{/if}}">
+                            <a href="{{url}}/posts/section/pab/All/0" class="swap_icons">
+                                <div style="margin-left: 30%;">
+                                <img alt="" class="icon_size" src="{{url}}/images/books.png">
+                                <img alt="" class="icon_size" src="{{url}}/images/books_white.png"></div>
+
+                                <div> Posted Books</div>
+                                <span class="arrow"></span>
+                            </a>                                
+                        </li>
+                        <li class="menu-dropdown classic-menu-dropdown ">
+                            <a href="javascript:;" class="swap_icons">
+                                <div style="margin-left: 30%;">
+                                <i class="fa fa-share-square-o font_icon_style_leftbar"></i>
+                                <!-- <img alt="" class="icon_size" src="{{url}}/images/my_requests.png">
+                                <img alt="" class="icon_size" src="{{url}}/images/my_requests_white.png"> -->
+
+                                </div>
+                                <div> Requests</div>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="dropdown-menu pull-left">
+                                <li class=" ">
+                                    <a href="#" class="nav-link  "> Requests For Answers </a>
+                                </li>
+                                <li class=" ">
+                                    <a href="#" class="nav-link  "> Requests For Review </a>
+                                </li>
+                                <li class=" ">
+                                    <a href="#" class="nav-link  "> Requests For Solutions</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                                               
+                         <li class="menu-dropdown classic-menu-dropdown ">
+
+                            <a href="{{url}}/posts/section/notice/All/0" class="swap_icons">
+                                <div style="margin-left: 30%;">
+                                <img alt="" class="icon_size" src="{{url}}/images/notice_board.png">
+                                <img alt="" class="icon_size" src="{{url}}/images/notice_board_white.png"></div>
+                                    <div>Notice Board</div>
+                                    <span class="arrow"></span>
+                            </a>                            
+
+                        </li>
+
+                        <li class="menu-dropdown classic-menu-dropdown ">
+
+                            <a href="javascript:;" class="swap_icons">
+                                <div style="margin-left: 30%;">
+                                <img alt="" class="icon_size" src="{{url}}/images/user_group.png">
+                                <img alt="" class="icon_size" src="{{url}}/images/user_group_white.png"></div>
+                                    <div>User Groups</div>
+                                    <span class="arrow"></span>
+                            </a>                            
+
+                        </li>
+
+                    </ul>
+                </div>
+                    <!-- END MEGA MENU -->
+                    <div class="clearfix"></div>
+            </div>
+        </div>
+            <!-- END HEADER MENU -->

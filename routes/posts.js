@@ -174,7 +174,7 @@ section.find(selection).sort({post_date:-1}).exec(function(err,items){
     since these may have changed*/
     if(items.length >0){
 
-        process_posts(items,req.user._id,function(processed_response){
+        process_posts.processPagePosts(items,req.user,function(processed_response){
 
             res.render(page, {
                 url:process.env.URL_ROOT,
