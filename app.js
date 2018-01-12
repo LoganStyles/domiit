@@ -340,7 +340,7 @@ app.get('/dashboard',isLoggedIn,function(req,res){
     var skip_val=0,
     limit_val=5,
     page='dashboard',
-    page_title='',
+    page_title='Dashboard',
     page_results=[],
     res_item_trend=[];
 

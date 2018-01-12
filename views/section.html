@@ -735,40 +735,7 @@
 
         });
 
-           //save posts
-           $("body").on('click','.bookmark_section_item',function(){
-            //get this posts data
-            var parent=$(this).parents('.posted');
-            var id=parent.find('input#post_id').val();
-            var section=parent.find('input#post_type').val();
-
-            var url='{{url}}/saveItem';
-            console.log('url '+url);
-
-            $.ajax({
-                url:url,
-                type:'POST',
-                data:{'post_id':id,'section':section},
-                headers: {'X-My-App-Token': 'loganstyles'},
-                success:function(response){
-                    console.log(response);
-                    if(response.success==true){
-                        //display notif
-                        alert(response.msg)
-                    }else{
-
-                         }                        
-
-                },
-                error:function(xhr, status, err){
-                    console.log('error');
-                    console.log(xhr);
-                    console.log(status);
-                    console.log(err);
-                }
-            });
-
-        });
+           
 
 
             $( "#section_response_form" ).validate( {/*validate & submit response details*/

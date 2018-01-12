@@ -22,28 +22,133 @@ function isLoggedIn(req, res, next) {
     }
 }
 
-/*get owner details*/
-// function getLatestOwnerDetails(arr){
-//     var promise=user.findOne({_id:arr.id},{
-//         displayName:1,
-//         displayPic:1,
-//         designation:1,
-//         trend_followed:1
-//     }).exec();
-//     return promise;
-// }
-
-// /*get trend story details*/
-// function getStoryDetails(arr){
-//     var promise=trend.findOne({_id:arr._id},{category:1,excerpt:1,pics:1}).exec();
-//     return promise;
-// }
 
 function stipInputCase(param){
     var categ=param.replace("all_","");
     console.log('CATEG '+categ)
     return categ;
 }
+
+/*fetchs for a user's bookmarks & returns data if found*/
+function searchBookmarks(user,final_response){
+    var curr_bm,section;
+    var res_items=[];//set empty result array
+    var saved_bookmarks_len=user.bookmarks.length;
+    var saved_bookmarks=user.bookmarks;
+
+    //loop thru bookmarks & process them
+    for(var i=0;i<saved_bookmarks_len;i++){
+        curr_bm=saved_bookmarks[i];
+        console.log(curr_bm.body)
+        switch(curr_bm.body){
+            case'question':
+            section = question;
+            break;
+
+            case'article':
+            section = article;
+            break;
+
+            case'riddle':
+            section = riddle;
+            break;
+
+            case'pab':
+            section = pab;
+            break;
+
+            case'notice':
+            section = notice;
+            break;
+
+            case'trending':
+            section = trend;
+            break;
+
+        }
+        section.findOne({_id:curr_bm.item_id}).exec(function(err,item){
+            console.log('result item found')
+            // console.log(item)
+            res_items.push(item);
+
+            //loop has ended
+            if(i==saved_bookmarks_len){
+                process_posts.processPagePosts(res_items,user,function(processed_response){
+                    console.log('final result response');
+                    // console.log(processed_response);
+                    final_response(processed_response);                    
+                });
+            }
+        });  
+    }
+}
+
+/*get all bookmarked posts*/
+router.get('/get_bookmarked',isLoggedIn,function(req,res){
+
+    //set default pic
+    var curr_user_display_pic='avatar.png';
+    if(req.user.displayPic[0]){
+        curr_user_display_pic=req.user.displayPic[req.user.displayPic.length - 1];
+    }
+
+    var res_item_trend=[];
+    var page='dashboard',page_title='My Bookmarked Items';
+
+        //get trending stories for sidebar headlines
+        trend.find().sort({date_created:1}).exec(function(err_trend,item_trend){
+
+            if(err_trend)console.log(err_trend);
+            if(item_trend){
+                res_item_trend=item_trend;
+            }
+        });
+
+        console.log('get bookmarked');
+    var saved_bookmarks=req.user.bookmarks;//get saved bookmarks
+
+    if(saved_bookmarks.length>0){
+
+        //get saved bookmarks & display result
+        searchBookmarks(req.user,function(processed_response){
+
+            res.render(page,{
+                url:process.env.URL_ROOT,
+                displayPic:curr_user_display_pic,
+                user_info:req.user,
+                data:processed_response,
+                data_trend:res_item_trend,
+                page_title: page_title,
+
+                quest_page_status:false,
+                art_page_status:false,
+                riddle_page_status:false,
+                notice_page_status:false,
+                pab_page_status:false,
+                trend_page_status:false,
+                home_page_status:true
+            }); 
+
+        });
+    }else{
+        res.render(page,{
+            url:process.env.URL_ROOT,
+            displayPic:curr_user_display_pic,
+            user_info:req.user,
+            data:[],
+            data_trend:res_item_trend,
+            page_title: page_title,
+
+            quest_page_status:false,
+            art_page_status:false,
+            riddle_page_status:false,
+            notice_page_status:false,
+            pab_page_status:false,
+            trend_page_status:false,
+            home_page_status:true
+        });
+    }
+});
 
 
 /*get all posted questions,*/

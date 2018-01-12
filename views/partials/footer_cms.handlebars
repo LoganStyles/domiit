@@ -710,6 +710,42 @@
 
             $(document).ready(function(){
 
+            //bookmarks an item
+            //save posts
+           $("body").on('click','.bookmark_section_item',function(){
+            //get this posts data
+            var parent=$(this).parents('.posted');
+            var id=parent.find('input#post_id').val();
+            var section=parent.find('input#post_type').val();
+
+            var url='{{url}}/saveItem';
+            console.log('url '+url);
+
+            $.ajax({
+                url:url,
+                type:'POST',
+                data:{'post_id':id,'section':section},
+                headers: {'X-My-App-Token': 'loganstyles'},
+                success:function(response){
+                    console.log(response);
+                    if(response.success==true){
+                        //display notif
+                        alert(response.msg)
+                    }else{
+
+                         }                        
+
+                },
+                error:function(xhr, status, err){
+                    console.log('error');
+                    console.log(xhr);
+                    console.log(status);
+                    console.log(err);
+                }
+            });
+
+        });
+
             //convert text to sentence case
                 
                 $(".post_item_topic,.post_item_more_info,.post_item_body,#section_response_body,#section_response_body,#synopsis,#about_author").each(function(index,element){
@@ -843,6 +879,14 @@
                     console.log('selected_item_more_info '+selected_item_more_info);
                     $('#section_response_form').trigger('reset');
 
+                    //select response title
+                    var page_response="";
+                        switch(selected_type){
+                        case'question':
+                        page_response='answer';
+                        break;
+                    }
+
 
                     $('#section_response_id').val(selected_id);
                     $('#section_response_type').val(selected_type);
@@ -850,6 +894,7 @@
                     $('#section_response_body').text(selected_item_body);
                     $('#section_response_more_info').text(selected_item_more_info);
                     $('#section_response_details').focus();
+                    $('#section_response_header').text(page_response);
                     $('#section_response_modal').modal({backdrop: false, keyboard: false});
                     
                 });
