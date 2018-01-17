@@ -2,8 +2,8 @@ var total_messages = 5;
 var delay_amount = 1000;
 var fade_speed = 200;
 var socket = io();
-var URL_ROOT="https://ancient-falls-19080.herokuapp.com";
-// var URL_ROOT="http://localhost:8000";
+// var URL_ROOT="https://ancient-falls-19080.herokuapp.com";
+var URL_ROOT="http://localhost:8000";
 
 // Connect to Socket.io
 socket.connect(URL_ROOT);
@@ -29,7 +29,7 @@ socket.on('new_unanswered_posts',function(json){
 	}
 
 	displayPost('.dashboard_page',json);
-	displayPost('.section_page',json);
+	// displayPost('.section_page',json);
 
 });
 
@@ -66,12 +66,16 @@ function displayPost(selected_class,json){
 		if(parsed.category){
 			post_content+='<span class="caption-helper post_category grey_cats left_border">'+parsed.category+'&nbsp;</span>';
 		}
-		if(parsed.sub_cat1){
+
+		if(!parsed.notice_status){
+			if(parsed.sub_cat1){
 			post_content+='<span class="caption-helper post_sub_cat1 grey_cats left_border">'+parsed.sub_cat1+'&nbsp;</span>';
+			}
+			if(parsed.sub_cat2){
+				post_content+='<span class="caption-helper post_sub_cat2 grey_cats left_border">'+parsed.sub_cat2+'&nbsp;</span>';
+			}
 		}
-		if(parsed.sub_cat2){
-			post_content+='<span class="caption-helper post_sub_cat2 grey_cats left_border">'+parsed.sub_cat2+'&nbsp;</span>';
-		}
+		
 		
 		post_content+='</div></div>';
 		post_content+='<div class="portlet-body" style="padding-top: 0px;">';
@@ -149,6 +153,7 @@ function displayPost(selected_class,json){
 		post_content+='</div><!--end float right--><div class="clearfix"></div></div><div class="clearfix"></div></div>';
 		post_content+='</div>';
 		if(parsed.pab_status){
+			/*chk for books*/
 			post_content+='<div class="item-body"><div style="width: 100%; color: #000;">';
 			post_content+='<div class="posts_pab_itemimage">';
 			if(parsed.pics){
@@ -212,27 +217,52 @@ function displayPost(selected_class,json){
 		post_content+='</div><div id="about_author'+content_id+'" class="tab-pane fade">';
 		post_content+='<p class="pab_iabout_author">'+parsed.about_author+'</p></div></div></div></div></div>';
 	}else{
-		post_content+='<div class="item-body">';
-		if(parsed.topic){
-			post_content+='<div class="post_item post_item_topic">'+parsed.topic+'</div>';
+		/*else : chk for books*/
+
+		/*start else part of books by chking for notices*/
+		 
+		if(parsed.notice_status){
+			post_content+='<div class="item-body">';
+			post_content+='<div class="post_item post_item_topic" style="text-align: center;text-transform: uppercase;">';
+			post_content+=parsed.sub_cat1+'</div><hr class="short_length">';
+			if(parsed.topic){
+				post_content+='<div class="post_item post_item_topic">'+parsed.topic+'</div>';
+			}
+
+			if(parsed.pics.length >0){
+				post_content+='<div style="margin-bottom: 3%;">';
+				post_content+='<img class="img-responsive" src="'+URL_ROOT+'/uploads/'+parsed.pics[0]+'"></div>';
+			}
+			post_content+='<div class="post_item post_item_body">';
+			post_content+=parsed.body;
+			post_content+='</div></div> <br>';
+
+		}else{/*start other posts:quests,arts,ridds,trends*/
+
+			post_content+='<div class="item-body">';
+			
+			if(parsed.topic){
+				post_content+='<div class="post_item post_item_topic">'+parsed.topic+'</div>';
+			}
+			if(parsed.pics.length >0){
+				post_content+='<div style="margin-bottom: 3%;">';
+				post_content+='<img class="img-responsive" src="'+URL_ROOT+'/uploads/'+parsed.pics[0]+'"></div>';
+			}
+			if(parsed.art_status){
+				post_content+='<hr class="short_length"><div class="post_item post_item_body">';
+			}else{
+				post_content+='<div class="post_item post_item_topic">';
+			}
+			post_content+=parsed.body;
+			post_content+='</div>';
+			if(parsed.description){
+				post_content+='<hr class="short_length"><div class="post_item post_item_more_info">'+parsed.description+'</div>';
+			}
+			post_content+='</div> <br>';/*end other posts:quests,arts,ridds,trends*/
 		}
-		if(parsed.pics.length >0){
-			post_content+='<div style="margin-bottom: 3%;">';
-			post_content+='<img class="img-responsive" src="'+URL_ROOT+'/uploads/'+parsed.pics[0]+'"></div>';
-		}
-		if(parsed.art_status){
-			post_content+='<hr class="short_length"><div class="post_item post_item_body">';
-		}else{
-			post_content+='<div class="post_item post_item_topic">';
-		}
-		post_content+=parsed.body;
-		post_content+='</div>';
-		if(parsed.description){
-			post_content+='<hr class="short_length"><div class="post_item post_item_more_info">'+parsed.description+'</div>';
-		}
-		post_content+='</div> <br>';
+		
             
-	}
+	} /*end if :chk for books-*/
 
 	post_content+='<div style="width: 100%;"><!--main block-->';
 	post_content+='<div class="pull-left">';
@@ -244,47 +274,95 @@ function displayPost(selected_class,json){
         }
         post_content+='</div>';
 
-    post_content+='<div class="posts_partition_right"><!--3rd partition-->';
-    post_content+='<a class="btn btn-link post_likes">';
-    post_content+='<span class="grey_button"><span class="social_value ">'+parsed.likes+'&nbsp;</span>';
-    post_content+='<i class="fa fa-heart-o"></i>&nbsp;Likes</span></a>';
+    if(parsed.notice_status){//partition_right : chking for notices
+        post_content+='<div class="posts_partition_right"><!--3rd partition-->';
+        post_content+='<a class="btn btn-link "><span class="grey_button">';
+        post_content+='<span class="social_value">'+parsed.views+'</span>&nbsp;Views';
+        post_content+='</span></a></div>';
 
-    post_content+='<a class="btn btn-link "><span class="grey_button">';
+    }else{//else partition_right : display for other options
 
-    if(parsed.question_status){
-    	post_content+='<span class="social_value">'+parsed.answers_len+'&nbsp;</span>';
-    	post_content+='<img src="'+URL_ROOT+'/images/comments.png">&nbsp;Answers';            
-    }
-    if(parsed.pab_status){
-    	post_content+='<span class="social_value">'+parsed.comments_len+'&nbsp;</span>';
-        post_content+='<img src="'+URL_ROOT+'/images/comments.png">&nbsp;Comments';
-    }
-    if(parsed.trend_status){
-    	post_content+='<span class="social_value">'+parsed.comments_len+'&nbsp;</span>';
-        post_content+='<img src="'+URL_ROOT+'/images/comments.png">&nbsp;Comments';
-    }
-	if(parsed.art_status){
-		post_content+='<span class="social_value">'+parsed.answers_len+'&nbsp;</span>';
-		post_content+='<img alt="" class="icon_size_15" src="'+URL_ROOT+'/images/articles_icon.png">&nbsp;Reviews';
-	}
-	if(parsed.riddle_status){
-		post_content+='<span class="social_value">'+parsed.answers_len+'&nbsp;</span>';
-		post_content+='<img src="'+URL_ROOT+'/images/comments.png">Solution';
-	}
+    	post_content+='<div class="posts_partition_right"><!--3rd partition-->';
+	    post_content+='<a class="btn btn-link post_likes">';
+	    post_content+='<span class="grey_button"><span class="social_value ">'+parsed.likes+'&nbsp;</span>';
+	    post_content+='<i class="fa fa-heart-o"></i>&nbsp;Likes</span></a>';
 
-	post_content+='</span></a><a class="btn btn-link post_shares">';
-	post_content+='<span class="item-label grey_button">';
-	post_content+='<span class="social_value">'+parsed.shares+'&nbsp;</span>';
-	post_content+='<i class="fa fa-share-alt"></i>&nbsp;Shares</span></a></div>';
+	    post_content+='<a class="btn btn-link "><span class="grey_button">';
+
+	    if(parsed.question_status){
+	    	post_content+='<span class="social_value">'+parsed.answers_len+'&nbsp;</span>';
+	    	post_content+='<img src="'+URL_ROOT+'/images/comments.png">&nbsp;Answers';            
+	    }
+	    if(parsed.pab_status){
+	    	post_content+='<span class="social_value">'+parsed.comments_len+'&nbsp;</span>';
+	        post_content+='<img src="'+URL_ROOT+'/images/comments.png">&nbsp;Comments';
+	    }
+	    if(parsed.trend_status){
+	    	post_content+='<span class="social_value">'+parsed.comments_len+'&nbsp;</span>';
+	        post_content+='<img src="'+URL_ROOT+'/images/comments.png">&nbsp;Comments';
+	    }
+		if(parsed.art_status){
+			post_content+='<span class="social_value">'+parsed.answers_len+'&nbsp;</span>';
+			post_content+='<img alt="" class="icon_size_15" src="'+URL_ROOT+'/images/articles_icon.png">&nbsp;Reviews';
+		}
+		if(parsed.riddle_status){
+			post_content+='<span class="social_value">'+parsed.answers_len+'&nbsp;</span>';
+			post_content+='<img src="'+URL_ROOT+'/images/comments.png">Solution';
+		}
+
+		post_content+='</span></a><a class="btn btn-link post_shares">';
+		post_content+='<span class="item-label grey_button">';
+		post_content+='<span class="social_value">'+parsed.shares+'&nbsp;</span>';
+		post_content+='<i class="fa fa-share-alt"></i>&nbsp;Shares</span></a></div>';
+
+    }
+
+    
+	
 	post_content+='<div class="clearfix"></div></div><hr style="margin:0;">';
 	post_content+='</div></div></div></div>';
-	post_content+='<!-- END PORTLET --><div class="task-footer" style="">';
-	post_content+='<div class="btn-arrow-link ">';
-	if(!parsed.pab_status){
-		post_content+='<a class=" sbold grey_button response_button">';
-		post_content+='<i class="fa fa-edit"></i>&nbsp;Write your '+parsed.page_response+'</a> ';
+	post_content+='<!-- END PORTLET -->';
+
+	if(parsed.notice_status){//partition_right : chking for notices
+		post_content+='<div class="task-footer" style="">';
+		if(parsed.sub_cat2=='notification'){// chking for notification type
+			post_content+='<div class="btn-arrow-link "><a class="btn btn-link post_likes">';
+			post_content+='<span class="grey_button">';
+			post_content+='<span class="social_value ">'+parsed.likes+'</span>';
+			post_content+='<i class="fa fa-heart-o"></i>&nbsp;Likes</span></a>';
+			post_content+='<a class="btn btn-link "><span class="grey_button">';
+			post_content+='<span class="social_value">'+parsed.comments_len+'</span>';
+			post_content+='<img src="'+URL_ROOT+'/images/comments.png">Comments</span></a>';
+			post_content+='<a class="btn btn-link post_shares"><span class="item-label grey_button">';
+			post_content+='<span class="social_value">'+parsed.shares+'</span>';
+			post_content+='<i class="fa fa-share-alt"></i>&nbsp;Shares</span></a></div>';
+		}else{
+			post_content+='<div class="btn-arrow-link "><a class="btn btn-link post_likes">';
+			post_content+='<span class="grey_button"><span class="social_value ">'+parsed.attending+'</span>';
+			post_content+='<i class="fa fa-user-plus"></i>&nbsp;Attending</span></a>';
+			post_content+='<a class="btn btn-link "><span class="grey_button">';
+			post_content+='<span class="social_value">'+parsed.not_attending+'</span>';
+			post_content+='<i class="fa fa-user"></i>-&nbsp;Not Attending</span></a>';
+			post_content+='<a class="btn btn-link "><span class="grey_button">';
+			post_content+='<span class="social_value">'+parsed.comments_len+'</span>';
+			post_content+='<img src="'+URL_ROOT+'/images/comments.png">Comments</span></a></div>';
+		}
+		post_content+='</div>';                                              
+	}else{//else task-footer : chking for pab
+
+		post_content+='<div class="task-footer" style="">';
+		post_content+='<div class="btn-arrow-link ">';
+		if(!parsed.pab_status){
+			post_content+='<a class=" sbold grey_button response_button">';
+			post_content+='<i class="fa fa-edit"></i>&nbsp;Write your '+parsed.page_response+'</a> ';
+		}
+		post_content+='</div></div>';
+
 	}
-	post_content+='</div></div><div class="clearfix"></div></div'
+
+	
+
+	post_content+='<div class="clearfix"></div></div';
         
     post_content+='</div><!--end post-->';
 

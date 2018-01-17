@@ -253,6 +253,7 @@ router.get('/section/:item/:type/:id', isLoggedIn,function(req, res) {
         section = notice;
         notice_status=true;
         item_response='';
+        page='notice';
         break;
 
         case'trend':

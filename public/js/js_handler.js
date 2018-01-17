@@ -1,5 +1,5 @@
-var URL_ROOT="https://ancient-falls-19080.herokuapp.com";
-// var URL_ROOT="http://localhost:8000";
+// var URL_ROOT="https://ancient-falls-19080.herokuapp.com";
+var URL_ROOT="http://localhost:8000";
 
 function newData(){
     $('#item_about_form').trigger('reset');
@@ -76,52 +76,56 @@ function modalLoader(type, mode,cat_type) {
         $(form_action).val("insert");
         $(modal).modal({backdrop: false, keyboard: false});
         $(header).text('Add');
-        var category_id="#"+type+"_modal "+"#"+type+"_category";
-        console.log(category_id)
+
+        if(type != 'notice'){
+            var category_id="#"+type+"_modal "+"#"+type+"_category";
+            console.log(category_id)
         //determine type & make ajax call
         //fetch categories
-            var url=URL_ROOT+'/fetchCats';
-            console.log(url);
+        var url=URL_ROOT+'/fetchCats';
+        console.log(url);
 
-            $.ajax({
-                url:url,
-                type:'GET',
-                data:{'section':type},
-                headers: {'X-My-App-Token': 'loganstyles'},
-                success:function(response){
-                    console.log(response);
-                    if(response.success==true){
-                        var res_cats=(response.cats);
-                        var options="";
-                        res_cats.forEach((curr_item,index,array)=>{
-                            options+='<option value="'+curr_item.title+'">'+curr_item.title+'</option>';
-                        });
+        $.ajax({
+            url:url,
+            type:'GET',
+            data:{'section':type},
+            headers: {'X-My-App-Token': 'loganstyles'},
+            success:function(response){
+                console.log(response);
+                if(response.success==true){
+                    var res_cats=(response.cats);
+                    var options="";
+                    res_cats.forEach((curr_item,index,array)=>{
+                        options+='<option value="'+curr_item.title+'">'+curr_item.title+'</option>';
+                    });
 
-                        $(category_id).html(options);
+                    $(category_id).html(options);
 
-                    }else{
-                        console.log('response is false');                            
-                    }                        
+                }else{
+                    console.log('response is false');                            
+                }                        
 
-                },
-                error:function(xhr, status, err){
-                    console.log('error');
-                    console.log(xhr);
-                    console.log(status);
-                    console.log(err);
-                }
-            });
-        break;
-
-        case 'edit':
-        console.log('inside mode edit: ');                
-        $(modal).modal({backdrop: false, keyboard: false});
-        $(header).text('Edit');
-        break;
-
-        default:
-        break;
+            },
+            error:function(xhr, status, err){
+                console.log('error');
+                console.log(xhr);
+                console.log(status);
+                console.log(err);
+            }
+        });
     }
+    
+    break;
+
+    case 'edit':
+    console.log('inside mode edit: ');                
+    $(modal).modal({backdrop: false, keyboard: false});
+    $(header).text('Edit');
+    break;
+
+    default:
+    break;
+}
 }
 
 

@@ -1,650 +1,5 @@
-<div class="portlet-body form">
-<div id="question_modal" class="modal fade" tabindex="-1">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title" id="question_sub1_header">Ask A Question</h4>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal" role="form" id="question_form" action="" method="post" enctype="multipart/form-data">
-                        <span class="form_submission_error"></span>
-                        <span class="form_submission_success"></span>
 
-                        <input type="hidden" name="question_id"  id="question_id" value="0">
-
-                        <div class="form-body">
-
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-lg-3 col-sm-12">Category </label>
-                                <div class="col-md-9 col-lg-9 col-sm-12">
-                                    <select class="form-control " name="question_category" id="question_category">
-                                           
-
-                                    </select>
-                                    <span class="req_opt">*required</span>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                              <label class="col-md-3 col-lg-3 col-sm-12 control-label">Category-1</label>
-                                <div class="col-md-9 col-lg-9 col-sm-12 ">
-                                    <input type="text" name="question_sub1" id="question_sub1" class="form-control" value="">
-                                    <span class="req_opt">*optional</span>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                              <label class="col-md-3 col-lg-3 col-sm-12 control-label">Category-2</label>
-                                <div class="col-md-9 col-lg-9 col-sm-12 ">
-                                    <input type="text" name="question_sub2" id="question_sub2" class="form-control" value="">
-                                    <span class="req_opt">*optional</span>
-                                </div>
-                            </div>
-
-
-                            <div class="form-group">
-                                <label class="col-md-3 col-lg-3 col-sm-12 control-label">Write your question</label>
-                                <div class="col-md-9 col-lg-9 col-sm-12 ">
-                                    <textarea  name="question_title" id="question_title" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
-                                </div>                                
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-3 col-lg-3 col-sm-12 control-label">Provide additional information</label>
-                                <div class="col-md-9 col-lg-9 col-sm-12 ">
-                                    <textarea  name="question_info" id="question_info" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
-                                </div>                                
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-3 col-lg-3 col-sm-12"></div>
-
-                                <div class="col-md-9 col-lg-9 col-sm-12 ">
-                                    <label for="question_photo" class="col-md-6 col-lg-6 col-sm-12 control-label custom-file-upload">
-                                        <i class="fa fa-camera"></i> Add Photos
-                                    </label>
-                                    <div class="col-md-4 col-lg-6 col-sm-12">
-                                        <input id="question_photo" name="question_photo" type="file" accept="application/x-zip-compressed,image/*"/>
-                                    </div>
-                                    
-                                </div>                                
-                            </div>
-
-
-                            <div class="form-actions noborder pull-right">
-                                <input type="submit" class="btn blue" name="submit" value="Post" />
-                                <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
-                            </div>
-                            <div class="clearfix"></div>
-
-                        </div>
-                    </form>
-                </div>
-
-            </div>
-
-    <div id="article_modal" class="modal fade" tabindex="-1">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title" id="article_sub1_header">Write An Article</h4>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal" role="form" id="article_form" action="" method="post" enctype="multipart/form-data">
-                    <span class="form_submission_error"></span>
-                    <span class="form_submission_success"></span>
-
-                    <input type="hidden" name="article_id"  id="article_id" value="0">
-
-                    <div class="form-body">
-
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-lg-3 col-sm-12">Category </label>
-                            <div class="col-md-9 col-lg-9 col-sm-12">
-                                <select class="form-control " name="article_category" id="article_category">
-                                      
-
-                                </select>
-                                <span class="req_opt">*required</span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                          <label class="col-md-3 col-lg-3 col-sm-12 control-label">Category-1</label>
-                            <div class="col-md-9 col-lg-9 col-sm-12 ">
-                                <input type="text" name="article_sub1" id="article_sub1" class="form-control" value="">
-                                <span class="req_opt">*optional</span>
-                            </div>
-                            
-                        </div>
-
-                    <div class="form-group">
-                        <label class="col-md-3 col-lg-3 col-sm-12 control-label">Category-2</label>
-                        <div class="col-md-9 col-lg-9 col-sm-12 ">
-                         <input type="text" name="article_sub2" id="article_sub2" class="form-control" value="">
-                         <span class="req_opt">*optional</span>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-md-3 col-lg-3 col-sm-12 control-label">Topic</label>
-                        <div class="col-md-9 col-lg-9 col-sm-12 ">
-                         <input type="text" name="article_topic" id="article_topic" class="form-control" value="">
-                        </div>
-                    </div>
-
-
-                <div class="form-group">
-                    <label class="col-md-3 col-lg-3 col-sm-12 control-label">Write your article</label>
-                    <div class="col-md-9 col-lg-9 col-sm-12 ">
-                        <textarea  name="article_title" id="article_title" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
-                    </div>                                
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-3 col-lg-3 col-sm-12"></div>
-
-                    <div class="col-md-9 col-lg-9 col-sm-12 ">
-                        <label for="article_attachment" class="col-md-4 col-lg-4 col-sm-12 control-label custom-file-upload">
-                            <img src="{{url}}/images/upload_attachment.png" /> Upload Attachment
-                        </label>
-                        <div class="col-md-2 col-lg-2 col-sm-12">
-                            <input id="article_attachment" name="article_attachment" type="file" accept="application/x-zip-compressed"/>
-                        </div>
-
-
-                        <label for="article_photo" class="col-md-4 col-lg-4 col-sm-12 control-label custom-file-upload">
-                            <i class="fa fa-camera"></i> Add Photos
-                        </label>
-                        <div class="col-md-2 col-lg-2 col-sm-12">
-                            <input id="article_photo" name="article_photo" type="file" accept="application/x-zip-compressed,image/*"/>
-                        </div>
-                        
-                    </div>                                
-                </div>
-
-
-                <div class="form-actions noborder pull-right">
-                    <input type="submit" class="btn blue" name="submit" value="Post" />
-                    <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
-                </div>
-                <div class="clearfix"></div>
-
-            </div>
-        </form>
-    </div>
-
-</div>
-
-<div id="riddle_modal" class="modal fade" tabindex="-1">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-        <h4 class="modal-title" id="riddle_sub1_header">Write A Riddle</h4>
-    </div>
-    <div class="modal-body">
-        <form class="form-horizontal" role="form" id="riddle_form" action="" method="post" enctype="multipart/form-data">
-            <span class="form_submission_error"></span>
-            <span class="form_submission_success"></span>
-
-            <input type="hidden" name="riddle_id"  id="riddle_id" value="0">
-
-            <div class="form-body">
-
-                <div class="form-group">
-                    <label class="control-label col-md-3 col-lg-3 col-sm-12">Category </label>
-                    <div class="col-md-9 col-lg-9 col-sm-12">
-                        <select class="form-control " name="riddle_category" id="riddle_category">
-                              
-
-                        </select>
-                        <span class="req_opt">*required</span>                        
-                    </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Category-1</label>
-                  <div class="col-md-9 col-lg-9 col-sm-12 ">
-                    <input type="text" name="riddle_sub1" id="riddle_sub1" class="form-control" value="">
-                    <span class="req_opt">*optional</span>
-                </div>
-                
-            </div>
-
-            <div class="form-group">
-              <label class="col-md-3 col-lg-3 col-sm-12 control-label">Category-2</label>
-              <div class="col-md-9 col-lg-9 col-sm-12 ">
-                <input type="text" name="riddle_sub2" id="riddle_sub2" class="form-control" value="">
-                <span class="req_opt">*optional</span>
-            </div>
-            
-        </div>
-
-
-        <div class="form-group">
-            <label class="col-md-3 col-lg-3 col-sm-12 control-label">Write your riddle</label>
-            <div class="col-md-9 col-lg-9 col-sm-12 ">
-                <textarea  name="riddle_title" id="riddle_title" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
-            </div>                                
-        </div>
-
-
-
-        <div class="form-group">
-            <div class="col-md-3 col-lg-3 col-sm-12"></div>
-
-            <div class="col-md-9 col-lg-9 col-sm-12 ">
-
-                <label for="riddle_photo" class="col-md-6 col-lg-6 col-sm-12 control-label custom-file-upload">
-                    <i class="fa fa-camera"></i> Add Photos
-                </label>
-                <div class="col-md-2 col-lg-2 col-sm-12">
-                    <input id="riddle_photo" name="riddle_photo" type="file" accept="application/x-zip-compressed,image/*"/>
-                </div>
-
-            </div>                                
-        </div>
-
-
-        <div class="form-actions noborder pull-right">
-            <input type="submit" class="btn blue" name="submit" value="Post" />
-            <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
-        </div>
-        <div class="clearfix"></div>
-
-    </div>
-</form>
-</div>
-
-</div>
-
-
-<div id="pab_modal" class="modal fade" tabindex="-1">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-        <h4 class="modal-title" id="pab_sub1_header">Post a book</h4>
-    </div>
-    <div class="modal-body">
-        <form class="form-horizontal" role="form" id="pab_form" action="" method="post" enctype="multipart/form-data">
-            <span class="form_submission_error"></span>
-            <span class="form_submission_success"></span>
-
-            <input type="hidden" name="pab_id"  id="pab_id" value="0">
-
-            <div class="form-body">
-
-                <div class="form-group">
-                    <label class="control-label col-md-3 col-lg-3 col-sm-12">Genre </label>
-                    <div class="col-md-9 col-lg-9 col-sm-12">
-                        <select class="form-control " name="pab_category" id="pab_category">
-
-                        </select>
-                        <span class="req_opt">*required</span>
-                    </div>
-                </div>
-
-
-            <div class="form-group">
-                <div class="col-md-3 col-lg-3 col-sm-12"></div>
-
-                <div class="col-md-9 col-lg-9 col-sm-12 ">
-
-                    <label for="pab_photo" class="col-md-10 col-lg-10 col-sm-12 control-label custom-file-upload">
-                        <i class="fa fa-camera"></i> Upload Picture of book cover
-                    </label>
-                    <div class="col-md-2 col-lg-2 col-sm-12">
-                        <input id="pab_photo" name="pab_photo" type="file" accept="application/x-zip-compressed,image/*"/>
-                    </div>
-
-                </div>                                
-            </div>
-
-            <div class="form-group">
-                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Title of the book</label>
-                  <div class="col-md-9 col-lg-9 col-sm-12 ">
-                    <input type="text" name="pab_title" id="pab_title" class="form-control" value="">
-                </div>
-            </div>
-
-            <div class="form-group">
-                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Author</label>
-                  <div class="col-md-9 col-lg-9 col-sm-12 ">
-                    <input type="text" name="pab_author" id="pab_author" class="form-control" value="">
-                </div>
-            </div>
-
-            <div class="form-group">
-                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Amount</label>
-                  <div class="col-md-9 col-lg-9 col-sm-12 ">
-                    <input type="number" name="pab_amount" id="pab_amount" class="form-control" value="">
-                </div>
-            </div>
-
-            <div class="form-group">
-                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">ISBN</label>
-                  <div class="col-md-9 col-lg-9 col-sm-12 ">
-                    <input type="text" name="pab_isbn" id="pab_isbn" class="form-control" value="">
-                </div>
-            </div>
-
-            <div class="form-group">
-                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Number of pages</label>
-                  <div class="col-md-9 col-lg-9 col-sm-12 ">
-                    <input type="number" name="pab_pages" id="pab_pages" class="form-control" value="">
-                </div>
-            </div>
-
-            <div class="form-group">
-                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Publishers</label>
-                  <div class="col-md-9 col-lg-9 col-sm-12 ">
-                    <input type="text" name="pab_publishers" id="pab_publishers" class="form-control" value="">
-                </div>
-            </div>
-
-            <div class="form-group">
-                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Bookshop or Contact</label>
-                  <div class="col-md-9 col-lg-9 col-sm-12 ">
-                    <input type="text" name="pab_bookshop" id="pab_bookshop" class="form-control" value="">
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                <label class="col-md-3 col-lg-3 col-sm-12 control-label">Url</label>
-                <div class="col-md-9 col-lg-9 col-sm-12 ">
-                    <input type="text" name="pab_url" id="pab_url" class="form-control" value="">
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                <label class="col-md-3 col-lg-3 col-sm-12 control-label">Synopsis</label>
-                <div class="col-md-9 col-lg-9 col-sm-12 ">
-                    <textarea  name="pab_synopsis" id="pab_synopsis" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
-                </div>                                
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-3 col-lg-3 col-sm-12 control-label">About the author</label>
-                <div class="col-md-9 col-lg-9 col-sm-12 ">
-                    <textarea  name="pab_about_author" id="pab_about_author" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
-                </div>                                
-            </div>
-
-
-
-            <div class="form-actions noborder pull-right">
-                <input type="submit" class="btn blue" name="submit" value="Post" />
-                <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
-            </div>
-            <div class="clearfix"></div>
-
-        </div>
-    </form>
-    </div>
-
-</div>
-
-</div>
-
-        <div id="section_delete_modal" class="modal fade" tabindex="-1">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title" id="section_delete_header">Confirm Delete</h4>
-            </div>
-            <div class="modal-body">
-                <h4>Are You Sure You Want To Delete This Item?</h4>
-                <form class="form-horizontal" role="form" id="section_delete_form" action="" method="post">
-                    <span class="form_submission_error"></span>
-                    <span class="form_submission_success"></span>
-
-                    <input type="hidden" name="section_delete_id"  id="section_delete_id" >
-                    <input type="hidden" name="section_delete_type"  id="section_delete_type" >
-
-                   
-
-                <div class="form-actions noborder pull-right">
-                    <input type="submit" class="btn blue" name="submit" value="Delete" />
-                    <button type="button" data-dismiss="modal" class="btn btn-outline dark">Cancel</button>
-                </div>
-                <div class="clearfix"></div>
-                </form>
-
-            </div>
-        
-        </div>
-
-    <div id="section_pab_modal" class="modal fade" tabindex="-1">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-        <h4 class="modal-title" id="section_pab_sub1_header">Post a book</h4>
-    </div>
-    <div class="modal-body">
-        <form class="form-horizontal" role="form" id="section_pab_form" action="" method="post" enctype="multipart/form-data">
-            <span class="form_submission_error"></span>
-            <span class="form_submission_success"></span>
-
-            <input type="hidden" name="section_pab_id"  id="section_pab_id" value="0">
-            <input type="hidden" name="section_pab_type"  id="section_pab_type" value="0">
-
-            <div class="form-body">
-
-                <div class="form-group">
-                    <label class="control-label col-md-3 col-lg-3 col-sm-12">Genre </label>
-                    <div class="col-md-9 col-lg-9 col-sm-12">
-                        <select class="form-control " name="section_pab_category" id="section_pab_category">
-
-                        </select>
-                        <span class="req_opt">*required</span>
-                    </div>
-                </div>
-
-
-            <div class="form-group">
-                <div class="col-md-3 col-lg-3 col-sm-12"></div>
-
-                <div class="col-md-9 col-lg-9 col-sm-12 ">
-
-                    <label for="section_pab_photo" class="col-md-10 col-lg-10 col-sm-12 control-label custom-file-upload">
-                        <i class="fa fa-camera"></i> Upload Picture of book cover
-                    </label>
-                    <div class="col-md-2 col-lg-2 col-sm-12">
-                        <input id="section_pab_photo" name="section_pab_photo" type="file" accept="application/x-zip-compressed,image/*"/>
-                    </div>
-
-                </div>                                
-            </div>
-
-            <div class="form-group">
-                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Title of the book</label>
-                  <div class="col-md-9 col-lg-9 col-sm-12 ">
-                    <input type="text" name="section_pab_title" id="section_pab_title" class="form-control" value="">
-                </div>
-            </div>
-
-            <div class="form-group">
-                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Author</label>
-                  <div class="col-md-9 col-lg-9 col-sm-12 ">
-                    <input type="text" name="section_pab_author" id="section_pab_author" class="form-control" value="">
-                </div>
-            </div>
-
-            <div class="form-group">
-                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Amount</label>
-                  <div class="col-md-9 col-lg-9 col-sm-12 ">
-                    <input type="number" name="section_pab_amount" id="section_pab_amount" class="form-control" value="">
-                </div>
-            </div>
-
-            <div class="form-group">
-                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">ISBN</label>
-                  <div class="col-md-9 col-lg-9 col-sm-12 ">
-                    <input type="text" name="section_pab_isbn" id="section_pab_isbn" class="form-control" value="">
-                </div>
-            </div>
-
-            <div class="form-group">
-                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Number of pages</label>
-                  <div class="col-md-9 col-lg-9 col-sm-12 ">
-                    <input type="number" name="section_pab_pages" id="section_pab_pages" class="form-control" value="">
-                </div>
-            </div>
-
-            <div class="form-group">
-                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Publishers</label>
-                  <div class="col-md-9 col-lg-9 col-sm-12 ">
-                    <input type="text" name="section_pab_publishers" id="section_pab_publishers" class="form-control" value="">
-                </div>
-            </div>
-
-            <div class="form-group">
-                  <label class="col-md-3 col-lg-3 col-sm-12 control-label">Bookshop or Contact</label>
-                  <div class="col-md-9 col-lg-9 col-sm-12 ">
-                    <input type="text" name="section_pab_bookshop" id="section_pab_bookshop" class="form-control" value="">
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                <label class="col-md-3 col-lg-3 col-sm-12 control-label">Url</label>
-                <div class="col-md-9 col-lg-9 col-sm-12 ">
-                    <input type="text" name="section_pab_url" id="section_pab_url" class="form-control" value="">
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                <label class="col-md-3 col-lg-3 col-sm-12 control-label">Synopsis</label>
-                <div class="col-md-9 col-lg-9 col-sm-12 ">
-                    <textarea  name="section_pab_synopsis" id="section_pab_synopsis" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
-                </div>                                
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-3 col-lg-3 col-sm-12 control-label">About the author</label>
-                <div class="col-md-9 col-lg-9 col-sm-12 ">
-                    <textarea  name="section_pab_about_author" id="section_pab_about_author" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
-                </div>                                
-            </div>
-
-
-
-            <div class="form-actions noborder pull-right">
-                <input type="submit" class="btn blue" name="submit" value="Post" />
-                <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
-            </div>
-            <div class="clearfix"></div>
-
-        </div>
-    </form>
-    </div>
-
-</div>
-
-
-
-        <div id="section_update_modal" class="modal fade" tabindex="-1">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title" id="section_update_header"></h4>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal" role="form" id="section_update_form" action="" method="post" enctype="multipart/form-data">
-                    <span class="form_submission_error"></span>
-                    <span class="form_submission_success"></span>
-
-                    <input type="hidden" name="section_update_id"  id="section_update_id" value="0">
-                    <input type="hidden" name="section_update_type"  id="section_update_type" value="0">
-
-                    <div class="form-body">
-
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-lg-3 col-sm-12">Category </label>
-                            <div class="col-md-9 col-lg-9 col-sm-12">
-                                <select class="form-control " name="section_update_category" id="section_update_category">                                   
-                                </select>
-                                <span class="req_opt">*required</span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-3 col-lg-3 col-sm-12 control-label">Category-1</label>
-                            <div class="col-md-9 col-lg-9 col-sm-12 ">
-                                <input type="text" name="section_update_sub1" id="section_update_sub1" class="form-control" value="">
-                                <span class="req_opt">*optional</span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-3 col-lg-3 col-sm-12 control-label">Category-2</label>
-                            <div class="col-md-9 col-lg-9 col-sm-12 ">
-                                <input type="text" name="section_update_sub2" id="section_update_sub2" class="form-control" value="">
-                                <span class="req_opt">*optional</span>
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="col-md-3 col-lg-3 col-sm-12 control-label edit_itemtopic">Edit the question</label>
-                            <div class="col-md-9 col-lg-9 col-sm-12 ">
-                                <textarea  name="section_update_title" id="section_update_title" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
-                            </div>                                
-                        </div>
-
-                        <div class="form-group hiddle_for_riddle">
-                            <label class="col-md-3 col-lg-3 col-sm-12 control-label edit_iteminfo">Provide additional information</label>
-                            <div class="col-md-9 col-lg-9 col-sm-12 ">
-                                <textarea  name="section_update_info" id="section_update_info" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
-                            </div>                                
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-3 col-lg-3 col-sm-12"></div>
-                            {{#if quest_status}}
-
-                            <div class="col-md-9 col-lg-9 col-sm-12 ">
-                                <label for="section_update_photo" class="col-md-6 col-lg-6 col-sm-12 control-label custom-file-upload">
-                                    <i class="fa fa-camera"></i> Add Photos
-                                </label>
-                                <div class="col-md-4 col-lg-6 col-sm-12">
-                                    <input id="section_update_photo" name="section_update_photo" type="file" accept="application/x-zip-compressed,image/*"/>
-                                </div>
-                                
-                            </div>  
-                            {{/if}}
-
-                            {{#if art_status}}
-
-                            <div class="col-md-9 col-lg-9 col-sm-12 ">
-                                <label for="section_update_attachment" class="col-md-4 col-lg-4 col-sm-12 control-label custom-file-upload">
-                                    <img src="{{url}}/images/upload_attachment.png" /> Upload Attachment
-                                </label>
-                                <div class="col-md-2 col-lg-2 col-sm-12">
-                                    <input id="section_update_attachment" name="section_update_attachment" type="file" accept="application/x-zip-compressed"/>
-                                </div>
-
-
-                                <label for="section_update_photo" class="col-md-4 col-lg-4 col-sm-12 control-label custom-file-upload">
-                                    <i class="fa fa-camera"></i> Add Photos
-                                </label>
-                                <div class="col-md-2 col-lg-2 col-sm-12">
-                                    <input id="section_update_photo" name="section_update_photo" type="file" accept="application/x-zip-compressed,image/*"/>
-                                </div>
-                                
-                            </div>  
-                            {{/if}}                              
-                        </div>
-
-
-                        <div class="form-actions noborder pull-right">
-                            <input type="submit" class="btn blue" name="submit" value="Post" />
-                            <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
-                        </div>
-                        <div class="clearfix"></div>
-
-                    </div>
-                </form>
-            </div>
-
-        </div>
-
+{{>footer_modals}}
 <!-- BEGIN FOOTER -->
     <div class="page-footer">
         <div class="page-footer-inner"> 2017 &copy; domiit
@@ -1291,6 +646,121 @@
             }
         } );
 
+        $( "#section_response_form" ).validate( {/*validate & submit response details*/
+                rules: {  
+                    section_response_details: {
+                        required: true
+                    }                    
+                },
+                messages: {                        
+                    section_response_details: {
+                        required: "This field is required"
+                    }
+                },
+                errorElement: "em",
+                errorPlacement: function ( error, element ) {
+                // Add the `help-block` class to the error element
+                error.addClass( "help-block" );
+
+                if ( element.prop( "type" ) === "checkbox" ) {
+                    error.insertAfter( element.parent( "label" ) );
+                } else {
+                    error.insertAfter( element );
+                }
+            },
+            success: function ( label, element ) {
+                // Add the span element, if doesn't exists, and apply the icon classes to it.
+                if ( !$( element ).next( "span" )[ 0 ] ) {
+                    $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+                }
+            },
+            highlight: function ( element, errorClass, validClass ) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
+            },
+
+            submitHandler: function () {
+                //modify button
+                var sub_button=$(this).find(':submit');
+                var old_button_val=sub_button.val();
+                sub_button.prop('disabled', true);
+                sub_button.val('...processing');
+
+                resetFields();
+                var my_url="{{url}}/response_item";
+                console.log('url: '+my_url);
+
+                $("#section_response_form").ajaxSubmit({
+                    url:my_url,
+                    contentType: 'application/json',
+                    success: function(response){
+                        if(response.success==true){
+                            $('#section_response_form  .form_submission_success').text(response.msg);
+                            setTimeout(function(){
+                                $('#section_response_form  .form_submission_success').text('');
+                                sub_button.val(old_button_val);
+                                sub_button.prop('disabled', false);
+                                $('#section_response_modal').modal('hide');
+                            },3000);
+
+                        }else{
+                            console.log('response is false');
+                            $('#section_response_form  .form_submission_error').text(response.msg);
+                            sub_button.val(old_button_val);
+                            sub_button.prop('disabled', false);
+                        }
+
+                    },
+                    error:function(xhr, status, err){
+                        console.log('error');
+                        console.log(xhr);
+                        console.log(status);
+                        console.log(err);
+                    }
+                });
+                
+            }
+        } );
+
+
+        //follow posts
+           $("body").on('click','.follow_section_item',function(){
+            //get this posts data
+            var parent=$(this).parents('.posted');
+            var id=parent.find('input#post_id').val();
+            var section=parent.find('input#post_type').val();
+
+            var url='{{url}}/followMember';
+            // console.log('url '+url);
+
+            $.ajax({
+                url:url,
+                type:'POST',
+                data:{'post_id':id,'section':section},
+                headers: {'X-My-App-Token': 'loganstyles'},
+                success:function(response){
+                    console.log(response);
+                    if(response.success==true){
+                        //display notif
+                        alert(response.msg)
+                    }else{
+
+                         }                        
+
+                },
+                error:function(xhr, status, err){
+                    console.log('error');
+                    console.log(xhr);
+                    console.log(status);
+                    console.log(err);
+                }
+            });
+
+        });
+        
+
         $( "#section_pab_form" ).validate( {/*validate & submit response details*/
             rules: {  
                 section_pab_title: {
@@ -1405,7 +875,431 @@
 
             });
 
-            })
+            $( "#riddle_form" ).validate( {/*validate & submit riddle modal data*/
+                rules: {  
+                    riddle_category: {
+                        required: true
+                    },
+                    riddle_title: {
+                        required: true,
+                    }
+                    
+                },
+                messages: {                        
+                    riddle_category: {
+                        required: "This field is required"
+                    },
+                    riddle_title: {
+                        required: "This field is required"
+                    }
+                },
+                errorElement: "em",
+                errorPlacement: function ( error, element ) {
+                // Add the `help-block` class to the error element
+                error.addClass( "help-block" );
+
+                if ( element.prop( "type" ) === "checkbox" ) {
+                    error.insertAfter( element.parent( "label" ) );
+                } else {
+                    error.insertAfter( element );
+                }
+            },
+            success: function ( label, element ) {
+                // Add the span element, if doesn't exists, and apply the icon classes to it.
+                if ( !$( element ).next( "span" )[ 0 ] ) {
+                    $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+                }
+            },
+            highlight: function ( element, errorClass, validClass ) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
+            },
+
+            submitHandler: function () {
+                //modify button
+                var sub_button=$("#riddle_form").find(':submit');
+                var old_button_val=sub_button.val();
+                sub_button.prop('disabled', true);
+                sub_button.val('...processing');
+
+                resetFields("#riddle_form");
+                var my_url="{{url}}/ask_riddle";
+                $("#riddle_form").ajaxSubmit({
+                    url:my_url,
+                       contentType: 'application/json',
+                       success: function(response){
+                        if(response.success==true){
+                                console.log('image uploaded and form submitted');
+                                $('#riddle_form  .form_submission_success').text(response.msg);
+                                setTimeout(function(){
+                                    $('#riddle_form  .form_submission_success').text('');
+                                    sub_button.val(old_button_val);
+                                    sub_button.prop('disabled', false);
+                                    $('#riddle_modal').modal('hide');
+                                },3000);
+                                
+                            }else{
+                                console.log('response is false');
+                                $('#riddle_form  .form_submission_error').text(response.msg);
+                                sub_button.val(old_button_val);
+                                sub_button.prop('disabled', false);
+                            }
+                              
+                       },
+                       error:function(xhr, status, err){
+                            console.log('error');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(err);
+                        }
+                   });
+                
+            }
+            } );
+
+
+        $( "#question_form" ).validate( {/*validate & submit question modal data*/
+                rules: {  
+                    question_category: {
+                        required: true
+                    },
+                    question_title: {
+                        required: true,
+                    }
+                    
+                },
+                messages: {                        
+                    question_category: {
+                        required: "This field is required"
+                    },
+                    question_title: {
+                        required: "This field is required"
+                    }
+                },
+                errorElement: "em",
+                errorPlacement: function ( error, element ) {
+                // Add the `help-block` class to the error element
+                error.addClass( "help-block" );
+
+                if ( element.prop( "type" ) === "checkbox" ) {
+                    error.insertAfter( element.parent( "label" ) );
+                } else {
+                    error.insertAfter( element );
+                }
+            },
+            success: function ( label, element ) {
+                // Add the span element, if doesn't exists, and apply the icon classes to it.
+                if ( !$( element ).next( "span" )[ 0 ] ) {
+                    $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+                }
+            },
+            highlight: function ( element, errorClass, validClass ) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
+            },
+
+            submitHandler: function () {
+                //modify button
+                var sub_button=$("#question_form").find(':submit');
+                var old_button_val=sub_button.val();
+                sub_button.prop('disabled', true);
+                sub_button.val('...processing');
+
+                resetFields("#question_form");
+                var my_url="{{url}}/ask_question";
+                $("#question_form").ajaxSubmit({
+                    url:my_url,
+                       contentType: 'application/json',
+                       success: function(response){
+                        if(response.success==true){
+                                console.log('image uploaded and form submitted');
+                                $('#question_form  .form_submission_success').text(response.msg);
+                                setTimeout(function(){
+                                    $('#question_form  .form_submission_success').text('');
+                                    sub_button.val(old_button_val);
+                                    sub_button.prop('disabled', false);
+                                    $('#question_modal').modal('hide');
+                                },3000);
+                                
+                            }else{
+                                console.log('response is false');
+                                $('#question_form  .form_submission_error').text(response.msg);
+                                sub_button.val(old_button_val);
+                                sub_button.prop('disabled', false);
+                            }
+                              
+                       },
+                       error:function(xhr, status, err){
+                            console.log('error');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(err);
+                        }
+                   });
+                
+            }
+            } );
+
+
+        $( "#article_form" ).validate( {/*validate & submit article modal data*/
+                rules: {  
+                    article_category: {
+                        required: true
+                    },
+                    article_title: {
+                        required: true,
+                    }
+                    
+                },
+                messages: {                        
+                    article_category: {
+                        required: "This field is required"
+                    },
+                    article_title: {
+                        required: "This field is required"
+                    }
+                },
+                errorElement: "em",
+                errorPlacement: function ( error, element ) {
+                // Add the `help-block` class to the error element
+                error.addClass( "help-block" );
+
+                if ( element.prop( "type" ) === "checkbox" ) {
+                    error.insertAfter( element.parent( "label" ) );
+                } else {
+                    error.insertAfter( element );
+                }
+            },
+            success: function ( label, element ) {
+                // Add the span element, if doesn't exists, and apply the icon classes to it.
+                if ( !$( element ).next( "span" )[ 0 ] ) {
+                    $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+                }
+            },
+            highlight: function ( element, errorClass, validClass ) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
+            },
+
+            submitHandler: function () {
+                //modify button
+                var sub_button=$("#article_form").find(':submit');
+                var old_button_val=sub_button.val();
+                sub_button.prop('disabled', true);
+                sub_button.val('...processing');
+
+                resetFields("#article_form");
+                var my_url="{{url}}/ask_article";
+                $("#article_form").ajaxSubmit({
+                    url:my_url,
+                       contentType: 'application/json',
+                       success: function(response){
+                        if(response.success==true){
+                                console.log('image uploaded and form submitted');
+                                $('#article_form  .form_submission_success').text(response.msg);
+                                setTimeout(function(){
+                                    $('#article_form  .form_submission_success').text('');
+                                    sub_button.val(old_button_val);
+                                    sub_button.prop('disabled', false);
+                                    $('#article_modal').modal('hide');
+                                },3000);
+                                
+                            }else{
+                                console.log('response is false');
+                                $('#article_form  .form_submission_error').text(response.msg);
+                                sub_button.val(old_button_val);
+                                sub_button.prop('disabled', false);
+                            }
+                              
+                       },
+                       error:function(xhr, status, err){
+                            console.log('error');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(err);
+                        }
+                   });
+                
+            }
+            } );
+
+
+        $( "#pab_form" ).validate( {/*validate & submit pab modal data*/
+                rules: {  
+                    pab_category: {
+                        required: true
+                    },
+                    pab_title: {
+                        required: true,
+                    }
+                    
+                },
+                messages: {                        
+                    pab_category: {
+                        required: "This field is required"
+                    },
+                    pab_title: {
+                        required: "This field is required"
+                    }
+                },
+                errorElement: "em",
+                errorPlacement: function ( error, element ) {
+                // Add the `help-block` class to the error element
+                error.addClass( "help-block" );
+
+                if ( element.prop( "type" ) === "checkbox" ) {
+                    error.insertAfter( element.parent( "label" ) );
+                } else {
+                    error.insertAfter( element );
+                }
+            },
+            success: function ( label, element ) {
+                // Add the span element, if doesn't exists, and apply the icon classes to it.
+                if ( !$( element ).next( "span" )[ 0 ] ) {
+                    $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+                }
+            },
+            highlight: function ( element, errorClass, validClass ) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
+            },
+
+            submitHandler: function () {
+                //modify button
+                var sub_button=$("#pab_form").find(':submit');
+                var old_button_val=sub_button.val();
+                sub_button.prop('disabled', true);
+                sub_button.val('...processing');
+
+                resetFields("#pab_form");
+                var my_url="{{url}}/ask_pab";
+                $("#pab_form").ajaxSubmit({
+                    url:my_url,
+                       contentType: 'application/json',
+                       success: function(response){
+                        if(response.success==true){
+                                console.log('image uploaded and form submitted');
+                                $('#pab_form  .form_submission_success').text(response.msg);
+                                setTimeout(function(){
+                                    $('#pab_form  .form_submission_success').text('');
+                                    sub_button.val(old_button_val);
+                                    sub_button.prop('disabled', false);
+                                    $('#pab_modal').modal('hide');
+                                },3000);
+                                
+                            }else{
+                                console.log('response is false');
+                                $('#pab_form  .form_submission_error').text(response.msg);
+                                sub_button.val(old_button_val);
+                                sub_button.prop('disabled', false);
+                            }
+                              
+                       },
+                       error:function(xhr, status, err){
+                            console.log('error');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(err);
+                        }
+                   });
+                
+            }
+            } );
+
+
+            $( "#notice_form" ).validate( {/*validate & submit pab modal data*/
+                rules: {  
+                    notice_top_heading: {
+                        required: true
+                    },
+                    notice_main_heading: {
+                        required: true,
+                    }
+                    
+                },
+                messages: {                        
+                    notice_top_heading: {
+                        required: "This field is required"
+                    },
+                    notice_main_heading: {
+                        required: "This field is required"
+                    }
+                },
+                errorElement: "em",
+                errorPlacement: function ( error, element ) {
+                // Add the `help-block` class to the error element
+                error.addClass( "help-block" );
+
+                if ( element.prop( "type" ) === "checkbox" ) {
+                    error.insertAfter( element.parent( "label" ) );
+                } else {
+                    error.insertAfter( element );
+                }
+            },
+            success: function ( label, element ) {
+                // Add the span element, if doesn't exists, and apply the icon classes to it.
+                if ( !$( element ).next( "span" )[ 0 ] ) {
+                    $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+                }
+            },
+            highlight: function ( element, errorClass, validClass ) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
+            },
+
+            submitHandler: function () {
+                //modify button
+                var sub_button=$("#notice_form").find(':submit');
+                var old_button_val=sub_button.val();
+                sub_button.prop('disabled', true);
+                sub_button.val('...processing');
+
+                resetFields("#notice_form");
+                var my_url="{{url}}/ask_notice";
+                $("#notice_form").ajaxSubmit({
+                    url:my_url,
+                       contentType: 'application/json',
+                       success: function(response){
+                        if(response.success==true){
+                                console.log('image uploaded and form submitted');
+                                $('#notice_form  .form_submission_success').text(response.msg);
+                                setTimeout(function(){
+                                    $('#notice_form  .form_submission_success').text('');
+                                    sub_button.val(old_button_val);
+                                    sub_button.prop('disabled', false);
+                                    $('#notice_modal').modal('hide');
+                                },3000);
+                                
+                            }else{
+                                console.log('response is false');
+                                $('#notice_form  .form_submission_error').text(response.msg);
+                                sub_button.val(old_button_val);
+                                sub_button.prop('disabled', false);
+                            }
+                              
+                       },
+                       error:function(xhr, status, err){
+                            console.log('error');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(err);
+                        }
+                   });
+                
+            }
+            } );
+
+});
 
         </script>
 

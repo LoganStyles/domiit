@@ -17,6 +17,14 @@ var noticeSchema = mongoose.Schema({
 	post_date: { type: Date, default: Date.now },
 	owner:{id:String,displayName:String,displayPic:String,status:String},
 	post_owner:{type:Boolean,default:false},
+	comments_len:{type:Number,default:0},
+	comments:[{
+		body:String,
+		responderDisplayName:String,
+		responder_id:String,
+		responderDisplayPic:String,
+		date_created:{type:Date,default:Date.now}
+	}],
 	
 	question_status:{type:Boolean,default:false},
 	art_status:{type:Boolean,default:false},
@@ -29,6 +37,8 @@ var noticeSchema = mongoose.Schema({
 	views:{type:Number,default:0},
 	shares:{type:Number,default:0},
 	likes:{type:Number,default:0},
+	attending:{type:Number,default:0},
+	not_attending:{type:Number,default:0},
 
 });
 

@@ -64,10 +64,10 @@
 
                                                 <div class="col-md-6">
                                                    
-            <div class="panel panel-default portlet">
+            <!-- <div class="panel panel-default portlet">
               <div class="panel-body" style="width: 100%;">
                 <div class="posts_top_actions_left">
-                    <span class="posts_page_title">{{page_title}}</span>
+                    <span class="posts_page_title"></span>
                 </div>
                 
                 <div class="posts_top_actions_right">
@@ -95,7 +95,20 @@
                    
                 </div>
               </div>
-            </div>                                      
+            </div>  -->  
+
+            <div class="panel panel-default portlet">
+              <div class="panel-body">
+                <a class="page_top_actions" onclick="modalLoader('question','new','');">Ask a question</a>&nbsp;|&nbsp;
+
+                <a class="page_top_actions" onclick="modalLoader('article','new','');">Write an article</a>&nbsp;|&nbsp;
+
+                <a class="page_top_actions" onclick="modalLoader('riddle','new','');">Post a riddle</a>&nbsp;|&nbsp;
+
+                <a class="page_top_actions" onclick="modalLoader('pab','new','');">Post a book</a>
+                
+              </div>
+            </div>                                   
                                                     
 
         <div class="question_all_post_area dashboard_page"> 
@@ -114,13 +127,17 @@
                         <span class="caption-helper post_category grey_cats left_border">{{category}}</span>
                         {{/if}}
 
-                        {{#if sub_cat1}}
-                        <span class="caption-helper post_sub_cat1 grey_cats left_border">{{sub_cat1}}</span>
-                        {{/if}}
+                        {{#unless notice_status}}
 
-                        {{#if sub_cat2}}
-                        <span class="caption-helper post_sub_cat2 grey_cats left_border">{{sub_cat2}}</span>
-                        {{/if}}
+                            {{#if sub_cat1}}
+                            <span class="caption-helper post_sub_cat1 grey_cats left_border">{{sub_cat1}}</span>
+                            {{/if}}
+
+                            {{#if sub_cat2}}
+                            <span class="caption-helper post_sub_cat2 grey_cats left_border">{{sub_cat2}}</span>
+                            {{/if}}
+
+                        {{/unless}}
                         
                     </div>
                        
@@ -235,7 +252,10 @@
                                         
 
                     </div>
-                        {{#if pab_status}}
+                    <!--lots of if blocks here
+                    not best practice but will do
+                     using if to negate notice boards-->
+                        {{#if pab_status}}<!--chk for books-->
 
                     <div class="item-body"> 
                     <div style="width: 100%; color: #000;">
@@ -336,43 +356,77 @@
 
                                         
                         </div>  
+                {{else}}<!--else : chk for books-->
+                
+                {{#if notice_status}}<!-- start else part of books by chking for notices-->
+
+                    <div class="item-body"> 
+                        <div class="post_item post_item_topic" style="text-align: center;text-transform: uppercase;">
+                         {{sub_cat1}}
+                        </div>
+                        <hr class="short_length">
+
+                            {{#if topic}}
+                                <div class="post_item post_item_topic">
+                                    {{topic}}
+                                </div>
+                            {{/if}}
+
+                            {{#if pics.length }}
+                                <div style="margin-bottom: 3%;">                                                                  
+                                    <img class="img-responsive" src="{{../url}}/uploads/{{pics.[0]}}">
+                                </div>
+                            {{/if}}
+
+                                <div class="post_item post_item_body">
+                                    {{body}}
+                                
+                                </div>
+                            
+                    </div> <br>
+
                 {{else}}
 
-                <div class="item-body"> 
-                    {{#if topic}}
+                        <!--start other posts:quests,arts,ridds,trends-->
+                    <div class="item-body"> 
+                        {{#if topic}}
+                            <div class="post_item post_item_topic">
+                                {{topic}}
+                            </div>
+                        {{/if}}
+
+                        {{#if pics.length }}
+                            <div style="margin-bottom: 3%;">                                                                  
+                                <img class="img-responsive" src="{{url}}/uploads/{{pics.[0]}}">
+                            </div>
+                        {{/if}}
+
+                        {{#if art_status}}
+                        <hr class="short_length">
+                        <div class="post_item post_item_body">
+                        {{else}}
                         <div class="post_item post_item_topic">
-                            {{topic}}
-                        </div>
-                    {{/if}}
+                        {{/if}}
+                        {{body}}
+                    
+                    </div>
+                                                    
 
-                    {{#if pics.length }}
-                        <div style="margin-bottom: 3%;">                                                                  
-                            <img class="img-responsive" src="{{url}}/uploads/{{pics.[0]}}">
-                        </div>
-                    {{/if}}
-
-                    {{#if art_status}}
+                        {{#if description}}
                     <hr class="short_length">
-                    <div class="post_item post_item_body">
-                    {{else}}
-                    <div class="post_item post_item_topic">
-                    {{/if}}
-                    {{body}}
+                    <div class="post_item post_item_more_info">
+                        {{description}}
+                    </div>
+                        {{/if}}
                 
-                </div>
-                                                
+            </div> <br><!--end other posts:quests,arts,ridds,trends-->
 
-                {{#if description}}
-                <hr class="short_length">
-                <div class="post_item post_item_more_info">
-                    {{description}}
-                </div>
+
                 {{/if}}
-            
-        </div> <br>
+                
 
 
-    {{/if}}
+    {{/if}}<!--end if :chk for books-->
 
     <div style="width: 100%;"><!--main block-->
 
@@ -385,64 +439,82 @@
          <a type="button" class="btn dark btn-outline sbold uppercase download_button"><i class="fa fa-cloud-download"></i>&nbsp;Download</a>                       
         {{/if}}
 
-        {{/if}}
+    {{/if}}
 
 
     </div>
-                                        
 
-    <div class="posts_partition_right"><!--3rd partition-->
+    {{#if notice_status}}<!-- partition_right : chking for notices-->
 
-        <a class="btn btn-link post_likes">
-        <span class="grey_button">
-            <span class="social_value ">{{likes}}</span>
-            <i class="fa fa-heart-o"></i>&nbsp;Likes
-        </span>
-        </a>
+        <div class="posts_partition_right"><!--3rd partition-->
 
-        <a class="btn btn-link ">
-        <span class="grey_button">
-            {{#if question_status}}
-             <span class="social_value">{{answers_len}}</span>
-            <!-- <i class="fa fa-comment-o"></i>&nbsp; -->
-            <img src="{{../url}}/images/comments.png">&nbsp;
-            Answers
-            {{/if}}
+            <a class="btn btn-link ">
+                <span class="grey_button">
+                    <span class="social_value">{{views}}</span>&nbsp;
+                    Views
+                </span>
+            </a>
 
-            {{#if pab_status}}
-            <span class="social_value">{{comments_len}}</span>
-            <img src="{{../url}}/images/comments.png">&nbsp;Comments
-            {{/if}}
+        </div>
+    
 
-            {{#if trend_status}}
-            <span class="social_value">{{comments_len}}</span>
-            <img src="{{../url}}/images/comments.png">&nbsp;Comments
-            {{/if}}
+    {{else}}<!-- else partition_right : display for other options-->
 
-            {{#if art_status}}
-            <span class="social_value">{{answers_len}}</span>
-            <img alt="" class="icon_size_15" src="{{../url}}/images/articles_icon.png">&nbsp;
-            Reviews
-            {{/if}}
+        <div class="posts_partition_right"><!--3rd partition-->
 
-            {{#if riddle_status}}
-            <span class="social_value">{{answers_len}}</span>
-            <img src="{{../url}}/images/comments.png">
-            <!-- <img alt="" class="icon_size_15" src="{{../url}}/images/solution.png">&nbsp; -->
-            Solution
-            {{/if}}
-        </span>
-        </a>
-
-        <a class="btn btn-link post_shares">
-            <span class="item-label grey_button">
-                <span class="social_value">{{shares}}</span>
-                <i class="fa fa-share-alt"></i>&nbsp;
-                Shares                                
+            <a class="btn btn-link post_likes">
+            <span class="grey_button">
+                <span class="social_value ">{{likes}}</span>
+                <i class="fa fa-heart-o"></i>&nbsp;Likes
             </span>
-        </a>
+            </a>
+
+            <a class="btn btn-link ">
+            <span class="grey_button">
+                {{#if question_status}}
+                 <span class="social_value">{{answers_len}}</span>
+                <!-- <i class="fa fa-comment-o"></i>&nbsp; -->
+                <img src="{{../url}}/images/comments.png">&nbsp;
+                Answers
+                {{/if}}
+
+                {{#if pab_status}}
+                <span class="social_value">{{comments_len}}</span>
+                <img src="{{../url}}/images/comments.png">&nbsp;Comments
+                {{/if}}
+
+                {{#if trend_status}}
+                <span class="social_value">{{comments_len}}</span>
+                <img src="{{../url}}/images/comments.png">&nbsp;Comments
+                {{/if}}
+
+                {{#if art_status}}
+                <span class="social_value">{{answers_len}}</span>
+                <img alt="" class="icon_size_15" src="{{../url}}/images/articles_icon.png">&nbsp;
+                Reviews
+                {{/if}}
+
+                {{#if riddle_status}}
+                <span class="social_value">{{answers_len}}</span>
+                <img src="{{../url}}/images/comments.png">
+                <!-- <img alt="" class="icon_size_15" src="{{../url}}/images/solution.png">&nbsp; -->
+                Solution
+                {{/if}}
+            </span>
+            </a>
+
+            <a class="btn btn-link post_shares">
+                <span class="item-label grey_button">
+                    <span class="social_value">{{shares}}</span>
+                    <i class="fa fa-share-alt"></i>&nbsp;
+                    Shares                                
+                </span>
+            </a>
 
     </div>
+    
+    {{/if}}
+                                        
 
                         <div class="clearfix"></div>
                     </div><hr style="margin:0;">
@@ -453,17 +525,81 @@
         </div>
     </div>
     <!-- END PORTLET -->
-   
-    <div class="task-footer" style="">
-        <div class="btn-arrow-link ">
-        {{#unless pab_status}}
-            <a class=" sbold grey_button response_button">
-            <i class="fa fa-edit"></i>&nbsp;Write your {{page_response}}</a>                            
-        {{/unless}}
 
-        
+    {{#if notice_status}}<!-- task-footer : chking for notices-->
+
+        <div class="task-footer" style="">
+            {{#ifEquals 'notification' sub_cat2}}
+
+                <div class="btn-arrow-link ">
+                     <a class="btn btn-link post_likes">
+                        <span class="grey_button">
+                            <span class="social_value ">{{likes}}</span>
+                            <i class="fa fa-heart-o"></i>&nbsp;Likes
+                        </span>
+                    </a>
+
+                    <a class="btn btn-link ">
+                        <span class="grey_button">
+                            <span class="social_value">{{comments_len}}</span>
+                            <img src="{{../url}}/images/comments.png">&nbsp;Comments
+                        </span>
+                    </a>
+
+                    <a class="btn btn-link post_shares">
+                        <span class="item-label grey_button">
+                            <span class="social_value">{{shares}}</span>
+                            <i class="fa fa-share-alt"></i>&nbsp;
+                            Shares                                
+                        </span>
+                    </a>                        
+                </div>
+                {{else}}
+
+                <div class="btn-arrow-link ">
+                     <a class="btn btn-link post_likes">
+                        <span class="grey_button">
+                            <span class="social_value ">{{attending}}</span>
+                            <i class="fa fa-user-plus"></i>&nbsp;Attending
+                        </span>
+                    </a>
+
+                    <a class="btn btn-link ">
+                        <span class="grey_button">
+                            <span class="social_value">{{not_attending}}</span>
+                            <i class="fa fa-user"></i>-&nbsp;Not Attending
+                        </span>
+                    </a>
+
+                    <a class="btn btn-link ">
+                        <span class="grey_button">
+                            <span class="social_value">{{comments_len}}</span>
+                            <img src="{{../url}}/images/comments.png">&nbsp;Comments
+                        </span>
+                    </a>                        
+                </div>
+
+
+
+            {{/ifEquals}}
+                
+            </div>
+
+
+    {{else}}<!--else task-footer : chking for pab-->
+
+        <div class="task-footer" style="">
+            <div class="btn-arrow-link ">
+            {{#unless pab_status}}
+                <a class=" sbold grey_button response_button">
+                <i class="fa fa-edit"></i>&nbsp;Write your {{page_response}}</a>                            
+            {{/unless}}
+            </div>
         </div>
-    </div>
+
+    {{/if}}<!--end task-footer-->
+   
+    
     <div class="clearfix"></div>
 
 </div>
@@ -630,47 +766,9 @@
 
             <!-- START MODAL PORTLET-->
 
-            <div id="section_response_modal" class="modal fade" tabindex="-1">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                        <h4 style="text-transform: uppercase;" class="modal-title" id="section_response_header"></h4>
-                    </div>
-                    <div class="modal-body">
-                        <form role="form" id="section_response_form" action="" method="post" enctype="multipart/form-data">
-                            <span class="form_submission_error"></span>
-                            <span class="form_submission_success"></span>
+            
 
-                            <input type="hidden" name="section_response_id"  id="section_response_id" >
-                            <input type="hidden" name="section_response_type"  id="section_response_type" >
-
-                            <div class="post_item_topic" id="section_response_topic"></div>
-                            <div class="post_item_body" id="section_response_body"></div>
-                            <div class="post_item_more_info" id="section_response_more_info"></div>                           
-
-                            <div class="form-group">
-                                <textarea  name="section_response_details" id="section_response_details" class="form-control " rows="3" style="font-weight: 500"></textarea>
-                                <label for="form_control_1">
-                                <i class="fa fa-edit"></i>&nbsp;Write your Post
-                                </label>
-                            </div>
-                            
-
-                             <div class="form-group">
-                             <label for="section_response_photo" class="custom-file-upload">
-                                    <i class="fa fa-camera"></i> Add Photo
-                                </label>
-                                <input id="section_response_photo" name="section_response_photo" type="file" accept="application/x-zip-compressed,image/*"/>
-                                <p class="help-block"> Optional </p>
-                            </div>
-                            <div class="form-actions noborder pull-right">
-                                <input type="submit" class="btn blue" name="submit" value="Post" />
-                                <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
-                            </div>
-                            <div class="clearfix"></div>
-                        </form>
-                    </div>
-
-                </div>
+        
 
             <!-- END MODAL PORTLET-->
             <!-- END CONTENT -->
@@ -687,353 +785,11 @@
         <script type="text/javascript">
 
         
-        $( document ).ready( function () {
+            $( document ).ready( function () {
 
-        $( "#question_form" ).validate( {/*validate & submit question modal data*/
-                rules: {  
-                    question_category: {
-                        required: true
-                    },
-                    question_title: {
-                        required: true,
-                    }
-                    
-                },
-                messages: {                        
-                    question_category: {
-                        required: "This field is required"
-                    },
-                    question_title: {
-                        required: "This field is required"
-                    }
-                },
-                errorElement: "em",
-                errorPlacement: function ( error, element ) {
-                // Add the `help-block` class to the error element
-                error.addClass( "help-block" );
+                });
 
-                if ( element.prop( "type" ) === "checkbox" ) {
-                    error.insertAfter( element.parent( "label" ) );
-                } else {
-                    error.insertAfter( element );
-                }
-            },
-            success: function ( label, element ) {
-                // Add the span element, if doesn't exists, and apply the icon classes to it.
-                if ( !$( element ).next( "span" )[ 0 ] ) {
-                    $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
-                }
-            },
-            highlight: function ( element, errorClass, validClass ) {
-                $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
-            },
-            unhighlight: function (element, errorClass, validClass) {
-                $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
-            },
-
-            submitHandler: function () {
-                //modify button
-                var sub_button=$("#question_form").find(':submit');
-                var old_button_val=sub_button.val();
-                sub_button.prop('disabled', true);
-                sub_button.val('...processing');
-
-                resetFields("#question_form");
-                var my_url="{{url}}/ask_question";
-                $("#question_form").ajaxSubmit({
-                    url:my_url,
-                       contentType: 'application/json',
-                       success: function(response){
-                        if(response.success==true){
-                                console.log('image uploaded and form submitted');
-                                $('#question_form  .form_submission_success').text(response.msg);
-                                setTimeout(function(){
-                                    $('#question_form  .form_submission_success').text('');
-                                    sub_button.val(old_button_val);
-                                    sub_button.prop('disabled', false);
-                                    $('#question_modal').modal('hide');
-                                },3000);
-                                
-                            }else{
-                                console.log('response is false');
-                                $('#question_form  .form_submission_error').text(response.msg);
-                                sub_button.val(old_button_val);
-                                sub_button.prop('disabled', false);
-                            }
-                              
-                       },
-                       error:function(xhr, status, err){
-                            console.log('error');
-                            console.log(xhr);
-                            console.log(status);
-                            console.log(err);
-                        }
-                   });
-                
-            }
-            } );
-
-
-        $( "#article_form" ).validate( {/*validate & submit article modal data*/
-                rules: {  
-                    article_category: {
-                        required: true
-                    },
-                    article_title: {
-                        required: true,
-                    }
-                    
-                },
-                messages: {                        
-                    article_category: {
-                        required: "This field is required"
-                    },
-                    article_title: {
-                        required: "This field is required"
-                    }
-                },
-                errorElement: "em",
-                errorPlacement: function ( error, element ) {
-                // Add the `help-block` class to the error element
-                error.addClass( "help-block" );
-
-                if ( element.prop( "type" ) === "checkbox" ) {
-                    error.insertAfter( element.parent( "label" ) );
-                } else {
-                    error.insertAfter( element );
-                }
-            },
-            success: function ( label, element ) {
-                // Add the span element, if doesn't exists, and apply the icon classes to it.
-                if ( !$( element ).next( "span" )[ 0 ] ) {
-                    $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
-                }
-            },
-            highlight: function ( element, errorClass, validClass ) {
-                $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
-            },
-            unhighlight: function (element, errorClass, validClass) {
-                $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
-            },
-
-            submitHandler: function () {
-                //modify button
-                var sub_button=$("#article_form").find(':submit');
-                var old_button_val=sub_button.val();
-                sub_button.prop('disabled', true);
-                sub_button.val('...processing');
-
-                resetFields("#article_form");
-                var my_url="{{url}}/ask_article";
-                $("#article_form").ajaxSubmit({
-                    url:my_url,
-                       contentType: 'application/json',
-                       success: function(response){
-                        if(response.success==true){
-                                console.log('image uploaded and form submitted');
-                                $('#article_form  .form_submission_success').text(response.msg);
-                                setTimeout(function(){
-                                    $('#article_form  .form_submission_success').text('');
-                                    sub_button.val(old_button_val);
-                                    sub_button.prop('disabled', false);
-                                    $('#article_modal').modal('hide');
-                                },3000);
-                                
-                            }else{
-                                console.log('response is false');
-                                $('#article_form  .form_submission_error').text(response.msg);
-                                sub_button.val(old_button_val);
-                                sub_button.prop('disabled', false);
-                            }
-                              
-                       },
-                       error:function(xhr, status, err){
-                            console.log('error');
-                            console.log(xhr);
-                            console.log(status);
-                            console.log(err);
-                        }
-                   });
-                
-            }
-            } );
-
-        $( "#riddle_form" ).validate( {/*validate & submit riddle modal data*/
-                rules: {  
-                    riddle_category: {
-                        required: true
-                    },
-                    riddle_title: {
-                        required: true,
-                    }
-                    
-                },
-                messages: {                        
-                    riddle_category: {
-                        required: "This field is required"
-                    },
-                    riddle_title: {
-                        required: "This field is required"
-                    }
-                },
-                errorElement: "em",
-                errorPlacement: function ( error, element ) {
-                // Add the `help-block` class to the error element
-                error.addClass( "help-block" );
-
-                if ( element.prop( "type" ) === "checkbox" ) {
-                    error.insertAfter( element.parent( "label" ) );
-                } else {
-                    error.insertAfter( element );
-                }
-            },
-            success: function ( label, element ) {
-                // Add the span element, if doesn't exists, and apply the icon classes to it.
-                if ( !$( element ).next( "span" )[ 0 ] ) {
-                    $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
-                }
-            },
-            highlight: function ( element, errorClass, validClass ) {
-                $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
-            },
-            unhighlight: function (element, errorClass, validClass) {
-                $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
-            },
-
-            submitHandler: function () {
-                //modify button
-                var sub_button=$("#riddle_form").find(':submit');
-                var old_button_val=sub_button.val();
-                sub_button.prop('disabled', true);
-                sub_button.val('...processing');
-
-                resetFields("#riddle_form");
-                var my_url="{{url}}/ask_riddle";
-                $("#riddle_form").ajaxSubmit({
-                    url:my_url,
-                       contentType: 'application/json',
-                       success: function(response){
-                        if(response.success==true){
-                                console.log('image uploaded and form submitted');
-                                $('#riddle_form  .form_submission_success').text(response.msg);
-                                setTimeout(function(){
-                                    $('#riddle_form  .form_submission_success').text('');
-                                    sub_button.val(old_button_val);
-                                    sub_button.prop('disabled', false);
-                                    $('#riddle_modal').modal('hide');
-                                },3000);
-                                
-                            }else{
-                                console.log('response is false');
-                                $('#riddle_form  .form_submission_error').text(response.msg);
-                                sub_button.val(old_button_val);
-                                sub_button.prop('disabled', false);
-                            }
-                              
-                       },
-                       error:function(xhr, status, err){
-                            console.log('error');
-                            console.log(xhr);
-                            console.log(status);
-                            console.log(err);
-                        }
-                   });
-                
-            }
-            } );
-
-
-        $( "#pab_form" ).validate( {/*validate & submit pab modal data*/
-                rules: {  
-                    pab_category: {
-                        required: true
-                    },
-                    pab_title: {
-                        required: true,
-                    }
-                    
-                },
-                messages: {                        
-                    pab_category: {
-                        required: "This field is required"
-                    },
-                    pab_title: {
-                        required: "This field is required"
-                    }
-                },
-                errorElement: "em",
-                errorPlacement: function ( error, element ) {
-                // Add the `help-block` class to the error element
-                error.addClass( "help-block" );
-
-                if ( element.prop( "type" ) === "checkbox" ) {
-                    error.insertAfter( element.parent( "label" ) );
-                } else {
-                    error.insertAfter( element );
-                }
-            },
-            success: function ( label, element ) {
-                // Add the span element, if doesn't exists, and apply the icon classes to it.
-                if ( !$( element ).next( "span" )[ 0 ] ) {
-                    $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
-                }
-            },
-            highlight: function ( element, errorClass, validClass ) {
-                $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
-            },
-            unhighlight: function (element, errorClass, validClass) {
-                $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
-            },
-
-            submitHandler: function () {
-                //modify button
-                var sub_button=$("#pab_form").find(':submit');
-                var old_button_val=sub_button.val();
-                sub_button.prop('disabled', true);
-                sub_button.val('...processing');
-
-                resetFields("#pab_form");
-                var my_url="{{url}}/ask_pab";
-                $("#pab_form").ajaxSubmit({
-                    url:my_url,
-                       contentType: 'application/json',
-                       success: function(response){
-                        if(response.success==true){
-                                console.log('image uploaded and form submitted');
-                                $('#pab_form  .form_submission_success').text(response.msg);
-                                setTimeout(function(){
-                                    $('#pab_form  .form_submission_success').text('');
-                                    sub_button.val(old_button_val);
-                                    sub_button.prop('disabled', false);
-                                    $('#pab_modal').modal('hide');
-                                },3000);
-                                
-                            }else{
-                                console.log('response is false');
-                                $('#pab_form  .form_submission_error').text(response.msg);
-                                sub_button.val(old_button_val);
-                                sub_button.prop('disabled', false);
-                            }
-                              
-                       },
-                       error:function(xhr, status, err){
-                            console.log('error');
-                            console.log(xhr);
-                            console.log(status);
-                            console.log(err);
-                        }
-                   });
-                
-            }
-            } );
-
-
-
-        
-
-            });
-
-            </script>
+        </script>
 
 
     </body>

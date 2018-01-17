@@ -634,7 +634,7 @@
 
             <div class="portlet-body form">                                         
 
-                <div id="section_response_modal" class="modal fade" tabindex="-1">
+                <!-- <div id="section_response_modal" class="modal fade" tabindex="-1">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                         <h4 style="text-transform: uppercase;" class="modal-title" id="section_response_header">{{page_response}}</h4>
@@ -673,7 +673,7 @@
                         </form>
                     </div>
 
-                </div>
+                </div> -->
 
             </div>
 
@@ -697,128 +697,6 @@
 
             $( document ).ready( function () {
 
-                
-
-
-            //follow posts
-           $("body").on('click','.follow_section_item',function(){
-            //get this posts data
-            var parent=$(this).parents('.posted');
-            var id=parent.find('input#post_id').val();
-            var section=parent.find('input#post_type').val();
-
-            var url='{{url}}/followMember';
-            // console.log('url '+url);
-
-            $.ajax({
-                url:url,
-                type:'POST',
-                data:{'post_id':id,'section':section},
-                headers: {'X-My-App-Token': 'loganstyles'},
-                success:function(response){
-                    console.log(response);
-                    if(response.success==true){
-                        //display notif
-                        alert(response.msg)
-                    }else{
-
-                         }                        
-
-                },
-                error:function(xhr, status, err){
-                    console.log('error');
-                    console.log(xhr);
-                    console.log(status);
-                    console.log(err);
-                }
-            });
-
-        });
-
-           
-
-
-            $( "#section_response_form" ).validate( {/*validate & submit response details*/
-                rules: {  
-                    section_response_details: {
-                        required: true
-                    }                    
-                },
-                messages: {                        
-                    section_response_details: {
-                        required: "This field is required"
-                    }
-                },
-                errorElement: "em",
-                errorPlacement: function ( error, element ) {
-                // Add the `help-block` class to the error element
-                error.addClass( "help-block" );
-
-                if ( element.prop( "type" ) === "checkbox" ) {
-                    error.insertAfter( element.parent( "label" ) );
-                } else {
-                    error.insertAfter( element );
-                }
-            },
-            success: function ( label, element ) {
-                // Add the span element, if doesn't exists, and apply the icon classes to it.
-                if ( !$( element ).next( "span" )[ 0 ] ) {
-                    $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
-                }
-            },
-            highlight: function ( element, errorClass, validClass ) {
-                $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
-            },
-            unhighlight: function (element, errorClass, validClass) {
-                $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
-            },
-
-            submitHandler: function () {
-                //modify button
-                var sub_button=$(this).find(':submit');
-                var old_button_val=sub_button.val();
-                sub_button.prop('disabled', true);
-                sub_button.val('...processing');
-
-                resetFields();
-                var my_url="{{url}}/response_item";
-                console.log('url: '+my_url);
-
-                $("#section_response_form").ajaxSubmit({
-                    url:my_url,
-                    contentType: 'application/json',
-                    success: function(response){
-                        if(response.success==true){
-                            $('#section_response_form  .form_submission_success').text(response.msg);
-                            setTimeout(function(){
-                                $('#section_response_form  .form_submission_success').text('');
-                                sub_button.val(old_button_val);
-                                sub_button.prop('disabled', false);
-                                $('#section_response_modal').modal('hide');
-                            },3000);
-
-                        }else{
-                            console.log('response is false');
-                            $('#section_response_form  .form_submission_error').text(response.msg);
-                            sub_button.val(old_button_val);
-                            sub_button.prop('disabled', false);
-                        }
-
-                    },
-                    error:function(xhr, status, err){
-                        console.log('error');
-                        console.log(xhr);
-                        console.log(status);
-                        console.log(err);
-                    }
-                });
-                
-            }
-        } );
-
-
-        
-               
 
             });
 

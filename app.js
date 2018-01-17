@@ -359,7 +359,7 @@ app.get('/dashboard',isLoggedIn,function(req,res){
     }
     
     //using async get the last 5 results from each collection
-    async.concat([question,article,riddle,pab,trend],function(model,callback){
+    async.concat([question,article,riddle,pab,trend,notice],function(model,callback){
         var query = model.find({}).sort({"date_created":-1}).skip(skip_val).limit(limit_val);
         query.exec(function (err,docs){
             if(err){
@@ -535,12 +535,12 @@ app.post('/ask_question',upload.single('question_photo'),function(req,res,next){
                 ask_quest.pics.push(req.file.filename);
             }
 
-            ask_quest.save(function(err1, ask_quest) {
+            ask_quest.save(function(err1, saved_quest) {
 
                 if(err1){console.log(err1);res.json({success: false,msg:"question submission failed"});
 
             }else{   
-                var json = JSON.stringify(ask_quest, null, 2);
+                var json = JSON.stringify(saved_quest, null, 2);
                     console.log(json);//update dashboard,all questions & unanswered quests
                     console.log('emitting...')
                     io.emit('new_unanswered_posts', json);
@@ -600,13 +600,66 @@ app.post('/ask_article',article_upload,function(req,res,next){
         }
 
 
-        write_art.save(function(err1, ask_quest) {
+        write_art.save(function(err1, saved_art) {
 
             if(err1){console.log(err1);res.json({success: false,msg:"Article submission failed"});
 
             }else{
-                var json = JSON.stringify(write_art, null, 2);
+                var json = JSON.stringify(saved_art, null, 2);
+                io.emit('new_unanswered_posts', json);
                 res.json({success:true,msg:"Article submission succesful"});
+            }   
+        });
+
+    }    
+
+});
+
+/*process an 'write a notice' post,save & update UI immediately*/
+var notice_upload = upload.fields([
+    {name: 'notice_photo',maxCount:1 }]);
+app.post('/ask_notice',notice_upload,function(req,res,next){
+    console.log(req.files)
+
+    if( (req.user.displayPic).length ===0 || req.user.displayName =="User" || req.user.displayName ==""){
+        console.log("user has not updated profile")
+        res.json({success:false,msg:"Your post failed, please update your profile first"});
+    }else{
+
+        var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
+        var status=(req.user.designation[0])?((req.user.designation[req.user.designation.length -1]).title):('');
+        var display_name=(req.user.displayName)?(req.user.displayName):('');
+        var res_id=(req.user._id)?((req.user._id).toString()):('');
+
+        var owner_details={id:res_id,
+            displayName:display_name,
+            displayPic:displayPic,
+            status:status};
+
+            let write_notice =new notice();
+            write_notice.post_type="notice";
+            write_notice.access=1;//default :public access
+            write_notice.body=convertToSentencCase(req.body.notice_title);
+            write_notice.category = req.body.notice_top_heading;
+            write_notice.sub_cat1=req.body.notice_main_heading;
+            write_notice.sub_cat2=req.body.notice_type;
+            write_notice.owner=owner_details;
+
+        //store photo if it exists
+        if(req.files && req.files['notice_photo']){
+            console.log('filename '+req.files['notice_photo'][0].filename)
+            write_notice.pics.push(req.files['notice_photo'][0].filename);
+        }
+
+
+        write_notice.save(function(err1, saved_notice) {
+
+            if(err1){console.log(err1);res.json({success: false,msg:"notice submission failed"});
+
+            }else{
+                var json = JSON.stringify(saved_notice, null, 2);
+                io.emit('new_unanswered_posts', json);
+                res.json({success:true,msg:"Notice submission succesful"});
             }   
         });
 
@@ -653,6 +706,7 @@ app.post('/ask_riddle',upload.single('riddle_photo'),function(req,res,next){
 
             }else{   
                 var json = JSON.stringify(saved_ridd, null, 2);
+                io.emit('new_unanswered_posts', json);
                 res.json({success:true,msg:"Riddle submission successful"});
             }   
         });
@@ -707,6 +761,7 @@ app.post('/ask_pab',upload.single('pab_photo'),function(req,res,next){
 
             }else{   
                 var json = JSON.stringify(saved, null, 2);
+                io.emit('new_unanswered_posts', json);
                 res.json({success:true,msg:"Book post successful"});
             }   
         });
@@ -962,14 +1017,16 @@ app.post('/update_bio1',profile_upload,function(req,res,next){
 
 /*process responses immediately*/
 app.post('/response_item',upload.single('section_response_photo'),function(req,res,next){
-    // console.log(req.user)
+    console.log(req.body)
 
     if( (req.user.displayPic).length ===0 || req.user.displayName =="User" || req.user.displayName ==""){
         console.log("user has not updated profile")
         res.json({success:false,msg:"Your post failed, please update your profile first"});
     }else{
         var section_type=req.body.section_response_type;
+        console.log('section type '+section_type);
         var section_id=req.body.section_response_id;
+        console.log('section_id '+section_id);
         switch(section_type){
             case'question':
             section = question;

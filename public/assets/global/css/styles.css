@@ -80,6 +80,7 @@
 .post_item_topic{
     color: #000;
     font-size: 1.3em;
+    font-weight: 600;
     /*text-transform: capitalize;*/
 }
 
@@ -579,5 +580,5 @@
 
 .short_length{
     margin: 1% 10%;
-    border-top: 2px solid #eee;
+    border-top: 2px solid #ccc;
 }
