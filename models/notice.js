@@ -17,6 +17,7 @@ var noticeSchema = mongoose.Schema({
 	post_date: { type: Date, default: Date.now },
 	owner:{id:String,displayName:String,displayPic:String,status:String},
 	post_owner:{type:Boolean,default:false},
+	friend_exists:{type:Boolean,default:false},
 	comments_len:{type:Number,default:0},
 	comments:[{
 		body:String,

@@ -22,6 +22,7 @@ var pabSchema = mongoose.Schema({
 	post_date: { type: Date, default: Date.now },
 	owner:{id:String,displayName:String,displayPic:String,status:String},
 	post_owner:{type:Boolean,default:false},
+	friend_exists:{type:Boolean,default:false},
 	
 	question_status:{type:Boolean,default:false},
 	art_status:{type:Boolean,default:false},

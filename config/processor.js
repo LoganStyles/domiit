@@ -84,7 +84,24 @@ methods.processPagePosts=function (items,user,callback){
                     cur_item.post_owner=true;
                 }else{
                     console.log('user is NOT the owner')
-                }                
+                }  
+                //chk if owner is a friend
+                /*get list of friends
+                chk if owner id is in the list:true:set friend_exists=true*/              
+                user.getFriends(function(err,friends){
+                    if (err) throw err;
+                    console.log('friends ',friends);
+                    var f_len=friends.length;
+                    if( f_len > 0){
+                        //chk if owner id is in the list
+                        for(var i=0;i<f_len;i++){
+                            if((user._id).toString() ==(friends._id).toString){
+                                cur_item.friend_exists=true;
+                            }
+                        }
+                    }
+
+                });
 
                 processed_items++;
                 // console.log('process inside:'+processed_items);

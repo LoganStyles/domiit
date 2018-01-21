@@ -3,6 +3,7 @@ if(process.env.NODE_ENV !== 'production'){
 }
 
 var http = require('http');
+var fetch = require('node-fetch');
 var express = require('express');
 var bodyParser = require('body-parser');
 var moment = require('moment');
@@ -35,6 +36,7 @@ var about = require('./models/about');
 var async = require('async');
 var multer = require('multer');
 var mime = require('mime-lib');
+var notifs = require('notifications');
 
 var Storage =multer.diskStorage({
     destination:function(req,file,cb){
@@ -340,7 +342,7 @@ app.get('/dashboard',isLoggedIn,function(req,res){
     var skip_val=0,
     limit_val=5,
     page='dashboard',
-    page_title='Dashboard',
+    page_title='',
     page_results=[],
     res_item_trend=[];
 
@@ -356,6 +358,15 @@ app.get('/dashboard',isLoggedIn,function(req,res){
     var curr_user_display_pic='avatar.png';//set default pic
     if(req.user.displayPic[0]){
         curr_user_display_pic=req.user.displayPic[req.user.displayPic.length - 1];
+    }
+
+    //find pending notifications length
+    var notif_len=req.user.notifications.length;
+    var pending_friend_notifs=0;
+    // var pending_notifs=0;
+    for(var i=0;i<notif_len;i++){
+        if((req.user.notifications[i].notif_type =="friends") &&(req.user.notifications[i].status =="pending"))
+            pending_friend_notifs++;
     }
     
     //using async get the last 5 results from each collection
@@ -380,7 +391,7 @@ app.get('/dashboard',isLoggedIn,function(req,res){
                 return (a.date_created < b.date_created)? 1:(a.date_created > b.date_created)? -1:0;
             });
             console.log('sorted page_results')
-            console.log(page_results);
+            // console.log(page_results);
         }
 
         if(page_results.length >0){
@@ -394,6 +405,9 @@ app.get('/dashboard',isLoggedIn,function(req,res){
                     data:processed_response,
                     data_trend:res_item_trend,
                     page_title: page_title,
+
+                    pending_friend_notifs:pending_friend_notifs,
+
 
                     quest_page_status:false,
                     art_page_status:false,
@@ -431,6 +445,62 @@ app.get('/dashboard',isLoggedIn,function(req,res){
         
     });
 
+
+});
+
+//register notifications for friend request
+notifs.on('friends_new',function(notif){
+    console.log('new friend notifs')
+    console.log(notif.object);
+    console.log(notif.info);
+    /*update destination's page using socket.io*/
+    //fetch socket frm db
+});
+
+/*sends a friend request */
+app.get('/sendFriendRequest',isLoggedIn, function(req, res) {
+    console.log('sending friend request');
+    var owner_id = req.query.owner_id;
+    console.log('received owner_id'+owner_id);
+    var curr_user=req.user;
+    console.log('curr user '+ curr_user);
+    //curr user sends request to owner
+    curr_user.friendRequest(owner_id,function(err,request){
+        if (err) console.log(err);
+        console.log('request',request);
+        if(request){
+            //send notification to requested
+            var new_friend_notif_obj={
+                source_id:req.user._id,
+                destination_id:owner_id,
+                status:'pending',
+                message:curr_user.displayName+' sent you a friend request'
+            }
+            notifs.post('friends_new',new_friend_notif_obj,{language:'en'});
+            //update requested's notifications db
+            user.findOne({_id:owner_id}, function(err1, user_owner) {
+                if(user_owner){
+                    let updateRequested=user_owner;
+
+                updateRequested.notifications.push(new_friend_notif_obj);//append notification items
+                updateRequested.date_modified=new Date();//update date
+                console.log(updateRequested);
+
+                user.updateOne({_id:owner_id},{$set:updateRequested},function(err2,res2){
+                    if(err2){
+                        console.log(err2);
+                        res.json({success:false,msg:"Friend Request Failed"});
+                }
+                    else if(res2){
+                        res.json({success:true,msg:"Friend Request Sent"});
+                    }
+                });
+
+            }
+
+        });
+        }
+    });
 
 });
 
@@ -1513,6 +1583,9 @@ app.post('/saveItem',function(req,res,next){
     });
 
 });
+
+
+
 
 server.listen(process.env.PORT || 3000,function(){
     console.log('Server started on port '+process.env.PORT);

@@ -1,4 +1,16 @@
 var mongoose = require('mongoose');
+// var friendsOfFriends = require('friends');
+// var friendsOfFriends = require('friends-of-friends');
+var options ={
+    //Users model
+    personModelName: 'User',
+    //friendship model
+    friendshipModelName: 'Friendship',
+    //name of Friendship collection
+    friendshipCollectionName: 'FriendshipCollection'
+}
+
+var friendsOfFriends = require('friends-of-friends')(mongoose,options);
 
 var userSchema = mongoose.Schema({
     id:String,
@@ -24,11 +36,12 @@ var userSchema = mongoose.Schema({
     group_ids:[String],
     gender:{type:String,default:'male'},
     location:{type:String,default:''},
-    friend_ids:[String],
+    // friend_ids:[String],
     followers:[String],
     followed:[String],
     trend_follows:[String],
     bookmarks:[{item_id:String,body:String,date:{type:Date,default:Date.now}}],
+    notifications:[{notif_type:String,source_id:String,destination_id:String,status:String,message:String,date:{type:Date,default:Date.now}}],
     upvotes:{type:Number,default:0},
     downvotes:{type:Number,default:0},
     request_ids:[String],
@@ -43,5 +56,9 @@ var userSchema = mongoose.Schema({
 
 });
 
-var User = mongoose.model('User', userSchema);
+// var options={};
+
+userSchema.plugin(friendsOfFriends.plugin,options);
+var User = mongoose.model(options.personModelName, userSchema);
+// var User = mongoose.model('User', userSchema);
 module.exports = User;

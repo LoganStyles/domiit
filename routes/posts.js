@@ -29,7 +29,7 @@ function stipInputCase(param){
     return categ;
 }
 
-/*fetchs for a user's bookmarks & returns data if found*/
+/*fetchs a user's bookmarks & returns data if found*/
 function searchBookmarks(user,final_response){
     var curr_bm,section;
     var res_items=[];//set empty result array
@@ -40,6 +40,7 @@ function searchBookmarks(user,final_response){
     for(var i=0;i<saved_bookmarks_len;i++){
         curr_bm=saved_bookmarks[i];
         console.log(curr_bm.body)
+
         switch(curr_bm.body){
             case'question':
             section = question;
@@ -93,7 +94,7 @@ router.get('/get_bookmarked',isLoggedIn,function(req,res){
     }
 
     var res_item_trend=[];
-    var page='dashboard',page_title='My Bookmarked Items';
+    var page='dashboard',page_title='Bookmarks';
 
         //get trending stories for sidebar headlines
         trend.find().sort({date_created:1}).exec(function(err_trend,item_trend){
@@ -104,7 +105,7 @@ router.get('/get_bookmarked',isLoggedIn,function(req,res){
             }
         });
 
-        console.log('get bookmarked');
+    console.log('get bookmarked');
     var saved_bookmarks=req.user.bookmarks;//get saved bookmarks
 
     if(saved_bookmarks.length>0){

@@ -64,51 +64,26 @@
 
                                                 <div class="col-md-6">
                                                    
-            <!-- <div class="panel panel-default portlet">
+            <div class="panel panel-default portlet">
               <div class="panel-body" style="width: 100%;">
                 <div class="posts_top_actions_left">
-                    <span class="posts_page_title"></span>
+                    <span class="posts_page_title">{{page_title}}</span>
                 </div>
                 
                 <div class="posts_top_actions_right">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default">Actions</button>
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-angle-down"></i>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a onclick="modalLoader('question','new','');"> Ask a question </a>
-                        </li>
-                        <li>
-                            <a onclick="modalLoader('article','new','');"> Write an article </a>
-                        </li>
-                        <li>
-                            <a onclick="modalLoader('riddle','new','');"> Post a riddle</a>
-                        </li>
-                        <li>
-                            <a onclick="modalLoader('pab','new','');"> Post a book</a>
-                        </li>
-                    </ul>
-                </div>
-                                                            
+                    <a class="page_top_actions" onclick="modalLoader('question','new','');">Ask a question</a>&nbsp;|&nbsp;
+
+                    <a class="page_top_actions" onclick="modalLoader('article','new','');">Write an article</a>&nbsp;|&nbsp;
+
+                    <a class="page_top_actions" onclick="modalLoader('riddle','new','');">Post a riddle</a>&nbsp;|&nbsp;
+
+                    <a class="page_top_actions" onclick="modalLoader('pab','new','');">Post a book</a>
                    
                 </div>
+                <div class="clearfix"></div>
               </div>
-            </div>  -->  
+            </div>   
 
-            <div class="panel panel-default portlet">
-              <div class="panel-body">
-                <a class="page_top_actions" onclick="modalLoader('question','new','');">Ask a question</a>&nbsp;|&nbsp;
-
-                <a class="page_top_actions" onclick="modalLoader('article','new','');">Write an article</a>&nbsp;|&nbsp;
-
-                <a class="page_top_actions" onclick="modalLoader('riddle','new','');">Post a riddle</a>&nbsp;|&nbsp;
-
-                <a class="page_top_actions" onclick="modalLoader('pab','new','');">Post a book</a>
-                
-              </div>
-            </div>                                   
                                                     
 
         <div class="question_all_post_area dashboard_page"> 
@@ -118,6 +93,7 @@
             <div class="portlet light posted">
              <input type="hidden" id="post_id" value="{{_id}}">
              <input type="hidden" id="post_type" value="{{post_type}}">
+             <input type="hidden" id="post_owner_id" value="{{owner.id}}">
 
                 <div class="portlet-title">
                     <div class="caption caption-md">
@@ -181,10 +157,10 @@
 
                                         {{/if}}
                                 {{else}}<!--other post:questio etc-->
-                                        {{#if post_owner}}
+                                        {{#if friend_exists}}
                                             <img class="icon_size_50 " src="{{../url}}/images/filler.png">
                                             {{else}}
-                                            <img class="icon_size_50 " src="{{../url}}/images/add_person.png">
+                                            <img class="icon_size_50 send_friend_req" src="{{../url}}/images/add_person.png">
                                         {{/if}}
 
                                 {{/if}}
@@ -786,8 +762,52 @@
 
         
             $( document ).ready( function () {
+                //send friend request
+                $("body").on('click','.send_friend_req',function(e){
+                //get this posts owner
+                var $this=$(this);
+                var parent=$this.parents('.posted');
+                var owner_id=parent.find('input#post_owner_id').val();
+                console.log('owner_id '+typeof(owner_id));
+                //send request
+                var url="{{url}}/sendFriendRequest";
+                console.log(url);
 
-                });
+                $.ajax({
+                    url:url,
+                    type:'GET',
+                    data:{'owner_id':owner_id},
+                    headers: {'X-My-App-Token': 'loganstyles'},
+                    success:function(response){
+                        console.log(response);
+                        $this.replaceWith('<span class="post_box_name">'+response.msg+'</span>');
+                        if(response.success==true){
+                            location.reload();                 
+
+                        }else{ 
+                            $this.replaceWith('<span class="post_box_name">'+response.msg+'</span>'); }
+                        },
+                        eerror:function(xhr, status, err){
+                            console.log('error');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(err);
+                        }
+                    });
+
+                // fetch(url)
+                // .then(function(res){
+                //     return res.text();
+                // }).then(function(body){
+                //     console.log(body);
+                // }).catch(function(error){
+                //     console.log('error occurred');
+                //     console.log(error);
+                // });
+
+            });
+
+            });
 
         </script>
 

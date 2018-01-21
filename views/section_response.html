@@ -326,7 +326,7 @@
                                                         <i class="fa fa-plus"></i>&nbsp; Follow</a>
                                                     {{/unless}}
                                             {{else}}<!--other post:questio etc-->
-                                                    {{#unless ../post_owner}}
+                                                    {{#unless ../friend_exists}}
                                                         <img class="icon_size_50" src="{{../../url}}/images/add_person.png">
                                                     {{/unless}}
 

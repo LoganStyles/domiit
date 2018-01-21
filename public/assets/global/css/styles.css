@@ -49,12 +49,12 @@
      float: left;
      /*background-color: #fff;*/
      font-weight: 600;
-     width: 50%;
+     width: 30%;
 }
 
 .posts_top_actions_right{
-     float: left;
-     width: 50%;
+     float: right;
+     width: 70%;
      text-align: right;
 }
 /**/
@@ -398,6 +398,7 @@
      	width: 28px;
         /*max-width: 100%;*/
      	height: 28px;
+        cursor: pointer;
      
      }
 
@@ -405,6 +406,7 @@
         width: 18px;
         /*max-width: 100%;*/
         height: 18px;
+        cursor: pointer;
      
      }
 
@@ -412,21 +414,25 @@
         /*width: 20px;*/
         max-width: 100%;
         height: 20px;
+        cursor: pointer;
      }
 
      .icon_size_15{
      	width: 15px;
      	height: 15px;
+        cursor: pointer;
      }
 
      .icon_size_40{
      	width: 40px;
      	height: 40px;
+        cursor: pointer;
      }
 
       .icon_size_50{
         width: 50px;
         height: 50px;
+        cursor: pointer;
      }
 
      .swap_icons img:last-child{display:none}
@@ -581,4 +587,9 @@
 .short_length{
     margin: 1% 10%;
     border-top: 2px solid #ccc;
+}
+
+/*friend*/
+.friend_req_failed{
+    color: #f00;text-transform: capitalize;
 }

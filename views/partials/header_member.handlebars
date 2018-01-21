@@ -138,7 +138,7 @@
                    
                     <div style="width: 100%;">
                         <i class="icon-bell font_icon_style">
-                          <!-- <span class="badge badge-default ">0</span> -->
+                          <!-- <span class="badge badge-default notif_span">2</span> -->
                         </i>
                     </div>                    
                     <div style="">Notifications</div>
@@ -150,7 +150,9 @@
                    
                     <div style="width: 100%;">
                         <i class="icon-users font_icon_style">
-                          <!-- <span class="badge badge-default ">0</span> -->
+                        {{#if (gt pending_friend_notifs 0)
+                          <span class="badge badge-default ">0</span>
+                        }}
                         </i>
                     </div>                    
                     <div>Friends</div>
