@@ -65,6 +65,43 @@
 
             $(document).ready(function(){
 
+            //send friend request
+                $("body").on('click','.send_friend_req',function(e){
+                //get this posts owner
+                var $this=$(this);
+                var parent=$this.parents('.posted');
+                var owner_id=parent.find('input#post_owner_id').val();
+                console.log('owner_id '+typeof(owner_id));
+                //send request
+                var url="{{url}}/sendFriendRequest";
+                console.log(url);
+
+                $.ajax({
+                    url:url,
+                    type:'GET',
+                    data:{'owner_id':owner_id},
+                    headers: {'X-My-App-Token': 'loganstyles'},
+                    success:function(response){
+                        console.log(response);
+                        
+                        if(response.success==true){
+                            $this.replaceWith('<span class="post_box_name">'+response.msg+'</span>');
+                            location.reload();                 
+
+                        }else{ 
+                            $this.replaceWith('<span class="friend_req_failed">'+response.msg+'</span>'); }
+                        },
+                        eerror:function(xhr, status, err){
+                            console.log('error');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(err);
+                        }
+                    });
+
+            });
+
+
             //bookmarks an item
             //save posts
            $("body").on('click','.bookmark_section_item',function(){

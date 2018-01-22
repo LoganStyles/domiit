@@ -93,6 +93,8 @@ router.get('/get_bookmarked',isLoggedIn,function(req,res){
         curr_user_display_pic=req.user.displayPic[req.user.displayPic.length - 1];
     }
 
+    var pending_friend_notifs=process_posts.getNotifications(req.user);
+
     var res_item_trend=[];
     var page='dashboard',page_title='Bookmarks';
 
@@ -120,6 +122,7 @@ router.get('/get_bookmarked',isLoggedIn,function(req,res){
                 data:processed_response,
                 data_trend:res_item_trend,
                 page_title: page_title,
+                pending_friend_notifs:pending_friend_notifs,
 
                 quest_page_status:false,
                 art_page_status:false,
@@ -139,6 +142,7 @@ router.get('/get_bookmarked',isLoggedIn,function(req,res){
             data:[],
             data_trend:res_item_trend,
             page_title: page_title,
+            pending_friend_notifs:pending_friend_notifs,
 
             quest_page_status:false,
             art_page_status:false,
@@ -274,6 +278,8 @@ section.find(selection).sort({post_date:-1}).exec(function(err,items){
         curr_user_display_pic=req.user.displayPic[req.user.displayPic.length - 1];
     }
 
+    var pending_friend_notifs=process_posts.getNotifications(req.user);
+
     if(err){console.log(err);}
     else if(items){
     //items were found
@@ -293,6 +299,7 @@ section.find(selection).sort({post_date:-1}).exec(function(err,items){
                 page_type:page_type,
                 page_response:item_response,
                 page_icon:page_icon,
+                pending_friend_notifs:pending_friend_notifs,
                 quest_status:question_status,
                 art_status:article_status,
                 riddle_status:riddle_status,
@@ -315,6 +322,7 @@ section.find(selection).sort({post_date:-1}).exec(function(err,items){
             page_type:page_type,
             page_response:item_response,
             page_icon:page_icon,
+            pending_friend_notifs:pending_friend_notifs,
             quest_status:question_status,
             art_status:article_status,
             riddle_status:riddle_status,

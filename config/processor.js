@@ -20,6 +20,19 @@ methods.getStoryDetails=function (arr){
     return promise;
 };
 
+/*handle notification for the current user*/
+methods.getNotifications=function(user){
+//find pending notifications length
+var notif_len=user.notifications.length;
+var pending_friend_notifs=0;
+    // var pending_notifs=0;
+    for(var i=0;i<notif_len;i++){
+        if((user.notifications[i].notif_type =="friends") &&(user.notifications[i].status =="pending"))
+            pending_friend_notifs++;
+    }
+    return pending_friend_notifs;
+};
+
 /*
 perform some operations on the posts such as updating display pics etc
 .::chk type of post since some operations defer based on this
@@ -73,37 +86,43 @@ methods.processPagePosts=function (items,user,callback){
                 status:status
             };
 
-                // update owner info
-                cur_item.owner=updated_obj;
+            /* update owner info*/
+            cur_item.owner=updated_obj;
                 // chk if current viewer is the owner
                 var req_user_id=(user._id).toString();
-                var response_id=(response)?((response._id).toString()):('');
-
-                if(req_user_id ===response_id){
-                    console.log('user is the owner')
+                if(req_user_id ===res_id){
+                    console.log('user is the owner of the post')
                     cur_item.post_owner=true;
+                    cur_item.friend_exists=true;
                 }else{
-                    console.log('user is NOT the owner')
-                }  
-                //chk if owner is a friend
-                /*get list of friends
-                chk if owner id is in the list:true:set friend_exists=true*/              
-                user.getFriends(function(err,friends){
-                    if (err) throw err;
-                    console.log('friends ',friends);
-                    var f_len=friends.length;
-                    if( f_len > 0){
-                        //chk if owner id is in the list
-                        for(var i=0;i<f_len;i++){
-                            if((user._id).toString() ==(friends._id).toString){
-                                cur_item.friend_exists=true;
+                    console.log('user is NOT the owner of the post')
+                    /*Perform other checks*/
+                    //check if there's pending friend request with owner*/
+
+
+                    //chk if owner is a friend
+                    /*get list of friends of current user,
+                    chk if owner id is in the list:true:set friend_exists=true*/              
+                    user.getFriends(function(err,friends){
+                        if (err) throw err;
+                        console.log('friends ',friends);
+                        var f_len=friends.length;
+
+                        if( f_len > 0){
+                            //chk if post owner id is in the list
+                            for(var i=0;i<f_len;i++){
+                                if(res_id ==(friends._id).toString){
+                                    cur_item.friend_exists=true;
+                                }
                             }
                         }
-                    }
 
-                });
+                    });
+            }  
+            
 
-                processed_items++;
+
+            processed_items++;
                 // console.log('process inside:'+processed_items);
                 if(processed_items==array.length){//iteration has ended
                     // res_items=items;

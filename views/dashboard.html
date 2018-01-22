@@ -66,11 +66,8 @@
                                                    
             <div class="panel panel-default portlet">
               <div class="panel-body" style="width: 100%;">
-                <div class="posts_top_actions_left">
-                    <span class="posts_page_title">{{page_title}}</span>
-                </div>
-                
-                <div class="posts_top_actions_right">
+                                
+                <div class="posts_top_actions_right" style="width: 100%;">
                     <a class="page_top_actions" onclick="modalLoader('question','new','');">Ask a question</a>&nbsp;|&nbsp;
 
                     <a class="page_top_actions" onclick="modalLoader('article','new','');">Write an article</a>&nbsp;|&nbsp;
@@ -493,7 +490,7 @@
                                         
 
                         <div class="clearfix"></div>
-                    </div><hr style="margin:0;">
+                    </div><hr class="long_length">
 
 
                 </div>
@@ -762,50 +759,7 @@
 
         
             $( document ).ready( function () {
-                //send friend request
-                $("body").on('click','.send_friend_req',function(e){
-                //get this posts owner
-                var $this=$(this);
-                var parent=$this.parents('.posted');
-                var owner_id=parent.find('input#post_owner_id').val();
-                console.log('owner_id '+typeof(owner_id));
-                //send request
-                var url="{{url}}/sendFriendRequest";
-                console.log(url);
 
-                $.ajax({
-                    url:url,
-                    type:'GET',
-                    data:{'owner_id':owner_id},
-                    headers: {'X-My-App-Token': 'loganstyles'},
-                    success:function(response){
-                        console.log(response);
-                        $this.replaceWith('<span class="post_box_name">'+response.msg+'</span>');
-                        if(response.success==true){
-                            location.reload();                 
-
-                        }else{ 
-                            $this.replaceWith('<span class="post_box_name">'+response.msg+'</span>'); }
-                        },
-                        eerror:function(xhr, status, err){
-                            console.log('error');
-                            console.log(xhr);
-                            console.log(status);
-                            console.log(err);
-                        }
-                    });
-
-                // fetch(url)
-                // .then(function(res){
-                //     return res.text();
-                // }).then(function(body){
-                //     console.log(body);
-                // }).catch(function(error){
-                //     console.log('error occurred');
-                //     console.log(error);
-                // });
-
-            });
 
             });
 

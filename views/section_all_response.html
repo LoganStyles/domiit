@@ -35,8 +35,27 @@
 
                             <div class="col-md-6">                                        
                                 <!-- BEGIN PORTLET -->
+                                <div class="panel panel-default portlet" {{#unless page_response}} style="display: none;"{{/unless}}>
+              <div class="panel-body" style="width: 100%;">
+                <div class="posts_top_actions_left">
+                    <span class="posts_page_title">{{page_title}}</span>
+                </div>
+                
+                <div class="posts_top_actions_right">
+                    <a class="page_top_actions" onclick="modalLoader('question','new','');">Ask a question</a>&nbsp;|&nbsp;
 
-            <div class="panel panel-default portlet" {{#unless page_response}} style="display: none;"{{/unless}}>
+                    <a class="page_top_actions" onclick="modalLoader('article','new','');">Write an article</a>&nbsp;|&nbsp;
+
+                    <a class="page_top_actions" onclick="modalLoader('riddle','new','');">Post a riddle</a>&nbsp;|&nbsp;
+
+                    <a class="page_top_actions" onclick="modalLoader('pab','new','');">Post a book</a>
+                   
+                </div>
+                <div class="clearfix"></div>
+              </div>
+            </div>
+
+            <!-- <div class="panel panel-default portlet" {{#unless page_response}} style="display: none;"{{/unless}}>
               <div class="panel-body" style="width: 100%;">
                 <div class="posts_top_actions_left">
                     <span class="posts_page_title">{{page_title}}</span>
@@ -67,7 +86,7 @@
                    
                 </div>
               </div>
-            </div>
+            </div> -->
                                 
             <div class="question_all_post_area">
 

@@ -14,6 +14,8 @@ var exphbs = require('express-handlebars');
 var Handlebars = require('handlebars');
 var MomentHandler =require("handlebars.moment");
 MomentHandler.registerHelpers(Handlebars);
+var just_hb_helper= require('just-handlebars-helpers');
+just_hb_helper.registerHelpers(Handlebars);
 var user = require('./models/user');
 var members = require('./routes/members');
 var cms_routes = require('./routes/cms');
@@ -264,7 +266,7 @@ app.get('/profile',isLoggedIn, function(req, res) {
             qualification:qualification,
             designation:designation,
             backgroundPic:backgroundPic,
-            friends_count:req.user.friend_ids.length,
+            // friends_count:req.user.friend_ids.length,
             followers_count:req.user.followers.length,
             followed_count:req.user.followed.length,
             bookmarks_count:req.user.bookmarks.length,
@@ -361,13 +363,8 @@ app.get('/dashboard',isLoggedIn,function(req,res){
     }
 
     //find pending notifications length
-    var notif_len=req.user.notifications.length;
-    var pending_friend_notifs=0;
-    // var pending_notifs=0;
-    for(var i=0;i<notif_len;i++){
-        if((req.user.notifications[i].notif_type =="friends") &&(req.user.notifications[i].status =="pending"))
-            pending_friend_notifs++;
-    }
+    var pending_friend_notifs=process_posts.getNotifications(req.user);
+    console.log('pending_friend_notifs '+pending_friend_notifs)
     
     //using async get the last 5 results from each collection
     async.concat([question,article,riddle,pab,trend,notice],function(model,callback){
@@ -430,6 +427,7 @@ app.get('/dashboard',isLoggedIn,function(req,res){
                 data:page_results,
                 data_trend:res_item_trend,
                 page_title: page_title,
+                pending_friend_notifs:pending_friend_notifs,
 
                 quest_page_status:false,
                 art_page_status:false,
@@ -453,17 +451,22 @@ notifs.on('friends_new',function(notif){
     console.log('new friend notifs')
     console.log(notif.object);
     console.log(notif.info);
-    /*update destination's page using socket.io*/
+    /*update destination's page in real time using socket.io*/
     //fetch socket frm db
 });
 
-/*sends a friend request */
+/*sends a friend request to the owner of the post*/
 app.get('/sendFriendRequest',isLoggedIn, function(req, res) {
-    console.log('sending friend request');
-    var owner_id = req.query.owner_id;
-    console.log('received owner_id'+owner_id);
-    var curr_user=req.user;
-    console.log('curr user '+ curr_user);
+    if( (req.user.displayPic).length ===0 || req.user.displayName =="User" || req.user.displayName ==""){
+        console.log("user has not updated profile")
+        res.json({success:false,msg:"Update your profile first"});
+    }else{
+
+        console.log('sending friend request');
+        var owner_id = req.query.owner_id;
+        console.log('received owner_id'+owner_id);
+        var curr_user=req.user;
+    // console.log('curr user '+ curr_user);
     //curr user sends request to owner
     curr_user.friendRequest(owner_id,function(err,request){
         if (err) console.log(err);
@@ -474,6 +477,7 @@ app.get('/sendFriendRequest',isLoggedIn, function(req, res) {
                 source_id:req.user._id,
                 destination_id:owner_id,
                 status:'pending',
+                notif_type:'friends',
                 message:curr_user.displayName+' sent you a friend request'
             }
             notifs.post('friends_new',new_friend_notif_obj,{language:'en'});
@@ -490,7 +494,7 @@ app.get('/sendFriendRequest',isLoggedIn, function(req, res) {
                     if(err2){
                         console.log(err2);
                         res.json({success:false,msg:"Friend Request Failed"});
-                }
+                    }
                     else if(res2){
                         res.json({success:true,msg:"Friend Request Sent"});
                     }
@@ -501,6 +505,8 @@ app.get('/sendFriendRequest',isLoggedIn, function(req, res) {
         });
         }
     });
+
+}
 
 });
 

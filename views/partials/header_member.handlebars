@@ -150,14 +150,15 @@
                    
                     <div style="width: 100%;">
                         <i class="icon-users font_icon_style">
-                        {{#if (gt pending_friend_notifs 0)
-                          <span class="badge badge-default ">0</span>
-                        }}
+
+                        {{#if (gt pending_friend_notifs 0)}}
+                          <span class="badge badge-default ">{{pending_friend_notifs}}</span>
+                        {{/if}}
                         </i>
                     </div>                    
                     <div>Friends</div>
 
-                   </a>                 
+                   </a> 
                 </li>
 
                 
@@ -165,7 +166,9 @@
                   <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                   
                   <div style="width: 100%;">
-                    <img alt="" class="icon_size_18 img-circle" src="{{url}}/uploads/{{displayPic}}">
+                  <div style="width: 50%;margin:0 auto;">
+                    <img alt="" class="icon_size_18 img-circle" src="{{url}}/uploads/{{displayPic}}" >
+                    </div>
                     <!--<img alt="" class="icon_size img-circle" style="margin: 0 30%;width: 35% !important;height: 2em;" src="{{url}}/uploads/{{displayPic}}">-->
                   </div>
                   <div style="text-transform: capitalize;">{{user_info.displayName}}</div>

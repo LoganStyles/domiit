@@ -148,7 +148,7 @@
 .profile_img_text{	
 	color: #000;
      font-size: 1.2em;
-     text-transform: capitalize;
+     /*text-transform: capitalize;*/
 	text-align: center;
 }
 
@@ -586,6 +586,11 @@
 
 .short_length{
     margin: 1% 10%;
+    border-top: 2px solid #ccc;
+}
+
+.long_length{
+    /*margin: 1% 10%;*/
     border-top: 2px solid #ccc;
 }
 
