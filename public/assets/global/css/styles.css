@@ -4,6 +4,27 @@
 	width: 100%;
 }
 
+.posts_partition_friends{
+    width: 20%;
+    display: inline-block;
+    color: #000;
+    float: left;
+}
+
+.posts_partition_friends_middle{
+    width: 40%;
+    display: inline-block;
+    color: #000;
+    float: left;
+}
+/*
+.posts_partition_friends_end{
+    width: 40%;
+    display: inline-block;
+    color: #000;
+    float: left;
+}*/
+
 .posts_partition{
 	width: 45%;
 	display: inline-block;
@@ -42,6 +63,7 @@
      float: left;
      width: 60%;
      text-align: left;
+     /*font-weight: 600;*/
 }
 
 /*action bar*/
@@ -114,7 +136,7 @@
 	-webkit-border-radius: 2px; 
 	-moz-border-radius: 2px;   
 	border-radius: 2px; 
-	padding: 1%;
+	padding: 0%;
 	/*margin-top: 3%;*/
 }
 
@@ -161,7 +183,7 @@
 
 .thin_border_activity{
     border-top: solid 1px #ccc;
-    padding: 2% 0 2% 0;
+    padding: 0% 0 0% 0;
     /*margin-top: 2%;*/
 }
 
@@ -178,12 +200,12 @@
 }
 
 .profile_text_section.bottom_line_space{
-	padding: 1% 0;
+	padding:  0;
 	width: 100%;
 }
 
 .profile_text_section.line_space{
-    padding: 4% 0;
+    padding: 1% 0;
     width: 100%;
 }
 
@@ -371,7 +393,8 @@
 
      .page_top_actions{
         color: #000;
-        font-size: 1.1em;
+        font-size: 0.95em;
+        font-weight: 600;
      }
 
      /*toggle cntent*/
@@ -528,7 +551,7 @@
 
 .grey_button{
     color: #666 !important;
-    font-size: 0.9em !important;
+    font-size: 1em !important;
     text-transform: capitalize;
     font-weight: 400 !important;
 }
@@ -571,12 +594,13 @@
 }
 
 .post_box_name{
-    color: #86be25;text-transform: capitalize;
+    color: #3598dc;text-transform: capitalize;
 }
 
 .posts_page_title{
-    font-size: 1.1em;font-weight: 600;
+    font-size: 0.85em;font-weight: 600;
     text-transform: uppercase;
+    color: #3598dc;
 }
 
 .left_border{
@@ -590,7 +614,7 @@
 }
 
 .long_length{
-    /*margin: 1% 10%;*/
+    margin: 1% 0 1% 0;
     border-top: 2px solid #ccc;
 }
 

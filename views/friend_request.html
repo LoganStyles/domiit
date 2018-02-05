@@ -35,7 +35,8 @@
 
         <div class="col-md-6">                                        
             <!-- BEGIN PORTLET -->
-            <div class="panel panel-default portlet" {{#unless page_response}} style="display: none;"{{/unless}}>
+
+             <div class="panel panel-default portlet" {{#unless page_response}} style="display: none;"{{/unless}}>
               <div class="panel-body" style="width: 100%;">
                 <div class="posts_top_actions_left">
                     <span class="posts_page_title">{{page_title}}</span>
@@ -55,243 +56,74 @@
               </div>
             </div>
 
-            <div class="post_responses question_all_post_area">
+            
+            <div class="question_all_post_area friend_req_page">
 
-            {{#each data}}
+            
 
              <div class="portlet light posted">
-             <input type="hidden" id="post_id" value="{{_id}}">
-             <input type="hidden" id="post_type" value="{{../page_type}}">
+             <input type="hidden" id="post_id" value="">
+             <input type="hidden" id="post_type" value="">
 
-                <div class="portlet-title">
-                    <div class="caption caption-md">
-                        
-                        <span class="caption-subject  bold post_box_name">{{../page_type}}</span>
-                        {{#if category}}
-                        <span class="caption-helper post_category grey_cats left_border">{{category}}</span>
-                        {{/if}}
-
-                        {{#if sub_cat1}}
-                        <span class="caption-helper post_sub_cat1 grey_cats left_border">{{sub_cat1}}</span>
-                        {{/if}}
-
-                        {{#if sub_cat2}}
-                        <span class="caption-helper post_sub_cat2 grey_cats left_border">{{sub_cat2}}</span>
-                        {{/if}}
-                        
-                    </div>                       
-                </div>
-                <div class="portlet-body">
-                    <div class="" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
-                        <div class="general-item-list">
-                            <div class="item">
-                                <div class="item-head">
-
-                                <div style="width: 100%;"><!--main block-->
-                                    <div class="posts_partition"><!--1st partition-->
-                                        <div style="width: 100%;">
-                                            <div class="section_posts_avatar">
-                                             <img class="icon_size_50 img-circle" src="{{../url}}/uploads/{{owner.displayPic}}">
-                                         </div>
-                                         <div class="section_posts_text">
-                                            <div> 
-                                               <a style="font-weight: 600;" href="" class="item-name">{{owner.displayName}}</a>
-                                           </div>
-                                           {{#if owner.status}}
-                                           <div class="post_item_body_status">
-                                            {{owner.status}}
-                                            </div>
-                                        {{/if}}
-
-                                        </div>
-                                        <div class="clearfix"></div>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="posts_partition_middle"><!--2nd partition-->
-                                        <span style="">
-                                             {{#if trend_status}}<!--trend post-->
-                                                {{#if trend_followed}}
-                                                    <img class="icon_size_50 " src="{{../url}}/images/filler.png">
-                                                {{else}}
-                                                <a href="javascript:;" class="btn blue" style="padding: 2px;">
-                                                    <i class="fa fa-plus"></i>&nbsp; Follow</a>
-
-                                                {{/if}}
-                                            {{/if}}
-                                        </span>
-                                    </div>
-
-                                    <div class="posts_partition"><!--3rd partition-->
-                                        <div class="pull-right">
-                                            <div class="fromnow">{{moment post_date "fromNow"}}</div>
-                                            <div class="clearfix"></div>
-                                            <div class="post_actions_button_left">
-                                                <img class="icon_size_20" src="{{../url}}/images/mask.png">
-                                            </div>
-                                             {{#if post_owner}}
-                                                 <div class="actions post_actions_button">
-                                                        <div class="btn-group">
-                                                            <span class="item-status cursor_dropper" data-toggle="dropdown">
-                                                                <i class="fa fa-ellipsis-v"></i>
-                                                            </span>
-                                                            <ul class="dropdown-menu pull-right">
-                                                                <li class="edit_section_item">
-                                                                    <a href="javascript:;">
-                                                                        <i class="fa fa-pencil"></i> Edit </a>
-                                                                </li>
-                                                                <li class="delete_section_item">
-                                                                    <a href="javascript:;">
-                                                                        <i class="fa fa-trash-o"></i> Delete </a>
-                                                                </li>
-                                                                {{#if question_status}}
-                                                <li>
-                                                    <a href="javascript:;">
-                                                        <i class="fa fa-ban"></i> Request for answer </a>
-                                                </li>  
-                                                {{/if}}
-
-                                                {{#if art_status}}
-                                                <li>
-                                                    <a href="javascript:;">
-                                                        <i class="fa fa-ban"></i> Request for review </a>
-                                                </li>  
-                                                {{/if}} 
-
-                                                {{#if riddle_status}}
-                                                <li>
-                                                    <a href="javascript:;">
-                                                        <i class="fa fa-ban"></i> Request for solution </a>
-                                                </li>  
-                                                {{/if}} 
-
-                                                {{#if notice_status}}
-                                                <li>
-                                                    <a href="javascript:;">
-                                                        <i class="fa fa-ban"></i> Share</a>
-                                                </li>  
-                                                {{/if}}                              
-                                                            </ul>
-                                                        </div>                                           
-                                                </div>
-                                                {{else}}
-                                                <div class="actions post_actions_button">
-                                                        <div class="btn-group">
-                                                            <span class="item-status cursor_dropper" data-toggle="dropdown">
-                                                                <i class="fa fa-ellipsis-v"></i>
-                                                            </span>
-                                                            <ul class="dropdown-menu pull-right">
-                                                                <li>
-                                                                    <a href="javascript:;">
-                                                                        <i class="fa fa-pencil"></i> Follow </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="javascript:;">
-                                                                        <i class="fa fa-trash-o"></i> Bookmark </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="javascript:;">
-                                                                        <i class="fa fa-ban"></i> Report Abuse </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>                                           
-                                                </div>
-                                                {{/if}}
-                                        </div><!--end float right-->
-                                        <div class="clearfix"></div>
-                                    </div>
-
-                                <div class="clearfix"></div>
-                                </div>                                      
-                                    
-
-                                </div>
-
-                                <div class="item-body"> 
-                                   
-                                    {{#if pics.length }}
-                                        <div style="margin-bottom: 3%;">                                                                 
-                                            <img class="img-responsive" src="{{url}}/uploads/{{pics.[0]}}">
-                                        </div>
-                                    {{/if}}
-
-                                    {{#if body}}
-                                        <div class="post_item post_item_topic">
-                                            {{body}}
-                                        </div><hr>
-                                    {{/if}}
-                                        <div class="post_item post_item_body">
-                                            {{description}}
-                                        </div>
-                                    
-                                </div>  <br>
+                {{#each data}}
+                    <div class="portlet-body" style="padding-top: 0px;">
+                    <input type="hidden" id="post_source_id" value="{{source_id}}">
+                        <div class="" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
+                            <div class="general-item-list">
+                                <div class="item">
+                                    <div class="item-head">
 
                                     <div style="width: 100%;"><!--main block-->
-                                    
+                                        <div class="posts_partition_friends"><!--1st partition-->
+                                            <div style="width: 100%;">
+                                                <div class="section_posts_avatar">
+                                                   <img class="icon_size_50 img-circle" src="{{../url}}/uploads/{{source_pic}}">
+                                                </div>
+                                                <div class="section_posts_text">
+                                                    
+                                                    
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
 
-                                        <div class="posts_partition_right"><!--3rd partition-->
+                                        </div>
 
-                                                <a class="btn btn-link">
-                                                    <span class="grey_button">
-                                                        <span class="social_value">{{views}}</span>&nbsp;
-                                                        Views
-                                                    </span>
-                                                </a>
-
+                                         <div class="posts_partition_friends_middle"><!--2nd partition-->
+                                            <span>
+                                                {{message}}
+                                                            
+                                            </span>
+                                        </div>
+                                         <div class="posts_partition_friends_middle"><!--3rd partition-->
+                                            <div class="pull-right" style="width: 50%">
+                                                 <div class="fromnow">{{moment date "fromNow"}}</div>
+                                                    <div class="clearfix"></div>
+                                                    <div style="margin-right: 5%;cursor: pointer" class="post_actions_button_left accept_friend">
+                                                        Accept
+                                                    </div>
+                                                    <div style="margin-right: 5%;cursor: pointer" class="post_actions_button_left deny_friend">
+                                                        Reject
+                                                    </div>
+                                                
+                                            </div><!--end float right-->
+                                            <div class="clearfix"></div>
                                         </div>
 
                                     <div class="clearfix"></div>
-                                </div>
-                                <!-- <hr> -->
+                                    </div>                                      
+                                        
 
+                                    </div>
+                                    
 
+                                        
                             </div>
                         </div>
                     </div>
-                </div>
-
                     <!-- END PORTLET -->
-                     <div class="response_votes div_vote_comments">
-                        <input type="hidden" id="post_response_id" value="{{_id}}">
+                   
+                    
 
-                        <a class="btn btn-link post_upvotes" >
-                        <span class="grey_button">
-                            <span class="social_value">{{upvotes}}</span>
-                            <i class="fa fa-long-arrow-up"></i>
-                            <!-- <img src="{{../url}}/images/up_vote.png">&nbsp; -->
-                            Upvotes
-                        </span>
-                        </a>
-
-                        <a class="btn btn-link post_downvotes grey_button" >
-                            <span class="grey_button">
-                                <span class="social_value">{{downvotes}}</span>
-                                <i class="fa fa-long-arrow-down "></i>
-                                <!-- <img src="{{../url}}/images/down_vote.png"> -->
-                                Downvotes
-                            </span>
-                        </a>
-
-                        <a class="btn btn-link grey_button">
-                            <span class="grey_button">
-                                <span class="social_value">{{comments.length}}</span>
-                                <img src="{{../../url}}/images/comments.png">&nbsp;Comments
-                            </span>
-                        </a>
-                    </div>
-
-                    <div class="div_other_add_buttons">
-                        <a href="{{../url}}/posts/section/{{../data_item}}/all_{{category}}/{{_id}}">
-                        <div class="other_add_buttons">
-                            View Related Trends                            
-                        </div>
-                        </a>
-
-                    </div>
-                    <div class="clearfix"></div>
-
-                        
                 </div>
             {{/each}}
             </div>
@@ -492,17 +324,17 @@
 
             <!-- START MODAL PORTLET-->
 
-            <div class="portlet-body form">  
+            <div class="portlet-body form">                                         
 
-            <!-- <div id="section_response_modal" class="modal fade" tabindex="-1">
+                <!-- <div id="section_response_modal" class="modal fade" tabindex="-1">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                        <h4 class="modal-title" id="section_response_header">{{page_response}}</h4>
+                        <h4 style="text-transform: uppercase;" class="modal-title" id="section_response_header">{{page_response}}</h4>
                     </div>
                     <div class="modal-body">
-                 <form role="form" id="section_response_form" action="" method="post" enctype="multipart/form-data">
-                        <span class="form_submission_error"></span>
-                        <span class="form_submission_success"></span>
+                        <form role="form" id="section_response_form" action="" method="post" enctype="multipart/form-data">
+                            <span class="form_submission_error"></span>
+                            <span class="form_submission_success"></span>
 
                             <input type="hidden" name="section_response_id"  id="section_response_id" >
                             <input type="hidden" name="section_response_type"  id="section_response_type" >
@@ -512,7 +344,7 @@
                             <div class="post_item_more_info" id="section_response_more_info"></div>                           
 
                             <div class="form-group">
-                                <textarea  name="section_response_details" id="section_response_details" class="form-control" rows="3" style="font-weight: 500"></textarea>
+                                <textarea  name="section_response_details" id="section_response_details" class="form-control " rows="3" style="font-weight: 500"></textarea>
                                 <label for="form_control_1">
                                 <i class="fa fa-edit"></i>&nbsp;Write your {{page_response}}</label>
                             </div>
@@ -525,14 +357,18 @@
                                 <input id="section_response_photo" name="section_response_photo" type="file" accept="application/x-zip-compressed,image/*"/>
                                 <p class="help-block"> Optional </p>
                             </div>
-                            <div class="form-actions noborder">
-                                <input type="submit" class="btn blue" name="submit" value="Answer" />
+                            <div class="form-actions noborder pull-right">
+                                <input type="submit" class="btn blue" name="submit" value="Post" />
                                 <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
                             </div>
+                            <div class="clearfix"></div>
                         </form>
                     </div>
 
                 </div> -->
+
+            </div>
+
                
             </div>
 
@@ -553,7 +389,81 @@
 
             $( document ).ready( function () {
 
-                
+                //accept friend request
+                $("body").on('click','.accept_friend',function(e){
+                //get this posts owner
+                var $this=$(this);
+                var parent=$this.parents('.portlet-body');
+                var source_id=parent.find('input#post_source_id').val();
+                console.log('source_id '+(source_id));
+                //send request
+                var url="{{url}}/acceptFriendRequest";
+                console.log(url);
+
+                $.ajax({
+                    url:url,
+                    type:'GET',
+                    data:{'source_id':source_id},
+                    headers: {'X-My-App-Token': 'loganstyles'},
+                    success:function(response){
+                        console.log(response);
+                        
+                        if(response.success==true){
+                            alert(response.msg);
+                            location.reload();                 
+
+                        }else{ 
+                            alert(response.msg);
+                         }  
+                        },
+                        error:function(xhr, status, err){
+                            console.log('error');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(err);
+                        }
+                    });
+
+            });
+
+                //deny friend request
+                $("body").on('click','.deny_friend',function(e){
+                //get this posts owner
+                var $this=$(this);
+                var parent=$this.parents('.portlet-body');
+                var source_id=parent.find('input#post_source_id').val();
+                console.log('source_id '+(source_id));
+                //send request
+                var url="{{url}}/rejectFriendRequest";
+                console.log(url);
+
+                $.ajax({
+                    url:url,
+                    type:'GET',
+                    data:{'source_id':source_id},
+                    headers: {'X-My-App-Token': 'loganstyles'},
+                    success:function(response){
+                        console.log(response);
+                        
+                        if(response.success==true){
+                            alert(response.msg);
+                            location.reload();                 
+
+                        }else{ 
+                            alert(response.msg);
+                         }  
+                        },
+                        error:function(xhr, status, err){
+                            console.log('error');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(err);
+                        }
+                    });
+
+            });
+
+
             });
 
             </script>

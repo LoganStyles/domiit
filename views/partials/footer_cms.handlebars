@@ -91,7 +91,7 @@
                         }else{ 
                             $this.replaceWith('<span class="friend_req_failed">'+response.msg+'</span>'); }
                         },
-                        eerror:function(xhr, status, err){
+                        error:function(xhr, status, err){
                             console.log('error');
                             console.log(xhr);
                             console.log(status);

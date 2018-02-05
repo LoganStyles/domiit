@@ -394,6 +394,8 @@ app.get('/dashboard',isLoggedIn,function(req,res){
         if(page_results.length >0){
             //update other details needed by the post
             process_posts.processPagePosts(page_results,req.user,function(processed_response){
+                console.log('PROCESSED RESPONSE');
+                console.log(processed_response);
 
                 res.render(page,{
                     url:process.env.URL_ROOT,
@@ -404,7 +406,6 @@ app.get('/dashboard',isLoggedIn,function(req,res){
                     page_title: page_title,
 
                     pending_friend_notifs:pending_friend_notifs,
-
 
                     quest_page_status:false,
                     art_page_status:false,
@@ -446,6 +447,58 @@ app.get('/dashboard',isLoggedIn,function(req,res){
 
 });
 
+app.get('/acceptFriendRequest',isLoggedIn,function(req,res){
+
+    if( (req.user.displayPic).length ===0 || req.user.displayName =="User" || req.user.displayName ==""){
+        console.log("user has not updated profile")
+        res.json({success:false,msg:"Update your profile first"});
+    }else{
+        console.log('accepting friend request');
+        var source_id = req.query.source_id;
+        console.log('accept source_id'+source_id);
+        var curr_user=req.user;
+
+        //accept the friendship
+        curr_user.acceptRequest(source_id,function(err,friendship){
+            if (err){
+               console.log(err);
+               res.json({success:false,msg:"Friendship processing failed"});
+            } 
+
+            if(friendship){console.log('friendship',friendship);
+            //update user's notifications
+               res.json({success:true,msg:"Friendship accepted"}); 
+            }
+        })
+    }
+});
+
+app.get('/rejectFriendRequest',isLoggedIn,function(req,res){
+
+    if( (req.user.displayPic).length ===0 || req.user.displayName =="User" || req.user.displayName ==""){
+        console.log("user has not updated profile")
+        res.json({success:false,msg:"Update your profile first"});
+    }else{
+        console.log('rejecting friend request');
+        var source_id = req.query.source_id;
+        console.log('rejected source_id'+source_id);
+        var curr_user=req.user;
+
+        //accept the friendship
+        curr_user.denyRequest(source_id,function(err,denied){
+            if (err){
+               console.log(err);
+               res.json({success:false,msg:"Friendship rejection processing failed"});
+            } 
+
+            if(denied){console.log('friendship',friendship)
+                //update user's notifications
+               res.json({success:true,msg:"Friendship denied"}); 
+            }
+        })
+    }
+});
+
 //register notifications for friend request
 notifs.on('friends_new',function(notif){
     console.log('new friend notifs')
@@ -474,9 +527,11 @@ app.get('/sendFriendRequest',isLoggedIn, function(req, res) {
         if(request){
             //send notification to requested
             var new_friend_notif_obj={
-                source_id:req.user._id,
+                source_id:curr_user._id,
+                source_name:curr_user.displayName,
+                source_pic:curr_user.displayPic,
                 destination_id:owner_id,
-                status:'pending',
+                status:'Pending',
                 notif_type:'friends',
                 message:curr_user.displayName+' sent you a friend request'
             }
@@ -509,6 +564,69 @@ app.get('/sendFriendRequest',isLoggedIn, function(req, res) {
 }
 
 });
+
+
+/*sends a friend request to the owner of the post*/
+app.get('/getFriendRequests',isLoggedIn, function(req, res) {
+    if( (req.user.displayPic).length ===0 || req.user.displayName =="User" || req.user.displayName ==""){
+        console.log("user has not updated profile")
+        res.json({success:false,msg:"Update your profile first"});
+    }else{
+
+        console.log('searching for friend request');
+        var curr_user_notifications_len=req.user.notifications.length;
+        var notif_res=[];
+        var page='friend_request';var page_title='';
+
+        //fetch pending friend notifications
+        for(var i=0;i<curr_user_notifications_len;i++){
+            console.log('inside notif for loog')
+            if((req.user.notifications[i].notif_type=='friends') && ( req.user.notifications[i].status=='Pending')){
+                notif_res.push(req.user.notifications[i]);
+                console.log('pushed 1 notif '+i)
+            }
+        }
+        console.log(notif_res);
+        console.log(process.env.URL_ROOT);
+
+        res.render(page,{
+            url:process.env.URL_ROOT,
+            displayPic:req.user.displayPic,
+            user_info:req.user,
+            data:notif_res,
+            // data_trend:res_item_trend,
+            page_title: page_title,
+            // pending_friend_notifs:pending_friend_notifs,
+
+            quest_page_status:false,
+            art_page_status:false,
+            riddle_page_status:false,
+            notice_page_status:false,
+            pab_page_status:false,
+            trend_page_status:false,
+            home_page_status:true
+        });
+
+        //check if there's pending friend request with owner
+        //or if owner is already a friend*/
+        //cat.find().sort({value:1}).exec(function(err1,res1){
+        // user.find({requested:curr_user._id},function(errChk,req_info){
+        //     if(errChk)console.log(errChk);
+
+        //     if(req_info){
+        //         console.log(req_info);
+        //         // if(req_info.status=='Accepted'){
+        //         //     cur_item.friend_status='friend';
+        //         // }else if(req_info.status=='Pending'){
+        //         //     cur_item.friend_status='Pending';
+        //         // }
+        //     }
+
+        // });
+
+        }
+
+    });
 
 
 app.get('/admin',isLoggedIn, function(req, res) {
@@ -713,7 +831,7 @@ app.post('/ask_notice',notice_upload,function(req,res,next){
             status:status};
 
             let write_notice =new notice();
-            write_notice.post_type="notice";
+            write_notice.post_type="notice board";
             write_notice.access=1;//default :public access
             write_notice.body=convertToSentencCase(req.body.notice_title);
             write_notice.category = req.body.notice_top_heading;

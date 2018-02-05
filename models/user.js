@@ -41,7 +41,7 @@ var userSchema = mongoose.Schema({
     followed:[String],
     trend_follows:[String],
     bookmarks:[{item_id:String,body:String,date:{type:Date,default:Date.now}}],
-    notifications:[{notif_type:String,source_id:String,destination_id:String,status:String,message:String,date:{type:Date,default:Date.now}}],
+    notifications:[{notif_type:String,source_id:String,source_name:String,source_pic:String,destination_id:String,status:String,message:String,date:{type:Date,default:Date.now}}],
     upvotes:{type:Number,default:0},
     downvotes:{type:Number,default:0},
     request_ids:[String],
