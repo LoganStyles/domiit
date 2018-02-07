@@ -1,7 +1,7 @@
 {{>header_member}}
 
 <!-- BEGIN CONTAINER -->
-<div class="page-container">
+<div class="page-container" style="margin-top: 12%;">
     <!-- BEGIN CONTENT -->
     <div class="page-content-wrapper">
         <!-- BEGIN CONTENT BODY -->
@@ -137,7 +137,7 @@
                                         <div class="posts_partition"><!--1st partition-->
                                         <div style="width: 100%;">
                                                 <div class="section_posts_avatar">
-                                                   <img class="icon_size_50 img-circle" src="{{../url}}/uploads/{{owner.displayPic}}">
+                                                   <img class="icon_size_50 img-circle" src="{{../url}}/{{owner.displayPic}}">
                                                 </div>
                                                 <div class="section_posts_text">
                                                     <div> 
@@ -171,7 +171,7 @@
                                                             {{#if (eq friend_status 'Pending')}}
                                                             <span class="post_box_name">Pending Friend Request</span>
                                                             {{else}}
-                                                            <img class="icon_size_50 send_friend_req" src="{{../url}}/images/add_person.png">
+                                                            <img class="icon_size_20 send_friend_req" src="{{../url}}/images/add_person.png">
                                                         {{/if}}
                                                     {{/if}}
 

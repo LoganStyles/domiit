@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+
+<head>
+    <meta charset="utf-8" />
+    <title>domiit | Members - {{title}}</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->        
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link href="{{url}}/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{url}}/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{url}}/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{url}}/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <link href="{{url}}/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{url}}/assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
+    <link href="{{url}}/assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css" rel="stylesheet" type="text/css" />
+    <link href="{{url}}/assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" type="text/css" />
+    <link href="{{url}}/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN THEME GLOBAL STYLES -->
+    <link href="{{url}}/assets/global/css/components-md.min.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="{{url}}/assets/global/css/plugins-md.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{url}}/assets/global/css/styles.css" rel="stylesheet" type="text/css" />
+    <link href="{{url}}/assets/global/css/nav_styles.css" rel="stylesheet" type="text/css" />
+    <!-- END THEME GLOBAL STYLES -->
+    <!-- BEGIN THEME LAYOUT STYLES -->        
+    <link href="{{url}}/assets/layouts/layout3/css/layout.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{url}}/assets/layouts/layout3/css/themes/default.min.css" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="{{url}}/assets/layouts/layout3/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <!-- END THEME LAYOUT STYLES -->
+    <link rel="shortcut icon" href="{{url}}/assets/pages/img/favicon.ico'" /> 
+    <style type="text/css">
+        /*form submission*/
+        .form_submission_error{
+            color:#f00;    
+        }
+
+        .form_submission_success{
+            color:#26C281;    
+        }
+    </style>
+</head>
+<!-- END HEAD -->
+
+<body class="page-container-bg-solid page-md">
+    <!-- BEGIN HEADER -->
+    <div class="page-header " style="/*height: 140px;*/">
+                          <!-- BEGIN HEADER MENU -->
+        <div>
+
+         <nav class="navbar navbar-default" style="background-color: #000;margin-bottom: 0px;">
+          <div class="container-fluid" style="padding: 0 3%;">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#domiit_notifs_navbar" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="{{url}}/dashboard">
+                 <img src="{{url}}/images/domiit_logo_150.png" alt="logo" class="logo-default">
+              </a>
+              <!-- BEGIN HEADER SEARCH BOX -->
+              <div class="col-md-3 col-lg-3 col-xs-12 navbar-brand">
+                    <form class="search-form" action="#" method="GET">
+                        <div class="input-group">
+                        <!--<input type="text" class="form-control input-large" placeholder="Search">-->
+                            <input type="text" class="form-control input-large" placeholder="Search" name="query">
+                            <span class="input-group-btn">
+                                <a href="javascript:;" class="btn submit" style="background: #86be25;color: #fff;">
+                                    <i class="icon-magnifier"></i>
+                                </a>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+                    <!-- END HEADER SEARCH BOX -->
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="domiit_notifs_navbar">
+              <ul class="nav navbar-nav">
+
+                 <li class="dropdown">
+                  <a href="javascript:;">
+                    <div style="width: 100%;">
+                        <i class="fa fa-bullhorn font_icon_style">
+                          <!-- <span class="badge badge-default ">0</span> -->
+                        </i>
+                    </div>                    
+                    <div style="">Adverts</div>
+
+                   </a>
+                </li>
+
+                <li class="dropdown">
+                  <a href="javascript:;">
+
+                    <div style="width: 100%;">
+                        <i class="icon-list font_icon_style">
+                          <!-- <span class="badge badge-default ">0</span> -->
+                        </i>
+                    </div>                    
+                    <div style="">Categories</div>
+                   </a>
+                 
+                </li>
+
+                
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                  <a href="javascript:;">
+                   <div style="width: 100%;">
+                        <i class="icon-envelope font_icon_style">
+                          <!-- <span class="badge badge-default ">0</span> -->
+                        </i>
+                    </div>                    
+                    <div style="">Messages</div>
+                   </a>                 
+                </li>
+
+                
+                <li class="dropdown">
+                  <a href="javascript:;">
+                   
+                    <div style="width: 100%;">
+                        <i class="icon-bell font_icon_style">
+                          <!-- <span class="badge badge-default notif_span">2</span> -->
+                        </i>
+                    </div>                    
+                    <div style="">Notifications</div>
+                   </a>                 
+                </li>
+
+                <li class="dropdown">
+                  <a href="{{url}}/getFriendRequests">
+                   
+                    <div style="width: 100%;">
+                        <i class="icon-users font_icon_style">
+
+                        {{#if (gt pending_friend_notifs 0)}}
+                          <span class="badge badge-default ">{{pending_friend_notifs}}</span>
+                        {{/if}}
+                        </i>
+                    </div>                    
+                    <div>Friends</div>
+
+                   </a> 
+                </li>
+
+                
+                 <li class="dropdown">
+                  <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  
+                  <div style="width: 100%;">
+                  <div style="width: 50%;margin:0 auto;">
+                    <img alt="" class="icon_size_18 img-circle" src="{{url}}/uploads/{{displayPic}}" >
+                    </div>
+                    <!--<img alt="" class="icon_size img-circle" style="margin: 0 30%;width: 35% !important;height: 2em;" src="{{url}}/uploads/{{displayPic}}">-->
+                  </div>
+                  <div style="text-transform: capitalize;">{{user_info.displayName}}</div>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{{url}}/profile">
+                    <i class="icon-user"></i> My Profile</a></li>
+                    <li><a href="{{url}}/members/logout">
+                    <i class="icon-key"></i> Logout</a></li>
+                 </ul>
+                </li>
+              </ul>
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </nav>
+
+        </div>
+
+        <div><!--begin 2nd-->
+
+         <nav class="navbar navbar-default" style="background-color: #fff;/*height:80px;*/width: 100%;">
+          <div class="container-fluid" style="padding: 0 1%;">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#domiit_notifs_navbar_main" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="domiit_notifs_navbar_main">
+              <ul class="nav navbar-nav">
+
+                <li class="dropdown nav_button_spacing {{#if home_status}}active{{/if}}" >
+                  <a href="{{url}}/dashboard">
+
+                    <div style="width: 100%;">
+                      <div class="icon_centralise">
+                        <img alt="" class="icon_size" src="{{url}}/images/home.png">
+                      </div>
+
+                    </div>
+                    <div class="icon_text">Home</div>
+                  </a>
+                </li>
+
+                <li class="dropdown nav_button_spacing {{#if quest_status}}active{{/if}}">
+                  <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+
+                    <div style="width: 100%;">
+                      <div class="icon_centralise">
+                        <img alt="" class="icon_size" src="{{url}}/images/Question_and_Answer.png">
+                      </div>
+
+                    </div>
+                    <div class="icon_text">Questions & Answers</div>
+                  </a>
+
+                  <ul class="dropdown-menu">
+                    <li><a href="{{url}}/posts/section/question/All/0">All</a></li>
+                    <li>
+                      <a href="{{url}}/posts/section/question/Unanswered/0">Unanswered Questions</a></li>
+                      <li>
+                        <a href="{{url}}/posts/section/question/Answered/0">Answered Questions</a></li>
+
+                      </ul>
+                    </li>
+
+                    <li class="dropdown nav_button_spacing {{#if art_status}}active{{/if}}">
+                      <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+
+                        <div style="width: 100%;">
+                          <div class="icon_centralise">
+                            <img alt="" class="icon_size" src="{{url}}/images/articles_icon.png">
+                          </div>
+
+                        </div>
+                        <div class="icon_text">Articles & Reviews</div>
+                      </a>
+
+                      <ul class="dropdown-menu">
+                        <li><a href="{{url}}/posts/section/article/All/0">All</a></li>
+                        <li>
+                          <a href="{{url}}/posts/section/article/Unreviewed/0">Unreviewed Articles </a></li>
+                          <li>
+                            <a href="{{url}}/posts/section/article/Reviewed/0">Reviewed Articles</a></li>
+
+                          </ul>
+                        </li>
+
+                        <li class="dropdown nav_button_spacing {{#if riddle_status}}active{{/if}}">
+                          <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+
+                            <div style="width: 100%;">
+                              <div class="icon_centralise">
+                                <img alt="" class="icon_size" src="{{url}}/images/riddles_solutions.png">
+                              </div>
+
+                            </div>
+                            <div class="icon_text">Riddles & Solutions</div>
+                          </a>
+
+                          <ul class="dropdown-menu">
+                            <li><a href="{{url}}/posts/section/riddle/All/0">All</a></li>
+                            <li>
+                              <a href="{{url}}/posts/section/riddle/Unresolved/0">Unresolved Riddles </a></li>
+                              <li>
+                                <a href="{{url}}/posts/section/riddle/Solved/0">Solved Riddles</a></li>
+
+                              </ul>
+                            </li>
+
+                            <li class="dropdown nav_button_spacing {{#if pab_status}}active{{/if}}">
+                              <a href="{{url}}/posts/section/pab/All/0">
+
+                                <div style="width: 100%;">
+                                  <div class="icon_centralise">
+                                    <img alt="" class="icon_size" src="{{url}}/images/books.png">
+                                  </div>
+
+                                </div>
+                                <div class="icon_text">Posted Books</div>
+                              </a>
+                            </li>
+                            <li class="dropdown nav_button_spacing {{#if request_status}}active{{/if}}">
+                              <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+
+                                <div style="width: 100%;">
+                                  <div class="icon_centralise">
+                                    <i class="fa fa-share-square-o font_icon_style_leftbar"></i>
+                                  </div>
+
+                                </div>
+                                <div class="icon_text">Requests</div>
+                              </a>
+
+                              <ul class="dropdown-menu">
+                              <li><a href="javascript:;">Requests For Answers</a></li>
+                                <li>
+                                  <a href="javascript:;">Requests For Review </a></li>
+                                  <li>
+                                    <a href="javascript:;">Requests For Solutions</a></li>
+
+                                  </ul>
+                                </li>
+
+                                <li class="dropdown nav_button_spacing {{#if notice_status}}active{{/if}}">
+                              <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+
+                                <div style="width: 100%;">
+                                  <div class="icon_centralise">
+                                    <img alt="" class="icon_size" src="{{url}}/images/notice_board.png">
+                                  </div>
+
+                                </div>
+                                <div class="icon_text">Notice Board</div>
+                              </a>
+
+                              <ul class="dropdown-menu">
+                              <li><a onclick="modalLoader('notice','new','');">Post a Notifications</a></li>
+                                <li>
+                                  <a href="{{url}}/posts/section/notice/All/0">View other Notifications</a></li>
+
+                                  </ul>
+                                </li>
+
+                                <li class="dropdown nav_button_spacing {{#if usergroup_status}}active{{/if}}">
+                              <a href="javascript:;">
+
+                                <div style="width: 100%;">
+                                  <div class="icon_centralise">
+                                    <img alt="" class="icon_size" src="{{url}}/images/user_group.png">
+                                  </div>
+
+                                </div>
+                                <div class="icon_text">User Groups</div>
+                              </a>
+                            </li>
+                              </ul>
+
+                            </div><!-- /.navbar-collapse -->
+                          </div><!-- /.container-fluid -->
+                        </nav>
+
+                      </div><!--end second-->
+
+        
+        
+    </div>
+        <!-- END HEADER -->
+
