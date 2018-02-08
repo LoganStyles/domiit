@@ -33,6 +33,7 @@
     "multer": "^1.3.0",
     "node-each": "^1.0.1",
     "node-fetch": "^1.7.3",
+    "normalize.css": "^7.0.0",
     "notifications": "^0.2.0",
     "passport": "*",
     "passport-facebook": "*",
@@ -41,6 +42,7 @@
     "passport-local": "^1.0.0",
     "passport-twitter": "*",
     "path": "^0.12.7",
+    "r": "0.0.5",
     "request": "^2.83.0",
     "socket.io": "^2.0.3",
     "url": "^0.11.0"

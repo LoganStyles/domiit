@@ -15,6 +15,8 @@
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
     <link href="{{url}}/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
+    <link href="{{url}}/assets/global/css/Normalize.css" rel="stylesheet" type="text/css" />
+
     <link href="{{url}}/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
 
     <!-- Bootstrap core CSS -->
@@ -75,16 +77,16 @@
 
   <!-- Fixed navbar -->
     <nav class="navbar navbar-default navbar-fixed-top" style="background-color: #000;">
-      <div class="container">
+      <div class="container-fluid">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <button type="button" style="background-color: #fff;" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="{{url}}/dashboard">
-          <img src="{{url}}/images/domiit_logo_150.png" alt="domiit logo" class="logo-default">
+          <img class="domiit_logo" src="{{url}}/images/domiit_logo_150.png" alt="domiit logo" class="logo-default">
           </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
@@ -92,18 +94,19 @@
 
           <ul class="nav navbar-nav">
             <!-- <li class="active"><a href="#">Home</a></li> -->
-            <li><a href="#about">
+            <li>
             <!-- BEGIN HEADER SEARCH BOX -->
-                <form class="navbar-form ">
-                    <div class="form-group">
-                      <input type="text" placeholder="Search" class="form-control">
-                    </div>
-                    
-                    <button type="submit" class="btn btn-success" style="background: #86be25;color: #fff;"><i class="icon-magnifier"></i></button>
-                  </form>
+            
+            <form class="navbar-form navbar-right">
+            <div class="form-group">
+              <input type="text" placeholder="Search" id="dom_search_button" style="" class="form-control">
+            </div>
+            
+            <button type="submit" class="btn btn-success" style="background: #86be25;color: #fff;"><i class="icon-magnifier"></i></button>
+          </form>
                   <!-- END HEADER SEARCH BOX -->
 
-            </a></li>
+            </li>
             <li><a href="javascript:;">
               <div style="width: 100%;">
                 <i class="fa fa-bullhorn font_icon_style">
@@ -183,7 +186,7 @@
         </div><!--/.nav-collapse -->
       </div>
 
-      <div class="container">
+      <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar1" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
