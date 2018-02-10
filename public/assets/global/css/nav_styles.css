@@ -4,6 +4,10 @@
   color: white;
 }
 
+#navbar1 .navbar-nav>li>a {
+  color: #000;
+}
+
 .badge.badge-default {
     background-color: #f36a5a !important;
     color: #fff !important;

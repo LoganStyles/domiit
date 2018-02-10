@@ -445,3 +445,8 @@ template {
 [hidden] {
   display: none;
 }
+
+/*domiit*/
+.nav_button_spacing{
+        margin:0;
+    }
