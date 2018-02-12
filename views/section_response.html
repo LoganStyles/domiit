@@ -10,7 +10,7 @@
                 <!-- END PAGE HEAD-->
                 <!-- BEGIN PAGE CONTENT BODY -->
                 <div class="page-content">
-                    <div class="container">
+                    <div class="container-fluid">
 
                         <!-- BEGIN PAGE CONTENT INNER -->
                         <div class="page-content-inner">                            
@@ -63,6 +63,7 @@
              <div class="portlet light posted">
              <input type="hidden" id="post_id" value="{{_id}}">
              <input type="hidden" id="post_type" value="{{../page_type}}">
+             <input type="hidden" id="post_owner_id" value="{{owner.id}}">
 
                 <div class="portlet-title" {{#if notice_status}} style="background-color:  #3598dc;" {{/if}}>
                     <div class="caption caption-md">
@@ -98,18 +99,38 @@
                                 <div style="width: 100%;"><!--main block-->
                                     <div class="posts_partition"><!--1st partition-->
                                         <div style="width: 100%;">
+
+                                        {{#unless trend_status}}<!--if not trend post attach profile link-->
+                                        <a href="{{../url}}/profile/{{owner.id}}">
+                                        {{/unless}}
                                             <div class="section_posts_avatar">
                                              <img class="icon_size_50 img-circle" src="{{../url}}/{{owner.displayPic}}">
                                          </div>
+                                         {{#unless trend_status}}<!--trend post-->
+                                        </a>
+                                        {{/unless}}
+
                                          <div class="section_posts_text">
                                             <div> 
-                                               <a style="font-weight: 600;" href="" class="item-name">{{owner.displayName}}</a>
-                                           </div>
-                                           {{#if owner.status}}
-                                           <div class="post_item_body_status">
+                                               {{#if trend_status}}
+                                                 <a style="font-weight: 600;" href="javascript:;" class="item-name">{{owner.displayName}}</a>
+                                                 {{else}}
+                                                 <a style="font-weight: 600;" href="{{../url}}/profile/{{owner.id}}" class="item-name">{{owner.displayName}}</a>
+                                                 {{/if}}
+                                            </div>
+
+                                          {{#if owner.status}}
+                                         {{#unless trend_status}}<!--if not trend post attach profile link-->
+                                            <a href="{{../url}}/profile/{{owner.id}}">
+                                            {{/unless}}
+                                            <div class="post_item_body_status">
+
                                             {{owner.status}}
                                             </div>
-                                        {{/if}}
+                                            {{#unless trend_status}}<!--trend post-->
+                                            </a>
+                                            {{/unless}}
+                                          {{/if}}
 
                                         </div>
                                         <div class="clearfix"></div>
@@ -268,7 +289,7 @@
 
                                     <div class="clearfix"></div>
                                 </div>
-                                <!-- <hr> -->
+                                <hr class="long_length">
 
 
                             </div>
@@ -326,7 +347,7 @@
                                                     {{/unless}}
                                             {{else}}<!--other post:questio etc-->
                                                     {{#unless ../friend_exists}}
-                                                        <img class="icon_size_50" src="{{../../url}}/images/add_person.png">
+                                                        <img class="icon_size_20 send_friend_req" src="{{../../url}}/images/add_person.png">
                                                     {{/unless}}
 
                                             {{/if}}

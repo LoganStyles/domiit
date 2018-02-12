@@ -26,7 +26,8 @@
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN PAGE LEVEL PLUGINS -->
-    <link href="{{url}}/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+    <!-- <link href="{{url}}/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" /> -->
+    <link href="{{url}}/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" type="text/css" />
     <link href="{{url}}/assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
     <link href="{{url}}/assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css" rel="stylesheet" type="text/css" />
     <link href="{{url}}/assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" type="text/css" />
@@ -176,7 +177,7 @@
 
               </a>
               <ul class="dropdown-menu">
-                <li><a href="{{url}}/profile">
+                <li><a href="{{url}}/profile/{{user_info._id}}">
                     <i class="icon-user"></i> My Profile</a></li>
                     <li><a href="{{url}}/members/logout">
                     <i class="icon-key"></i> Logout</a></li>
@@ -321,7 +322,7 @@
 
                             </a>
                             <ul class="dropdown-menu">
-                              <li><a onclick="modalLoader('notice','new','');">Post a Notifications</a></li>
+                              <li><a onclick="modalLoader('notice','new','');">Post a Notification</a></li>
                               <li>
                                 <a href="{{url}}/posts/section/notice/All/0">View other Notifications</a></li>
 

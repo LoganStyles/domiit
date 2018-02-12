@@ -55,10 +55,6 @@ var Storage =multer.diskStorage({
 
 var process_posts=require('./config/processor');
 
-// require 'normalize.css';
-
-
-
 
 // var inbound = require('inbound');
 
@@ -186,7 +182,7 @@ app.use(function(req,res,next){
             }
             // finishing processing the middleware and run the route
             next();
-        })
+        });
     }else{
         console.log('inside app.use: no existing req.session')
         next();
@@ -221,71 +217,79 @@ function convertToSentencCase(text_data){
 
 
 
-app.get('/profile',isLoggedIn, function(req, res) {
+app.get('/profile/:id',isLoggedIn, function(req, res) {
     console.log('inside profile');
     // console.log(req)   
+    //fetch user
+    var user_id = req.params.id;
+    console.log('user id '+user_id);
+
+    user.findOne({_id:user_id},function(err,u){
+        if(u){
+            let found_user = u;
+
+            var qualification="",
+            designation="",
+            dob="",age="",
+            displayPic="avatar.png",
+            backgroundPic="";
+
+            if(found_user.qualification[0]){
+                qualification=found_user.qualification[found_user.qualification.length -1].title;
+            }
+            console.log('qualification : '+qualification)
+
+            if(found_user.designation[0]){
+                designation=found_user.designation[found_user.designation.length -1].title;
+            }
+            console.log('designation : '+designation);
+
+            if(found_user.dob){
+                dob=moment(found_user.dob).format('MM/DD/YYYY');
+                age=moment().diff(new Date(found_user.dob),'years');
+            }
+            console.log('dob : '+dob);
+            console.log('age : '+age);
+            if(found_user.displayPic[0]){
+                displayPic=found_user.displayPic[found_user.displayPic.length - 1];
+            }
+            console.log('displayPic : '+displayPic);
+
+            if(found_user.backgroundPic[0]){
+                backgroundPic=found_user.backgroundPic[found_user.backgroundPic.length - 1];
+            }
+            console.log('backgroundPic : '+backgroundPic);
+
+
+            res.render('profile', {
+                url:process.env.URL_ROOT,
+                user_info:found_user,
+                dob:dob,
+                age:age,
+                displayPic:displayPic,
+                qualification:qualification,
+                designation:designation,
+                backgroundPic:backgroundPic,
+                followers_count:found_user.followers.length,
+                followed_count:found_user.followed.length,
+                bookmarks_count:found_user.bookmarks.length,
+                requests_count:found_user.request_ids.length,
+                questions_count:found_user.question_ids.length,
+                answers_count:found_user.answer_ids.length,
+                articles_count:found_user.article_ids.length,
+                reviews_count:found_user.review_ids.length,
+                riddles_count:found_user.riddle_ids.length,
+                solutions_count:found_user.solution_ids.length,
+                postedbooks_count:found_user.postedbook_ids.length,
+                groups_count:found_user.group_ids.length
+            });
+
+        }else{
+            res.redirect('/');
+        }
+
+    });
     
-    if(req.user){
-        var qualification="",
-        designation="",
-        dob="",age="",
-        displayPic="avatar.png",
-        backgroundPic="";
-
-        if(req.user.qualification[0]){
-            qualification=req.user.qualification[req.user.qualification.length -1].title;
-        }
-        console.log('qualification : '+qualification)
-
-        if(req.user.designation[0]){
-            designation=req.user.designation[req.user.designation.length -1].title;
-        }
-        console.log('designation : '+designation);
-
-        if(req.user.dob){
-            dob=moment(req.user.dob).format('MM/DD/YYYY');
-            age=moment().diff(new Date(req.user.dob),'years');
-        }
-        console.log('dob : '+dob);
-        console.log('age : '+age);
-        if(req.user.displayPic[0]){
-            displayPic=req.user.displayPic[req.user.displayPic.length - 1];
-        }
-        console.log('displayPic : '+displayPic);
-
-        if(req.user.backgroundPic[0]){
-            backgroundPic=req.user.backgroundPic[req.user.backgroundPic.length - 1];
-        }
-        console.log('backgroundPic : '+backgroundPic);
-
-
-        res.render('profile', {
-            url:process.env.URL_ROOT,
-            user_info:req.user,
-            dob:dob,
-            age:age,
-            displayPic:displayPic,
-            qualification:qualification,
-            designation:designation,
-            backgroundPic:backgroundPic,
-            // friends_count:req.user.friend_ids.length,
-            followers_count:req.user.followers.length,
-            followed_count:req.user.followed.length,
-            bookmarks_count:req.user.bookmarks.length,
-            requests_count:req.user.request_ids.length,
-            questions_count:req.user.question_ids.length,
-            answers_count:req.user.answer_ids.length,
-            articles_count:req.user.article_ids.length,
-            reviews_count:req.user.review_ids.length,
-            riddles_count:req.user.riddle_ids.length,
-            solutions_count:req.user.solution_ids.length,
-            postedbooks_count:req.user.postedbook_ids.length,
-            groups_count:req.user.group_ids.length
-        });
-
-    }else{
-        res.redirect('/');
-    }
     
 });
 
@@ -397,7 +401,7 @@ app.get('/dashboard',isLoggedIn,function(req,res){
             //update other details needed by the post
             process_posts.processPagePosts(page_results,req.user,function(processed_response){
                 console.log('PROCESSED RESPONSE');
-                console.log(processed_response);
+                //console.log(processed_response);
 
                 res.render(page,{
                     url:process.env.URL_ROOT,
@@ -457,8 +461,12 @@ app.get('/acceptFriendRequest',isLoggedIn,function(req,res){
     }else{
         console.log('accepting friend request');
         var source_id = req.query.source_id;
-        console.log('accept source_id'+source_id);
+        var notif_id = req.query.notif_id;
+        console.log('accept source_id '+source_id);
+        console.log('accept source_id type '+ typeof(source_id));
+        console.log('accept notif_id '+notif_id);
         var curr_user=req.user;
+        console.log('curr_user '+curr_user._id);
 
         //accept the friendship
         curr_user.acceptRequest(source_id,function(err,friendship){
@@ -469,7 +477,19 @@ app.get('/acceptFriendRequest',isLoggedIn,function(req,res){
 
             if(friendship){console.log('friendship',friendship);
             //update user's notifications
-               res.json({success:true,msg:"Friendship accepted"}); 
+            res.json({success:true,msg:"You accepted a friendship"});
+                // user.updateOne({_id:req.user._id,"notifications._id":notif_id},
+                //     {$set:
+                //         {"notifications.$.status":"Accepted"}},
+                //         function(err2,res2){
+                //             if(err2){
+                //                 console.log(err2)
+                //                 res.json({success:false,msg:"Your friendship update was not successfull"});
+                //             }else if(res2){                        
+                //                 res.json({success:true,msg:"You accepted a friendship"});
+                //             }
+                //         });
+
             }
         })
     }
@@ -493,9 +513,20 @@ app.get('/rejectFriendRequest',isLoggedIn,function(req,res){
                res.json({success:false,msg:"Friendship rejection processing failed"});
             } 
 
-            if(denied){console.log('friendship',friendship)
+            if(denied){console.log('friendship',denied)
                 //update user's notifications
-               res.json({success:true,msg:"Friendship denied"}); 
+            res.json({success:true,msg:"You rejected a friendship"});
+                // user.updateOne({_id:req.user._id,"notifications._id":notif_id},
+                //     {$set:
+                //         {"notifications.$.status":"Rejected"}},
+                //         function(err2,res2){
+                //             if(err2){
+                //                 console.log(err2)
+                //                 res.json({success:false,msg:"Your friendship update was not successfull"});
+                //             }else if(res2){                        
+                //                 res.json({success:true,msg:"You rejected a friendship"});
+                //             }
+                //         });
             }
         })
     }
@@ -527,39 +558,40 @@ app.get('/sendFriendRequest',isLoggedIn, function(req, res) {
         if (err) console.log(err);
         console.log('request',request);
         if(request){
+            res.json({success:true,msg:"Friend Request Sent"});
             //send notification to requested
-            var new_friend_notif_obj={
-                source_id:curr_user._id,
-                source_name:curr_user.displayName,
-                source_pic:curr_user.displayPic,
-                destination_id:owner_id,
-                status:'Pending',
-                notif_type:'friends',
-                message:curr_user.displayName+' sent you a friend request'
-            }
-            notifs.post('friends_new',new_friend_notif_obj,{language:'en'});
-            //update requested's notifications db
-            user.findOne({_id:owner_id}, function(err1, user_owner) {
-                if(user_owner){
-                    let updateRequested=user_owner;
+        //     var new_friend_notif_obj={
+        //         source_id:curr_user._id,
+        //         source_name:curr_user.displayName,
+        //         source_pic:curr_user.displayPic,
+        //         destination_id:owner_id,
+        //         status:'Pending',
+        //         notif_type:'friends',
+        //         message:curr_user.displayName+' sent you a friend request'
+        //     }
+        //     notifs.post('friends_new',new_friend_notif_obj,{language:'en'});
+        //     //update requested's notifications db
+        //     user.findOne({_id:owner_id}, function(err1, user_owner) {
+        //         if(user_owner){
+        //             let updateRequested=user_owner;
 
-                updateRequested.notifications.push(new_friend_notif_obj);//append notification items
-                updateRequested.date_modified=new Date();//update date
-                console.log(updateRequested);
+        //         updateRequested.notifications.push(new_friend_notif_obj);//append notification items
+        //         updateRequested.date_modified=new Date();//update date
+        //         console.log(updateRequested);
 
-                user.updateOne({_id:owner_id},{$set:updateRequested},function(err2,res2){
-                    if(err2){
-                        console.log(err2);
-                        res.json({success:false,msg:"Friend Request Failed"});
-                    }
-                    else if(res2){
-                        res.json({success:true,msg:"Friend Request Sent"});
-                    }
-                });
+        //         user.updateOne({_id:owner_id},{$set:updateRequested},function(err2,res2){
+        //             if(err2){
+        //                 console.log(err2);
+        //                 res.json({success:false,msg:"Friend Request Failed"});
+        //             }
+        //             else if(res2){
+        //                 res.json({success:true,msg:"Friend Request Sent"});
+        //             }
+        //         });
 
-            }
+        //     }
 
-        });
+        // });
         }
     });
 
@@ -576,20 +608,52 @@ app.get('/getFriendRequests',isLoggedIn, function(req, res) {
     }else{
 
         console.log('searching for friend request');
-        var curr_user_notifications_len=req.user.notifications.length;
+        //var curr_user_notifications_len=req.user.notifications.length;
         var notif_res=[];
         var page='friend_request';var page_title='';
+        var curr_user=req.user;
 
-        //fetch pending friend notifications
-        for(var i=0;i<curr_user_notifications_len;i++){
-            console.log('inside notif for loog')
-            if((req.user.notifications[i].notif_type=='friends') && ( req.user.notifications[i].status=='Pending')){
-                notif_res.push(req.user.notifications[i]);
-                console.log('pushed 1 notif '+i)
+        //get pending friends
+        curr_user.getPendingFriends(curr_user._id,function(err,pending){
+            if(err){
+                console.log('err occured geting pending friends');
+                console.log(err)
             }
-        }
-        console.log(notif_res);
-        console.log(process.env.URL_ROOT);
+            if(pending){
+                console.log(pending);
+                var len=pending.length;
+                var new_friend_notif_obj;
+                var curr_pending;
+                for(var i=0;i<len;i++){
+                    curr_pending=pending[i];
+
+                    new_friend_notif_obj={
+                    source_id:curr_pending._id,
+                    source_name:curr_pending.displayName,
+                    source_pic:curr_pending.displayPic[0],
+                    destination_id:curr_user._id,
+                    status:'Pending',
+                    notif_type:'friends',
+                    message:curr_pending.displayName+' sent you a friend request'
+                }
+                notif_res.push(new_friend_notif_obj);
+
+                }
+                console.log(notif_res);
+            }
+
+        });
+
+        // //fetch pending friend notifications
+        // for(var i=0;i<curr_user_notifications_len;i++){
+        //     console.log('inside notif for loog')
+        //     if((req.user.notifications[i].notif_type=='friends') && ( req.user.notifications[i].status=='Pending')){
+        //         notif_res.push(req.user.notifications[i]);
+        //         console.log('pushed 1 notif '+i)
+        //     }
+        // }
+        // console.log(notif_res);
+        // console.log(process.env.URL_ROOT);
 
         res.render(page,{
             url:process.env.URL_ROOT,
@@ -608,23 +672,6 @@ app.get('/getFriendRequests',isLoggedIn, function(req, res) {
             trend_page_status:false,
             home_page_status:true
         });
-
-        //check if there's pending friend request with owner
-        //or if owner is already a friend*/
-        //cat.find().sort({value:1}).exec(function(err1,res1){
-        // user.find({requested:curr_user._id},function(errChk,req_info){
-        //     if(errChk)console.log(errChk);
-
-        //     if(req_info){
-        //         console.log(req_info);
-        //         // if(req_info.status=='Accepted'){
-        //         //     cur_item.friend_status='friend';
-        //         // }else if(req_info.status=='Pending'){
-        //         //     cur_item.friend_status='Pending';
-        //         // }
-        //     }
-
-        // });
 
         }
 
@@ -689,6 +736,7 @@ var io = require('socket.io').listen(server);
 
 io.on('connection',function(socket){
     console.log('a user connected');
+    //get connected socketId & save in db
     socket.on('disconnect',function(){
         console.log('user disconnected');
     });
@@ -1709,8 +1757,6 @@ app.post('/saveItem',function(req,res,next){
     });
 
 });
-
-
 
 
 server.listen(process.env.PORT || 3000,function(){

@@ -95,6 +95,7 @@
              <div class="portlet light posted">
              <input type="hidden" id="post_id" value="{{_id}}">
              <input type="hidden" id="post_type" value="{{../page_type}}">
+             <input type="hidden" id="post_owner_id" value="{{owner.id}}">
 
 
                     <div class="portlet-title" {{#if notice_status}} style="background-color:  #3598dc;" {{/if}}>
@@ -137,17 +138,37 @@
                                         <div class="posts_partition"><!--1st partition-->
                                             <div style="width: 100%;">
                                                 <div class="section_posts_avatar">
-                                                   <img class="icon_size_50 img-circle" src="{{../url}}/{{owner.displayPic}}">
+                                                   {{#unless trend_status}}<!--if not trend post attach profile link-->
+                                                <a href="{{../url}}/profile/{{owner.id}}">
+                                                {{/unless}}
+                                                    <div class="section_posts_avatar">
+                                                       <img class="icon_size_50 img-circle" src="{{../url}}{{owner.displayPic}}">
+                                                    </div>
+                                                    {{#unless trend_status}}<!--trend post-->
+                                                    </a>
+                                                    {{/unless}}
                                                 </div>
                                                 <div class="section_posts_text">
                                                     <div> 
-                                                     <a style="font-weight: 600;" href="" class="item-name">{{owner.displayName}}</a>
+                                                     {{#if trend_status}}
+                                                     <a style="font-weight: 600;" href="javascript:;" class="item-name">{{owner.displayName}}</a>
+                                                     {{else}}
+                                                     <a style="font-weight: 600;" href="{{../url}}/profile/{{owner.id}}" class="item-name">{{owner.displayName}}</a>
+                                                     {{/if}}
                                                      </div>
-                                                     {{#if owner.status}}
-                                                        <div class="post_item_body_status">
-                                                        {{owner.status}}
-                                                        </div>
-                                                      {{/if}}
+
+                                                         {{#if owner.status}}
+                                                         {{#unless trend_status}}<!--if not trend post attach profile link-->
+                                                            <a href="{{../url}}/profile/{{owner.id}}">
+                                                            {{/unless}}
+                                                            <div class="post_item_body_status">
+
+                                                            {{owner.status}}
+                                                            </div>
+                                                            {{#unless trend_status}}<!--trend post-->
+                                                            </a>
+                                                            {{/unless}}
+                                                          {{/if}}
                                                     
                                                 </div>
                                                 <div class="clearfix"></div>
@@ -404,6 +425,7 @@
                                     {{/if}}
 
                                         <div style="width: 100%;"><!--main block-->
+                                        <hr class="long_length">
 
                                         <div class="pull-left">
 
@@ -470,7 +492,7 @@
 
                                         <div class="clearfix"></div>
                                     </div>
-                                    <!-- <hr class="long_length"> -->
+                                    <hr class="long_length">
 
 
                                 </div>

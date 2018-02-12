@@ -68,6 +68,7 @@
                 {{#each data}}
                     <div class="portlet-body" style="padding-top: 0px;">
                     <input type="hidden" id="post_source_id" value="{{source_id}}">
+                    <input type="hidden" id="post_notif_id" value="{{_id}}">
                         <div class="" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
                             <div class="general-item-list">
                                 <div class="item">
@@ -98,6 +99,7 @@
                                             <div class="pull-right" style="width: 50%">
                                                  <div class="fromnow">{{moment date "fromNow"}}</div>
                                                     <div class="clearfix"></div>
+
                                                     <div style="margin-right: 5%;cursor: pointer" class="post_actions_button_left accept_friend">
                                                         Accept
                                                     </div>
@@ -395,7 +397,9 @@
                 var $this=$(this);
                 var parent=$this.parents('.portlet-body');
                 var source_id=parent.find('input#post_source_id').val();
+                var notif_id=parent.find('input#post_notif_id').val();
                 console.log('source_id '+(source_id));
+                console.log('notif_id '+(notif_id));
                 //send request
                 var url="{{url}}/acceptFriendRequest";
                 console.log(url);
@@ -403,7 +407,7 @@
                 $.ajax({
                     url:url,
                     type:'GET',
-                    data:{'source_id':source_id},
+                    data:{'source_id':source_id,'notif_id':notif_id},
                     headers: {'X-My-App-Token': 'loganstyles'},
                     success:function(response){
                         console.log(response);
@@ -432,7 +436,9 @@
                 var $this=$(this);
                 var parent=$this.parents('.portlet-body');
                 var source_id=parent.find('input#post_source_id').val();
+                var notif_id=parent.find('input#post_notif_id').val();
                 console.log('source_id '+(source_id));
+                console.log('notif_id '+(notif_id));
                 //send request
                 var url="{{url}}/rejectFriendRequest";
                 console.log(url);
@@ -440,7 +446,7 @@
                 $.ajax({
                     url:url,
                     type:'GET',
-                    data:{'source_id':source_id},
+                    data:{'source_id':source_id,'notif_id':notif_id},
                     headers: {'X-My-App-Token': 'loganstyles'},
                     success:function(response){
                         console.log(response);

@@ -22,7 +22,7 @@
                             <div class="col-md-2 col-lg-2"></div>
                             <div class="col-md-7 col-lg-7 profile_top profile_area" style="">                                        
 
-                                <div class="profile_bgimg_container"><!--background img-->
+                                <div style="cursor: pointer;" class="profile_bgimg_container" onclick="modalLoader('profile_bio1','edit','');"><!--background img-->
                                     <div class="pro_bgimage">
                                   {{#if backgroundPic}}
                                     <img class="object-fit_cover" src="{{url}}/uploads/{{backgroundPic}}">
@@ -31,7 +31,7 @@
                                 </div>
 
                                 <div class="profile_img_container">
-                                    <div class="pro_image">
+                                    <div style="cursor: pointer;" class="pro_image" onclick="modalLoader('profile_bio1','edit','');">
                                     
                                     <img class="object-fit_cover" src="{{url}}/uploads/{{displayPic}}">
                                     
@@ -839,7 +839,7 @@
                                     sub_button.val(old_button_val);
                                     sub_button.prop('disabled', false);
                                     $('#profile_bio1_modal').modal('hide');
-                                     window.location.href="{{url}}/profile";
+                                     window.location.href="{{url}}/profile/{{user_info._id}}";
                                 },3000);
                                 
                             }else{
@@ -923,7 +923,7 @@
                                     sub_button.val(old_button_val);
                                     sub_button.prop('disabled', false);
                                     $('#profile_desc_modal').modal('hide');
-                                     window.location.href="{{url}}/profile";
+                                     window.location.href="{{url}}/profile/{{user_info._id}}";
                                 },3000);
                                 
                             }else{
@@ -1005,7 +1005,7 @@
                                     sub_button.val(old_button_val);
                                     sub_button.prop('disabled', false);
                                     $('#profile_edu_modal').modal('hide');
-                                     window.location.href="{{url}}/profile";
+                                     window.location.href="{{url}}/profile/{{user_info._id}}";
                                 },3000);
                                 
                             }else{
@@ -1086,7 +1086,7 @@
                                     sub_button.val(old_button_val);
                                     sub_button.prop('disabled', false);
                                     $('#profile_qual_modal').modal('hide');
-                                     window.location.href="{{url}}/profile";
+                                     window.location.href="{{url}}/profile/{{user_info._id}}";
                                 },3000);
                                 
                             }else{
@@ -1168,7 +1168,7 @@
                                     sub_button.val(old_button_val);
                                     sub_button.prop('disabled', false);
                                     $('#profile_sch_modal').modal('hide');
-                                     window.location.href="{{url}}/profile";
+                                     window.location.href="{{url}}/profile/{{user_info._id}}";
                                 },3000);
                                 
                             }else{

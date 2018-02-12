@@ -10,7 +10,7 @@
                 <!-- END PAGE HEAD-->
                 <!-- BEGIN PAGE CONTENT BODY -->
                 <div class="page-content">
-                    <div class="container">
+                    <div class="container-fluid">
 
                         <!-- BEGIN PAGE CONTENT INNER -->
                         <div class="page-content-inner">                            
@@ -127,23 +127,44 @@
 
                         <div style="width: 100%;"><!--main block-->
                             <div class="posts_partition"><!--1st partition-->
+                            
                                 <div style="width: 100%;">
+                                {{#unless trend_status}}<!--if not trend post attach profile link-->
+                                <a href="{{../url}}/profile/{{owner.id}}">
+                                {{/unless}}
                                     <div class="section_posts_avatar">
                                        <img class="icon_size_50 img-circle" src="{{../url}}{{owner.displayPic}}">
                                     </div>
+                                    {{#unless trend_status}}<!--trend post-->
+                                    </a>
+                                    {{/unless}}
+
                                     <div class="section_posts_text">
                                         <div> 
-                                         <a style="font-weight: 600;" href="" class="item-name">{{owner.displayName}}</a>
+                                        {{#if trend_status}}
+                                         <a style="font-weight: 600;" href="javascript:;" class="item-name">{{owner.displayName}}</a>
+                                         {{else}}
+                                         <a style="font-weight: 600;" href="{{../url}}/profile/{{owner.id}}" class="item-name">{{owner.displayName}}</a>
+                                         {{/if}}
                                          </div>
+
                                          {{#if owner.status}}
+                                         {{#unless trend_status}}<!--if not trend post attach profile link-->
+                                            <a href="{{../url}}/profile/{{owner.id}}">
+                                            {{/unless}}
                                             <div class="post_item_body_status">
+
                                             {{owner.status}}
                                             </div>
+                                            {{#unless trend_status}}<!--trend post-->
+                                            </a>
+                                            {{/unless}}
                                           {{/if}}
                                         
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
+                                
                             </div>
 
                         <div class="posts_partition_middle"><!--2nd partition-->
@@ -432,6 +453,7 @@
     {{/if}}<!--end if :chk for books-->
 
     <div style="width: 100%;"><!--main block-->
+    <hr class="long_length">
 
     <div class="pull-left">
 
@@ -521,7 +543,7 @@
 
                         <div class="clearfix"></div>
                     </div>
-                    <!-- <hr class="long_length"> -->
+                    <hr class="long_length">
 
 
                 </div>

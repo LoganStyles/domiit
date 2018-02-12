@@ -27,7 +27,7 @@ router.post('/register',function(req,res,next){
             	newUser.save(function(err, newUser) {
             		if(err){res.json({success: false,msg:"registration failed"});
             	}else{
-            		res.json({success:true,msg:"User registered"});
+            		res.json({success:true,msg:"User registered, please wait..."});
             	}
             });
             } else {//user previously exists

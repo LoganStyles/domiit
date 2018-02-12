@@ -17,7 +17,7 @@ var articleSchema = mongoose.Schema({
 	post_date: { type: Date, default: Date.now },
 	owner:{id:String,displayName:String,displayPic:String,status:String},
 	post_owner:{type:Boolean,default:false},
-	friend_status:String,//friend,not_friend,pending
+	friend_status:String,//friend,not_friend,Pending
 
 	question_status:{type:Boolean,default:false},
 	art_status:{type:Boolean,default:true},
