@@ -720,8 +720,8 @@
         width: 100px;
     }
 
-#dom_search_button{
-        width: 100px;
+input#dom_search_button{
+        width: 200px;
     }
 .nav>li>a{
         padding: 10px 8px;
