@@ -4,6 +4,7 @@ var trendCatsSchema = mongoose.Schema({
 	id:String,
 	title:String,
 	value:String,
+	icon:{type:String,default:''},
 	description:{type:String,default:''}
 });
 

@@ -231,7 +231,7 @@ app.get('/profile/:id',isLoggedIn, function(req, res) {
             var qualification="",
             designation="",
             dob="",age="",
-            displayPic="avatar.png",
+            displayPic="uploads/avatar.png",
             backgroundPic="";
 
             if(found_user.qualification[0]){
@@ -359,11 +359,12 @@ app.get('/dashboard',isLoggedIn,function(req,res){
 
         if(err_trend)console.log(err_trend);
         if(item_trend){
+            console.log(item_trend);
             res_item_trend=item_trend;
         }
     });
 
-    var curr_user_display_pic='avatar.png';//set default pic
+    var curr_user_display_pic='uploads/avatar.png';//set default pic
     if(req.user.displayPic[0]){
         curr_user_display_pic=req.user.displayPic[req.user.displayPic.length - 1];
     }
@@ -394,7 +395,7 @@ app.get('/dashboard',isLoggedIn,function(req,res){
                 return (a.date_created < b.date_created)? 1:(a.date_created > b.date_created)? -1:0;
             });
             console.log('sorted page_results')
-            // console.log(page_results);
+             console.log(page_results);
         }
 
         if(page_results.length >0){
@@ -410,7 +411,7 @@ app.get('/dashboard',isLoggedIn,function(req,res){
                     data:processed_response,
                     data_trend:res_item_trend,
                     page_title: page_title,
-
+                    class_type:'dashboard_page',
                     pending_friend_notifs:pending_friend_notifs,
 
                     quest_page_status:false,
@@ -434,6 +435,7 @@ app.get('/dashboard',isLoggedIn,function(req,res){
                 data:page_results,
                 data_trend:res_item_trend,
                 page_title: page_title,
+                class_type:'dashboard_page',
                 pending_friend_notifs:pending_friend_notifs,
 
                 quest_page_status:false,
@@ -476,20 +478,7 @@ app.get('/acceptFriendRequest',isLoggedIn,function(req,res){
             } 
 
             if(friendship){console.log('friendship',friendship);
-            //update user's notifications
             res.json({success:true,msg:"You accepted a friendship"});
-                // user.updateOne({_id:req.user._id,"notifications._id":notif_id},
-                //     {$set:
-                //         {"notifications.$.status":"Accepted"}},
-                //         function(err2,res2){
-                //             if(err2){
-                //                 console.log(err2)
-                //                 res.json({success:false,msg:"Your friendship update was not successfull"});
-                //             }else if(res2){                        
-                //                 res.json({success:true,msg:"You accepted a friendship"});
-                //             }
-                //         });
-
             }
         })
     }
@@ -514,19 +503,7 @@ app.get('/rejectFriendRequest',isLoggedIn,function(req,res){
             } 
 
             if(denied){console.log('friendship',denied)
-                //update user's notifications
             res.json({success:true,msg:"You rejected a friendship"});
-                // user.updateOne({_id:req.user._id,"notifications._id":notif_id},
-                //     {$set:
-                //         {"notifications.$.status":"Rejected"}},
-                //         function(err2,res2){
-                //             if(err2){
-                //                 console.log(err2)
-                //                 res.json({success:false,msg:"Your friendship update was not successfull"});
-                //             }else if(res2){                        
-                //                 res.json({success:true,msg:"You rejected a friendship"});
-                //             }
-                //         });
             }
         })
     }
@@ -755,7 +732,7 @@ app.post('/ask_question',upload.single('question_photo'),function(req,res,next){
         res.json({success:false,msg:"Your post failed, please update your profile first"});
     }else{
 
-        var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
+        var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('uploads/avatar.png');
         var status=(req.user.designation[0])?((req.user.designation[req.user.designation.length -1]).title):('');
         var display_name=(req.user.displayName)?(req.user.displayName):('');
         var res_id=(req.user._id)?((req.user._id).toString()):('');
@@ -776,7 +753,7 @@ app.post('/ask_question',upload.single('question_photo'),function(req,res,next){
                 ask_quest.owner=owner_details;
 
             if (req.file && req.file.filename != null) {
-                ask_quest.pics.push(req.file.filename);
+                ask_quest.pics.push('uploads/'+req.file.filename);
             }
 
             ask_quest.save(function(err1, saved_quest) {
@@ -784,12 +761,22 @@ app.post('/ask_question',upload.single('question_photo'),function(req,res,next){
                 if(err1){console.log(err1);res.json({success: false,msg:"question submission failed"});
 
             }else{   
-                var json = JSON.stringify(saved_quest, null, 2);
-                    console.log(json);//update dashboard,all questions & unanswered quests
-                    console.log('emitting...')
-                    io.emit('new_unanswered_posts', json);
-                    // io.emit('unanswered_questions', json);
-                    res.json({success:true,msg:"Question submission succesful"});
+                var page_results=[];
+                console.log(saved_quest);
+                page_results.push(saved_quest);
+
+                process_posts.processPagePosts(page_results,req.user,function(processed_response){
+                console.log('JSON PROCESSED RESPONSE');
+                // console.log(processed_response);
+                var json = JSON.stringify(processed_response[0], null, 2);
+
+                // console.log(json);//update dashboard,all questions & unanswered quests
+                console.log('emitting...')
+                io.emit('new_questions', json);
+                res.json({success:true,msg:"Question submission succesful"});
+
+            });
+                    
                 }   
             });
 
@@ -810,7 +797,7 @@ app.post('/ask_article',article_upload,function(req,res,next){
         res.json({success:false,msg:"Your post failed, please update your profile first"});
     }else{
 
-        var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
+        var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('uploads/avatar.png');
         var status=(req.user.designation[0])?((req.user.designation[req.user.designation.length -1]).title):('');
         var display_name=(req.user.displayName)?(req.user.displayName):('');
         var res_id=(req.user._id)?((req.user._id).toString()):('');
@@ -834,13 +821,13 @@ app.post('/ask_article',article_upload,function(req,res,next){
         //store attachment if it exists
         if(req.files && req.files['article_attachment']){
             console.log('filename '+req.files['article_attachment'][0].filename)
-            write_art.attachment.push(req.files['article_attachment'][0].filename);
+            write_art.attachment.push('uploads/'+req.files['article_attachment'][0].filename);
         }
 
         //store photo if it exists
         if(req.files && req.files['article_photo']){
             console.log('filename '+req.files['article_photo'][0].filename)
-            write_art.pics.push(req.files['article_photo'][0].filename);
+            write_art.pics.push('uploads/'+req.files['article_photo'][0].filename);
         }
 
 
@@ -849,9 +836,18 @@ app.post('/ask_article',article_upload,function(req,res,next){
             if(err1){console.log(err1);res.json({success: false,msg:"Article submission failed"});
 
             }else{
-                var json = JSON.stringify(saved_art, null, 2);
-                io.emit('new_unanswered_posts', json);
+                var page_results=[];
+                page_results.push(saved_art);
+
+                process_posts.processPagePosts(page_results,req.user,function(processed_response){
+                console.log('JSON PROCESSED RESPONSE');
+                var json = JSON.stringify(processed_response[0], null, 2);
+                console.log('emitting...')
+                io.emit('new_articles', json);
                 res.json({success:true,msg:"Article submission succesful"});
+
+            });
+
             }   
         });
 
@@ -870,7 +866,7 @@ app.post('/ask_notice',notice_upload,function(req,res,next){
         res.json({success:false,msg:"Your post failed, please update your profile first"});
     }else{
 
-        var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
+        var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('uploads/avatar.png');
         var status=(req.user.designation[0])?((req.user.designation[req.user.designation.length -1]).title):('');
         var display_name=(req.user.displayName)?(req.user.displayName):('');
         var res_id=(req.user._id)?((req.user._id).toString()):('');
@@ -892,7 +888,7 @@ app.post('/ask_notice',notice_upload,function(req,res,next){
         //store photo if it exists
         if(req.files && req.files['notice_photo']){
             console.log('filename '+req.files['notice_photo'][0].filename)
-            write_notice.pics.push(req.files['notice_photo'][0].filename);
+            write_notice.pics.push('uploads/'+req.files['notice_photo'][0].filename);
         }
 
 
@@ -901,9 +897,23 @@ app.post('/ask_notice',notice_upload,function(req,res,next){
             if(err1){console.log(err1);res.json({success: false,msg:"notice submission failed"});
 
             }else{
-                var json = JSON.stringify(saved_notice, null, 2);
-                io.emit('new_unanswered_posts', json);
+                // var json = JSON.stringify(saved_notice, null, 2);
+                // io.emit('new_notices', json);
+                // res.json({success:true,msg:"Notice submission succesful"});
+
+                var page_results=[];
+                page_results.push(saved_notice);
+
+                process_posts.processPagePosts(page_results,req.user,function(processed_response){
+                console.log('JSON PROCESSED RESPONSE');
+                var json = JSON.stringify(processed_response[0], null, 2);
+                console.log('emitting notices...')
+                io.emit('new_notices', json);
                 res.json({success:true,msg:"Notice submission succesful"});
+
+            });
+
+
             }   
         });
 
@@ -921,7 +931,7 @@ app.post('/ask_riddle',upload.single('riddle_photo'),function(req,res,next){
         console.log("user has not updated profile")
         res.json({success:false,msg:"Your post failed, please update your profile first"});
     }else{
-        var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
+        var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('uploads/avatar.png');
         var status=(req.user.designation[0])?((req.user.designation[req.user.designation.length -1]).title):('');
         var display_name=(req.user.displayName)?(req.user.displayName):('');
         var res_id=(req.user._id)?((req.user._id).toString()):('');
@@ -941,18 +951,25 @@ app.post('/ask_riddle',upload.single('riddle_photo'),function(req,res,next){
             ask_riddle.owner=owner_details;
 
             if (req.file && req.file.filename != null) {
-                ask_riddle.pics.push(req.file.filename);
+                ask_riddle.pics.push('uploads/'+req.file.filename);
             }
 
             ask_riddle.save(function(err1, saved_ridd) {
 
                 if(err1){console.log(err1);res.json({success: false,msg:"Riddle submission failed"});
 
-            }else{   
-                var json = JSON.stringify(saved_ridd, null, 2);
-                io.emit('new_unanswered_posts', json);
-                res.json({success:true,msg:"Riddle submission successful"});
-            }   
+            }else{
+                var page_results=[];
+                page_results.push(saved_ridd);
+
+                process_posts.processPagePosts(page_results,req.user,function(processed_response){
+                console.log('JSON PROCESSED RESPONSE');
+                var json = JSON.stringify(processed_response[0], null, 2);
+                console.log('emitting riddles...')
+                io.emit('new_riddles', json);
+                res.json({success:true,msg:"Riddle submission succesful"});
+            }); 
+            }  
         });
 
         }
@@ -968,7 +985,7 @@ app.post('/ask_pab',upload.single('pab_photo'),function(req,res,next){
         res.json({success:false,msg:"Your post failed, please update your profile first"});
     }else{
 
-        var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
+        var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('uploads/avatar.png');
         var status=(req.user.designation[0])?((req.user.designation[req.user.designation.length -1]).title):('');
         var display_name=(req.user.displayName)?(req.user.displayName):('');
         var res_id=(req.user._id)?((req.user._id).toString()):('');
@@ -995,7 +1012,7 @@ app.post('/ask_pab',upload.single('pab_photo'),function(req,res,next){
             ask_pab.owner=owner_details;
 
             if (req.file && req.file.filename != null) {
-                ask_pab.pics.push(req.file.filename);
+                ask_pab.pics.push('uploads/'+req.file.filename);
             }
 
 
@@ -1003,10 +1020,19 @@ app.post('/ask_pab',upload.single('pab_photo'),function(req,res,next){
 
                 if(err1){console.log(err1);res.json({success: false,msg:"Book post failed"});
 
-            }else{   
-                var json = JSON.stringify(saved, null, 2);
-                io.emit('new_unanswered_posts', json);
-                res.json({success:true,msg:"Book post successful"});
+            }else{  
+
+                var page_results=[];
+                page_results.push(saved);
+
+                process_posts.processPagePosts(page_results,req.user,function(processed_response){
+                console.log('JSON PROCESSED RESPONSE');
+                var json = JSON.stringify(processed_response[0], null, 2);
+                console.log('emitting pabs...')
+                io.emit('new_pabs', json);
+                res.json({success:true,msg:"Book post succesful"});
+            });
+
             }   
         });
             
@@ -1233,12 +1259,12 @@ app.post('/update_bio1',profile_upload,function(req,res,next){
             //store img if it exists
             if(req.files && req.files['profile_bio1_displayPic']){
                 console.log('filename '+req.files['profile_bio1_displayPic'][0].filename)
-                updateUser.displayPic.push(req.files['profile_bio1_displayPic'][0].filename);
+                updateUser.displayPic.push('uploads/'+req.files['profile_bio1_displayPic'][0].filename);
             }
 
             if(req.files && req.files['profile_bio1_backgroundPic']){
                 console.log('filename '+req.files['profile_bio1_backgroundPic'][0].filename)
-                updateUser.backgroundPic.push(req.files['profile_bio1_backgroundPic'][0].filename);
+                updateUser.backgroundPic.push('uploads/'+req.files['profile_bio1_backgroundPic'][0].filename);
             }
             console.log(updateUser);
             //$currentDate:{date_modified:true},
@@ -1290,19 +1316,19 @@ app.post('/response_item',upload.single('section_response_photo'),function(req,r
                 let updateSection = result;
                 updateSection.answers_len=updateSection.answers_len +1;//incr the no. of ans
                 updateSection.date_modified=new Date();
-                var displayPic=(req.user.displayPic[0])?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
+                var displayPic=(req.user.displayPic[0])?(req.user.displayPic[req.user.displayPic.length -1]):('uploads/avatar.png');
 
                 updateSection.answers.push({
                     body : convertToSentencCase(req.body.section_response_details),
                     responderDisplayName:req.user.displayName,
                     responder_id:req.user._id,
                     responderDisplayPic:displayPic,
-                    responderStatus:req.user.designation
+                    responderStatus:req.user.designation.title
                 }); 
 
                 //store img if exists
                 if (req.file && req.file.filename != null) {
-                    updateSection.answers[updateSection.answers.length - 1].pics.push(req.file.filename);
+                    updateSection.answers[updateSection.answers.length - 1].pics.push('uploads/'+req.file.filename);
                 }
 
                 /*update all received info here*/
@@ -1447,7 +1473,7 @@ app.post('/update_item',section_update_upload,function(req,res,next){
 
         section.findOne({_id:section_id},function(error,result){//find the question that was responsed
             if(result){
-                var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
+                var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('uploads/avatar.png');
                 var status=(req.user.designation[0])?((req.user.designation[req.user.designation.length -1]).title):('');
                 var display_name=(req.user.displayName)?(req.user.displayName):('');
                 var res_id=(req.user._id)?((req.user._id).toString()):('');
@@ -1483,13 +1509,13 @@ app.post('/update_item',section_update_upload,function(req,res,next){
                 //store attachment if it exists
                 if(req.files && req.files['section_update_attachment']){
                     console.log('filename '+req.files['section_update_attachment'][0].filename)
-                    updateSection.attachment.push(req.files['section_update_attachment'][0].filename);
+                    updateSection.attachment.push('uploads/'+req.files['section_update_attachment'][0].filename);
                 }
 
                 //store photo if it exists
                 if(req.files && req.files['section_update_photo']){
                     console.log('filename '+req.files['section_update_photo'][0].filename)
-                    updateSection.pics.push(req.files['section_update_photo'][0].filename);
+                    updateSection.pics.push('uploads/'+req.files['section_update_photo'][0].filename);
                 }                          
                 
                 let most_recent_response={
@@ -1537,7 +1563,7 @@ app.post('/update_pab_item',section_update_upload,function(req,res,next){
 
         section.findOne({_id:section_id},function(error,result){//find the pab that was responsed
             if(result){
-                var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('avatar.png');
+                var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('uploads/avatar.png');
                 var status=(req.user.designation[0])?((req.user.designation[req.user.designation.length -1]).title):('');
                 var display_name=(req.user.displayName)?(req.user.displayName):('');
                 var res_id=(req.user._id)?((req.user._id).toString()):('');
@@ -1566,7 +1592,7 @@ app.post('/update_pab_item',section_update_upload,function(req,res,next){
                 //store photo if it exists
                 if(req.files && req.files['section_pab_photo']){
                     console.log('filename '+req.files['section_pab_photo'][0].filename)
-                    updateSection.pics.push(req.files['section_pab_photo'][0].filename);
+                    updateSection.pics.push('uploads/'+req.files['section_pab_photo'][0].filename);
                 }                          
                 
                 let most_recent_response={

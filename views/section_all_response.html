@@ -88,7 +88,7 @@
               </div>
             </div> -->
                                 
-            <div class="question_all_post_area">
+            <div class="question_all_post_area {{class_type}}">
 
                 {{#each data}}
 
@@ -142,7 +142,7 @@
                                                     <a href="{{../url}}/profile/{{owner.id}}">
                                                     {{/unless}}
                                                         <div class="section_posts_avatar">
-                                                           <img class="icon_size_50 img-circle" src="{{../url}}{{owner.displayPic}}">
+                                                           <img class="icon_size_50 img-circle" src="{{../url}}/{{owner.displayPic}}">
                                                         </div>
                                                         {{#unless trend_status}}<!--trend post-->
                                                         </a>
@@ -206,7 +206,7 @@
                                                 <div class="fromnow">{{moment post_date "fromNow"}}</div>
                                                 <div class="clearfix"></div>
                                                 <div class="post_actions_button_left">
-                                                    <img class="icon_size_20" src="{{../url}}/images/mask.png">
+                                                    <!-- <img class="icon_size_20" src="{{../url}}/images/mask.png"> -->
                                                 </div>
                                                 {{#if post_owner}}
                                                  <div class="actions post_actions_button">
@@ -223,10 +223,33 @@
                                                                     <a href="javascript:;">
                                                                         <i class="fa fa-trash-o"></i> Delete </a>
                                                                 </li>
-                                                                <li>
-                                                                    <a href="javascript:;">
-                                                                        <i class="fa fa-ban"></i> Request for answer </a>
-                                                                </li>                            
+                                                                {{#if question_status}}
+                                                <li>
+                                                    <a href="javascript:;">
+                                                        <i class="fa fa-ban"></i> Request for answer </a>
+                                                </li>  
+                                                {{/if}}
+
+                                                {{#if art_status}}
+                                                <li>
+                                                    <a href="javascript:;">
+                                                        <i class="fa fa-ban"></i> Request for review </a>
+                                                </li>  
+                                                {{/if}} 
+
+                                                {{#if riddle_status}}
+                                                <li>
+                                                    <a href="javascript:;">
+                                                        <i class="fa fa-ban"></i> Request for solution </a>
+                                                </li>  
+                                                {{/if}} 
+
+                                                {{#if notice_status}}
+                                                <li>
+                                                    <a href="javascript:;">
+                                                        <i class="fa fa-share-alt"></i> Share</a>
+                                                </li>  
+                                                {{/if}}                            
                                                             </ul>
                                                         </div>                                           
                                                 </div>
@@ -244,6 +267,10 @@
                                                                 <li>
                                                                     <a href="javascript:;">
                                                                         <i class="fa fa-trash-o"></i> Bookmark </a>
+                                                                </li>
+                                                                <li class="">
+                                                                    <a href="javascript:;">
+                                                                        <img class="icon_size_20" src="{{../url}}/images/mask.png"> Mask </a>
                                                                 </li>
                                                                 <li>
                                                                     <a href="javascript:;">
@@ -272,7 +299,7 @@
 
                                                 {{#if pics.length }}
                                                 <div style="margin-bottom: 3%;">                                                                    
-                                                    <img class="img-responsive" src="{{../url}}/uploads/{{pics.[0]}}">
+                                                    <img class="img-responsive" src="{{../url}}/{{pics.[0]}}">
                                                 </div>
                                                 {{/if}}
 
@@ -358,20 +385,35 @@
                                         <div style="width: 100%;"><!--main block: display the latest answer-->
                                             <div class="posts_partition"><!--1st partition-->
                                             <div style="width: 100%;">
-                                                <div class="section_posts_avatar">
-                                                   <img class="icon_size_50 img-circle" src="{{../url}}/uploads/{{responderDisplayPic}}">
+
+                                            <div class="section_posts_avatar">
+                                                   {{#unless trend_status}}<!--if not trend post attach profile link-->
+                                                    <a href="{{../url}}/profile/{{owner.id}}">
+                                                    {{/unless}}
+                                                        <div class="section_posts_avatar">
+                                                           <img class="icon_size_50 img-circle" src="{{../url}}/{{responderDisplayPic}}">
+                                                        </div>
+                                                        {{#unless trend_status}}<!--trend post-->
+                                                        </a>
+                                                        {{/unless}}
                                                 </div>
+
+                                                <!-- <div class="section_posts_avatar">
+                                                   <img class="icon_size_50 img-circle" src="{{../url}}/uploads/{{responderDisplayPic}}">
+                                                </div> -->
                                                 <div class="section_posts_text">
                                                     <div> 
-                                                     <a style="color: #000;" href="" class="item-name primary-link">{{responderDisplayName}}</a>
+                                                     <a style="font-weight: 600;" href="{{../url}}/profile/{{responder_id}}" class="item-name">{{responderDisplayName}}</a>
                                                      </div>
                                                      {{#if responderStatus}}
-                                                        <div>
+                                                        <div class="post_item_body_status">
                                                         {{responderStatus}}
                                                         </div>
                                                       {{/if}}
                                                     
                                                 </div>
+
+
                                                 <div class="clearfix"></div>
                                             </div>
                                             </div>
@@ -492,7 +534,7 @@
                                 <div class="item-body"> 
                                     {{#if pics.length }}
                                     <div style="margin-bottom: 3%;">                                                                    
-                                        <img class="img-responsive" src="{{../../url}}/uploads/{{pics.[0]}}">
+                                        <img class="img-responsive" src="{{../../url}}/{{pics.[0]}}">
                                     </div>
                                     {{/if}}
                                     <div style="color: #000;" class="post_question post_item_body">

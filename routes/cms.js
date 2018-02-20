@@ -414,8 +414,8 @@ router.post('/post_about_subitem/:type',function(req,res,next){
  var upload = multer({storage:Storage});
  router.post('/post_page/:type',upload.single('page_photo'),function(req,res,next){
 
-    console.log('req.fil')
-    console.log(req.file);
+    // console.log('req.fil')
+    // console.log(req.file);
 
     var type = req.params.type;//story or cat
     let obj,
@@ -423,9 +423,9 @@ router.post('/post_about_subitem/:type',function(req,res,next){
     page_id=req.body.page_id, //
     page_type=req.body.page_type; //trend,news,question etc
 
-    console.log('page_id '+page_id);
-    console.log('mode '+mode);
-    console.log('page_type '+page_type);
+    // console.log('page_id '+page_id);
+    // console.log('mode '+mode);
+    // console.log('page_type '+page_type);
 
     if(mode=="insert"){
 
@@ -459,6 +459,11 @@ router.post('/post_about_subitem/:type',function(req,res,next){
             obj.title = (req.body.page_title).trim();
             obj.value = (req.body.page_title).trim().replace(/[^A-Za-z0-9]/g, "_");
             obj.description=req.body.page_description;
+            obj.icon='images/trending.png';//sets default icon
+
+            if (req.file && req.file.filename != null) {
+                obj.icon='uploads/'+(req.file.filename);//replaces default icon
+            }
 
         }else if(type=="story"){
 
@@ -472,16 +477,33 @@ router.post('/post_about_subitem/:type',function(req,res,next){
             obj.description=convertToSentencCase((req.body.page_description).trim());
             obj.excerpt = (obj.description).substr(0,100);
             obj.category=req.body.page_category;
+            obj.category_icon='images/trending.png';//sets default category icon
+
+            //get icon for this category
+            trend_cat.findOne({title:obj.category},function(cat_err,cat_res){
+
+                if(cat_err){
+                    // console.log(cat_err)
+                }
+                else if(cat_res){
+                    // console.log(cat_res);
+                    obj.category_icon=cat_res.icon;//replaces default category icon e.g /uploads/tren.png
+                }
+
+            });
+
+            obj.pics=obj.category_icon;//sets default pic
 
             if (req.file && req.file.filename != null) {
-                obj.pics.push(req.file.filename);
+                obj.pics='uploads/'+(req.file.filename);//replaces default pic
             }
         }
 
         
 
         obj.save(function(err,quest){
-            if(err){console.log(err);res.json({success:false,msg:" update failed"});
+            if(err){//console.log(err);
+                res.json({success:false,msg:" update failed"});
         }else{
             res.json({success:true,msg:" submission successful"});
             var json = JSON.stringify(obj,null,2);
@@ -524,11 +546,19 @@ router.post('/post_about_subitem/:type',function(req,res,next){
             update_items.value=req.body.page_title.trim().replace(/[^A-Za-z0-9]/g, "_");
             update_items.description=req.body.page_description;
 
+            if(!update_items.icon){
+                update_items.icon='images/trending.png';//sets default icon
+            }
+
+            if (req.file && req.file.filename != null) {
+                        update_items.icon='uploads/'+(req.file.filename);
+                    }
+
             //update a obj
             obj.findOneAndUpdate({_id:page_id},{$set:update_items},function(err1,res1){
 
                 if(err1){
-                    console.log(err1)
+                    // console.log(err1)
                     res.json({success:false,msg:" update failed"});
                 }else if(res1){
                     res.json({success:true,msg:" update was successfull"});
@@ -554,14 +584,34 @@ router.post('/post_about_subitem/:type',function(req,res,next){
                     update_items.excerpt = (update_items.description).substr(0,100);
                     update_items.post_type="trending";
 
+                    //update category_icon from cat
+                    trend_cat.findOne({title:update_items.category},function(cat_err2,cat_res2){
+
+                        if(cat_err2){
+                            // console.log(cat_err2)
+                        }
+                        else if(cat_res2){
+                            // console.log(cat_res2);
+                            update_items.category_icon=cat_res2.icon;//replaces default category icon e.g /uploads/tren.png
+                        }
+
+                    });
+
+                    if(!update_items.category_icon){
+                        update_items.category_icon='images/trending.png';//sets default icon
+                    }
+
+                    //sets default pic
+                    update_items.pics=update_items.category_icon;
+
                     if (req.file && req.file.filename != null) {
-                        update_items.pics.push(req.file.filename);
+                        update_items.pics='uploads/'+(req.file.filename);
                     }
 
                     obj.updateOne({_id:page_id},{$set:update_items},function(err1,res1){
 
                         if(err1){
-                            console.log(err1)
+                            // console.log(err1)
                             res.json({success:false,msg:" update failed"});
                         }else if(res1){
                             res.json({success:true,msg:" update was successfull"});

@@ -11,13 +11,13 @@ socket.connect(URL_ROOT);
 var oldest_post;
 console.log('inside sockets');
 
-socket.on('new_unanswered_posts',function(json){
+socket.on('new_questions',function(json){
 
-	console.log('new_unanswered_posts');
-	oldest_post = $('.posted').last();
-	//get count of posts before appending another
-	var count = $('.posted').length;
-	console.log('total current page posts is '+count);
+	//post on dashboard
+	oldest_post = $('.dashboard_page .posted').last();
+	//get count of dashboard posts before appending another
+	var count = $('.dashboard_page .posted').length;
+	console.log('total current dashboard posts is '+count);
 	
 	//if there are more than 'total messages', start removing from the bottom
 	if(count >= total_messages){
@@ -27,9 +27,167 @@ socket.on('new_unanswered_posts',function(json){
 		console.log('removing post');
 		removePost(oldest_post);
 	}
-
 	displayPost('.dashboard_page',json);
-	// displayPost('.section_page',json);
+
+	//post on section
+	oldest_post = $('.question .posted').last();
+	//get count of dashboard posts before appending another
+	var count = $('.question .posted').length;
+	console.log('total current question posts is '+count);
+	
+	//if there are more than 'total messages', start removing from the bottom
+	if(count >= total_messages){
+		//delay for fading elements in and out
+		delay_amount = fade_speed +1;
+		//remove the post from the DOM
+		console.log('removing post');
+		removePost(oldest_post);
+	}
+	displayPost('.question',json);
+
+});
+
+socket.on('new_articles',function(json){
+
+	//post on dashboard
+	oldest_post = $('.dashboard_page .posted').last();
+	//get count of dashboard posts before appending another
+	var count = $('.dashboard_page .posted').length;
+	console.log('total current dashboard posts is '+count);
+	
+	//if there are more than 'total messages', start removing from the bottom
+	if(count >= total_messages){
+		//delay for fading elements in and out
+		delay_amount = fade_speed +1;
+		//remove the post from the DOM
+		console.log('removing post');
+		removePost(oldest_post);
+	}
+	displayPost('.dashboard_page',json);
+
+	//post on section
+	oldest_post = $('.article .posted').last();
+	//get count of dashboard posts before appending another
+	var count = $('.article .posted').length;
+	console.log('total current article posts is '+count);
+	
+	//if there are more than 'total messages', start removing from the bottom
+	if(count >= total_messages){
+		//delay for fading elements in and out
+		delay_amount = fade_speed +1;
+		//remove the post from the DOM
+		console.log('removing post');
+		removePost(oldest_post);
+	}
+	displayPost('.article',json);
+
+});
+
+socket.on('new_notices',function(json){
+
+	//post on dashboard
+	oldest_post = $('.dashboard_page .posted').last();
+	//get count of dashboard posts before appending another
+	var count = $('.dashboard_page .posted').length;
+	console.log('total current dashboard posts is '+count);
+	
+	//if there are more than 'total messages', start removing from the bottom
+	if(count >= total_messages){
+		//delay for fading elements in and out
+		delay_amount = fade_speed +1;
+		//remove the post from the DOM
+		console.log('removing post');
+		removePost(oldest_post);
+	}
+	displayPost('.dashboard_page',json);
+
+	//post on section
+	oldest_post = $('.notice .posted').last();
+	//get count of dashboard posts before appending another
+	var count = $('.notice .posted').length;
+	console.log('total current notice posts is '+count);
+	
+	//if there are more than 'total messages', start removing from the bottom
+	if(count >= total_messages){
+		//delay for fading elements in and out
+		delay_amount = fade_speed +1;
+		//remove the post from the DOM
+		console.log('removing post');
+		removePost(oldest_post);
+	}
+	displayPost('.notice',json);
+
+});
+
+socket.on('new_riddles',function(json){
+
+	//post on dashboard
+	oldest_post = $('.dashboard_page .posted').last();
+	//get count of dashboard posts before appending another
+	var count = $('.dashboard_page .posted').length;
+	console.log('total current dashboard posts is '+count);
+	
+	//if there are more than 'total messages', start removing from the bottom
+	if(count >= total_messages){
+		//delay for fading elements in and out
+		delay_amount = fade_speed +1;
+		//remove the post from the DOM
+		console.log('removing post');
+		removePost(oldest_post);
+	}
+	displayPost('.dashboard_page',json);
+
+	//post on section
+	oldest_post = $('.riddle .posted').last();
+	//get count of dashboard posts before appending another
+	var count = $('.riddle .posted').length;
+	console.log('total current riddle posts is '+count);
+	
+	//if there are more than 'total messages', start removing from the bottom
+	if(count >= total_messages){
+		//delay for fading elements in and out
+		delay_amount = fade_speed +1;
+		//remove the post from the DOM
+		console.log('removing post');
+		removePost(oldest_post);
+	}
+	displayPost('.riddle',json);
+
+});
+
+socket.on('new_pabs',function(json){
+
+	//post on dashboard
+	oldest_post = $('.dashboard_page .posted').last();
+	//get count of dashboard posts before appending another
+	var count = $('.dashboard_page .posted').length;
+	console.log('total current dashboard posts is '+count);
+	
+	//if there are more than 'total messages', start removing from the bottom
+	if(count >= total_messages){
+		//delay for fading elements in and out
+		delay_amount = fade_speed +1;
+		//remove the post from the DOM
+		console.log('removing post');
+		removePost(oldest_post);
+	}
+	displayPost('.dashboard_page',json);
+
+	//post on section
+	oldest_post = $('.pab .posted').last();
+	//get count of dashboard posts before appending another
+	var count = $('.pab .posted').length;
+	console.log('total current pab posts is '+count);
+	
+	//if there are more than 'total messages', start removing from the bottom
+	if(count >= total_messages){
+		//delay for fading elements in and out
+		delay_amount = fade_speed +1;
+		//remove the post from the DOM
+		console.log('removing post');
+		removePost(oldest_post);
+	}
+	displayPost('.pab',json);
 
 });
 
@@ -61,10 +219,25 @@ function displayPost(selected_class,json){
 	var post_content='<div class="portlet light posted">';
 		post_content+='<input type="hidden" id="post_id" value="'+parsed._id+'">';
 		post_content+='<input type="hidden" id="post_type" value="'+parsed.post_type+'">';
-		post_content+='<div class="portlet-title"><div class="caption caption-md">';
-		post_content+='<span class="caption-subject  bold post_box_name">'+parsed.post_type+'&nbsp;</span>';
+		post_content+='<input type="hidden" id="post_owner_id" value="'+parsed.owner.id+'">';
+		post_content+='<div class="portlet-title"';
+		if(parsed.notice_status){
+			post_content+='style="background-color:#5F84CF;"';
+		}
+		post_content+= '><div class="caption caption-md">';
+		post_content+='<span ';
+
+		if(parsed.notice_status){
+			post_content+='style="color:  #fff;"';
+		}
+
+		post_content+='class="caption-subject  bold post_box_name">'+parsed.post_type+'&nbsp;</span>';
 		if(parsed.category){
-			post_content+='<span class="caption-helper post_category grey_cats left_border">'+parsed.category+'&nbsp;</span>';
+			post_content+='<span class="caption-helper post_category grey_cats left_border" ';
+			if(parsed.notice_status){
+				post_content+='style="color: #fff !important;"';
+			}
+			post_content+=' >'+parsed.category+'&nbsp;</span>';
 		}
 
 		if(!parsed.notice_status){
@@ -74,8 +247,7 @@ function displayPost(selected_class,json){
 			if(parsed.sub_cat2){
 				post_content+='<span class="caption-helper post_sub_cat2 grey_cats left_border">'+parsed.sub_cat2+'&nbsp;</span>';
 			}
-		}
-		
+		}	
 		
 		post_content+='</div></div>';
 		post_content+='<div class="portlet-body" style="padding-top: 0px;">';
@@ -84,13 +256,35 @@ function displayPost(selected_class,json){
 		post_content+='<div class="item"><div class="item-head">';
 		post_content+='<div style="width: 100%;"><!--main block-->';
 		post_content+='<div class="posts_partition"><!--1st partition-->';
-		post_content+='<div style="width: 100%;"><div class="section_posts_avatar">';
-		post_content+='<img class="icon_size_50 img-circle" src="'+URL_ROOT+'/uploads/'+parsed.owner.displayPic+'">';
-		post_content+='</div><div class="section_posts_text">';
-		post_content+='<div><a style="font-weight: 600;" href="" class="item-name">'+parsed.owner.displayName+'</a></div>';
-		if(parsed.owner.status){
-			 post_content+='<div class="post_item_body_status">'+parsed.owner.status+'</div>';
+		post_content+='<div style="width: 100%;">';
+		if(!parsed.trend_status){//if not trend post attach profile link
+			post_content+='<a href="'+URL_ROOT+'/profile/'+parsed.owner.id+'">';
 		}
+		post_content+='<div class="section_posts_avatar">';
+		post_content+='<img class="icon_size_50 img-circle" src="'+URL_ROOT+'/'+parsed.owner.displayPic+'">';
+		post_content+='</div>';
+		if(!parsed.trend_status){
+			post_content+='</a>';
+		}
+		post_content+='<div class="section_posts_text">';
+		post_content+='<div>';
+		if(parsed.trend_status){
+			post_content+='<a style="font-weight: 600;" href="javascript:;" class="item-name">'+parsed.owner.displayName+'</a>';
+		}else{
+			post_content+='<a style="font-weight: 600;" href="'+URL_ROOT+'/profile/'+parsed.owner.id+'" class="item-name">'+parsed.owner.displayName+'</a>';
+		}
+		post_content+='</div>';
+		if(parsed.owner.status){
+			if(!parsed.trend_status){//if not trend post atach profile
+				post_content+='<a href="'+URL_ROOT+'/profile/'+parsed.owner.id+'">';
+			}
+			post_content+='<div class="post_item_body_status">'+parsed.owner.status+'</div>';
+
+			if(!parsed.trend_status){
+				post_content+='</a>';
+			}
+		}
+				
 		post_content+='</div><div class="clearfix"></div></div></div>';
 		post_content+='<div class="posts_partition_middle"><!--2nd partition-->';
 		post_content+='<span>';
@@ -98,14 +292,18 @@ function displayPost(selected_class,json){
 			if(parsed.trend_followed){
 				post_content+='<img class="icon_size_50 " src="'+URL_ROOT+'/images/filler.png">';
 			}else{
-				post_content+='<a href="javascript:;" class="btn blue"><i class="fa fa-plus"></i>&nbsp; Follow</a>';
+				post_content+='<a href="javascript:;" class="btn blue" style="padding: 2px;"><i class="fa fa-plus"></i>&nbsp; Follow</a>';
 			}
 
 		}else{//other post:questio etc-->
-			if(parsed.post_owner){
+			if(parsed.friend_status=='friend'){
 				post_content+='<img class="icon_size_50 " src="'+URL_ROOT+'/images/filler.png">';
 			}else{
-				post_content+='<img class="icon_size_50 " src="'+URL_ROOT+'/images/add_person.png">';
+				if(parsed.friend_status=='Pending'){
+					post_content+='<span class="post_box_name">Pending Friend Request</span>';
+				}else{
+					post_content+='<img class="icon_size_20 send_friend_req " src="'+URL_ROOT+'/images/add_person.png">';
+				}
 			}
 		}
 		post_content+='</span></div>';
@@ -115,7 +313,7 @@ function displayPost(selected_class,json){
 		post_content+='<div class="fromnow">'+item_date+'</div>';
 		post_content+='<div class="clearfix"></div>';
 		post_content+='<div class="post_actions_button_left">';
-		post_content+='<img class="icon_size_20" src="'+URL_ROOT+'/images/mask.png">';
+		//post_content+='<img class="icon_size_20" src="'+URL_ROOT+'/images/mask.png">';
 		post_content+='</div>';
 		if(parsed.post_owner){
 			post_content+='<div class="actions post_actions_button">';
@@ -126,9 +324,32 @@ function displayPost(selected_class,json){
 			post_content+='<a href="#"><i class="fa fa-pencil"></i> Edit </a></li>';
 			post_content+='<li class="delete_section_item"><a href="#">';
 			post_content+='<i class="fa fa-trash-o"></i> Delete </a></li>';
-			post_content+='<li><a href="javascript:;">';
+			if(parsed.question_status){
+				post_content+='<li><a href="javascript:;">';
 			post_content+='<i class="fa fa-ban"></i> Request for answer </a>';
-			post_content+='</li></ul></div></div>';
+			post_content+='</li>';
+			}
+
+			if(parsed.art_status){
+				post_content+='<li><a href="javascript:;">';
+				post_content+='<i class="fa fa-ban"></i> Request for review </a>';
+				post_content+='</li>';
+			}
+
+			if(parsed.riddle_status){
+				post_content+='<li><a href="javascript:;">';
+				post_content+='<i class="fa fa-ban"></i> Request for solution </a>';
+				post_content+='</li>';
+			}
+
+			if(parsed.notice_status){
+				post_content+='<li><a href="javascript:;">';
+				post_content+='<i class="fa fa-ban"></i> Share </a>';
+				post_content+='</li>';
+			}
+			
+			
+			post_content+='</ul></div></div>';
                                 
             }else{
             post_content+='<div class="actions post_actions_button">';
@@ -144,6 +365,12 @@ function displayPost(selected_class,json){
             post_content+='<a href="#">';
             post_content+='<i class="fa fa-bookmark"></i> Bookmark </a>';
             post_content+='</li>';
+
+            post_content+='<li class="">';
+            post_content+='<a href="javascript:;">';
+            post_content+='<img class="icon_size_20" src="'+URL_ROOT+'/images/mask.png"></i> Mask </a>';            
+            post_content+='</li>';
+
             post_content+='<li>';
             post_content+='<a href="javascript:;">';
             post_content+='<i class="fa fa-ban"></i> Report Abuse </a>';
@@ -157,7 +384,7 @@ function displayPost(selected_class,json){
 			post_content+='<div class="item-body"><div style="width: 100%; color: #000;">';
 			post_content+='<div class="posts_pab_itemimage">';
 			if(parsed.pics){
-				post_content+='<img class="img-responsive" src="'+URL_ROOT+'/uploads/'+parsed.pics[0]+'">';
+				post_content+='<img class="img-responsive" src="'+URL_ROOT+'/'+parsed.pics[0]+'">';
 			}else{
 				post_content+='<img class="img-responsive" src="'+URL_ROOT+'/images/default_img.png">';
 			}
@@ -231,7 +458,7 @@ function displayPost(selected_class,json){
 
 			if(parsed.pics.length >0){
 				post_content+='<div style="margin-bottom: 3%;">';
-				post_content+='<img class="img-responsive" src="'+URL_ROOT+'/uploads/'+parsed.pics[0]+'"></div>';
+				post_content+='<img class="img-responsive" src="'+URL_ROOT+'/'+parsed.pics[0]+'"></div>';
 			}
 			post_content+='<div class="post_item post_item_body">';
 			post_content+=parsed.body;
@@ -246,7 +473,7 @@ function displayPost(selected_class,json){
 			}
 			if(parsed.pics.length >0){
 				post_content+='<div style="margin-bottom: 3%;">';
-				post_content+='<img class="img-responsive" src="'+URL_ROOT+'/uploads/'+parsed.pics[0]+'"></div>';
+				post_content+='<img class="img-responsive" src="'+URL_ROOT+'/'+parsed.pics[0]+'"></div>';
 			}
 			if(parsed.art_status){
 				post_content+='<hr class="short_length"><div class="post_item post_item_body">';
@@ -265,7 +492,7 @@ function displayPost(selected_class,json){
 	} /*end if :chk for books-*/
 
 	post_content+='<div style="width: 100%;"><!--main block-->';
-	post_content+='<div class="pull-left">';
+	post_content+='<hr class="long_length"><div class="pull-left">';
 	if(parsed.art_status && parsed.attachemnt){
 		//if page is article, chek for attachemnt
 		post_content+='<input type="hidden" class="download_input_field" value="'+parsed.attachemnt+'">';
@@ -319,7 +546,7 @@ function displayPost(selected_class,json){
 
     
 	
-	post_content+='<div class="clearfix"></div></div><hr style="margin:0;">';
+	post_content+='<div class="clearfix"></div></div><hr class="long_length">';
 	post_content+='</div></div></div></div>';
 	post_content+='<!-- END PORTLET -->';
 
@@ -393,7 +620,7 @@ function displayPost(selected_class,json){
 			response_content+='<div class="general-item-list">';
 			response_content+='<div class="item"><div class="item-head"><div style="width: 100%;">';
 			response_content+='<div class="posts_partition"><!--1st partition-->';
-			response_content+='<span> <img class="item-pic" src="'+URL_ROOT+'/uploads/'+parsed.responderDisplayPic+'">';
+			response_content+='<span> <img class="item-pic" src="'+URL_ROOT+'/'+parsed.responderDisplayPic+'">';
 			response_content+='<a style="color: #000;" href="" class="item-name primary-link">'+parsed.responderDisplayName+'</a>';
 			response_content+='<span>'+parsed.responderStatus+'</span> </span></div>';
 			response_content+='<div class="posts_partition_middle"><!--2nd partition-->';
@@ -415,7 +642,7 @@ function displayPost(selected_class,json){
 			response_content+='<div class="item-body">';
 			if(parsed.pics.length >0){
 				response_content+='<div style="margin-bottom: 3%;">';
-				response_content+='<img class="img-responsive" src="'+URL_ROOT+'/uploads/'+parsed.pics[0]+'"></div>';
+				response_content+='<img class="img-responsive" src="'+URL_ROOT+'/'+parsed.pics[0]+'"></div>';
 			}
 
 			response_content+='<div style="color: #000;" class="post_response">'+parsed.body+'</div></div>';

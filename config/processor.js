@@ -57,6 +57,8 @@ checking if the post owner is a friend etc
 */
 
 methods.processPagePosts=function (items,ref_user,callback){
+    console.log('processPagePosts')
+    console.log(items);
     var promise,trend_followed=false,
     displayPic="",
     status="",
@@ -78,7 +80,7 @@ methods.processPagePosts=function (items,ref_user,callback){
         promise.then(function(response){
             //console.log(response);
             if(response && (cur_item.post_type=="trending")){
-                displayPic=(response.pics[0])?('/uploads/'+response.pics[response.pics.length -1]):('/images/trending.png');
+                displayPic=(response.category_icon)?(response.category_icon):('images/trending.png');
                 display_name=(response.category)?(response.category):('');
                 res_id=(response._id)?((response._id).toString()):('');
                 //check if the current user is following this trend
@@ -93,7 +95,7 @@ methods.processPagePosts=function (items,ref_user,callback){
                 cur_item.trend_followed=trend_followed;
 
             }else if(response){
-                displayPic=(response.displayPic[0])?('/uploads/'+response.displayPic[response.displayPic.length -1]):('/uploads/avatar.png');
+                displayPic=(response.displayPic[0])?(response.displayPic[response.displayPic.length -1]):('uploads/avatar.png');
                 status=(response.designation[0])?((response.designation[response.designation.length -1]).title):('');
                 display_name=(response.displayName)?(response.displayName):('');
                 res_id=(response._id)?((response._id).toString()):('');
@@ -182,7 +184,7 @@ methods.processPagePosts=function (items,ref_user,callback){
                 if(processed_items==array.length){//iteration has ended
                     // res_items=items;
                     console.log('processing finished')
-                    //console.log(items);
+                    console.log(items);
                     callback(items);
                 }
 

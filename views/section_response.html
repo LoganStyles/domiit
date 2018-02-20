@@ -56,7 +56,7 @@
             </div>
             
 
-            <div class="post_responses question_all_post_area">
+            <div class="post_responses question_all_post_area {{class_type}}">
 
             {{#each data}}
 
@@ -238,7 +238,7 @@
                                     {{/if}}
                                     {{#if pics.length }}
                                         <div style="margin-bottom: 3%;">                                                                    
-                                            <img class="img-responsive" src="{{../url}}/uploads/{{pics.[0]}}">
+                                            <img class="img-responsive" src="{{../url}}/{{pics.[0]}}">
                                         </div>
                                     {{/if}}
                                         {{#if art_status}}
@@ -324,7 +324,7 @@
                                         <div class="posts_partition"><!--1st partition-->
                                         <div style="width: 100%;">
                                                 <div class="section_posts_avatar">
-                                                   <img class="icon_size_50 img-circle" src="{{../../url}}/uploads/{{responderDisplayPic}}">
+                                                   <img class="icon_size_50 img-circle" src="{{../../url}}/{{responderDisplayPic}}">
                                                 </div>
                                                 <div class="section_posts_text">
                                                     <div> 
@@ -453,7 +453,7 @@
                                     <div class="item-body"> 
                                         {{#if pics.length }}
                                             <div style="margin-bottom: 3%;">                                                               
-                                                <img class="img-responsive" src="{{../../url}}/uploads/{{pics.[0]}}">
+                                                <img class="img-responsive" src="{{../../url}}/{{pics.[0]}}">
                                             </div>
                                         {{/if}}
                                             <div class="post_response post_item_body">

@@ -88,7 +88,7 @@ function searchBookmarks(user,final_response){
 router.get('/get_bookmarked',isLoggedIn,function(req,res){
 
     //set default pic
-    var curr_user_display_pic='avatar.png';
+    var curr_user_display_pic='uploads/avatar.png';
     if(req.user.displayPic[0]){
         curr_user_display_pic=req.user.displayPic[req.user.displayPic.length - 1];
     }
@@ -273,7 +273,7 @@ router.get('/section/:item/:type/:id', isLoggedIn,function(req, res) {
 section.find(selection).sort({post_date:-1}).exec(function(err,items){
 
     var res_items=[];
-    var curr_user_display_pic='avatar.png';//set default pic
+    var curr_user_display_pic='uploads/avatar.png';//set default pic
     if(req.user.displayPic[0]){
         curr_user_display_pic=req.user.displayPic[req.user.displayPic.length - 1];
     }
@@ -297,6 +297,7 @@ section.find(selection).sort({post_date:-1}).exec(function(err,items){
                 data_item:item,
                 page_title: page_title,
                 page_type:page_type,
+                class_type:item,
                 page_response:item_response,
                 page_icon:page_icon,
                 pending_friend_notifs:pending_friend_notifs,
@@ -320,6 +321,7 @@ section.find(selection).sort({post_date:-1}).exec(function(err,items){
             data_item:item,
             page_title: page_title,
             page_type:page_type,
+            class_type:item,
             page_response:item_response,
             page_icon:page_icon,
             pending_friend_notifs:pending_friend_notifs,

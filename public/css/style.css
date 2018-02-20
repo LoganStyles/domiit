@@ -2220,7 +2220,7 @@ ul.w3_address li span {
 		line-height: 28px;
 	}
 	.banner-btm-w3layouts, .gallery, .team, .services-agileits, .contact, .cir_agile_info, .newsletter, .testimonials {
-		padding: 4em 0;
+		/*padding: 4em 0;*/
 	}
 	.tittle-agileinfo h3,.tittle-agileinfo h2 {
 		font-size: 29px;
@@ -2322,7 +2322,7 @@ ul.w3_address li span {
 		bottom: 15%;
 	}
 	.banner-btm-w3layouts, .gallery, .team, .services-agileits, .contact, .cir_agile_info, .newsletter, .testimonials {
-		padding: 3.5em 0;
+		/*padding: 3.5em 0;*/
 	}
 	.tittle-agileinfo h3,.tittle-agileinfo h2 {
 		font-size: 27px;

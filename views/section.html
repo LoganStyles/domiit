@@ -88,7 +88,7 @@
             </div>
 
             
-            <div class="question_all_post_area section_page">
+            <div class="question_all_post_area {{class_type}}">
 
             {{#each data}}
 
@@ -142,7 +142,7 @@
                                                 <a href="{{../url}}/profile/{{owner.id}}">
                                                 {{/unless}}
                                                     <div class="section_posts_avatar">
-                                                       <img class="icon_size_50 img-circle" src="{{../url}}{{owner.displayPic}}">
+                                                       <img class="icon_size_50 img-circle" src="{{../url}}/{{owner.displayPic}}">
                                                     </div>
                                                     {{#unless trend_status}}<!--trend post-->
                                                     </a>
@@ -227,31 +227,31 @@
                                                                 {{#if question_status}}
                                                 <li>
                                                     <a href="javascript:;">
-                                                        <i class="fa fa-ban"></i> Request for answer </a>
+                                                        <i class="fa fa-share-square-o"></i> Request for answer </a>
                                                 </li>  
                                                 {{/if}}
 
                                                 {{#if art_status}}
                                                 <li>
                                                     <a href="javascript:;">
-                                                        <i class="fa fa-ban"></i> Request for review </a>
+                                                        <i class="fa fa-share-square-o"></i> Request for review </a>
                                                 </li>  
                                                 {{/if}} 
 
                                                 {{#if riddle_status}}
                                                 <li>
                                                     <a href="javascript:;">
-                                                        <i class="fa fa-ban"></i> Request for solution </a>
+                                                        <i class="fa fa-share-square-o"></i> Request for solution </a>
                                                 </li>  
                                                 {{/if}} 
 
                                                 {{#if notice_status}}
                                                 <li>
                                                     <a href="javascript:;">
-                                                        <i class="fa fa-ban"></i> Share</a>
+                                                        <i class="fa fa-share-alt"></i> Share</a>
                                                 </li>  
                                                 {{/if}}                             
-                                                            </ul>
+                                                </ul>
                                                         </div>                                           
                                                 </div>
                                                 {{else}}
@@ -297,7 +297,7 @@
 
                         <div class="posts_pab_itemimage">
                         {{#if pics}}
-                            <img class="img-responsive" src="{{../url}}/uploads/{{pics.[0]}}">
+                            <img class="img-responsive" src="{{../url}}/{{pics.[0]}}">
                             {{else}}
                             <img class="img-responsive" src="{{../url}}/images/default_img.png">
                         {{/if}}
@@ -402,7 +402,7 @@
 
                                             {{#if pics.length }}
                                                 <div style="margin-bottom: 3%;">                                                                  
-                                                    <img class="img-responsive" src="{{../url}}/uploads/{{pics.[0]}}">
+                                                    <img class="img-responsive" src="{{../url}}/{{pics.[0]}}">
                                                 </div>
                                             {{/if}}
 
