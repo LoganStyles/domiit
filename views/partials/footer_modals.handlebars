@@ -122,6 +122,98 @@
 
 </div>
 
+
+<div id="request_modal" class="modal fade" tabindex="-1">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title" id="request_sub1_header" style="color: #3598dc;">Request For</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" id="request_form" action="" method="post" enctype="multipart/form-data">
+                        <span class="form_submission_error"></span>
+                        <span class="form_submission_success"></span>
+
+                        <input type="hidden" name="request_id"  id="request_id" value="0">
+                        <input type="hidden" name="request_type"  id="request_type" value="0">
+
+                        <div class="form-body">
+
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-lg-4 col-sm-12">Category </label>
+                                <div class="col-md-8 col-lg-8 col-sm-12">
+                                    <select class="form-control " name="request_category" id="request_category">
+                                           
+
+                                    </select>
+                                    <span class="req_opt">*required</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-lg-4 col-sm-12">Sub Category-1 </label>
+                                <div class="col-md-8 col-lg-8 col-sm-12">
+                                    <select class="form-control " name="request_sub1" id="request_sub1">
+                                           
+
+                                    </select>
+                                    <span class="req_opt">*required</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-lg-4 col-sm-12">Sub Category-2 </label>
+                                <div class="col-md-8 col-lg-8 col-sm-12">
+                                    <select class="form-control " name="request_sub2" id="request_sub2">
+                                           
+
+                                    </select>
+                                    <span class="req_opt">*required</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 col-lg-4 col-sm-12 control-label">Write your request</label>
+                                <div class="col-md-8 col-lg-8 col-sm-12 ">
+                                    <textarea  name="request_title" id="request_title" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
+                                </div>                                
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 col-lg-4 col-sm-12 control-label">Provide additional information</label>
+                                <div class="col-md-8 col-lg-8 col-sm-12 ">
+                                    <textarea  name="request_info" id="request_info" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
+                                </div>                                
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-4 col-lg-4 col-sm-12"></div>
+
+                                <div class="col-md-8 col-lg-8 col-sm-12 ">
+                                    <label for="request_photo" class="col-md-6 col-lg-6 col-sm-12 control-label custom-file-upload">
+                                        <i class="fa fa-camera"></i> Add Photos
+                                    </label>
+                                    <div class="col-md-4 col-lg-6 col-sm-12">
+                                        <input id="request_photo" name="request_photo" type="file" accept="application/x-zip-compressed,image/*"/>
+                                    </div>
+                                    
+                                </div>                                
+                            </div>
+
+
+                            <div class="form-actions noborder pull-right">
+                                <input type="submit" class="btn blue" name="submit" value="Post" />
+                                <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+                            </div>
+                            <div class="clearfix"></div>
+
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+
+
 <div id="question_modal" class="modal fade" tabindex="-1">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>

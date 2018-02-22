@@ -73,121 +73,51 @@
         <script src="{{url}}/js/socket.io.js" type="text/javascript"></script>
         <script src="{{url}}/js/sockets_fetcher.js" type="text/javascript"></script>
 
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.min.js"></script>
+
+        <script type="text/javascript" src="{{url}}/assets/froala-editor/js/froala_editor.min.js" ></script>
+
+      <script type="text/javascript" src="{{url}}/assets/froala-editor/js/plugins/align.min.js"></script>
+      <script type="text/javascript" src="{{url}}/assets/froala-editor/js/plugins/code_beautifier.min.js"></script>
+      <script type="text/javascript" src="{{url}}/assets/froala-editor/js/plugins/code_view.min.js"></script>
+      <script type="text/javascript" src="{{url}}/assets/froala-editor/js/plugins/colors.min.js"></script>
+      <script type="text/javascript" src="{{url}}/assets/froala-editor/js/plugins/draggable.min.js"></script>
+      <script type="text/javascript" src=".{{url}}/assets/froala-editor/js/plugins/emoticons.min.js"></script>
+      <script type="text/javascript" src="{{url}}/assets/froala-editor/js/plugins/font_size.min.js"></script>
+      <script type="text/javascript" src="{{url}}/assets/froala-editor/js/plugins/font_family.min.js"></script>
+      <script type="text/javascript" src="{{url}}/assets/froala-editor/js/plugins/image.min.js"></script>
+      <script type="text/javascript" src="{{url}}/assets/froala-editor/js/plugins/file.min.js"></script>
+      <script type="text/javascript" src="{{url}}/assets/froala-editor/js/plugins/image_manager.min.js"></script>
+      <script type="text/javascript" src="{{url}}/assets/froala-editor/js/plugins/line_breaker.min.js"></script>
+      <script type="text/javascript" src="{{url}}/assets/froala-editor/js/plugins/link.min.js"></script>
+      <script type="text/javascript" src="{{url}}/assets/froala-editor/js/plugins/lists.min.js"></script>
+      <script type="text/javascript" src="{{url}}/assets/froala-editor/js/plugins/paragraph_format.min.js"></script>
+      <script type="text/javascript" src="{{url}}/assets/froala-editor/js/plugins/paragraph_style.min.js"></script>
+      <script type="text/javascript" src="{{url}}/assets/froala-editor/js/plugins/video.min.js"></script>
+      <script type="text/javascript" src="{{url}}/assets/froala-editor/js/plugins/table.min.js"></script>
+      <script type="text/javascript" src="{{url}}/assets/froala-editor/js/plugins/url.min.js"></script>
+      <script type="text/javascript" src="{{url}}/assets/froala-editor/js/plugins/entities.min.js"></script>
+      <script type="text/javascript" src="{{url}}/assets/froala-editor/js/plugins/char_counter.min.js"></script>
+      <script type="text/javascript" src="{{url}}/assets/froala-editor/js/plugins/inline_style.min.js"></script>
+      <script type="text/javascript" src="{{url}}/assets/froala-editor/js/plugins/save.min.js"></script>
+      <script type="text/javascript" src="{{url}}/assets/froala-editor/js/plugins/fullscreen.min.js"></script>
+      <script type="text/javascript" src="{{url}}/assets/froala-editor/js/plugins/quote.min.js"></script>
+      <script type="text/javascript" src="{{url}}/assets/froala-editor/js/plugins/quick_insert.min.js"></script>
+
         <!--<script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>-->
 
         <!-- Include the Quill library -->
-        <script src="https://cdn.quilljs.com/1.3.5/quill.js"></script>
+        <!--<script src="https://cdn.quilljs.com/1.3.5/quill.js"></script>-->
 
         <script type="text/javascript">
 
             $(document).ready(function(){
 
-            var toolbarOptions = [
-                ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-                ['blockquote', 'code-block'],
+            $('#question_title,#question_info').froalaEditor({});
 
-                [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-                [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-                [{ 'direction': 'rtl' }],                         // text direction
-
-                [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                [ 'link', 'image', 'video', 'formula' ],          // add's image support
-                [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-                [{ 'font': [] }],
-                [{ 'align': [] }],
-
-                ['clean']                                         // remove formatting button
-            ];
-
-             
-
-            var quill = new Quill('#question_title', {
-              modules: {
-                toolbar: toolbarOptions
-            },
-              placeholder: 'Compose an epic...',
-              theme: 'snow'  // or 'bubble'
-            });
-
-            var quill2 = new Quill('#question_info', {
-              modules: {
-                toolbar: toolbarOptions
-              },
-              placeholder: 'Compose an epic...',
-              theme: 'snow'  // or 'bubble'
-            });
-
-            var quill3 = new Quill('#section_response_details', {
-              modules: {
-                toolbar: toolbarOptions
-              },
-              placeholder: 'Compose an epic...',
-              theme: 'snow'  // or 'bubble'
-            });
-
-            var quill4 = new Quill('#notice_title', {
-              modules: {
-                toolbar: toolbarOptions
-              },
-              placeholder: 'Compose an epic...',
-              theme: 'snow'  // or 'bubble'
-            });
-
-            var quill5 = new Quill('#article_title', {
-              modules: {
-                toolbar: toolbarOptions
-              },
-              placeholder: 'Compose an epic...',
-              theme: 'snow'  // or 'bubble'
-            });
-
-            var quill6 = new Quill('#riddle_title', {
-              modules: {
-                toolbar: toolbarOptions
-              },
-              placeholder: 'Compose an epic...',
-              theme: 'snow'  // or 'bubble'
-            });
-
-            var quill7 = new Quill('#pab_synopsis', {
-              modules: {
-                toolbar: toolbarOptions
-              },
-              placeholder: 'Compose an epic...',
-              theme: 'snow'  // or 'bubble'
-            });
-
-            var quill8 = new Quill('#pab_about_author', {
-              modules: {
-                toolbar: toolbarOptions
-              },
-              placeholder: 'Compose an epic...',
-              theme: 'snow'  // or 'bubble'
-            });
-
-            var quill9 = new Quill('#section_pab_synopsis', {
-              modules: {
-                toolbar: toolbarOptions
-              },
-              placeholder: 'Compose an epic...',
-              theme: 'snow'  // or 'bubble'
-            });
-
-             var quill10 = new Quill('#section_pab_about_author', {
-              modules: {
-                toolbar: toolbarOptions
-              },
-              placeholder: 'Compose an epic...',
-              theme: 'snow'  // or 'bubble'
-            });
-
-
-
-            //install tinymce
-            /*tinymce.init({
+            /*install tinymce
+            tinymce.init({
                 selector:'textarea',
                 height:50,
                 menubar:false,
@@ -201,6 +131,61 @@
                 '//www.tinymce.com/css/codepen.min.css'
                 ]
             });*/
+
+            //
+                $("body").on('change','#request_category',function(e){
+                //get the sub-category 1 for this item
+                var category=$(this).val();
+                var section=$('#request_type').val();
+
+                //reset other fields
+                $('#request_sub2').html('');
+                
+                console.log('request category '+category);
+                console.log('request type '+section);
+                //send request
+                var url="{{url}}/fetchSubCats1";
+                console.log(url);
+
+                $.ajax({
+                    url:url,
+                    type:'GET',
+                    data:{'section':section,'category':category},
+                    headers: {'X-My-App-Token': 'loganstyles'},
+                    success:function(response){
+                        console.log(response);
+                        if(response.success==true){
+                            var res_cats=(response.cats);
+                            var options="";
+                            var proc_arr=[];
+                            res_cats.forEach((curr_item,index,array)=>{
+                            proc_arr.push(curr_item.sub_cat1);
+                            });
+                            console.log(proc_arr);
+                            var unique_items = proc_arr.filter( onlyUnique );
+                            console.log(unique_items);
+                            unique_items.forEach((curr,index,array)=>{
+                                options+='<option value="'+curr+'">'+curr+'</option>';
+
+                            });
+
+                            $('#request_sub1').html(options);
+
+                        }else{
+                            console.log('response is false');                            
+                        }                        
+
+                    },
+                    error:function(xhr, status, err){
+                        console.log('error');
+                        console.log(xhr);
+                        console.log(status);
+                        console.log(err);
+                    }
+                });
+
+            });
+
 
             //send friend request
                 $("body").on('click','.send_friend_req',function(e){

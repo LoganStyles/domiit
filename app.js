@@ -10,6 +10,9 @@ var moment = require('moment');
 var session = require('client-sessions');
 var path = require('path');
 var request = require('request');
+// var froalaEditor = require('froala-editor');
+// var FroalaEditor = require('./wysiwyg-editor-node-sdk/lib/froalaEditor.js');
+
 var exphbs = require('express-handlebars');
 var Handlebars = require('handlebars');
 var MomentHandler =require("handlebars.moment");
@@ -334,6 +337,58 @@ app.get('/fetchCats',isLoggedIn,function(req,res){
                 success:true,
                 msg:"Fetched categories successfully",
                 cats:res_cat
+            });
+        }
+
+    });        
+});
+
+/*
+fetch sub cat1s for a category
+*/
+app.get('/fetchSubCats1',isLoggedIn,function(req,res){
+    console.log(req.query);
+    var section_type =req.query.section,
+    category =req.query.category,
+    section;
+
+    switch(section_type){
+        case 'question':
+        section =question;
+        break;
+
+        case 'article':
+        section =article;
+        break;
+
+        case 'riddle':
+        section =riddle;
+        break;
+
+        // case 'Post Books':
+        // case 'pab':
+        // section =pab_cat;
+        // break;
+    }
+
+    section.find({category:category},{sub_cat1:1}).exec(function(err1,res1){
+        var res_subcat=[];
+
+        if(err1){
+            console.log(err1);
+
+            res.json({success:false,
+                msg:"Fetched sub categories failed",
+                cats:res_subcat
+            });
+        }else if(res1){
+            console.log(res1);
+            res_subcat=res1;
+
+            res.json({
+                success:true,
+                msg:"Fetched sub categories successfully",
+                cats:res_subcat
             });
         }
 

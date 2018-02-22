@@ -54,11 +54,12 @@ function modalLoader(type, mode,cat_type) {
     var formid = "#" + type + "_form";
     var header = "#" + type + "_header";
     var submit_but = formid + " input[type='submit']";
-    if(cat_type){
+    if(cat_type && type !='request'){
         var modal ="#"+type+"_"+cat_type+"_modal";
     }else{
         var modal ="#"+type+"_modal";
     }
+    var section='';
 
     resetFields(formid);
 
@@ -79,8 +80,15 @@ function modalLoader(type, mode,cat_type) {
 
         if(type != 'notice'){
             var category_id="#"+type+"_modal "+"#"+type+"_category";
-            console.log(category_id)
+            console.log(category_id);
+            
         //determine type & make ajax call
+        if(type == 'request'){
+            section=cat_type;
+            $('#request_sub1_header').text('Request For '+section)
+            $('#request_type').val(section);
+            $('#request_sub1').html('');
+        }else{section=type;}
         //fetch categories
         var url=URL_ROOT+'/fetchCats';
         console.log(url);
@@ -88,7 +96,7 @@ function modalLoader(type, mode,cat_type) {
         $.ajax({
             url:url,
             type:'GET',
-            data:{'section':type},
+            data:{'section':section},
             headers: {'X-My-App-Token': 'loganstyles'},
             success:function(response){
                 console.log(response);
@@ -158,6 +166,11 @@ function answerModalLoader(type, mode,cat_type) {
         default:
         break;
     }
+}
+
+/*removes dupliates from an array*/
+function onlyUnique(value, index, self) { 
+    return self.indexOf(value) === index;
 }
 
 function convertToSentencCase(text_data){

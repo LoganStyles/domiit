@@ -21,6 +21,7 @@
     "express": "*",
     "express-handlebars": "^3.0.0",
     "friends-of-friends": "^3.1.1",
+    "froala-editor": "^2.7.5",
     "fs": "0.0.1-security",
     "fs-extra": "^4.0.2",
     "handlebars": "^4.0.11",
