@@ -22,13 +22,86 @@ function resetFields(formid){
     $(error_field).text("");
 }
 
+//get a list of sub-items for a selected item
+function fetchItemList(selected_item,section,url,req_field){
+
+    $(req_field).html('');
+
+    $.ajax({
+        url:url,
+        type:'GET',
+        data:{'section':section,'item':selected_item},
+        headers: {'X-My-App-Token': 'loganstyles'},
+        success:function(response){
+            // console.log(response);
+            if(response.success==true){
+                var res_cats=(response.cats);
+                var options="";
+                var proc_arr=[];
+
+                if(req_field != '#request_users'){
+
+                    //store received data temporarily
+                    res_cats.forEach((curr_item,index,array)=>{
+                        switch(req_field){
+                            case '#request_sub1':
+                            proc_arr.push(curr_item.sub_cat1);
+                            break;
+
+                            case '#request_sub2':
+                            proc_arr.push(curr_item.sub_cat2);
+
+                            
+                           $('#request_normal_u').attr("disabled",false);
+                            $('#request_domiit_u').attr("disabled",false);
+                            break;
+                        }
+
+                    });
+                    // console.log(proc_arr);
+                //remove duplicate entries
+                var unique_items = proc_arr.filter( onlyUnique );
+                // console.log(unique_items);
+                unique_items.forEach((curr,index,array)=>{
+                    options+='<option value="'+curr+'">'+curr+'</option>';
+
+                });
+
+            }else{
+
+                res_cats.forEach((curr_item,index,array)=>{
+                    options+='<option value="'+curr_item._id+'">'+curr_item.displayName+'</option>';
+                });
+                $('#request_title').attr("disabled",false);
+                $('#request_info').attr("disabled",false);
+
+            }
+
+
+            $(req_field).attr('disabled',false);
+            $(req_field).html(options);
+
+        }else{
+            // console.log('response is false');                            
+        }                        
+
+    },
+    error:function(xhr, status, err){
+        // console.log('error');
+        // console.log(xhr);
+        // console.log(status);
+        // console.log(err);
+    }
+});
+}
+
 function typeModalLoader(mode,type){
     /*mode:new,edit
     type:cat,story
     */
     switch (mode) {
         case 'new':
-        console.log('inside mode new for '+type);
+        // console.log('inside mode new for '+type);
         $("#page_modal #page_form").trigger('reset');
         $("#page_modal #page_id").val(0);
         $("#page_modal #page_type").val(type);
@@ -85,9 +158,32 @@ function modalLoader(type, mode,cat_type) {
         //determine type & make ajax call
         if(type == 'request'){
             section=cat_type;
-            $('#request_sub1_header').text('Request For '+section)
+            switch(section){
+                case 'question':
+                response_type='Answer';
+                break;
+
+                case 'article':
+                response_type='Review';
+                break;
+
+                case 'riddle':
+                response_type='Solution';
+                break;
+            }
+            $('#request_sub1_header').text('Request For '+response_type)
             $('#request_type').val(section);
             $('#request_sub1').html('');
+            $('#request_sub2').html('');
+            $('#request_users').html('');
+            $('#request_sub1').attr("disabled",true);
+            $('#request_sub2').attr("disabled",true);
+            $('#request_users').attr("disabled",true);
+            $('#request_normal_u').attr("disabled",true);
+            $('#request_domiit_u').attr("disabled",true);
+            $('#request_title').attr("disabled",true);
+            $('#request_info').attr("disabled",true);
+
         }else{section=type;}
         //fetch categories
         var url=URL_ROOT+'/fetchCats';

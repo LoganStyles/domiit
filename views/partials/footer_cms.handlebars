@@ -132,57 +132,51 @@
                 ]
             });*/
 
-            //
+            /*on category select, fetch sub_cat1s for that category*/
                 $("body").on('change','#request_category',function(e){
                 //get the sub-category 1 for this item
                 var category=$(this).val();
                 var section=$('#request_type').val();
+                
+                //console.log('request category '+category);
+                //console.log('request type '+section);
+                fetchItemList(category,section,"{{url}}/fetchSubCats1",'#request_sub1');
+            });
+
+            /*on cat1 select, fetch sub_cat2s for that cat1*/
+            $("body").on('change','#request_sub1',function(e){
+                
+                var cat1=$(this).val();
+                var section=$('#request_type').val();
 
                 //reset other fields
                 $('#request_sub2').html('');
-                
-                console.log('request category '+category);
-                console.log('request type '+section);
+
+                //console.log('request cat1 '+cat1);
+                //console.log('request type '+section);
                 //send request
-                var url="{{url}}/fetchSubCats1";
-                console.log(url);
+                var url="{{url}}/fetchSubCats2";
+                //console.log(url);
 
-                $.ajax({
-                    url:url,
-                    type:'GET',
-                    data:{'section':section,'category':category},
-                    headers: {'X-My-App-Token': 'loganstyles'},
-                    success:function(response){
-                        console.log(response);
-                        if(response.success==true){
-                            var res_cats=(response.cats);
-                            var options="";
-                            var proc_arr=[];
-                            res_cats.forEach((curr_item,index,array)=>{
-                            proc_arr.push(curr_item.sub_cat1);
-                            });
-                            console.log(proc_arr);
-                            var unique_items = proc_arr.filter( onlyUnique );
-                            console.log(unique_items);
-                            unique_items.forEach((curr,index,array)=>{
-                                options+='<option value="'+curr+'">'+curr+'</option>';
+                fetchItemList(cat1,section,url,'#request_sub2');
 
-                            });
+            });
 
-                            $('#request_sub1').html(options);
+            /*on radio select, fetch users for that selection*/
+            $("body").on('change','.request_from',function(e){
+                
+                var level=$(this).val();
+                var section=$('#request_type').val();
 
-                        }else{
-                            console.log('response is false');                            
-                        }                        
+                //reset other fields
+                $('#request_users').html('');
 
-                    },
-                    error:function(xhr, status, err){
-                        console.log('error');
-                        console.log(xhr);
-                        console.log(status);
-                        console.log(err);
-                    }
-                });
+                //console.log('request level '+level);
+                //console.log('request type '+section);
+                //send request
+                var url="{{url}}/fetchUsers";
+                //console.log(url);
+                fetchItemList(level,section,url,'#request_users');
 
             });
 
@@ -244,7 +238,8 @@
                     console.log(response);
                     if(response.success==true){
                         //display notif
-                        alert(response.msg)
+                        alert(response.msg);
+                        location.reload();
                     }else{
 
                          }                        
@@ -1272,6 +1267,91 @@
                             }else{
                                 console.log('response is false');
                                 $('#article_form  .form_submission_error').text(response.msg);
+                                sub_button.val(old_button_val);
+                                sub_button.prop('disabled', false);
+                            }
+                              
+                       },
+                       error:function(xhr, status, err){
+                            console.log('error');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(err);
+                        }
+                   });
+                
+            }
+            } );
+
+
+            $( "#request_form" ).validate( {/*validate & submit request modal data*/
+                rules: {  
+                    request_category: {
+                        required: true
+                    },
+                    request_title: {
+                        required: true,
+                    }
+                    
+                },
+                messages: {                        
+                    request_category: {
+                        required: "This field is required"
+                    },
+                    request_title: {
+                        required: "This field is required"
+                    }
+                },
+                errorElement: "em",
+                errorPlacement: function ( error, element ) {
+                // Add the `help-block` class to the error element
+                error.addClass( "help-block" );
+
+                if ( element.prop( "type" ) === "checkbox" ) {
+                    error.insertAfter( element.parent( "label" ) );
+                } else {
+                    error.insertAfter( element );
+                }
+            },
+            success: function ( label, element ) {
+                // Add the span element, if doesn't exists, and apply the icon classes to it.
+                if ( !$( element ).next( "span" )[ 0 ] ) {
+                    $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+                }
+            },
+            highlight: function ( element, errorClass, validClass ) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
+            },
+
+            submitHandler: function () {
+                //modify button
+                var sub_button=$("#request_form").find(':submit');
+                var old_button_val=sub_button.val();
+                sub_button.prop('disabled', true);
+                sub_button.val('...processing');
+
+                resetFields("#request_form");
+                var my_url="{{url}}/make_request";
+                $("#request_form").ajaxSubmit({
+                    url:my_url,
+                       contentType: 'application/json',
+                       success: function(response){
+                        if(response.success==true){
+                                console.log('image uploaded and form submitted');
+                                $('#request_form  .form_submission_success').text(response.msg);
+                                setTimeout(function(){
+                                    $('#request_form  .form_submission_success').text('');
+                                    sub_button.val(old_button_val);
+                                    sub_button.prop('disabled', false);
+                                    $('#request_modal').modal('hide');
+                                },3000);
+                                
+                            }else{
+                                console.log('response is false');
+                                $('#request_form  .form_submission_error').text(response.msg);
                                 sub_button.val(old_button_val);
                                 sub_button.prop('disabled', false);
                             }

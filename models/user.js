@@ -17,6 +17,7 @@ var userSchema = mongoose.Schema({
     email:String,
     dob: { type: Date, default: '' },
     type:{type:String,default:'User'},
+    level:{type:String,default:'beginner'},//Beginner,expert
     password:String,
     firstname:{type:String,default:''},
     lastname:{type:String,default:''},

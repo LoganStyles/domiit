@@ -29,6 +29,7 @@ var riddle = require('./models/riddle');
 var pab = require('./models/pab');
 var trend = require('./models/trend');
 var notice = require('./models/notice');
+var request_model = require('./models/request');
 
 var trend_cat = require('./models/trend_cats');
 var quest_cat = require('./models/question_cats');
@@ -349,7 +350,7 @@ fetch sub cat1s for a category
 app.get('/fetchSubCats1',isLoggedIn,function(req,res){
     console.log(req.query);
     var section_type =req.query.section,
-    category =req.query.category,
+    category =req.query.item,
     section;
 
     switch(section_type){
@@ -364,11 +365,6 @@ app.get('/fetchSubCats1',isLoggedIn,function(req,res){
         case 'riddle':
         section =riddle;
         break;
-
-        // case 'Post Books':
-        // case 'pab':
-        // section =pab_cat;
-        // break;
     }
 
     section.find({category:category},{sub_cat1:1}).exec(function(err1,res1){
@@ -396,6 +392,85 @@ app.get('/fetchSubCats1',isLoggedIn,function(req,res){
 });
 
 /*
+fetch sub cat2s for a category
+*/
+app.get('/fetchSubCats2',isLoggedIn,function(req,res){
+    console.log(req.query);
+    var section_type =req.query.section,
+    cat1 =req.query.item,
+    section;
+
+    switch(section_type){
+        case 'question':
+        section =question;
+        break;
+
+        case 'article':
+        section =article;
+        break;
+
+        case 'riddle':
+        section =riddle;
+        break;
+    }
+
+    section.find({sub_cat1:cat1},{sub_cat2:1}).exec(function(err1,res1){
+        var res_subcat=[];
+
+        if(err1){
+            console.log(err1);
+
+            res.json({success:false,
+                msg:"Fetched sub categories2 failed",
+                cats:res_subcat
+            });
+        }else if(res1){
+            console.log(res1);
+            res_subcat=res1;
+
+            res.json({
+                success:true,
+                msg:"Fetched sub categories2 successfully",
+                cats:res_subcat
+            });
+        }
+
+    });        
+});
+
+/*
+fetch users
+*/
+app.get('/fetchUsers',isLoggedIn,function(req,res){
+    console.log(req.query);
+    var section_type =req.query.section;
+    //level:req.query.item
+
+    user.find({_id:{$ne:req.user._id}},{_id:1,displayName:1}).exec(function(err1,res1){
+        var res_subcat=[];
+
+        if(err1){
+            console.log(err1);
+
+            res.json({success:false,
+                msg:"Fetched users failed",
+                cats:res_subcat
+            });
+        }else if(res1){
+            console.log(res1);
+            res_subcat=res1;
+
+            res.json({
+                success:true,
+                msg:"Fetched users successfully",
+                cats:res_subcat
+            });
+        }
+
+    });        
+});
+
+/*
 fetch at most 5 rows from each section,
 sort them by date_created
 */
@@ -403,31 +478,43 @@ app.get('/dashboard',isLoggedIn,function(req,res){
     console.log('inside dashboard');
     //page defaults
     var skip_val=0,
+    req_count=0,
     limit_val=5,
     page='dashboard',
     page_title='',
     page_results=[],
     res_item_trend=[];
 
-    //get trending stories for sidebar headlines
+    //get trending stories for sidebar headlines::nb::this operation takes a while to complete,
+    //try nesting or callbacks to prevent
     trend.find().sort({date_created:1}).exec(function(err_trend,item_trend){
 
-        if(err_trend)console.log(err_trend);
+        if(err_trend){
+            //console.log(err_trend);
+        }
         if(item_trend){
-            console.log(item_trend);
+            //console.log(item_trend);
             res_item_trend=item_trend;
         }
-    });
 
-    var curr_user_display_pic='uploads/avatar.png';//set default pic
-    if(req.user.displayPic[0]){
-        curr_user_display_pic=req.user.displayPic[req.user.displayPic.length - 1];
-    }
+    //get total requests for this user
+    var id_string=(req.user._id).toString();
+    request_model.find({$or:[{destination_id:id_string},{"owner.id":id_string}]}).exec(function(err1,res1){
+        req_count =res1.length;
 
-    //find pending notifications length
-    var pending_friend_notifs=process_posts.getNotifications(req.user);
-    console.log('pending_friend_notifs '+pending_friend_notifs)
-    
+        var curr_user_display_pic='uploads/avatar.png';//set default pic
+        if(req.user.displayPic[0]){
+            curr_user_display_pic=req.user.displayPic[req.user.displayPic.length - 1];
+        }//end display
+
+        var bookmark_len=req.user.bookmarks.length;//get saved bookmarks
+
+
+        //find pending notifications length
+        var pending_friend_notifs=process_posts.getNotifications(req.user);
+        console.log('pending_friend_notifs '+pending_friend_notifs)
+
+
     //using async get the last 5 results from each collection
     async.concat([question,article,riddle,pab,trend,notice],function(model,callback){
         var query = model.find({}).sort({"date_created":-1}).skip(skip_val).limit(limit_val);
@@ -450,14 +537,14 @@ app.get('/dashboard',isLoggedIn,function(req,res){
                 return (a.date_created < b.date_created)? 1:(a.date_created > b.date_created)? -1:0;
             });
             console.log('sorted page_results')
-             console.log(page_results);
+            //console.log(page_results);
         }
 
         if(page_results.length >0){
             //update other details needed by the post
             process_posts.processPagePosts(page_results,req.user,function(processed_response){
                 console.log('PROCESSED RESPONSE');
-                //console.log(processed_response);
+                console.log(processed_response);
 
                 res.render(page,{
                     url:process.env.URL_ROOT,
@@ -468,6 +555,8 @@ app.get('/dashboard',isLoggedIn,function(req,res){
                     page_title: page_title,
                     class_type:'dashboard_page',
                     pending_friend_notifs:pending_friend_notifs,
+                    req_count:req_count,
+                    bookmarks_count:bookmark_len,
 
                     quest_page_status:false,
                     art_page_status:false,
@@ -492,6 +581,8 @@ app.get('/dashboard',isLoggedIn,function(req,res){
                 page_title: page_title,
                 class_type:'dashboard_page',
                 pending_friend_notifs:pending_friend_notifs,
+                req_count:req_count,
+                bookmarks_count:bookmark_len,
 
                 quest_page_status:false,
                 art_page_status:false,
@@ -506,6 +597,13 @@ app.get('/dashboard',isLoggedIn,function(req,res){
         
         
     });
+
+
+
+    });//end request
+
+
+    });//end trend
 
 
 });
@@ -822,7 +920,7 @@ app.post('/ask_question',upload.single('question_photo'),function(req,res,next){
 
                 process_posts.processPagePosts(page_results,req.user,function(processed_response){
                 console.log('JSON PROCESSED RESPONSE');
-                // console.log(processed_response);
+                 console.log(processed_response);
                 var json = JSON.stringify(processed_response[0], null, 2);
 
                 // console.log(json);//update dashboard,all questions & unanswered quests
@@ -903,6 +1001,67 @@ app.post('/ask_article',article_upload,function(req,res,next){
 
             });
 
+            }   
+        });
+
+    }    
+
+});
+
+
+/*process a request post,save*/
+var request_upload = upload.fields([
+    // {name: 'request_attachment',maxCount:1 },
+    {name: 'request_photo',maxCount:1 }]);
+app.post('/make_request',request_upload,function(req,res,next){
+    console.log(req.files)
+
+    if( (req.user.displayPic).length ===0 || req.user.displayName =="User" || req.user.displayName ==""){
+        console.log("user has not updated profile")
+        res.json({success:false,msg:"Your post failed, please update your profile first"});
+    }else{
+
+        var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('uploads/avatar.png');
+        var status=(req.user.designation[0])?((req.user.designation[req.user.designation.length -1]).title):('');
+        var display_name=(req.user.displayName)?(req.user.displayName):('');
+        var res_id=(req.user._id)?((req.user._id).toString()):('');
+
+        var owner_details={id:res_id,
+            displayName:display_name,
+            displayPic:displayPic,
+            status:status};
+
+            let write_req =new request_model();
+            write_req.post_type="request";
+            write_req.access=1;//default :public access
+            write_req.body=convertToSentencCase(req.body.request_title);
+            // write_req.topic=convertToSentencCase(req.body.request_info);
+            write_req.category = req.body.request_category;
+            write_req.destination_id = req.body.request_users;
+            write_req.sub_cat1=req.body.request_sub1;
+            write_req.sub_cat2=req.body.request_sub2;
+            write_req.description=req.body.request_info;
+            write_req.owner=owner_details;
+
+        //store attachment if it exists
+        // if(req.files && req.files['request_attachment']){
+        //     console.log('filename '+req.files['request_attachment'][0].filename)
+        //     write_req.attachment.push('uploads/'+req.files['request_attachment'][0].filename);
+        // }
+
+        //store photo if it exists
+        if(req.files && req.files['request_photo']){
+            console.log('filename '+req.files['request_photo'][0].filename)
+            write_req.pics.push('uploads/'+req.files['request_photo'][0].filename);
+        }
+
+
+        write_req.save(function(err1, saved_req) {
+
+            if(err1){console.log(err1);res.json({success: false,msg:"Request submission failed"});
+
+            }else{
+                res.json({success:true,msg:"Request submission succesful"});
             }   
         });
 
@@ -1806,7 +1965,7 @@ app.post('/saveItem',function(req,res,next){
     }
 
     var logged_user_id=req.user._id;
-    console.log('logged_user_id '+logged_user_id);
+    //console.log('logged_user_id '+logged_user_id);
     //save post details to user's bookmarks
 
     user.findOne({_id:logged_user_id }, function(err, u) {
@@ -1820,11 +1979,11 @@ app.post('/saveItem',function(req,res,next){
             }
             updateUser.bookmarks.push(saved_info);//save post details
             
-            console.log(updateUser);
+            //console.log(updateUser);
             user.updateOne({_id:logged_user_id},{$set:updateUser},function(err1,res1){
 
                 if(err1){
-                    console.log(err1)
+                    //console.log(err1)
                     res.json({success:false,msg:"Bookmarks update failed"});
                 }else if(res1){
                     res.json({success:true,msg:"Bookmarks update was successfull"});

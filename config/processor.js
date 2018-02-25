@@ -37,17 +37,22 @@ user.getPendingFriends(user._id,function(err,pending){
 
 });
 return len;
-
-//find pending notifications length
-// var notif_len=user.notifications.length;
-// var pending_friend_notifs=0;
-//     // var pending_notifs=0;
-//     for(var i=0;i<notif_len;i++){
-//         if((user.notifications[i].notif_type =="friends") &&(user.notifications[i].status =="Pending"))
-//             pending_friend_notifs++;
-//     }
-//     return pending_friend_notifs;
 };
+
+/*check if item has been previously bookmarked*/
+methods.checkBookmarks=function(user,item_id){
+    var saved_bookmarks_len=user.bookmarks.length;
+    var saved_bookmarks=user.bookmarks;
+    var curr_saved_bookmark;
+
+    for(var i=0;i<saved_bookmarks_len;i++){
+        curr_saved_bookmark=saved_bookmarks[i];
+        if(curr_saved_bookmark.item_id == (item_id).toString()){
+            return true;
+        }
+    }
+    return false;
+}
 
 /*
 perform some operations on the posts such as updating display pics,
@@ -58,7 +63,7 @@ checking if the post owner is a friend etc
 
 methods.processPagePosts=function (items,ref_user,callback){
     console.log('processPagePosts')
-    console.log(items);
+    //console.log(items);
     var promise,trend_followed=false,
     displayPic="",
     status="",
@@ -75,7 +80,7 @@ methods.processPagePosts=function (items,ref_user,callback){
             promise = this.getLatestOwnerDetails(cur_item.owner);//fetch data for this person
         }
 
-        console.log(index)
+        //console.log(index)
 
         promise.then(function(response){
             //console.log(response);
@@ -100,11 +105,14 @@ methods.processPagePosts=function (items,ref_user,callback){
                 display_name=(response.displayName)?(response.displayName):('');
                 res_id=(response._id)?((response._id).toString()):('');
 
+                //check if already bookmarkd
+                cur_item.bookmarked_post=this.checkBookmarks(ref_user,cur_item._id);
+
                 //check relationship
                 cur_item.friend_status='not_friend';
                 var req_user_id=(ref_user._id).toString();
                 if(req_user_id ===res_id){
-                    console.log('user is the owner of the post')
+                    //console.log('user is the owner of the post')
                     cur_item.post_owner=true;
                     cur_item.friend_status='friend';
 
@@ -115,14 +123,14 @@ methods.processPagePosts=function (items,ref_user,callback){
 
                     user.getFriendship(ref_user._id,response._id,function(err_res,rel_res){
                         if(err_res){
-                            console.log('err occured in chking relationship');
+                            //console.log('err occured in chking relationship');
                             console.log(err_res);
                         }
 
                         if(rel_res){
                             console.log('results for relationship found');
-                            console.log(rel_res._id);
-                            console.log(rel_res.status);
+                            // console.log(rel_res._id);
+                            // console.log(rel_res.status);
 
                             if(rel_res.status=='Accepted'){
                                 cur_item.friend_status='friend';
@@ -184,13 +192,13 @@ methods.processPagePosts=function (items,ref_user,callback){
                 if(processed_items==array.length){//iteration has ended
                     // res_items=items;
                     console.log('processing finished')
-                    console.log(items);
+                    //console.log(items);
                     callback(items);
                 }
 
             }).catch(function(err3){
-                console.log("Error occured while fetching owner/story data");
-                console.log(err3)
+                //console.log("Error occured while fetching owner/story data");
+                //console.log(err3)
             });
 
         });

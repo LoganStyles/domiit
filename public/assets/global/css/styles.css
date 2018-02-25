@@ -384,7 +384,7 @@
         float: left;
      }
 
-     .section_posts_text{
+     .section_posts_text > a{
         float: left;
         text-transform: capitalize;
         color: #000 !important;

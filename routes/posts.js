@@ -10,6 +10,8 @@ var pab = require('../models/pab');
 var notice = require('../models/notice');
 var trend = require('../models/trend');
 
+var request_model = require('../models/request');
+
 var process_posts=require('../config/processor');
 
 
@@ -87,30 +89,44 @@ function searchBookmarks(user,final_response){
 /*get all bookmarked posts*/
 router.get('/get_bookmarked',isLoggedIn,function(req,res){
 
-    //set default pic
+    if( (req.user.displayPic).length ===0 || req.user.displayName =="User" || req.user.displayName ==""){
+        console.log("user has not updated profile")
+        res.json({success:false,msg:"Please update your profile first"});
+    }else{
+
+    //set avatar
     var curr_user_display_pic='uploads/avatar.png';
     if(req.user.displayPic[0]){
         curr_user_display_pic=req.user.displayPic[req.user.displayPic.length - 1];
     }
 
-    var pending_friend_notifs=process_posts.getNotifications(req.user);
-
     var res_item_trend=[];
     var page='dashboard',page_title='Bookmarks';
+    var req_count=0;
 
         //get trending stories for sidebar headlines
         trend.find().sort({date_created:1}).exec(function(err_trend,item_trend){
 
-            if(err_trend)console.log(err_trend);
+            if(err_trend){
+                //console.log(err_trend);
+            }
             if(item_trend){
                 res_item_trend=item_trend;
             }
-        });
 
-    console.log('get bookmarked');
+            //get total requests for this user
+            var id_string=(req.user._id).toString();
+            request_model.find({$or:[{destination_id:id_string},{"owner.id":id_string}]}).exec(function(err1,res1){
+            req_count =res1.length;
+
+            var pending_friend_notifs=process_posts.getNotifications(req.user);
+
+
+                console.log('get bookmarked');
     var saved_bookmarks=req.user.bookmarks;//get saved bookmarks
+    var bookmark_len=saved_bookmarks.length;
 
-    if(saved_bookmarks.length>0){
+    if(bookmark_len>0){
 
         //get saved bookmarks & display result
         searchBookmarks(req.user,function(processed_response){
@@ -123,6 +139,9 @@ router.get('/get_bookmarked',isLoggedIn,function(req,res){
                 data_trend:res_item_trend,
                 page_title: page_title,
                 pending_friend_notifs:pending_friend_notifs,
+                req_count:req_count,
+                bookmarks_count:bookmark_len,
+                class_type:'bookmark_page',
 
                 quest_page_status:false,
                 art_page_status:false,
@@ -143,6 +162,9 @@ router.get('/get_bookmarked',isLoggedIn,function(req,res){
             data_trend:res_item_trend,
             page_title: page_title,
             pending_friend_notifs:pending_friend_notifs,
+            req_count:req_count,
+            bookmarks_count:bookmark_len,
+            class_type:'bookmark_page',
 
             quest_page_status:false,
             art_page_status:false,
@@ -153,7 +175,16 @@ router.get('/get_bookmarked',isLoggedIn,function(req,res){
             home_page_status:true
         });
     }
-});
+
+});//end request
+
+
+    });//end trend
+
+    }
+
+
+});//end
 
 
 /*get all posted questions,*/

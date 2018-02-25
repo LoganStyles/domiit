@@ -326,8 +326,8 @@ function displayPost(selected_class,json){
 			post_content+='<i class="fa fa-trash-o"></i> Delete </a></li>';
 			if(parsed.question_status){
 				post_content+='<li><a href="javascript:;">';
-			post_content+='<i class="fa fa-ban"></i> Request for answer </a>';
-			post_content+='</li>';
+				post_content+='<i class="fa fa-ban"></i> Request for answer </a>';
+				post_content+='</li>';
 			}
 
 			if(parsed.art_status){
