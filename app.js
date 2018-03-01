@@ -12,7 +12,7 @@ var path = require('path');
 var request = require('request');
 var fs = require('fs');
 // var froalaEditor = require('froala-editor');
-var FroalaEditor = require('wysiwyg-editor-node-sdk/lib/froalaEditor.js');
+//var FroalaEditor = require('wysiwyg-editor-node-sdk/lib/froalaEditor.js');
 
 var exphbs = require('express-handlebars');
 var Handlebars = require('handlebars');
