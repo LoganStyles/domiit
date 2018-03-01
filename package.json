@@ -46,8 +46,7 @@
     "r": "0.0.5",
     "request": "^2.83.0",
     "socket.io": "^2.0.3",
-    "url": "^0.11.0",
-    "wysiwyg-editor-node-sdk": "file:wysiwyg-editor-node-sdk"
+    "url": "^0.11.0"
   },
   "keywords": [
     "knowledge",
