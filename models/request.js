@@ -7,6 +7,7 @@ var requestSchema = mongoose.Schema({
 	topic:String,
 	body:String,
 	destination_id:String,
+	destination_type:String,
 	// message:String,//display message prompt
 	category:String,
 	sub_cat1:{type:String,default:''},

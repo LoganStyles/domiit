@@ -1043,9 +1043,9 @@ app.post('/make_request',request_upload,function(req,res,next){
     var request_type=req.body.request_type;
     console.log('request_type '+request_type);
 
-    if( (req.user.displayPic).length ===0 || req.user.displayName =="User" || req.user.displayName ==""){
+    if((req.body.request_choice) && (req.user.displayPic).length ===0 || req.user.displayName =="User" || req.user.displayName ==""){
         console.log("user has not updated profile")
-        res.json({success:false,msg:"Your post failed, please update your profile first"});
+        res.json({success:false,msg:"Your post failed"});
     }else{
 
         var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('uploads/avatar.png');
@@ -1077,6 +1077,8 @@ app.post('/make_request',request_upload,function(req,res,next){
             write_req.destination_id = req.body.request_users;
             write_req.sub_cat1=req.body.request_sub1;
             write_req.sub_cat2=req.body.request_sub2;
+            write_req.destination_id=req.body.request_users;
+            write_req.destination_type=req.body.request_choice;
             
             write_req.owner=owner_details;
 
@@ -1701,6 +1703,10 @@ app.post('/delete_postitem',function(req,res,next){
         case'pab_cat':
         section = pab_cat;
         break;
+
+        case'request':
+        section = request_model;
+        break;
     }
 
     section.findByIdAndRemove(section_id,function(err1,res1){
@@ -1830,22 +1836,10 @@ app.post('/update_request',request_update_upload,function(req,res,next){
     
     var request_type=req.body.request_update_type;
     var section_id=req.body.request_update_id;
-    // switch(request_type){
-    //     case'question':
-    //     section = question;
-    //     break;
-
-    //     case'article':
-    //     section = article;
-    //     break;
-
-    //     case'riddle':
-    //     section = riddle;
-    //     break;
-    // }
+    
 
         request_model.findOne({_id:section_id},function(error,result){//find the request that was responsed
-            if(result){
+            if(result && (req.body.request_update_choice)){
                 var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('uploads/avatar.png');
                 var status=(req.user.designation[0])?((req.user.designation[req.user.designation.length -1]).title):('');
                 var display_name=(req.user.displayName)?(req.user.displayName):('');
@@ -1861,6 +1855,8 @@ app.post('/update_request',request_update_upload,function(req,res,next){
                 updateSection.category=req.body.request_update_category;
                 updateSection.sub_cat1=req.body.request_update_sub1;
                 updateSection.sub_cat2=req.body.request_update_sub2;
+                updateSection.destination_id=req.body.request_update_users;
+                updateSection.destination_type=req.body.request_update_choice;
 
                 switch(request_type){
                     case 'question':
@@ -1916,7 +1912,7 @@ app.post('/update_request',request_update_upload,function(req,res,next){
 
                 });             
             }else{
-                res.json({success:false,msg:"Item not found"});
+                res.json({success:false,msg:"Item not found or error occured"});
             }
 
         });
