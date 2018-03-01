@@ -54,39 +54,6 @@
                 <div class="clearfix"></div>
               </div>
             </div>
-
-            <!-- <div class="panel panel-default portlet" {{#unless page_response}} style="display: none;"{{/unless}}>
-              <div class="panel-body" style="width: 100%;">
-                <div class="posts_top_actions_left">
-                    <span class="posts_page_title">{{page_title}}</span>
-                </div>
-                
-                <div class="posts_top_actions_right">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default">Actions</button>
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-angle-down"></i>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a onclick="modalLoader('question','new','');"> Ask a question </a>
-                        </li>
-                        <li>
-                            <a onclick="modalLoader('article','new','');"> Write an article </a>
-                        </li>
-                        <li>
-                            <a onclick="modalLoader('riddle','new','');"> Post a riddle</a>
-                        </li>
-                        <li>
-                            <a onclick="modalLoader('pab','new','');"> Post a book</a>
-                        </li>
-                    </ul>
-                </div>
-                                                            
-                   
-                </div>
-              </div>
-            </div> -->
                                 
             <div class="question_all_post_area {{class_type}}">
 
@@ -264,10 +231,12 @@
                                                                     <a href="javascript:;">
                                                                         <i class="fa fa-pencil"></i> Follow </a>
                                                                 </li>
-                                                                <li>
-                                                                    <a href="javascript:;">
-                                                                        <i class="fa fa-trash-o"></i> Bookmark </a>
-                                                                </li>
+                                                                {{#unless bookmarked_post}}
+                                                <li class="bookmark_section_item">
+                                                    <a href="javascript:;">
+                                                        <i class="fa fa-bookmark"></i> Bookmark </a>
+                                                </li>
+                                                {{/unless}}
                                                                 <li class="">
                                                                     <a href="javascript:;">
                                                                         <img class="icon_size_20" src="{{../url}}/images/mask.png"> Mask </a>
@@ -310,14 +279,14 @@
                                                 {{else}}
                                                 <div class="post_item post_item_topic">
                                                 {{/if}}
-                                                    {{body}}
+                                                    {{{body}}}
                                                 
                                                 </div>
 
                                                     {{#if description}}
                                                     <hr class="short_length">
                                                     <div class="post_item post_item_more_info">
-                                                        {{description}}
+                                                        {{{description}}}
                                                     </div>
                                                     {{/if}}
                                                 
@@ -505,10 +474,12 @@
                                                         <a href="#">
                                                             <i class="fa fa-plus"></i> Follow </a>
                                                     </li>
-                                                    <li class="bookmark_section_item">
-                                                        <a href="#">
-                                                            <i class="fa fa-bookmark"></i> Bookmark </a>
-                                                    </li>
+                                                    {{#unless bookmarked_post}}
+                                                <li class="bookmark_section_item">
+                                                    <a href="javascript:;">
+                                                        <i class="fa fa-bookmark"></i> Bookmark </a>
+                                                </li>
+                                                {{/unless}}
                                                     <li class="">
                                                     <a href="javascript:;">
                                                         <img class="icon_size_20" src="{{../url}}/images/mask.png"> Mask </a>

@@ -65,8 +65,11 @@
                                                    
             <div class="panel panel-default portlet">
               <div class="panel-body" style="width: 100%;">
+              <div class="posts_top_actions_left">
+                    <span class="posts_page_title">Requests ({{req_owner_count}})</span>
+                </div>
                                 
-                <div class="posts_top_actions_right" style="width: 100%;">
+                <div class="posts_top_actions_right">
                     <a class="page_top_actions" onclick="modalLoader('question','new','');">Ask a question</a>&nbsp;|&nbsp;
 
                     <a class="page_top_actions" onclick="modalLoader('article','new','');">Write an article</a>&nbsp;|&nbsp;
@@ -94,7 +97,14 @@
                 <div class="portlet-title" {{#if notice_status}} style="background-color:#5F84CF;" {{/if}}>
                     <div class="caption caption-md">
                         
-                        <span {{#if notice_status}} style="color:  #fff;" {{/if}} class="caption-subject  bold post_box_name">{{post_type}}</span>
+                        <span {{#if notice_status}} style="color:  #fff;" {{/if}} class="caption-subject  bold post_box_name">
+
+                        {{#if question_status}} question {{/if}}
+
+                        {{#if art_status}} article {{/if}}
+
+                        {{#if riddle_status}} riddle {{/if}}
+                        </span>
 
                         {{#if category}}
                         <span class="caption-helper post_category grey_cats left_border" {{#if notice_status}} style="color: #fff !important;" {{/if}} >{{category}}</span>
@@ -203,7 +213,7 @@
                                                 <i class="fa fa-ellipsis-v"></i>
                                             </span>
                                             <ul class="dropdown-menu pull-right">
-                                                <li class="edit_section_item">
+                                                <li class="edit_request_item">
                                                     <a href="javascript:;">
                                                         <i class="fa fa-pencil"></i> Edit </a>
                                                 </li>
@@ -465,9 +475,7 @@
         <!--if page is article, chek for attachemnt-->
         {{#if attachment}}
         <input type="hidden" class="download_input_field" value="{{attachment}}">
-         <a type="button" class="btn dark btn-outline sbold uppercase download_button">
-         <img src="{{../url}}/images/downloads.png">&nbsp;
-         <!--<i class="fa fa-cloud-download"></i>-->Download</a>                       
+         <a type="button" class="btn dark btn-outline sbold uppercase download_button"><i class="fa fa-cloud-download"></i>&nbsp;Download</a>                       
         {{/if}}
 
     {{/if}}
@@ -622,13 +630,8 @@
 
         <div class="task-footer" style="">
             <div class="btn-arrow-link ">
-            {{#unless pab_status}}
-
-                {{#if page_response}}
-                <a class=" sbold grey_button response_button">
-                <i class="fa fa-edit"></i>&nbsp;Write your {{page_response}}</a>
-                {{/if}}                            
-            {{/unless}}
+            <a class=" sbold grey_button response_button">
+                <i class="fa fa-edit"></i>&nbsp;Write your Response</a>
             </div>
         </div>
 

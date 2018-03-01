@@ -29,7 +29,7 @@
                                                 <div class="profile-usermenu">
                                                     <ul class="nav">
                                                         <li class="active">
-                                                            <a href="{{url}}/posts/getRequests">
+                                                            <a href="javascript:;">
                                                             <i class="fa fa-share-square-o font_icon_style_leftbar"></i>
                                                                 My Requests ({{req_count}})</a>
                                                                 <hr class="long_length">
@@ -63,10 +63,13 @@
 
                                                 <div class="col-md-6">
                                                    
-            <div class="panel panel-default portlet">
+            <div class="panel panel-default portlet" >
               <div class="panel-body" style="width: 100%;">
-                                
-                <div class="posts_top_actions_right" style="width: 100%;">
+                <div class="posts_top_actions_left">
+                    <span class="posts_page_title">{{page_title}}</span>
+                </div>
+                
+                <div class="posts_top_actions_right">
                     <a class="page_top_actions" onclick="modalLoader('question','new','');">Ask a question</a>&nbsp;|&nbsp;
 
                     <a class="page_top_actions" onclick="modalLoader('article','new','');">Write an article</a>&nbsp;|&nbsp;
@@ -78,7 +81,7 @@
                 </div>
                 <div class="clearfix"></div>
               </div>
-            </div>   
+            </div>  
 
                                                     
 
@@ -194,7 +197,7 @@
                                  <div class="fromnow">{{moment post_date "fromNow"}}</div>
                                     <div class="clearfix"></div>
                                     <div class="post_actions_button_left">
-                                        
+                                        <!-- <img class="icon_size_20" src="{{../url}}/images/mask.png"> -->
                                     </div>
                                 {{#if post_owner}}
                                  <div class="actions post_actions_button" >
@@ -435,7 +438,7 @@
                         {{else}}
                         <div class="post_item post_item_topic">
                         {{/if}}
-                        {{{body}}}
+                        {{body}}
                     
                     </div>
                                                     
@@ -443,7 +446,7 @@
                         {{#if description}}
                     <hr class="short_length">
                     <div class="post_item post_item_more_info">
-                        {{{description}}}
+                        {{description}}
                     </div>
                         {{/if}}
                 
@@ -465,9 +468,7 @@
         <!--if page is article, chek for attachemnt-->
         {{#if attachment}}
         <input type="hidden" class="download_input_field" value="{{attachment}}">
-         <a type="button" class="btn dark btn-outline sbold uppercase download_button">
-         <img src="{{../url}}/images/downloads.png">&nbsp;
-         <!--<i class="fa fa-cloud-download"></i>-->Download</a>                       
+         <a type="button" class="btn dark btn-outline sbold uppercase download_button"><i class="fa fa-cloud-download"></i>&nbsp;Download</a>                       
         {{/if}}
 
     {{/if}}

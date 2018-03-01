@@ -361,10 +361,14 @@ function displayPost(selected_class,json){
             post_content+='<a href="#">';
             post_content+='<i class="fa fa-plus"></i> Follow </a>';
             post_content+=' </li>';
-            post_content+='<li class="bookmark_section_item">';
-            post_content+='<a href="#">';
-            post_content+='<i class="fa fa-bookmark"></i> Bookmark </a>';
-            post_content+='</li>';
+            if(!parsed.bookmarked_post){
+
+            	post_content+='<li class="bookmark_section_item">';
+	            post_content+='<a href="#">';
+	            post_content+='<i class="fa fa-bookmark"></i> Bookmark </a>';
+	            post_content+='</li>';
+
+            }
 
             post_content+='<li class="">';
             post_content+='<a href="javascript:;">';

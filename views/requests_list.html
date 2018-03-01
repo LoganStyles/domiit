@@ -65,6 +65,7 @@
                                                    
             <div class="panel panel-default portlet">
               <div class="panel-body" style="width: 100%;">
+                
                                 
                 <div class="posts_top_actions_right" style="width: 100%;">
                     <a class="page_top_actions" onclick="modalLoader('question','new','');">Ask a question</a>&nbsp;|&nbsp;
@@ -465,9 +466,7 @@
         <!--if page is article, chek for attachemnt-->
         {{#if attachment}}
         <input type="hidden" class="download_input_field" value="{{attachment}}">
-         <a type="button" class="btn dark btn-outline sbold uppercase download_button">
-         <img src="{{../url}}/images/downloads.png">&nbsp;
-         <!--<i class="fa fa-cloud-download"></i>-->Download</a>                       
+         <a type="button" class="btn dark btn-outline sbold uppercase download_button"><i class="fa fa-cloud-download"></i>&nbsp;Download</a>                       
         {{/if}}
 
     {{/if}}
@@ -522,7 +521,7 @@
                 {{#if art_status}}
                 <span class="social_value">{{answers_len}}</span>
                 <img alt="" class="icon_size_15" src="{{../url}}/images/articles_icon.png">&nbsp;
-                Reviews
+                Responses
                 {{/if}}
 
                 {{#if riddle_status}}

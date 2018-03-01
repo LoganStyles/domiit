@@ -187,10 +187,12 @@
                                                                     <a href="#">
                                                                         <i class="fa fa-plus"></i> Follow </a>
                                                                 </li>
-                                                                <li class="bookmark_section_item">
-                                                                    <a href="#">
-                                                                        <i class="fa fa-bookmark"></i> Bookmark </a>
-                                                                </li>
+                                                                {{#unless bookmarked_post}}
+                                                <li class="bookmark_section_item">
+                                                    <a href="javascript:;">
+                                                        <i class="fa fa-bookmark"></i> Bookmark </a>
+                                                </li>
+                                                {{/unless}}
                                                                 <li class="">
                                                                     <a href="javascript:;">
                                                                         <img class="icon_size_20" src="{{../url}}/images/mask.png"> Mask </a>

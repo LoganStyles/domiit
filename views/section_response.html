@@ -186,14 +186,33 @@
                                                                     <a href="javascript:;">
                                                                         <i class="fa fa-trash-o"></i> Delete </a>
                                                                 </li>
-                                                                <li class="">
-                                                                    <a href="javascript:;">
-                                                                        <img class="icon_size_20" src="{{../url}}/images/mask.png"> Mask </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="javascript:;">
-                                                                        <i class="fa fa-ban"></i> Request for answer </a>
-                                                                </li>                            
+                                                                {{#if question_status}}
+                                                <li>
+                                                    <a href="javascript:;">
+                                                        <i class="fa fa-share-square-o"></i> Request for answer </a>
+                                                </li>  
+                                                {{/if}}
+
+                                                {{#if art_status}}
+                                                <li>
+                                                    <a href="javascript:;">
+                                                        <i class="fa fa-share-square-o"></i> Request for review </a>
+                                                </li>  
+                                                {{/if}} 
+
+                                                {{#if riddle_status}}
+                                                <li>
+                                                    <a href="javascript:;">
+                                                        <i class="fa fa-share-square-o"></i> Request for solution </a>
+                                                </li>  
+                                                {{/if}} 
+
+                                                {{#if notice_status}}
+                                                <li>
+                                                    <a href="javascript:;">
+                                                        <i class="fa fa-share-alt"></i> Share</a>
+                                                </li>  
+                                                {{/if}}                             
                                                             </ul>
                                                         </div>                                           
                                                 </div>
@@ -208,10 +227,16 @@
                                                                     <a href="javascript:;">
                                                                         <i class="fa fa-pencil"></i> Follow </a>
                                                                 </li>
-                                                                <li>
-                                                                    <a href="javascript:;">
-                                                                        <i class="fa fa-trash-o"></i> Bookmark </a>
-                                                                </li>
+                                                                {{#unless bookmarked_post}}
+                                                <li class="bookmark_section_item">
+                                                    <a href="javascript:;">
+                                                        <i class="fa fa-bookmark"></i> Bookmark </a>
+                                                </li>
+                                                {{/unless}}
+                                                <li class="">
+                                                    <a href="javascript:;">
+                                                        <img class="icon_size_20" src="{{../url}}/images/mask.png"> Mask </a>
+                                                </li>
                                                                 <li>
                                                                     <a href="javascript:;">
                                                                         <i class="fa fa-ban"></i> Report Abuse </a>
@@ -247,14 +272,14 @@
                                                 {{else}}
                                                 <div class="post_item post_item_topic">
                                                 {{/if}}
-                                                    {{body}}
+                                                    {{{body}}}
                                                 
                                                 </div>
 
                                                     {{#if description}}
                                                     <hr class="short_length">
                                                     <div class="post_item post_item_more_info">
-                                                        {{description}}
+                                                        {{{description}}}
                                                     </div>
                                                     {{/if}}
                                                 

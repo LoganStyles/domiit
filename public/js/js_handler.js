@@ -1,5 +1,5 @@
 var URL_ROOT="https://ancient-falls-19080.herokuapp.com";
-// var URL_ROOT="http://localhost:8000";
+//var URL_ROOT="http://localhost:8000";
 
 function newData(){
     $('#item_about_form').trigger('reset');
@@ -24,6 +24,10 @@ function resetFields(formid){
 
 //get a list of sub-items for a selected item
 function fetchItemList(selected_item,section,url,req_field){
+    // console.log('selected_item '+selected_item)
+    // console.log('section '+section)
+    // console.log('url '+url)
+    // console.log('req_field '+req_field)
 
     $(req_field).html('');
 
@@ -33,53 +37,74 @@ function fetchItemList(selected_item,section,url,req_field){
         data:{'section':section,'item':selected_item},
         headers: {'X-My-App-Token': 'loganstyles'},
         success:function(response){
-            // console.log(response);
+             console.log(response);
             if(response.success==true){
                 var res_cats=(response.cats);
+                console.log(res_cats);
                 var options="";
                 var proc_arr=[];
 
-                if(req_field != '#request_users'){
+                if(req_field != '#request_users' && req_field != '#request_update_users'){
 
                     //store received data temporarily
+                    /*console.log('req_field '+req_field)
                     res_cats.forEach((curr_item,index,array)=>{
                         switch(req_field){
                             case '#request_sub1':
-                            proc_arr.push(curr_item.sub_cat1);
+                            case '#request_update_sub1':
+                            if(curr_item.sub_cat1){
+                                proc_arr.push(curr_item.sub_cat1);
+                            }
                             break;
 
                             case '#request_sub2':
-                            proc_arr.push(curr_item.sub_cat2);
-
-                            
-                           $('#request_normal_u').attr("disabled",false);
-                            $('#request_domiit_u').attr("disabled",false);
+                            case '#request_update_sub2':
+                            if(curr_item.sub_cat2){
+                                proc_arr.push(curr_item.sub_cat2);
+                            }
                             break;
                         }
 
                     });
-                    // console.log(proc_arr);
+                     console.log(proc_arr);
                 //remove duplicate entries
                 var unique_items = proc_arr.filter( onlyUnique );
-                // console.log(unique_items);
+                 console.log(unique_items);
                 unique_items.forEach((curr,index,array)=>{
-                    options+='<option value="'+curr+'">'+curr+'</option>';
+                    if(curr){
+                       options+='<option value="'+curr+'">'+curr+'</option>'; 
+                    }
+                    
 
-                });
+                });*/
 
             }else{
 
                 res_cats.forEach((curr_item,index,array)=>{
-                    options+='<option value="'+curr_item._id+'">'+curr_item.displayName+'</option>';
+                    if(curr_item._id){
+                       options+='<option value="'+curr_item._id+'">'+curr_item.displayName+'</option>'; 
+                    }
+                    
                 });
-                $('#request_title').attr("disabled",false);
-                $('#request_info').attr("disabled",false);
+                //$('#request_title').attr("disabled",false);
+                //$('#request_info').attr("disabled",false);
 
             }
 
 
-            $(req_field).attr('disabled',false);
+            //$(req_field).attr('disabled',false);
             $(req_field).html(options);
+            if(req_field == '#request_sub1'){
+                var category=$(req_field).val();
+                //var section=$('#request_type').val();
+                //fetchItemList(category,section,URL_ROOT+"/fetchSubCats2",'#request_sub2'); 
+            }
+
+            if(req_field == '#request_update_sub1'){
+                var category=$(req_field).val();
+                //var section=$('#request_type').val();
+                //fetchItemList(category,section,URL_ROOT+"/fetchSubCats2",'#request_update_sub2'); 
+            }
 
         }else{
             // console.log('response is false');                            
@@ -119,8 +144,8 @@ function typeModalLoader(mode,type){
 
 function modalLoader(type, mode,cat_type) {
 
-    console.log('type: ' + type);
-    console.log('mode: ' + mode);
+    //console.log('type: ' + type);
+    //console.log('mode: ' + mode);
     // console.log('cat_type: ' + cat_type);
 
     var form_action = "#" + type + "_action";
@@ -137,14 +162,14 @@ function modalLoader(type, mode,cat_type) {
     resetFields(formid);
 
     var itemid = "#" + type + "_id";
-    console.log('form_action: ' + form_action);
-    console.log('formid: ' + formid);
-    console.log('submit_but: ' + submit_but);
-    console.log('modal: ' + modal);
+    // console.log('form_action: ' + form_action);
+    // console.log('formid: ' + formid);
+    // console.log('submit_but: ' + submit_but);
+    // console.log('modal: ' + modal);
 
     switch (mode) {
         case 'new':
-        console.log('inside mode new: ');
+        //console.log('inside mode new: ');
         $(itemid).val(0);
         $(formid).trigger('reset');
         $(form_action).val("insert");
@@ -153,7 +178,7 @@ function modalLoader(type, mode,cat_type) {
 
         if(type != 'notice'){
             var category_id="#"+type+"_modal "+"#"+type+"_category";
-            console.log(category_id);
+            //console.log(category_id);
             
         //determine type & make ajax call
         if(type == 'request'){
@@ -161,14 +186,23 @@ function modalLoader(type, mode,cat_type) {
             switch(section){
                 case 'question':
                 response_type='Answer';
+                $('.request_article').hide();
+                $('.request_question').show();
+                $('.request_riddle').hide();
                 break;
 
                 case 'article':
                 response_type='Review';
+                $('.request_article').show();
+                $('.request_question').hide();
+                $('.request_riddle').hide();
                 break;
 
                 case 'riddle':
                 response_type='Solution';
+                $('.request_article').hide();
+                $('.request_question').hide();
+                $('.request_riddle').show();
                 break;
             }
             $('#request_sub1_header').text('Request For '+response_type)
@@ -176,18 +210,10 @@ function modalLoader(type, mode,cat_type) {
             $('#request_sub1').html('');
             $('#request_sub2').html('');
             $('#request_users').html('');
-            $('#request_sub1').attr("disabled",true);
-            $('#request_sub2').attr("disabled",true);
-            $('#request_users').attr("disabled",true);
-            $('#request_normal_u').attr("disabled",true);
-            $('#request_domiit_u').attr("disabled",true);
-            $('#request_title').attr("disabled",true);
-            $('#request_info').attr("disabled",true);
-
+            
         }else{section=type;}
-        //fetch categories
         var url=URL_ROOT+'/fetchCats';
-        console.log(url);
+        //console.log(url);
 
         $.ajax({
             url:url,
@@ -195,26 +221,37 @@ function modalLoader(type, mode,cat_type) {
             data:{'section':section},
             headers: {'X-My-App-Token': 'loganstyles'},
             success:function(response){
-                console.log(response);
+                //console.log(response);
                 if(response.success==true){
                     var res_cats=(response.cats);
                     var options="";
                     res_cats.forEach((curr_item,index,array)=>{
-                        options+='<option value="'+curr_item.title+'">'+curr_item.title+'</option>';
+                        if(curr_item.title){
+                           options+='<option value="'+curr_item.title+'">'+curr_item.title+'</option>'; 
+                        }
+                        
                     });
 
                     $(category_id).html(options);
 
+                    // if(type == 'request'){
+                    //     //populate the sub category1 field
+                    //     var category=$(category_id).val();
+                    //     //var section=$('#request_type').val();
+                    //     fetchItemList(category,section,URL_ROOT+"/fetchSubCats1",'#request_sub1'); 
+                    // }
+                    
+
                 }else{
-                    console.log('response is false');                            
+                    //console.log('response is false');                            
                 }                        
 
             },
             error:function(xhr, status, err){
-                console.log('error');
-                console.log(xhr);
-                console.log(status);
-                console.log(err);
+                // console.log('error');
+                // console.log(xhr);
+                // console.log(status);
+                // console.log(err);
             }
         });
     }
@@ -222,7 +259,7 @@ function modalLoader(type, mode,cat_type) {
     break;
 
     case 'edit':
-    console.log('inside mode edit: ');                
+    //console.log('inside mode edit: ');                
     $(modal).modal({backdrop: false, keyboard: false});
     $(header).text('Edit');
     break;

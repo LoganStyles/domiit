@@ -23,7 +23,7 @@ var requestSchema = mongoose.Schema({
 	friend_status:String,//friend,not_friend,Pending
 
 	question_status:{type:Boolean,default:false},
-	art_status:{type:Boolean,default:true},
+	art_status:{type:Boolean,default:false},
 	riddle_status:{type:Boolean,default:false},
 	pab_status:{type:Boolean,default:false},
 	notice_status:{type:Boolean,default:false},

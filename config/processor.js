@@ -28,7 +28,7 @@ methods.getNotifications=function(user){
 var len=0;
 user.getPendingFriends(user._id,function(err,pending){
     if(err)
-        console.log(err)
+        //console.log(err)
 
     if(pending){
         len=pending.length;
@@ -47,12 +47,13 @@ methods.checkBookmarks=function(user,item_id){
 
     for(var i=0;i<saved_bookmarks_len;i++){
         curr_saved_bookmark=saved_bookmarks[i];
+        // console.log('curr_saved_bookmark '+curr_saved_bookmark)
         if(curr_saved_bookmark.item_id == (item_id).toString()){
             return true;
         }
     }
     return false;
-}
+};
 
 /*
 perform some operations on the posts such as updating display pics,
@@ -77,6 +78,8 @@ methods.processPagePosts=function (items,ref_user,callback){
         if(cur_item.post_type=="trending"){
             promise = this.getStoryDetails(cur_item);//fetch data for this story
         }else{
+            //check if already bookmarkd
+            cur_item.bookmarked_post=this.checkBookmarks(ref_user,cur_item._id);
             promise = this.getLatestOwnerDetails(cur_item.owner);//fetch data for this person
         }
 
@@ -105,14 +108,13 @@ methods.processPagePosts=function (items,ref_user,callback){
                 display_name=(response.displayName)?(response.displayName):('');
                 res_id=(response._id)?((response._id).toString()):('');
 
-                //check if already bookmarkd
-                cur_item.bookmarked_post=this.checkBookmarks(ref_user,cur_item._id);
+                
 
                 //check relationship
                 cur_item.friend_status='not_friend';
                 var req_user_id=(ref_user._id).toString();
                 if(req_user_id ===res_id){
-                    //console.log('user is the owner of the post')
+                    console.log('user is the owner of the post')
                     cur_item.post_owner=true;
                     cur_item.friend_status='friend';
 

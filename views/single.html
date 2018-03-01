@@ -187,10 +187,12 @@
                                                                     <a href="javascript:;">
                                                                         <i class="fa fa-pencil"></i> Follow </a>
                                                                 </li>
-                                                                <li>
+                                                                {{#unless bookmarked_post}}
+                                                                <li class="bookmark_section_item">
                                                                     <a href="javascript:;">
-                                                                        <i class="fa fa-trash-o"></i> Bookmark </a>
+                                                                        <i class="fa fa-bookmark"></i> Bookmark </a>
                                                                 </li>
+                                                                {{/unless}}
                                                                 <li class="">
                                                     <a href="javascript:;">
                                                         <img class="icon_size_20" src="{{../url}}/images/mask.png"> Mask </a>
@@ -223,11 +225,11 @@
 
                                     {{#if body}}
                                         <div class="post_item post_item_topic">
-                                            {{body}}
+                                            {{{body}}}
                                         </div><hr>
                                     {{/if}}
                                         <div class="post_item post_item_body">
-                                            {{description}}
+                                            {{{description}}}
                                         </div>
                                     
                                 </div>  <br>

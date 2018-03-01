@@ -124,10 +124,6 @@
                 </div>
 
 
-
-
-
-
                     <div class="portlet-body" style="padding-top: 0px;">
                         <div class="" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
                             <div class="general-item-list">
@@ -265,10 +261,12 @@
                                                                     <a href="#">
                                                                         <i class="fa fa-plus"></i> Follow </a>
                                                                 </li>
-                                                                <li class="bookmark_section_item">
-                                                                    <a href="#">
-                                                                        <i class="fa fa-bookmark"></i> Bookmark </a>
-                                                                </li>
+                                                                {{#unless bookmarked_post}}
+                                                <li class="bookmark_section_item">
+                                                    <a href="javascript:;">
+                                                        <i class="fa fa-bookmark"></i> Bookmark </a>
+                                                </li>
+                                                {{/unless}}
                                                                 <li class="">
                                                                     <a href="javascript:;">
                                                                         <img class="icon_size_20" src="{{../url}}/images/mask.png"> Mask </a>
@@ -412,7 +410,7 @@
                                                 {{else}}
                                                 <div class="post_item post_item_topic">
                                                 {{/if}}
-                                                    {{body}}
+                                                    {{{body}}}
                                                 
                                                 </div>
                                                 
@@ -420,7 +418,7 @@
                                                 {{#if description}}
                                                 <hr class="short_length">
                                                 <div class="post_item post_item_more_info">
-                                                    {{description}}
+                                                    {{{description}}}
                                                 </div>
                                                 {{/if}}
                                             

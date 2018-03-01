@@ -10,8 +10,9 @@ var moment = require('moment');
 var session = require('client-sessions');
 var path = require('path');
 var request = require('request');
+var fs = require('fs');
 // var froalaEditor = require('froala-editor');
-// var FroalaEditor = require('./wysiwyg-editor-node-sdk/lib/froalaEditor.js');
+var FroalaEditor = require('wysiwyg-editor-node-sdk/lib/froalaEditor.js');
 
 var exphbs = require('express-handlebars');
 var Handlebars = require('handlebars');
@@ -202,6 +203,7 @@ function isLoggedIn(req, res, next) {
 }
 
 function convertToSentencCase(text_data){
+    console.log('text_data '+text_data);
     var n = text_data.split(".");
     var vfinal="";
 
@@ -365,6 +367,10 @@ app.get('/fetchSubCats1',isLoggedIn,function(req,res){
         case 'riddle':
         section =riddle;
         break;
+
+        case 'request':
+        section =request_model;
+        break;
     }
 
     section.find({category:category},{sub_cat1:1}).exec(function(err1,res1){
@@ -411,6 +417,10 @@ app.get('/fetchSubCats2',isLoggedIn,function(req,res){
 
         case 'riddle':
         section =riddle;
+        break;
+
+        case 'request':
+        section =request_model;
         break;
     }
 
@@ -468,6 +478,21 @@ app.get('/fetchUsers',isLoggedIn,function(req,res){
         }
 
     });        
+});
+
+/*upload inline images from editor*/
+app.post('/uploadInlineImages',isLoggedIn,function(req,res){
+console.log('inside inline images');
+    //store image
+    FroalaEditor.Image.upload(req,'/public/uploads/',function(err,data){
+        //return data
+        if(err){
+            return res.send(JSON.stringify(err));
+        }
+        console.log('inside inline images: sending resp');
+        res.send(data);
+    });
+
 });
 
 /*
@@ -536,7 +561,7 @@ app.get('/dashboard',isLoggedIn,function(req,res){
             page_results=res_items.sort(function(a,b){
                 return (a.date_created < b.date_created)? 1:(a.date_created > b.date_created)? -1:0;
             });
-            console.log('sorted page_results')
+            //console.log('sorted page_results')
             //console.log(page_results);
         }
 
@@ -544,7 +569,7 @@ app.get('/dashboard',isLoggedIn,function(req,res){
             //update other details needed by the post
             process_posts.processPagePosts(page_results,req.user,function(processed_response){
                 console.log('PROCESSED RESPONSE');
-                console.log(processed_response);
+                //console.log(processed_response);
 
                 res.render(page,{
                     url:process.env.URL_ROOT,
@@ -1014,7 +1039,9 @@ var request_upload = upload.fields([
     // {name: 'request_attachment',maxCount:1 },
     {name: 'request_photo',maxCount:1 }]);
 app.post('/make_request',request_upload,function(req,res,next){
-    console.log(req.files)
+    
+    var request_type=req.body.request_type;
+    console.log('request_type '+request_type);
 
     if( (req.user.displayPic).length ===0 || req.user.displayName =="User" || req.user.displayName ==""){
         console.log("user has not updated profile")
@@ -1026,6 +1053,7 @@ app.post('/make_request',request_upload,function(req,res,next){
         var display_name=(req.user.displayName)?(req.user.displayName):('');
         var res_id=(req.user._id)?((req.user._id).toString()):('');
 
+
         var owner_details={id:res_id,
             displayName:display_name,
             displayPic:displayPic,
@@ -1034,14 +1062,38 @@ app.post('/make_request',request_upload,function(req,res,next){
             let write_req =new request_model();
             write_req.post_type="request";
             write_req.access=1;//default :public access
-            write_req.body=convertToSentencCase(req.body.request_title);
-            // write_req.topic=convertToSentencCase(req.body.request_info);
+
+            if(request_type=="question"){
+                write_req.body=convertToSentencCase(req.body.request_title);
+                write_req.description=req.body.request_info;
+            }else if(request_type=="article"){
+                write_req.topic=convertToSentencCase(req.body.request_topic);
+                write_req.description=convertToSentencCase(req.body.request_info_article);
+            }else if(request_type=="riddle"){
+                write_req.body=convertToSentencCase(req.body.request_title_riddle);
+            }
+            
             write_req.category = req.body.request_category;
             write_req.destination_id = req.body.request_users;
             write_req.sub_cat1=req.body.request_sub1;
             write_req.sub_cat2=req.body.request_sub2;
-            write_req.description=req.body.request_info;
+            
             write_req.owner=owner_details;
+
+            //set the appropriate request type
+            switch(req.body.request_type){
+                case 'question':
+                write_req.question_status = true;
+                break;
+
+                case 'article':
+                write_req.art_status = true;
+                break;
+
+                case 'riddle':
+                write_req.riddle_status = true;
+                break;
+            }
 
         //store attachment if it exists
         // if(req.files && req.files['request_attachment']){
@@ -1523,6 +1575,10 @@ app.post('/response_item',upload.single('section_response_photo'),function(req,r
             case'riddle':
             section = riddle;
             break;
+
+            case'request':
+            section = request_model;
+            break;
         }
 
         section.findOne({_id:section_id},function(error,result){//find the question that was responsed
@@ -1744,6 +1800,109 @@ app.post('/update_item',section_update_upload,function(req,res,next){
 
 
                 section.updateOne({_id:section_id},{$set:updateSection},function(err1,res1){
+
+                    if(err1){
+                        console.log(err1)
+                        res.json({success:false,msg:"Your update failed"});
+                    }else if(res1){
+                        var json = JSON.stringify(most_recent_response, null, 2);
+                        // console.log(json);
+                        // io.emit('responded', json);
+                        res.json({success:true,msg:"Your update was successfull"});
+                    }
+
+                });             
+            }else{
+                res.json({success:false,msg:"Item not found"});
+            }
+
+        });
+
+
+    });
+
+
+/*process  request modifications & edits immediately*/
+var request_update_upload = upload.fields([
+    // {name: 'request_update_attachment',maxCount:1 },
+    {name: 'request_update_photo',maxCount:1 }]);
+app.post('/update_request',request_update_upload,function(req,res,next){
+    
+    var request_type=req.body.request_update_type;
+    var section_id=req.body.request_update_id;
+    // switch(request_type){
+    //     case'question':
+    //     section = question;
+    //     break;
+
+    //     case'article':
+    //     section = article;
+    //     break;
+
+    //     case'riddle':
+    //     section = riddle;
+    //     break;
+    // }
+
+        request_model.findOne({_id:section_id},function(error,result){//find the request that was responsed
+            if(result){
+                var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('uploads/avatar.png');
+                var status=(req.user.designation[0])?((req.user.designation[req.user.designation.length -1]).title):('');
+                var display_name=(req.user.displayName)?(req.user.displayName):('');
+                var res_id=(req.user._id)?((req.user._id).toString()):('');
+
+                var owner_details={id:res_id,
+                    displayName:display_name,
+                    displayPic:displayPic,
+                    status:status};
+
+                let updateSection = result;
+                updateSection.date_modified=new Date();
+                updateSection.category=req.body.request_update_category;
+                updateSection.sub_cat1=req.body.request_update_sub1;
+                updateSection.sub_cat2=req.body.request_update_sub2;
+
+                switch(request_type){
+                    case 'question':
+                    updateSection.body=convertToSentencCase(req.body.request_update_title);
+                    updateSection.description=convertToSentencCase(req.body.request_update_info);
+                    break;
+                    case 'article':
+                    updateSection.topic=convertToSentencCase(req.body.request_update_topic);
+                    updateSection.description=convertToSentencCase(req.body.request_update_info_article);
+                    break;
+                    case 'riddle':
+                    updateSection.body=convertToSentencCase(req.body.request_update_title_riddle);
+                    break;
+                }
+                
+                updateSection.owner=owner_details;
+                
+
+                //store attachment if it exists
+                // if(req.files && req.files['section_update_attachment']){
+                //     console.log('filename '+req.files['section_update_attachment'][0].filename)
+                //     updateSection.attachment.push('uploads/'+req.files['section_update_attachment'][0].filename);
+                // }
+
+                //store photo if it exists
+                if(req.files && req.files['section_update_photo']){
+                    console.log('filename '+req.files['section_update_photo'][0].filename)
+                    updateSection.pics.push('uploads/'+req.files['section_update_photo'][0].filename);
+                }                          
+                
+                let most_recent_response={
+                    _id:section_id,
+                    body : updateSection.body,
+                    category:updateSection.category,
+                    sub_cat1:updateSection.sub_cat1,
+                    sub_cat2:updateSection.sub_cat2,
+                    description:updateSection.description,
+                    date_modified:updateSection.date_modified
+                }
+
+
+                request_model.updateOne({_id:section_id},{$set:updateSection},function(err1,res1){
 
                     if(err1){
                         console.log(err1)

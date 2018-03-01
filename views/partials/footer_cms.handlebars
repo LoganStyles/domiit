@@ -114,7 +114,12 @@
 
             $(document).ready(function(){
 
-            $('#question_title,#question_info').froalaEditor({});
+            $('#question_title,#question_info,#section_response_details,#notice_title,#request_title,#request_info,#request_title_riddle,#request_info_article,#request_update_title,#request_update_info,#request_update_title_riddle,#request_update_info_article,#article_title,#riddle_title,#pab_synopsis,#pab_about_author,#section_pab_synopsis,#section_pab_about_author,#section_update_title,#section_update_info').froalaEditor({
+                heightMin:100,
+                heightMax:200,
+                toolbarButtons: ['bold','italic','underline','insertImage','insertLink','insertTable','undo','redo'],
+                imageUploadURL:'{{url}}/uploadInlineImages'
+            });
 
             /*install tinymce
             tinymce.init({
@@ -136,10 +141,7 @@
                 $("body").on('change','#request_category',function(e){
                 //get the sub-category 1 for this item
                 var category=$(this).val();
-                var section=$('#request_type').val();
-                
-                //console.log('request category '+category);
-                //console.log('request type '+section);
+                var section=$('#request_type').val();                
                 fetchItemList(category,section,"{{url}}/fetchSubCats1",'#request_sub1');
             });
 
@@ -152,12 +154,8 @@
                 //reset other fields
                 $('#request_sub2').html('');
 
-                //console.log('request cat1 '+cat1);
-                //console.log('request type '+section);
                 //send request
                 var url="{{url}}/fetchSubCats2";
-                //console.log(url);
-
                 fetchItemList(cat1,section,url,'#request_sub2');
 
             });
@@ -171,13 +169,23 @@
                 //reset other fields
                 $('#request_users').html('');
 
-                //console.log('request level '+level);
-                //console.log('request type '+section);
                 //send request
                 var url="{{url}}/fetchUsers";
-                //console.log(url);
                 fetchItemList(level,section,url,'#request_users');
+            });
 
+            /*on radio select, fetch users for that selection*/
+            $("body").on('change','.request_update_from',function(e){
+                
+                var level=$(this).val();
+                var section=$('#request_update_type').val();
+
+                //reset other fields
+                $('#request_update_users').html('');
+
+                //send request
+                var url="{{url}}/fetchUsers";
+                fetchItemList(level,section,url,'#request_update_users');
             });
 
 
@@ -544,6 +552,113 @@
 
                 });
 
+
+        //edit request posts
+        $("body").on('click','.edit_request_item',function(){
+        //get this posts data
+        var response_type="";
+        var parent=$(this).parents('.posted');
+        var id=parent.find('input#post_id').val();
+        var section = (parent.find('span.bold.post_box_name').text()).trim();
+        console.log('section '+section);
+
+        var post_category=parent.find('.post_category').text();
+        var post_sub_cat1=parent.find('.post_sub_cat1').text();
+        var post_sub_cat2=parent.find('.post_sub_cat2').text();
+
+        $("#request_update_modal #request_update_form").trigger('reset'); 
+
+        var post_item_topic=parent.find('.item-body .post_item_topic').text();
+        var post_item_body=parent.find('.item-body .post_item_body').text();
+        var post_item_more_info=parent.find('.item-body .post_item_more_info').text();
+        console.log('post_item_topic '+post_item_topic)
+        console.log('post_item_body '+post_item_body)
+        console.log('post_item_more_info '+post_item_more_info);
+
+        //append data to modal
+        $('#request_update_modal').modal({backdrop: false, keyboard: false});
+
+        //fetch categories
+        var url='{{url}}/fetchCats';
+        //var url2='{{url}}/fetchSubCats1';
+
+        $.ajax({
+            url:url,
+            type:'GET',
+            data:{'section':section},
+            headers: {'X-My-App-Token': 'loganstyles'},
+            success:function(response){
+                //console.log(response);
+                if(response.success==true){
+                    var res_cats=(response.cats);
+                    var options="";
+                    res_cats.forEach((curr_item,index,array)=>{
+                    if(curr_item.title)
+                        options+='<option value="'+curr_item.title+'">'+curr_item.title+'</option>';
+                    });
+
+                    $('#request_update_modal #request_update_category').html(options);
+
+                    //var category=$('#request_update_modal #request_update_category').val();
+                    //console.log('CATEGORY '+category);
+                    //fetchItemList(category,'request',url2,'#request_update_sub1'); 
+
+                    switch(section){
+                        case 'question':
+                        response_type='Answer';
+                        $('.request_article').hide();
+                        $('.request_question').show();
+                        $('.request_riddle').hide();
+                        break;
+
+                        case 'article':
+                        response_type='Review';
+                        $('.request_article').show();
+                        $('.request_question').hide();
+                        $('.request_riddle').hide();
+                        break;
+
+                        case 'riddle':
+                        response_type='Solution';
+                        $('.request_article').hide();
+                        $('.request_question').hide();
+                        $('.request_riddle').show();
+                        break;
+                    }
+
+                    $('#request_update_modal #request_update_sub1_header').text("Request for "+response_type);
+                    $('#request_update_modal #request_update_id').val(id);
+                    $('#request_update_modal #request_update_type').val(section);
+                    $('#request_update_modal #request_update_sub1').val(post_sub_cat1);
+                    $('#request_update_modal #request_update_sub2').val(post_sub_cat2);
+                    if(section =="question"){
+                    $('#request_update_modal #request_update_title').text(post_item_topic.trim());
+                    $('#request_update_modal #request_update_info').text(post_item_more_info.trim());
+
+                    }else if(section =="article"){
+                    $('#request_update_modal #request_update_topic').val(post_item_body.trim());
+                    $('#request_update_modal #request_update_info_article').text(post_item_more_info.trim());
+
+                    }else if(section =="riddle"){
+                    $('#request_update_modal #request_update_title_riddle').text(post_item_topic.trim());
+                    }
+
+                }else{
+                    //console.log('response is false');                            
+                }                        
+
+            },
+            error:function(xhr, status, err){
+                // console.log('error');
+                // console.log(xhr);
+                // console.log(status);
+                // console.log(err);
+            }
+        });
+
+
+        });
+
         //edit posts
            $("body").on('click','.edit_section_item',function(e){
            
@@ -552,20 +667,27 @@
             var parent=$(this).parents('.posted');
             var id=parent.find('input#post_id').val();
             var section=parent.find('input#post_type').val();
+            //var prev_section=section;
             console.log('section '+section)
+
+            //if(section=='request'){
+            //update section to the appropriate type::question/article/riddle
+               // section = (parent.find('span.bold.post_box_name').text()).trim();
+                //console.log('updated section '+section);
+            //}
 
             var post_category=parent.find('.post_category').text();
             var post_sub_cat1=parent.find('.post_sub_cat1').text();
             var post_sub_cat2=parent.find('.post_sub_cat2').text();
 
             if(section !="Post Books"){ 
-            $("#section_update_modal #section_update_form").trigger('reset');           
-            var post_item_topic=parent.find('.item-body .post_item_topic').text();
-            var post_item_body=parent.find('.item-body .post_item_body').text();
-            var post_item_more_info=parent.find('.item-body .post_item_more_info').text();
-            console.log('post_item_topic '+post_item_topic)
-            console.log('post_item_body '+post_item_body)
-            console.log('post_item_more_info '+post_item_more_info)
+                $("#section_update_modal #section_update_form").trigger('reset');           
+                var post_item_topic=parent.find('.item-body .post_item_topic').text();
+                var post_item_body=parent.find('.item-body .post_item_body').text();
+                var post_item_more_info=parent.find('.item-body .post_item_more_info').text();
+                console.log('post_item_topic '+post_item_topic)
+                console.log('post_item_body '+post_item_body)
+                console.log('post_item_more_info '+post_item_more_info);
             
             
             //append data to modal
@@ -585,10 +707,19 @@
                         var res_cats=(response.cats);
                         var options="";
                         res_cats.forEach((curr_item,index,array)=>{
+                        if(curr_item.title)
                             options+='<option value="'+curr_item.title+'">'+curr_item.title+'</option>';
                         });
 
                         $('#section_update_modal #section_update_category').html(options);
+
+                        //if(prev_section == 'request'){
+                        //populate the sub category1 field
+                        //var category=$('#section_update_modal #section_update_category').val();
+                        //var section=$('#request_type').val();
+                        //fetchItemList(category,section,"/{{url}}/fetchCats",'#section_update_modal #section_update_sub1'); 
+                    //}
+
                         $('#section_update_modal #section_update_header').text(section);
                         $('#section_update_modal #section_update_id').val(id);
                         $('#section_update_modal #section_update_type').val(section);
@@ -1352,6 +1483,90 @@
                             }else{
                                 console.log('response is false');
                                 $('#request_form  .form_submission_error').text(response.msg);
+                                sub_button.val(old_button_val);
+                                sub_button.prop('disabled', false);
+                            }
+                              
+                       },
+                       error:function(xhr, status, err){
+                            console.log('error');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(err);
+                        }
+                   });
+                
+            }
+            } );
+
+            $( "#request_update_form" ).validate( {/*validate & submit request modal data*/
+                rules: {  
+                    request_update_category: {
+                        required: true
+                    },
+                    request_update_title: {
+                        required: true,
+                    }
+                    
+                },
+                messages: {                        
+                    request_update_category: {
+                        required: "This field is required"
+                    },
+                    request_update_title: {
+                        required: "This field is required"
+                    }
+                },
+                errorElement: "em",
+                errorPlacement: function ( error, element ) {
+                // Add the `help-block` class to the error element
+                error.addClass( "help-block" );
+
+                if ( element.prop( "type" ) === "checkbox" ) {
+                    error.insertAfter( element.parent( "label" ) );
+                } else {
+                    error.insertAfter( element );
+                }
+            },
+            success: function ( label, element ) {
+                // Add the span element, if doesn't exists, and apply the icon classes to it.
+                if ( !$( element ).next( "span" )[ 0 ] ) {
+                    $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+                }
+            },
+            highlight: function ( element, errorClass, validClass ) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
+            },
+
+            submitHandler: function () {
+                //modify button
+                var sub_button=$("#request_update_form").find(':submit');
+                var old_button_val=sub_button.val();
+                sub_button.prop('disabled', true);
+                sub_button.val('...processing');
+
+                resetFields("#request_update_form");
+                var my_url="{{url}}/update_request";
+                $("#request_update_form").ajaxSubmit({
+                    url:my_url,
+                       contentType: 'application/json',
+                       success: function(response){
+                        if(response.success==true){
+                                console.log('image uploaded and form submitted');
+                                $('#request_update_form  .form_submission_success').text(response.msg);
+                                setTimeout(function(){
+                                    $('#request_update_form  .form_submission_success').text('');
+                                    sub_button.val(old_button_val);
+                                    sub_button.prop('disabled', false);
+                                    $('#request_update_modal').modal('hide');
+                                },3000);
+                                
+                            }else{
+                                console.log('response is false');
+                                $('#request_update_form  .form_submission_error').text(response.msg);
                                 sub_button.val(old_button_val);
                                 sub_button.prop('disabled', false);
                             }

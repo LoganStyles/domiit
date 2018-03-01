@@ -89,10 +89,10 @@ function searchBookmarks(user,final_response){
 /*get all bookmarked posts*/
 router.get('/get_bookmarked',isLoggedIn,function(req,res){
 
-    if( (req.user.displayPic).length ===0 || req.user.displayName =="User" || req.user.displayName ==""){
-        console.log("user has not updated profile")
-        res.json({success:false,msg:"Please update your profile first"});
-    }else{
+    // if( (req.user.displayPic).length ===0 || req.user.displayName =="User" || req.user.displayName ==""){
+    //     console.log("user has not updated profile")
+    //     res.json({success:false,msg:"Please update your profile first"});
+    // }else{
 
     //set avatar
     var curr_user_display_pic='uploads/avatar.png';
@@ -101,7 +101,7 @@ router.get('/get_bookmarked',isLoggedIn,function(req,res){
     }
 
     var res_item_trend=[];
-    var page='dashboard',page_title='Bookmarks';
+    var page='bookmarks',page_title='Bookmarks';
     var req_count=0;
 
         //get trending stories for sidebar headlines
@@ -179,12 +179,271 @@ router.get('/get_bookmarked',isLoggedIn,function(req,res){
 });//end request
 
 
-    });//end trend
+});//end trend
 
-    }
+    //}//end if block
 
 
 });//end
+
+
+
+/*
+fetchs requests made by a user and requests made to a user
+*/
+router.get('/getRequests',isLoggedIn,function(req,res){
+    var req_owner_count=0,
+    req_destination_count=0,
+    req_count=0,
+    pending_friend_notifs=0,
+    page='my_requests',
+    page_title='My Requests',
+    res_item_trend=[];
+
+    //get trending stories for sidebar headlines::nb::this operation takes a while to complete,
+    //try nesting or callbacks to prevent
+    trend.find().sort({date_created:1}).exec(function(err_trend,item_trend){
+
+        if(err_trend){
+            //console.log(err_trend);
+        }
+        if(item_trend){
+            //console.log(item_trend);
+            res_item_trend=item_trend;
+        }
+
+    var bookmark_len=req.user.bookmarks.length;//get saved bookmarks
+
+
+    //find pending notifications length
+    var pending_friend_notifs=process_posts.getNotifications(req.user);
+    //console.log('pending_friend_notifs '+pending_friend_notifs)
+
+    var curr_user_display_pic='uploads/avatar.png';//set default pic
+    if(req.user.displayPic[0]){
+        curr_user_display_pic=req.user.displayPic[req.user.displayPic.length - 1];
+        }//end display
+
+    //get total requests made by this user
+    var id_string=(req.user._id).toString();
+    request_model.find({"owner.id":id_string}).exec(function(err1,res1){
+        if(err1){
+                    //console.log('err occured geting requests');
+                    //console.log(err1)
+                }
+        req_owner_count =res1.length;
+
+        //get total requests for this user
+        request_model.find({destination_id:id_string}).exec(function(err2,res2){
+            if(err2){
+                    //console.log('err occured geting requests');
+                    //console.log(err2)
+                }
+
+            req_destination_count =res2.length;
+
+            //get total requests for this user
+            request_model.find({$or:[{destination_id:id_string},{"owner.id":id_string}]}).exec(function(err3,res3){
+                req_count =res3.length;
+
+
+                if(err3){
+                    //console.log('err occured geting requests');
+                    //console.log(err3)
+                }
+
+
+                if(res3){
+            //update other details needed by the post
+            res.render(page,{
+                url:process.env.URL_ROOT,
+                displayPic:curr_user_display_pic,
+                user_info:req.user,
+                req_owner_count:req_owner_count,
+                req_destination_count:req_destination_count,
+                req_count:req_count,
+                data_trend:res_item_trend,
+                page_title: page_title,
+                class_type:'my_requests',
+                pending_friend_notifs:pending_friend_notifs,
+                bookmarks_count:bookmark_len,
+
+                quest_page_status:false,
+                art_page_status:false,
+                riddle_page_status:false,
+                notice_page_status:false,
+                pab_page_status:false,
+                trend_page_status:false,
+                home_page_status:true
+            });          
+
+        }else{
+
+            res.render(page,{
+                url:process.env.URL_ROOT,
+                displayPic:curr_user_display_pic,
+                user_info:req.user,
+                req_owner_count:req_owner_count,
+                req_destination_count:req_destination_count,
+                req_count:req_count,
+                data_trend:res_item_trend,
+                page_title: page_title,
+                class_type:'my_requests',
+                pending_friend_notifs:pending_friend_notifs,
+                bookmarks_count:bookmark_len,
+
+                quest_page_status:false,
+                art_page_status:false,
+                riddle_page_status:false,
+                notice_page_status:false,
+                pab_page_status:false,
+                trend_page_status:false,
+                home_page_status:true
+            });
+
+        }
+
+
+    });//end all requests
+
+
+        });//end destination request
+
+    });//end request
+
+
+    });//end trend
+
+});
+
+
+/*
+fetchs request details made by a user
+*/
+router.get('/getOwnerRequestLists',isLoggedIn,function(req,res){
+    var req_owner_count=0,
+    req_destination_count=0,
+    req_count=0,
+    pending_friend_notifs=0,
+    page='my_requests_lists',
+    page_title='My Requests',
+    res_item_trend=[];
+
+    //get list of trending stories for sidebar headlines::nb::this operation takes a while to complete,
+    //try nesting or callbacks to prevent
+    trend.find().sort({date_created:1}).exec(function(err_trend,item_trend){
+
+        if(err_trend){
+            //console.log(err_trend);
+        }
+        if(item_trend){
+            //console.log(item_trend);
+            res_item_trend=item_trend;
+        }
+
+    var bookmark_len=req.user.bookmarks.length;//get saved bookmarks for sidebar
+
+
+    //find pending notifications length for header
+    var pending_friend_notifs=process_posts.getNotifications(req.user);
+    //console.log('pending_friend_notifs '+pending_friend_notifs)
+
+    var curr_user_display_pic='uploads/avatar.png';//set default pic
+    if(req.user.displayPic[0]){
+        curr_user_display_pic=req.user.displayPic[req.user.displayPic.length - 1];
+        }//end display
+
+    //get total requests for this user
+    var id_string=(req.user._id).toString();
+    request_model.find({$or:[{destination_id:id_string},{"owner.id":id_string}]}).exec(function(err1,res1){
+        if(err1){
+                    //console.log('err occured geting requests');
+                    //console.log(err1)
+                }
+        req_count =res1.length;
+
+            //get total requests made by this user
+            request_model.find({"owner.id":id_string}).sort({date_created:-1}).exec(function(err3,res3){
+                req_owner_count =res3.length;
+
+                if(err3){
+                    //console.log('err occured geting requests');
+                    //console.log(err3)
+                }
+
+
+                if(req_owner_count >0){
+            //update other details needed by the post
+            process_posts.processPagePosts(res3,req.user,function(processed_response){
+                //console.log('MY REQUESTS LISTS .......................PROCESSED RESPONSE');
+                //console.log(processed_response);
+
+                res.render(page,{
+                    url:process.env.URL_ROOT,
+                    displayPic:curr_user_display_pic,
+                    user_info:req.user,
+                    data:processed_response,
+                    req_owner_count:req_owner_count,
+                    //page_response:item_response,
+                    req_count:req_count,
+                    data_trend:res_item_trend,
+                    page_title: page_title,
+                    class_type:'my_requests_lists',
+                    pending_friend_notifs:pending_friend_notifs,
+                    bookmarks_count:bookmark_len,
+
+                    quest_page_status:false,
+                    art_page_status:false,
+                    riddle_page_status:false,
+                    notice_page_status:false,
+                    pab_page_status:false,
+                    trend_page_status:false,
+                    home_page_status:true
+                });      
+
+            });     
+
+        }else{
+
+            res.render(page,{
+                url:process.env.URL_ROOT,
+                displayPic:curr_user_display_pic,
+                user_info:req.user,
+                data:[],
+                req_owner_count:req_owner_count,
+                req_destination_count:req_destination_count,
+                req_count:req_count,
+                //page_response:item_response,
+                data_trend:res_item_trend,
+                page_title: page_title,
+                class_type:'my_requests_lists',
+                pending_friend_notifs:pending_friend_notifs,
+                bookmarks_count:bookmark_len,
+
+                quest_page_status:false,
+                art_page_status:false,
+                riddle_page_status:false,
+                notice_page_status:false,
+                pab_page_status:false,
+                trend_page_status:false,
+                home_page_status:true
+            });
+
+        }
+
+
+    });//end all requests
+
+
+    });//end request
+
+
+    });//end trend
+
+});
+
+
+
 
 
 /*get all posted questions,*/
