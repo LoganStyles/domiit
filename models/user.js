@@ -23,7 +23,7 @@ var userSchema = mongoose.Schema({
     lastname:{type:String,default:''},
     country:{type:String,default:''},
     displayName:{type:String,default:'User'},
-    displayPic:[{type:String,default:''}],
+    displayPic:[{type:String,default:'uploads/avatar.png'}],
     backgroundPic:[{type:String,default:''}],
     phone:{type:String,default:''},
     date_created: { type: Date, default: Date.now },
