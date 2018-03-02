@@ -396,8 +396,8 @@ app.get('/fetchSubCats1',isLoggedIn,function(req,res){
 
     });        
 });
-
 /*
+
 fetch sub cat2s for a category
 */
 app.get('/fetchSubCats2',isLoggedIn,function(req,res){

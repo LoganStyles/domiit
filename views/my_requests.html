@@ -35,8 +35,8 @@
                                                                 <hr class="long_length">
                                                             </li>
                                                             <li>
-                                                                <a href="#">
-                                                                <i class="fa fa-file-text-o font_icon_style_leftbar"></i>
+                                                                <a href="javascript:;">
+                                                                <img alt="" class="icon_size" src="{{url}}/images/my_docs.png">
 
                                                                     My docs </a>
                                                                     <hr class="long_length">
@@ -114,14 +114,14 @@
 
                                         </div>
 
-                                         <div class="posts_partition_friends_middle" style="width: 40%;"><!--2nd partition-->
+                                         <div class="posts_partition_friends_middle" style="width: 60%;"><!--2nd partition-->
                                             <span>
                                                 ({{req_owner_count}}) requests Made By You
                                                             
                                             </span>
                                         </div>
-                                         <div class="posts_partition_friends_middle"><!--3rd partition-->
-                                            <div class="pull-right" style="width: 30%">
+                                         <div class=""><!--3rd partition-->
+                                            <div class="pull-right" style="width: 10%">
                                                  <div class="fromnow"></div>
                                                     <div class="clearfix"></div>
 
@@ -187,25 +187,29 @@
 
                                         </div>
 
-                                         <div class="posts_partition_friends_middle" style="width: 40%;"><!--2nd partition-->
+                                         <div class="posts_partition_friends_middle" style="width: 60%;"><!--2nd partition-->
                                             <span>
                                                 ({{req_destination_count}}) requests Made By Users To You
                                                             
                                             </span>
                                         </div>
-                                         <div class="posts_partition_friends_middle"><!--3rd partition-->
-                                            <div class="pull-right" style="width: 30%">
+                                         <div class=""><!--3rd partition-->
+                                            <div class="pull-right" style="width: 10%">
                                                  <div class="fromnow"></div>
                                                     <div class="clearfix"></div>
 
                                                     {{#if (gt req_destination_count 0)}}
 
+                                                    <a href="{{url}}/posts/getDestinationRequestLists">
+
                                                     
                                                         <div style="margin-right: 5%;cursor: pointer" class="post_actions_button_left user_requests">
                                                         
                                                             View
-                                                        </a>
+                                                        
                                                         </div>
+
+                                                        </a>
                                                     
                                                     {{/if}}
                                                     
