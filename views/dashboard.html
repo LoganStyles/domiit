@@ -34,13 +34,13 @@
                                                                 My Requests ({{req_count}})</a>
                                                                 <hr class="long_length">
                                                             </li>
-                                                            <li>
+                                                            <!-- <li>
                                                                 <a href="javascript:;">
                                                                 <img alt="" class="icon_size" src="{{url}}/images/my_docs.png">
 
                                                                     My docs </a>
                                                                     <hr class="long_length">
-                                                                </li>
+                                                            </li> -->
                                                                 <li>
                                                                     <a href="{{url}}/posts/get_bookmarked" style="margin-left: 2px;">
                                                                         <img alt="" class="icon_size" src="{{url}}/images/my_bookmarked_items.png"> My Bookmarked Items ({{bookmarks_count}})</a>
@@ -65,8 +65,11 @@
                                                    
             <div class="panel panel-default portlet">
               <div class="panel-body" style="width: 100%;">
+              <div class="posts_top_actions_left">
+                    <span class="posts_page_title">My Feeds</span>
+                </div>
                                 
-                <div class="posts_top_actions_right" style="width: 100%;">
+                <div class="posts_top_actions_right">
                     <a class="page_top_actions" onclick="modalLoader('question','new','');">Ask a question</a>&nbsp;|&nbsp;
 
                     <a class="page_top_actions" onclick="modalLoader('article','new','');">Write an article</a>&nbsp;|&nbsp;
@@ -213,7 +216,7 @@
                                                 </li>
                                                 
                                                 {{#if question_status}}
-                                                <li>
+                                                <li class="edit_request_item">
                                                     <a href="javascript:;">
                                                         <i class="fa fa-share-square-o"></i> Request for answer </a>
                                                 </li>  
@@ -457,7 +460,7 @@
     {{/if}}<!--end if :chk for books-->
 
     <div style="width: 100%;"><!--main block-->
-    <hr class="long_length">
+    <!-- <hr class="long_length"> -->
 
     <div class="pull-left">
 
@@ -625,7 +628,7 @@
             {{#unless pab_status}}
 
                 {{#if page_response}}
-                <a class=" sbold grey_button response_button">
+                <a class=" sbold response_button">
                 <i class="fa fa-edit"></i>&nbsp;Write your {{page_response}}</a>
                 {{/if}}                            
             {{/unless}}

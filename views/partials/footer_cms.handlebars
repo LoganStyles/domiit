@@ -662,7 +662,6 @@
         //edit posts
            $("body").on('click','.edit_section_item',function(e){
            
-            
             //get this posts data
             var parent=$(this).parents('.posted');
             var id=parent.find('input#post_id').val();
@@ -682,12 +681,13 @@
 
             if(section !="Post Books"){ 
                 $("#section_update_modal #section_update_form").trigger('reset');           
-                var post_item_topic=parent.find('.item-body .post_item_topic').text();
+                var post_item_topic=parent.find('.item-body .post_item_topic').html();
                 var post_item_body=parent.find('.item-body .post_item_body').text();
                 var post_item_more_info=parent.find('.item-body .post_item_more_info').text();
                 console.log('post_item_topic '+post_item_topic)
                 console.log('post_item_body '+post_item_body)
                 console.log('post_item_more_info '+post_item_more_info);
+                console.log('post_category '+post_category);
             
             
             //append data to modal
@@ -713,19 +713,13 @@
 
                         $('#section_update_modal #section_update_category').html(options);
 
-                        //if(prev_section == 'request'){
-                        //populate the sub category1 field
-                        //var category=$('#section_update_modal #section_update_category').val();
-                        //var section=$('#request_type').val();
-                        //fetchItemList(category,section,"/{{url}}/fetchCats",'#section_update_modal #section_update_sub1'); 
-                    //}
-
-                        $('#section_update_modal #section_update_header').text(section);
-                        $('#section_update_modal #section_update_id').val(id);
-                        $('#section_update_modal #section_update_type').val(section);
-                        $('#section_update_modal #section_update_sub1').val(post_sub_cat1);
-                        $('#section_update_modal #section_update_sub2').val(post_sub_cat2);
-                        $('#section_update_modal #section_update_title').text(post_item_topic.trim());
+    $('#section_update_modal #section_update_header').text("Edit this "+section);
+    $('#section_update_modal #section_update_id').val(id);
+    $('#section_update_modal #section_update_type').val(section);
+    $('#section_update_modal #section_update_sub1').val(post_sub_cat1);
+    $('#section_update_modal #section_update_sub2').val(post_sub_cat2);
+    $('#section_update_modal #section_update_title').froalaEditor('html.set',post_item_topic.trim());
+                        
 
                         switch(section){
                         case 'question':
@@ -845,7 +839,6 @@
                     console.log(err);
                 }
             });
-
 
 
             }

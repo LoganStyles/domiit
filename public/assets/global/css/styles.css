@@ -535,7 +535,8 @@
      }
 
      #section_update_header{
-          text-transform: uppercase; 
+          /*text-transform: capitalize; */
+          color: #5F84CF;
      }
 
      /*category rows*/

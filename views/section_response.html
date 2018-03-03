@@ -318,7 +318,7 @@
 
                                     <div class="clearfix"></div>
                                 </div>
-                                <hr class="long_length">
+                                <!-- <hr class="long_length"> -->
 
 
                             </div>
@@ -482,7 +482,7 @@
                                             </div>
                                         {{/if}}
                                             <div class="post_response post_item_body">
-                                                {{body}}
+                                                {{{body}}}
                                             </div>
                                         
                                     </div>  
@@ -533,7 +533,7 @@
                         </span>
                         </a>
 
-                        <a class="btn btn-link post_downvotes grey_button" >
+                        <a class="btn btn-link post_downvotes " >
                             <span class="grey_button">
                                 <span class="social_value">{{downvotes}}</span>
                                 <i class="fa fa-long-arrow-down "></i>
@@ -542,7 +542,7 @@
                             </span>
                         </a>
 
-                        <a class="btn btn-link grey_button">
+                        <a class="btn btn-link">
                             <span class="grey_button">
                                 <span class="social_value">{{comments.length}}</span>
                                 <img src="{{../../url}}/images/comments.png">&nbsp;Comments
