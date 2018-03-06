@@ -502,7 +502,7 @@
                 submitHandler: function () {
                     resetFields();
                     var formData = $('#register_member').serialize();
-                    console.log(formData);
+                    //console.log(formData);
                     var my_url="{{url}}/members/register";
 
                     $.ajax({
@@ -514,7 +514,7 @@
                             // contentType: 'application/json', 
                             headers: {'X-My-App-Token': 'loganstyles'},
                             success:function(response){
-                                console.log('success');
+                                //console.log('success');
                                 if(response.success==true){
                                     $('#register_member .form_submission_success').append(response.msg);
                                     //clear msgs & show login
@@ -531,10 +531,10 @@
                             },
                             error:function(xhr, status, err){
                                 ('#register_member .form_submission_error').append('Operation Failed');
-                                console.log('error');
+                                /*console.log('error');
                                 console.log(xhr);
                                 console.log(status);
-                                console.log(err);
+                                console.log(err);*/
                             }
                         });
                 }
@@ -585,7 +585,7 @@ $( "#login_member" ).validate( {
                 submitHandler: function () {
                     resetFields();
                     var formData = $('#login_member').serialize();
-                    console.log(formData);
+                    //console.log(formData);
 
                     $.ajax({
                         url:'{{url}}/members/login',
@@ -595,8 +595,8 @@ $( "#login_member" ).validate( {
                         headers: {'X-My-App-Token': 'loganstyles'},
                             // contentType: false, 
                             success:function(response){
-                                console.log('success');
-                                console.log(response);
+                                //console.log('success');
+                                //console.log(response);
                                 if(response.success==true){
                                     window.location.href="{{url}}/dashboard";
                                     
@@ -606,10 +606,10 @@ $( "#login_member" ).validate( {
                                 }
                             },
                             error:function(xhr, status, err){
-                                console.log('error');
+                                /*console.log('error');
                                 console.log(xhr);
                                 console.log(status);
-                                console.log(err);
+                                console.log(err);*/
                             }
                         });
                 }

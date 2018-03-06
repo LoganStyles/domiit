@@ -1044,8 +1044,8 @@ app.post('/make_request',request_upload,function(req,res,next){
     console.log('request_type '+request_type);
 
     if((req.body.request_choice) && (req.user.displayPic).length ===0 || req.user.displayName =="User" || req.user.displayName ==""){
-        console.log("user has not updated profile")
-        res.json({success:false,msg:"Your post failed"});
+        console.log("request failed or user has not updated profile")
+        res.json({success:false,msg:"Your request failed"});
     }else{
 
         var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('uploads/avatar.png');
@@ -1122,6 +1122,114 @@ app.post('/make_request',request_upload,function(req,res,next){
     }    
 
 });
+
+
+/*process a new request*/
+var request_upload = upload.fields([
+    // {name: 'request_attachment',maxCount:1 },
+    //{name: 'new_request_photo',maxCount:1 }
+    ]);
+app.post('/make_new_request',request_upload,function(req,res,next){
+
+    // for (var key in body) {//loop thru obj
+    //     console.log(key)
+    //         // if (body.hasOwnProperty(key)) {
+    //         //     console.log(key + " -> " + body[key]);
+    //         // }
+    //     }
+    
+    //console.log('request '+req);
+    var request_type=req.body.new_request_type;
+    console.log('request_type '+request_type);
+
+    var request_id=req.body.new_request_id;
+    console.log('request_id '+request_id);
+
+    if((req.body.new_request_choice) && (req.user.displayPic).length ===0 || req.user.displayName =="User" || req.user.displayName ==""){
+        console.log("request failed or user has not updated profile")
+        res.json({success:false,msg:"Your request failed"});
+    }else{
+
+        var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('uploads/avatar.png');
+        var status=(req.user.designation[0])?((req.user.designation[req.user.designation.length -1]).title):('');
+        var display_name=(req.user.displayName)?(req.user.displayName):('');
+        var res_id=(req.user._id)?((req.user._id).toString()):('');
+
+
+        var owner_details={id:res_id,
+            displayName:display_name,
+            displayPic:displayPic,
+            status:status};
+            var section;
+
+            switch(request_type){
+                case 'question':
+                section=question;
+                break;
+
+            }
+
+            //get question & insert into request
+            section.findOne({_id:request_id},function(error,result){
+                if(result){
+                    let section_data=result;
+
+                    let write_req =new request_model();
+                    write_req.post_type="request";
+                    write_req.access=1;//default :public access
+
+                    if(request_type=="question"){
+                        write_req.body=section_data.body;
+                        write_req.description=section_data.description;
+                    }else if(request_type=="article"){
+                        write_req.topic=(req.body.new_request_topic);
+                        write_req.description=(req.body.new_request_info_article);
+                    }else if(request_type=="riddle"){
+                        write_req.body=(req.body.new_request_title_riddle);
+                    }
+
+                    write_req.destination_id=req.body.new_request_users;
+                    write_req.destination_type=req.body.new_request_choice;
+                    write_req.category = section_data.category;
+                    write_req.sub_cat1 = section_data.sub_cat1;
+                    write_req.sub_cat2 = section_data.sub_cat2;
+                    write_req.pics = section_data.pics;
+                    write_req.date_created = new Date();;
+                    write_req.sub_cat2 = section_data.sub_cat2;
+
+                    write_req.owner=owner_details;
+                    //set the appropriate new_request type
+                    switch(request_type){
+                        case 'question':
+                        write_req.question_status = true;
+                        break;
+
+                        case 'article':
+                        write_req.art_status = true;
+                        break;
+
+                        case 'riddle':
+                        write_req.riddle_status = true;
+                        break;
+                    }
+
+                    write_req.save(function(err1, saved_req) {
+
+                        if(err1){console.log(err1);res.json({success: false,msg:"Request submission failed"});
+
+                    }else{
+                        res.json({success:true,msg:"Request submission succesful"});
+                    }   
+                });
+
+                }else{
+                    res.json({success: false,msg:"Item not found for this request"});
+                }
+            });
+
+        }    
+
+    });
 
 /*process an 'write a notice' post,save & update UI immediately*/
 var notice_upload = upload.fields([
@@ -1591,7 +1699,7 @@ app.post('/response_item',upload.single('section_response_photo'),function(req,r
                 var displayPic=(req.user.displayPic[0])?(req.user.displayPic[req.user.displayPic.length -1]):('uploads/avatar.png');
 
                 updateSection.answers.push({
-                    body : convertToSentencCase(req.body.section_response_details),
+                    body : (req.body.section_response_details),
                     responderDisplayName:req.user.displayName,
                     responder_id:req.user._id,
                     responderDisplayPic:displayPic,
@@ -1634,11 +1742,16 @@ app.post('/response_item',upload.single('section_response_photo'),function(req,r
                     }else if(res1){
                         var json = JSON.stringify(most_recent_response, null, 2);
                         // console.log(json);
-                        io.emit('responded', json);
+                        if(section_type !='request'){//for non-requests
+                            io.emit('responded', json);
+                        }else{
+                            //real time requests responses
+                        }
                         res.json({success:true,msg:"Your post has been received successfully"});
-                    }
+                    
+                }
 
-                });             
+            });             
             }else{
                 res.json({success:false,msg:"Item not found"});
             }

@@ -657,10 +657,20 @@ function displayPost(selected_class,json){
 			response_content+='<span class="social_value">'+parsed.views+'</span>&nbsp;&nbsp;Views</span></a>&nbsp;|';
 			response_content+='<a class="btn btn-link post_shares" style="color: #000;font-size: 0.8em;color: orange">About this post</a></div>';
 			response_content+='<div class="clearfix"></div></div><hr></div></div></div>';
+
+			//console.log('ABOUT TO DISPLAY THE RESPONSE');
 			var response_area=$(this).find('.response_area');
-			console.log('response_area '+response_area)
+			//console.log('response_area '+response_area)
 			// $(response_area).html("");
 			$(response_area).html(response_content);
+
+			//$(".post_responses").prepend("SOMETHING CAME OUT HERE");
+
+			//$(".post_responses").prepend($(this));
+
+			//console.log('THE RESULTANT POST')
+
+			//console.log($(this));
 
 			return false;
 		}

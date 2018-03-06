@@ -340,7 +340,7 @@
                     <div>
                         <div class="caption caption-md">
                             <!-- <i class="fa fa-question"></i> -->
-                            <span class="caption-subject  bold post_box_name" style="color: #86be25">{{answers.length}} Answer(s)</span>
+                            <span class="caption-subject  bold post_box_name">{{answers.length}} Answer(s)</span>
 
                         </div>                       
                     </div>
@@ -401,7 +401,7 @@
                                                         {{#if post_owner}}
                                                             <img class="icon_size_50 " src="{{../url}}/images/filler.png">
                                                             {{else}}
-                                                            <img class="icon_size_50 " src="{{../url}}/images/add_person.png">
+                                                            <img class="icon_size_20 send_friend_req " src="{{../url}}/images/add_person.png">
                                                         {{/if}}
 
                                                 {{/if}}
@@ -509,7 +509,7 @@
                                     </div>
                                     {{/if}}
                                     <div style="color: #000;" class="post_question post_item_body">
-                                        {{body}}
+                                        {{{body}}}
                                     </div>
 
                                 </div>  <br>
@@ -525,7 +525,7 @@
                             <span class="grey_button">
                                 <span class="social_value">{{upvotes}}</span>
                                 <!-- <i class="fa fa-long-arrow-up"></i> -->
-                            <img src="{{../../url}}/images/up_votes.png">&nbsp;
+                            <img class="icon_size_20" src="{{../../url}}/images/upvotes.png">&nbsp;
                             Upvotes
                             </span>
                         </a>
@@ -534,7 +534,7 @@
                             <span class="grey_button">
                                 <span class="social_value">{{downvotes}}</span>
                                 <!-- <i class="fa fa-long-arrow-down "></i> -->
-                                <img src="{{../../url}}/images/down_votes.png">
+                                <img class="icon_size_20" src="{{../../url}}/images/downvotes.png">
                                 Downvotes
                             </span>
                         </a>

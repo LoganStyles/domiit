@@ -107,17 +107,14 @@
 
         <!--<script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>-->
 
-        <!-- Include the Quill library -->
-        <!--<script src="https://cdn.quilljs.com/1.3.5/quill.js"></script>-->
-
         <script type="text/javascript">
 
             $(document).ready(function(){
 
-            $('#question_title,#question_info,#section_response_details,#notice_title,#request_title,#request_info,#request_title_riddle,#request_info_article,#request_update_title,#request_update_info,#request_update_title_riddle,#request_update_info_article,#article_title,#riddle_title,#pab_synopsis,#pab_about_author,#section_pab_synopsis,#section_pab_about_author,#section_update_title,#section_update_info').froalaEditor({
+            $('#question_title,#question_info,#section_response_details,#notice_title,#request_title,#request_info,#request_title_riddle,#request_info_article,#new_request_title,#new_request_info,#new_request_title_riddle,#new_request_info_article,#request_update_title,#request_update_info,#request_update_title_riddle,#request_update_info_article,#article_title,#riddle_title,#pab_synopsis,#pab_about_author,#section_pab_synopsis,#section_pab_about_author,#section_update_title,#section_update_info').froalaEditor({
                 heightMin:100,
                 heightMax:200,
-                toolbarButtons: ['bold','italic','underline','insertImage','insertLink','insertTable','undo','redo'],
+                toolbarButtons: ['bold','italic','underline','insertImage','insertLink','insertTable','undo','redo','color', 'formatOL', 'formatUL'],
                 imageUploadURL:'{{url}}/uploadInlineImages'
             });
 
@@ -172,6 +169,20 @@
                 //send request
                 var url="{{url}}/fetchUsers";
                 fetchItemList(level,section,url,'#request_users');
+            });
+
+            /*on radio select, fetch users for that selection*/
+            $("body").on('change','.new_request_from',function(e){
+                
+                var level=$(this).val();
+                var section=$('#new_request_type').val();
+
+                //reset other fields
+                $('#new_request_users').html('');
+
+                //send request
+                var url="{{url}}/fetchUsers";
+                fetchItemList(level,section,url,'#new_request_users');
             });
 
             /*on radio select, fetch users for that selection*/
@@ -265,14 +276,14 @@
 
             //convert text to sentence case
                 
-                $(".post_item_topic,.post_item_more_info,.post_item_body,#section_response_body,#section_response_body,#synopsis,#about_author").each(function(index,element){
+               /* $(".post_item_topic_ed,.post_item_more_info_ed,.post_item_body,#section_response_body,#section_response_body,#synopsis,#about_author").each(function(index,element){
 
                     var string =$(this).text();
-                    console.log('initial string '+string)
+                    //console.log('initial string '+string)
                     var string_converted=convertToSentencCase(string);
-                    console.log('converted string '+string_converted)
+                    //console.log('converted string '+string_converted)
                     $(this).text(string_converted);
-                });
+                });*/
 
             /*show modal for answering a question*/
 
@@ -380,14 +391,13 @@
                 });
 
                 $('body').on('click','.response_button',function(e){
-                    //e.preventDefault();
 
                     var $this=$(this);
                     var selected_id=$this.parents('.posted').find('#post_id').val();
                     var selected_type=$this.parents('.posted').find('#post_type').val();
-                    var selected_item_topic=($this.parents('.posted').find('.post_item_topic').text()).trim();
-                    var selected_item_body=($this.parents('.posted').find('.post_item_body').text()).trim();
-                    var selected_item_more_info=($this.parents('.posted').find('.post_item_more_info').text()).trim();
+                    var selected_item_topic=$this.parents('.posted').find('.post_item_topic').html();
+                    var selected_item_body=$this.parents('.posted').find('.post_item_body').html();
+                    var selected_item_more_info=$this.parents('.posted').find('.post_item_more_info').html();
 
                     console.log('this '+selected_id);
                     console.log('selected_type '+selected_type);
@@ -402,14 +412,21 @@
                         case'question':
                         page_response='answer';
                         break;
+
+                        case'request':
+                        page_response='response';
+                        break;
                     }
 
 
                     $('#section_response_id').val(selected_id);
                     $('#section_response_type').val(selected_type);
-                    $('#section_response_topic').text(selected_item_topic);
-                    $('#section_response_body').text(selected_item_body);
-                    $('#section_response_more_info').text(selected_item_more_info);
+                    if(selected_item_topic)
+                    $('#section_response_topic').html(selected_item_topic.trim());
+                    if(selected_item_body)
+                    $('#section_response_body').html(selected_item_body.trim());
+                    if(selected_item_more_info)
+                    $('#section_response_more_info').html(selected_item_more_info.trim());
                     $('#section_response_details').focus();
                     $('#section_response_header').text(page_response);
                     $('#section_response_modal').modal({backdrop: false, keyboard: false});
@@ -472,8 +489,8 @@
                     var parent=$(this).parents('.posted');
                     var id=parent.find('input#post_id').val();
                     var section=parent.find('input#post_type').val();
-                    console.log('delete id '+id);
-                    console.log('delete section '+section);
+                    //console.log('delete id '+id);
+                    //console.log('delete section '+section);
 
                     //update & show modal
                     $('#section_delete_modal').modal({backdrop: false, keyboard: false});
@@ -487,9 +504,9 @@
 
                     var curr_id=$('table tr.page_row.active .curr_id').val();
                     if(curr_id){
-                     console.log('curr_id '+curr_id);
+                    // console.log('curr_id '+curr_id);
                     var curr_type=$('table tr.page_row.active .curr_type').val();
-                    console.log('curr_type '+curr_type);
+                    //console.log('curr_type '+curr_type);
                 
                     //update & show modal
                     $('#section_delete_modal').modal({backdrop: false, keyboard: false});
@@ -511,10 +528,10 @@
 
                     resetFields();
                     var my_url="{{url}}/delete_postitem";
-                    console.log('url: '+my_url);
+                    //console.log('url: '+my_url);
                     
                     var form_data=$(this).serialize();
-                    console.log(form_data);
+                    //console.log(form_data);
 
                     $.ajax({
                         url:my_url,
@@ -522,7 +539,7 @@
                         data:form_data,
                         headers: {'X-My-App-Token': 'loganstyles'},
                         success:function(response){
-                            console.log(response);
+                            //console.log(response);
                             if(response.success==true){
                             $('#section_delete_form  .form_submission_success').text(response.msg);
                             setTimeout(function(){
@@ -543,10 +560,10 @@
 
                         },
                         error:function(xhr, status, err){
-                            console.log('error');
+                            /*console.log('error');
                             console.log(xhr);
                             console.log(status);
-                            console.log(err);
+                            console.log(err);*/
                         }
                     });
 
@@ -568,9 +585,9 @@
 
         $("#request_update_modal #request_update_form").trigger('reset'); 
 
-        var post_item_topic=parent.find('.item-body .post_item_topic').text();
-        var post_item_body=parent.find('.item-body .post_item_body').text();
-        var post_item_more_info=parent.find('.item-body .post_item_more_info').text();
+        var post_item_topic=parent.find('.item-body .post_item_topic').html();
+        var post_item_body=parent.find('.item-body .post_item_body').html();
+        var post_item_more_info=parent.find('.item-body .post_item_more_info').html();
         console.log('post_item_topic '+post_item_topic)
         console.log('post_item_body '+post_item_body)
         console.log('post_item_more_info '+post_item_more_info);
@@ -632,8 +649,12 @@
                     $('#request_update_modal #request_update_sub1').val(post_sub_cat1);
                     $('#request_update_modal #request_update_sub2').val(post_sub_cat2);
                     if(section =="question"){
-                    $('#request_update_modal #request_update_title').text(post_item_topic.trim());
-                    $('#request_update_modal #request_update_info').text(post_item_more_info.trim());
+                    //$('#request_update_modal #request_update_title').text(post_item_topic.trim());
+                    //$('#request_update_modal #request_update_info').text(post_item_more_info.trim());
+
+                    $('#request_update_modal #request_update_title').froalaEditor('html.set',post_item_topic.trim());
+
+                    $('#request_update_modal #request_update_info').froalaEditor('html.set',post_item_more_info.trim());
 
                     }else if(section =="article"){
                     $('#request_update_modal #request_update_topic').val(post_item_body.trim());
@@ -642,6 +663,115 @@
                     }else if(section =="riddle"){
                     $('#request_update_modal #request_update_title_riddle').text(post_item_topic.trim());
                     }
+
+                }else{
+                    //console.log('response is false');                            
+                }                        
+
+            },
+            error:function(xhr, status, err){
+                // console.log('error');
+                // console.log(xhr);
+                // console.log(status);
+                // console.log(err);
+            }
+        });
+
+
+        });
+
+
+        //new request got from quests,arts etc posts
+        $("body").on('click','.new_request_item',function(){
+        //get this posts data
+        var response_type="";
+        var parent=$(this).parents('.posted');
+        var id=parent.find('input#post_id').val();
+        var section = (parent.find('span.bold.post_box_name').text()).trim();
+        console.log('section '+section);
+
+        /*var post_category=parent.find('.post_category').text();
+        var post_sub_cat1=parent.find('.post_sub_cat1').text();
+        var post_sub_cat2=parent.find('.post_sub_cat2').text();*/
+
+        $("#new_request_modal #new_request_form").trigger('reset'); 
+
+        /*var post_item_topic=parent.find('.item-body .post_item_topic').html();
+        var post_item_body=parent.find('.item-body .post_item_body').html();
+        var post_item_more_info=parent.find('.item-body .post_item_more_info').html();
+        console.log('post_item_topic '+post_item_topic)
+        console.log('post_item_body '+post_item_body)
+        console.log('post_item_more_info '+post_item_more_info);*/
+
+        //append data to modal
+        $('#new_request_modal').modal({backdrop: false, keyboard: false});
+
+        //fetch categories
+        var url='{{url}}/fetchCats';
+
+        $.ajax({
+            url:url,
+            type:'GET',
+            data:{'section':section},
+            headers: {'X-My-App-Token': 'loganstyles'},
+            success:function(response){
+                //console.log(response);
+                if(response.success==true){
+                    var res_cats=(response.cats);
+                    var options="";
+                    res_cats.forEach((curr_item,index,array)=>{
+                    if(curr_item.title)
+                        options+='<option value="'+curr_item.title+'">'+curr_item.title+'</option>';
+                    });
+
+                    //$('#new_request_modal #new_request_category').html(options);
+
+                    switch(section){
+                        case 'question':
+                        response_type='Answer';
+                       /* $('.request_article').hide();
+                        $('.request_question').show();
+                        $('.request_riddle').hide();*/
+                        break;
+
+                        case 'article':
+                        response_type='Review';
+                        /*$('.request_article').show();
+                        $('.request_question').hide();
+                        $('.request_riddle').hide();*/
+                        break;
+
+                        case 'riddle':
+                        response_type='Solution';
+                        /*$('.request_article').hide();
+                        $('.request_question').hide();
+                        $('.request_riddle').show();*/
+                        break;
+                    }
+
+                    $('#new_request_modal #new_request_sub1_header').text("Request for "+response_type);
+                    $('#new_request_modal #new_request_id').val(id);
+                    $('#new_request_modal #new_request_type').val(section);
+                    /*$('#new_request_modal #new_request_sub1').val(post_sub_cat1);
+                    $('#new_request_modal #new_request_sub2').val(post_sub_cat2);
+                    if(section =="question"){
+                    $('#new_request_modal #new_request_title').froalaEditor('html.set',post_item_topic.trim());
+
+                    $('#new_request_modal #new_request_info').froalaEditor('html.set',post_item_more_info.trim());
+
+                    }else if(section =="article"){
+                    $('#new_request_modal #new_request_topic').froalaEditor('html.set',post_item_body.trim());
+                    $('#new_request_modal #new_request_info_article').froalaEditor('html.set',post_item_more_info.trim());
+
+                    //$('#request_modal #request_topic').val(post_item_body.trim());
+                    //$('#request_modal #request_info_article').text(post_item_more_info.trim());
+
+                    }else if(section =="riddle"){
+                    $('#new_request_modal #new_request_title_riddle').froalaEditor('html.set',post_item_topic.trim());
+
+                    //$('#request_modal #request_title_riddle').text(post_item_topic.trim());
+                    }
+                    */
 
                 }else{
                     //console.log('response is false');                            
@@ -669,12 +799,6 @@
             //var prev_section=section;
             console.log('section '+section)
 
-            //if(section=='request'){
-            //update section to the appropriate type::question/article/riddle
-               // section = (parent.find('span.bold.post_box_name').text()).trim();
-                //console.log('updated section '+section);
-            //}
-
             var post_category=parent.find('.post_category').text();
             var post_sub_cat1=parent.find('.post_sub_cat1').text();
             var post_sub_cat2=parent.find('.post_sub_cat2').text();
@@ -682,8 +806,8 @@
             if(section !="Post Books"){ 
                 $("#section_update_modal #section_update_form").trigger('reset');           
                 var post_item_topic=parent.find('.item-body .post_item_topic').html();
-                var post_item_body=parent.find('.item-body .post_item_body').text();
-                var post_item_more_info=parent.find('.item-body .post_item_more_info').text();
+                var post_item_body=parent.find('.item-body .post_item_body').html();
+                var post_item_more_info=parent.find('.item-body .post_item_more_info').html();
                 console.log('post_item_topic '+post_item_topic)
                 console.log('post_item_body '+post_item_body)
                 console.log('post_item_more_info '+post_item_more_info);
@@ -706,19 +830,21 @@
                     if(response.success==true){
                         var res_cats=(response.cats);
                         var options="";
+                        //append the categories
                         res_cats.forEach((curr_item,index,array)=>{
                         if(curr_item.title)
                             options+='<option value="'+curr_item.title+'">'+curr_item.title+'</option>';
                         });
-
                         $('#section_update_modal #section_update_category').html(options);
 
+//update other fields
     $('#section_update_modal #section_update_header').text("Edit this "+section);
     $('#section_update_modal #section_update_id').val(id);
     $('#section_update_modal #section_update_type').val(section);
     $('#section_update_modal #section_update_sub1').val(post_sub_cat1);
     $('#section_update_modal #section_update_sub2').val(post_sub_cat2);
     $('#section_update_modal #section_update_title').froalaEditor('html.set',post_item_topic.trim());
+    $('#section_update_modal #section_update_info').froalaEditor('html.set',post_item_more_info.trim());
                         
 
                         switch(section){
@@ -1486,6 +1612,92 @@
                             console.log(xhr);
                             console.log(status);
                             console.log(err);
+                        }
+                   });
+                
+            }
+            } );
+
+
+            $( "#new_request_form" ).validate( {/*validate & submit new_request modal data*/
+                rules: {  
+                    new_request_category: {
+                        required: true
+                    },
+                    new_request_title: {
+                        required: true,
+                    }
+                    
+                },
+                messages: {                        
+                    new_request_category: {
+                        required: "This field is required"
+                    },
+                    new_request_title: {
+                        required: "This field is required"
+                    }
+                },
+                errorElement: "em",
+                errorPlacement: function ( error, element ) {
+                // Add the `help-block` class to the error element
+                error.addClass( "help-block" );
+
+                if ( element.prop( "type" ) === "checkbox" ) {
+                    error.insertAfter( element.parent( "label" ) );
+                } else {
+                    error.insertAfter( element );
+                }
+            },
+            success: function ( label, element ) {
+                // Add the span element, if doesn't exists, and apply the icon classes to it.
+                if ( !$( element ).next( "span" )[ 0 ] ) {
+                    $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+                }
+            },
+            highlight: function ( element, errorClass, validClass ) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
+            },
+
+            submitHandler: function () {
+                //modify button
+                var sub_button=$("#new_request_form").find(':submit');
+                var old_button_val=sub_button.val();
+                sub_button.prop('disabled', true);
+                sub_button.val('...processing');
+
+                resetFields("#new_request_form");
+                var my_url="{{url}}/make_new_request";
+                console.log('url '+my_url);
+                $("#new_request_form").ajaxSubmit({
+                    url:my_url,
+                       contentType: 'application/json',
+                       success: function(response){
+                        if(response.success==true){
+                                //console.log('image uploaded and form submitted');
+                                $('#new_request_form  .form_submission_success').text(response.msg);
+                                setTimeout(function(){
+                                    $('#new_request_form  .form_submission_success').text('');
+                                    sub_button.val(old_button_val);
+                                    sub_button.prop('disabled', false);
+                                    $('#new_request_modal').modal('hide');
+                                },3000);
+                                
+                            }else{
+                                console.log('response is false');
+                                $('#new_request_form  .form_submission_error').text(response.msg);
+                                sub_button.val(old_button_val);
+                                sub_button.prop('disabled', false);
+                            }
+                              
+                       },
+                       error:function(xhr, status, err){
+                           /* console.log('error');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(err);*/
                         }
                    });
                 

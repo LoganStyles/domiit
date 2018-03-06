@@ -44,7 +44,7 @@ function fetchItemList(selected_item,section,url,req_field){
                 var options="";
                 var proc_arr=[];
 
-                if(req_field != '#request_users' && req_field != '#request_update_users'){
+                if(req_field != '#request_users' && req_field != '#new_request_users' && req_field != '#request_update_users'){
 
                     //store received data temporarily
                     /*console.log('req_field '+req_field)
@@ -86,13 +86,9 @@ function fetchItemList(selected_item,section,url,req_field){
                     }
                     
                 });
-                //$('#request_title').attr("disabled",false);
-                //$('#request_info').attr("disabled",false);
-
             }
 
 
-            //$(req_field).attr('disabled',false);
             $(req_field).html(options);
             if(req_field == '#request_sub1'){
                 var category=$(req_field).val();

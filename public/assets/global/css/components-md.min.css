@@ -1856,7 +1856,8 @@ code {
 }
 
 .general-item-list>.item>.item-body {
-    color: #96a5aa
+    color: #000;
+    /*color: #96a5aa*/
 }
 
 .file-drop-zone {
