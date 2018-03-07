@@ -2,8 +2,8 @@ var total_messages = 5;
 var delay_amount = 1000;
 var fade_speed = 200;
 var socket = io();
-var URL_ROOT="https://ancient-falls-19080.herokuapp.com";
-// var URL_ROOT="http://localhost:8000";
+// var URL_ROOT="https://ancient-falls-19080.herokuapp.com";
+var URL_ROOT="http://localhost:8000";
 
 // Connect to Socket.io
 socket.connect(URL_ROOT);
@@ -522,23 +522,23 @@ function displayPost(selected_class,json){
 
 	    if(parsed.question_status){
 	    	post_content+='<span class="social_value">'+parsed.answers_len+'&nbsp;</span>';
-	    	post_content+='<img src="'+URL_ROOT+'/images/comments.png">&nbsp;Answers';            
+	    	post_content+='<img class="icon_size_20" src="'+URL_ROOT+'/images/comments.png">&nbsp;Answers';            
 	    }
 	    if(parsed.pab_status){
 	    	post_content+='<span class="social_value">'+parsed.comments_len+'&nbsp;</span>';
-	        post_content+='<img src="'+URL_ROOT+'/images/comments.png">&nbsp;Comments';
+	        post_content+='<img class="icon_size_20" src="'+URL_ROOT+'/images/comments.png">&nbsp;Comments';
 	    }
 	    if(parsed.trend_status){
 	    	post_content+='<span class="social_value">'+parsed.comments_len+'&nbsp;</span>';
-	        post_content+='<img src="'+URL_ROOT+'/images/comments.png">&nbsp;Comments';
+	        post_content+='<img class="icon_size_20" src="'+URL_ROOT+'/images/comments.png">&nbsp;Comments';
 	    }
 		if(parsed.art_status){
 			post_content+='<span class="social_value">'+parsed.answers_len+'&nbsp;</span>';
-			post_content+='<img alt="" class="icon_size_15" src="'+URL_ROOT+'/images/articles_icon.png">&nbsp;Reviews';
+			post_content+='<img alt="" class="icon_size_15" src="'+URL_ROOT+'/images/reviews.png">&nbsp;Reviews';
 		}
 		if(parsed.riddle_status){
 			post_content+='<span class="social_value">'+parsed.answers_len+'&nbsp;</span>';
-			post_content+='<img src="'+URL_ROOT+'/images/comments.png">Solution';
+			post_content+='<img class="icon_size_20" src="'+URL_ROOT+'/images/comments.png">Solution';
 		}
 
 		post_content+='</span></a><a class="btn btn-link post_shares">';
@@ -563,20 +563,20 @@ function displayPost(selected_class,json){
 			post_content+='<i class="fa fa-heart-o"></i>&nbsp;Likes</span></a>';
 			post_content+='<a class="btn btn-link "><span class="grey_button">';
 			post_content+='<span class="social_value">'+parsed.comments_len+'</span>';
-			post_content+='<img src="'+URL_ROOT+'/images/comments.png">Comments</span></a>';
+			post_content+='<img class="icon_size_20" src="'+URL_ROOT+'/images/comments.png">Comments</span></a>';
 			post_content+='<a class="btn btn-link post_shares"><span class="item-label grey_button">';
 			post_content+='<span class="social_value">'+parsed.shares+'</span>';
 			post_content+='<i class="fa fa-share-alt"></i>&nbsp;Shares</span></a></div>';
 		}else{
 			post_content+='<div class="btn-arrow-link "><a class="btn btn-link post_likes">';
 			post_content+='<span class="grey_button"><span class="social_value ">'+parsed.attending+'</span>';
-			post_content+='<i class="fa fa-user-plus"></i>&nbsp;Attending</span></a>';
+			post_content+='<img class="icon_size_20" src="'+URL_ROOT+'/images/attending.png">&nbsp;Attending</span></a>';
 			post_content+='<a class="btn btn-link "><span class="grey_button">';
 			post_content+='<span class="social_value">'+parsed.not_attending+'</span>';
-			post_content+='<i class="fa fa-user"></i>-&nbsp;Not Attending</span></a>';
+			post_content+='<img class="icon_size_20" src="'+URL_ROOT+'/images/not_attending.png">&nbsp;Not Attending</span></a>';
 			post_content+='<a class="btn btn-link "><span class="grey_button">';
 			post_content+='<span class="social_value">'+parsed.comments_len+'</span>';
-			post_content+='<img src="'+URL_ROOT+'/images/comments.png">Comments</span></a></div>';
+			post_content+='<img class="icon_size_20" src="'+URL_ROOT+'/images/comments.png">Comments</span></a></div>';
 		}
 		post_content+='</div>';                                              
 	}else{//else task-footer : chking for pab
