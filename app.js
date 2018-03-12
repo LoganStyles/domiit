@@ -221,6 +221,15 @@ function convertToSentencCase(text_data){
     return vfinal;
 }
 
+/*removes dupliates from an array*/
+function onlyUnique(value, index, self) { 
+    return self.indexOf(value) === index;
+}
+
+/*deletes all occurances of an item from an array*/
+function remove(array,element){
+    return array.filter(e =>e !== element)
+}
 
 
 app.get('/profile/:id',isLoggedIn, function(req, res) {
@@ -536,9 +545,9 @@ app.get('/dashboard',isLoggedIn,function(req,res){
 
 
         //find pending notifications length
-        var pending_friend_notifs=process_posts.getNotifications(req.user);
-        console.log('pending_friend_notifs '+pending_friend_notifs)
-
+        var pending_friend_notifs=0;
+        process_posts.getNotifications(req.user,function(rel_notifs){
+             pending_friend_notifs=rel_notifs;
 
     //using async get the last 5 results from each collection
     async.concat([question,article,riddle,pab,trend,notice],function(model,callback){
@@ -569,7 +578,7 @@ app.get('/dashboard',isLoggedIn,function(req,res){
             //update other details needed by the post
             process_posts.processPagePosts(page_results,req.user,function(processed_response){
                 console.log('PROCESSED RESPONSE');
-                //console.log(processed_response);
+                console.log(processed_response);
 
                 res.render(page,{
                     url:process.env.URL_ROOT,
@@ -623,7 +632,7 @@ app.get('/dashboard',isLoggedIn,function(req,res){
         
     });
 
-
+    });//end notifs
 
     });//end request
 
@@ -1703,7 +1712,7 @@ app.post('/response_item',upload.single('section_response_photo'),function(req,r
                     responderDisplayName:req.user.displayName,
                     responder_id:req.user._id,
                     responderDisplayPic:displayPic,
-                    responderStatus:req.user.designation.title
+                    responderStatus:req.user.designation[0].title
                 }); 
 
                 //store img if exists
@@ -2150,6 +2159,8 @@ app.post('/followMember',function(req,res,next){
                         let updateUser=u;
                         updateUser.date_modified=new Date();
                         updateUser.followers.push(logged_user_id);//save logged_user_id
+                        //remove duplicate entries
+                        updateUser.followers = updateUser.followers.filter( onlyUnique );
                         
                         console.log(updateUser);
                         user.updateOne({_id:owner_id},{$set:updateUser},function(err1,res1){
@@ -2165,6 +2176,107 @@ app.post('/followMember',function(req,res,next){
                                     let updateUser=u2;
                                     updateUser.date_modified=new Date();
                                         updateUser.followed.push(owner_id);//save owner_id
+                                        //remove duplicate entries
+                                        updateUser.followed = updateUser.followed.filter( onlyUnique );
+
+                                        console.log(updateUser);
+                                        user.updateOne({_id:logged_user_id},{$set:updateUser},function(err3,res3){
+
+                                            if(err3){
+                                                console.log(err3)
+                                                res.json({success:false,msg:"Followed update failed"});
+                                            }else if(res1){  
+                                                res.json({success:true,msg:"Follows update was successfull"});  
+
+                                            }
+
+                                        });
+                                    }else{
+                                       res.json({success:false,msg:"Curr User not found"}); 
+                                    }
+
+                                }); 
+
+                    }
+
+                });
+                    }else{
+                        res.json({success:false,msg:"Current Owner not found"}); 
+                    }
+
+                });
+
+
+            }else{
+                res.json({success:false,msg:"Follower Item not found"});
+            }
+
+        });
+
+
+    });
+
+/*update the followers and followed fields of both users*/
+app.post('/unfollowMember',function(req,res,next){
+    // console.log('follow member')
+    // console.log(req)
+    
+    var section_type=req.body.section;
+    var section_id=req.body.post_id;
+    // console.log('section_type '+section_type);
+    // console.log('section_id '+section_id);
+
+    switch(section_type){
+        case'question':
+        section = question;
+        break;
+
+        case'article':
+        section = article;
+        break;
+
+        case'riddle':
+        section = riddle;
+        break;
+
+        case'Post Books':
+        section = pab;
+        break;
+    }
+
+        section.findOne({_id:section_id},function(error,result){//find the section that was responsed to
+            if(result){
+                var owner_id=result.owner.id;
+                // console.log('owner_id '+owner_id);
+                var logged_user_id=req.user._id;
+                // console.log('logged_user_id '+logged_user_id);
+                //add logged_user_id to owner's followers
+
+                user.findOne({_id:owner_id }, function(err, u) {
+                    if(u){
+                        let updateUser=u;
+                        updateUser.date_modified=new Date();
+                        updateUser.followers=remove(updateUser.followers,logged_user_id);//remove logged_user_id
+                        //remove duplicate entries
+                        //updateUser.followers = updateUser.followers.filter( onlyUnique );
+                        
+                        console.log(updateUser);
+                        user.updateOne({_id:owner_id},{$set:updateUser},function(err1,res1){
+
+                            if(err1){
+                                console.log(err1)
+                                res.json({success:false,msg:"Followers update failed"});
+                            }else if(res1){   
+
+                            //add owner to logged_user_id's followed
+                            user.findOne({_id:logged_user_id }, function(err2, u2) {
+                                if(u2){
+                                    let updateUser=u2;
+                                    updateUser.date_modified=new Date();
+                                        //updateUser.followed.push(owner_id);//save owner_id
+                                        updateUser.followed=remove(updateUser.followed,owner_id);//remove owner_id
+                                        //remove duplicate entries
+                                        //updateUser.followed = updateUser.followed.filter( onlyUnique );
 
                                         console.log(updateUser);
                                         user.updateOne({_id:logged_user_id},{$set:updateUser},function(err3,res3){

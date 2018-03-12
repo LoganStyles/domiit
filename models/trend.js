@@ -16,6 +16,8 @@ var trendSchema = mongoose.Schema({
 	owner:{id:String,displayName:String,displayPic:String,status:String},
 	post_owner:{type:Boolean,default:false},
 	bookmarked_post:{type:Boolean,default:false},
+	followed_post:{type:Boolean,default:false},
+	liked_post:{type:Boolean,default:false},
 	friend_status:String,//friend,not_friend,Pending
 	
 	question_status:{type:Boolean,default:false},
@@ -29,7 +31,7 @@ var trendSchema = mongoose.Schema({
 	trend_followed:{type:Boolean,default:false},
 	views:{type:Number,default:0},
 	shares:{type:Number,default:0},
-	likes:{type:Number,default:0},
+	likes:[String],
 	// answers_len:{type:Number,default:0},
 	comments_len:{type:Number,default:0},
 	comments:[{

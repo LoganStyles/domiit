@@ -685,6 +685,11 @@ router.get('/section/:item/:type/:id', isLoggedIn,function(req, res) {
         break;
     }
 
+//find pending notifications length
+var pending_friend_notifs=0;
+process_posts.getNotifications(req.user,function(rel_notifs){
+pending_friend_notifs=rel_notifs;
+
 //get required data
 section.find(selection).sort({post_date:-1}).exec(function(err,items){
 
@@ -693,8 +698,6 @@ section.find(selection).sort({post_date:-1}).exec(function(err,items){
     if(req.user.displayPic[0]){
         curr_user_display_pic=req.user.displayPic[req.user.displayPic.length - 1];
     }
-
-    var pending_friend_notifs=process_posts.getNotifications(req.user);
 
     if(err){console.log(err);}
     else if(items){
@@ -754,7 +757,9 @@ section.find(selection).sort({post_date:-1}).exec(function(err,items){
     
 }
 
-});
+});//end section
+
+ });//end notifs
 
 });
 
@@ -764,8 +769,15 @@ router.post('/update_meta/:type/:id/:action/:subitem_id',function(req,res,next){
     var id=req.params.id;
     var action=req.params.action;
     var subitem_id=req.params.subitem_id;
+    var user_id=req.user._id;
     var update_param='';
     var update_query={_id:id};
+
+    console.log('section_type '+section_type)
+    console.log('id '+id)
+    console.log('action '+action)
+    console.log('subitem_id '+subitem_id)
+    console.log('user_id '+user_id)
 
     switch(section_type){
         case'question':
@@ -778,9 +790,9 @@ router.post('/update_meta/:type/:id/:action/:subitem_id',function(req,res,next){
     }
 
     switch(action){
-        case'likes':        
-        update_param = {likes:1};
-        break;
+        // case'likes':        
+        // //update_param = {likes:1};
+        // break;
         case'shares':
         update_param = {shares:1};
         break;
@@ -801,9 +813,46 @@ router.post('/update_meta/:type/:id/:action/:subitem_id',function(req,res,next){
         break;
     }
 
-    section.update(update_query,{$inc:update_param},function(error,response){
+    if(action == 'likes'){
+        section.find({_id:id,likes:user_id},function(err1,res1){
+            if(err1){
+                //console.log('likes err1')
+                console.log(err1)
+            }else if(res1){
+                //console.log('likes response2')
+                console.log(res1)
+                //if data is found, remove user id else insert user id
+                if(res1.length >0){
+                    section.update({_id:id},{$pull:{likes:user_id}},function(err2,res2){
+                        if(err2){
+                            console.log(err2)
+                            res.json({success:false,msg:"UnLike Update failed"});
+                        }else{
+                            console.log(res2)
+                            res.json({success:true,msg:"Unlike Update succesful",action:"unlike"});
+                        }
 
-        if(error){
+                    });
+                }else{
+                    section.update({_id:id},{$push:{likes:user_id}},function(err3,res3){
+                        if(err3){
+                            console.log(err3)
+                            res.json({success:false,msg:"Likes Update failed"});
+                        }else{
+                            console.log(res3)
+                            res.json({success:true,msg:"Likes Update succesful",action:"like"});
+                        }
+
+                    });
+                }
+            }
+
+
+        });
+    }else{
+        section.update(update_query,{$inc:update_param},function(error,response){
+
+            if(error){
             // console.log(error)
             res.json({success:false,msg:"Update failed"});
         }else{
@@ -813,6 +862,9 @@ router.post('/update_meta/:type/:id/:action/:subitem_id',function(req,res,next){
 
 
     });
+    }
+
+    
 
 });
 

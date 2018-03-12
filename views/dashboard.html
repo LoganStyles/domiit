@@ -247,10 +247,18 @@
                                                 <i class="fa fa-ellipsis-h"></i>
                                             </span>
                                             <ul class="dropdown-menu pull-right">
+                                            {{#if followed_post}}
+                                            <li class="un_follow_section_item">
+                                                    <a href="javascript:;">
+                                                        <i class="fa fa-minus-square"></i> Unfollow </a>
+                                                </li>
+                                                
+                                            {{else}}
                                                 <li class="follow_section_item">
                                                     <a href="javascript:;">
-                                                        <i class="fa fa-plus"></i> Follow </a>
+                                                        <i class="fa fa-plus-square"></i> Follow </a>
                                                 </li>
+                                            {{/if}}
                                                 {{#unless bookmarked_post}}
                                                 <li class="bookmark_section_item">
                                                     <a href="javascript:;">
@@ -493,12 +501,16 @@
 
             <a class="btn btn-link post_likes">
             <span class="grey_button">
-                <span class="social_value ">{{likes}}</span>
+                <span class="social_value ">{{likes.length}}</span>
+                {{#if liked_post}}
+                <i class="fa fa-heart"></i>&nbsp;Likes
+                {{else}}
                 <i class="fa fa-heart-o"></i>&nbsp;Likes
+                {{/if}}
             </span>
             </a>
 
-            <a class="btn btn-link ">
+            <a class="btn btn-link " href="{{../url}}/posts/section/{{post_type}}/all_responses/{{_id}}">
             <span class="grey_button">
                 {{#if question_status}}
                  <span class="social_value">{{answers_len}}</span>

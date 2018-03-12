@@ -53,8 +53,7 @@ var userSchema = mongoose.Schema({
     review_ids:[String],
     riddle_ids:[String],
     solution_ids:[String],
-    postedbook_ids:[String],
-    request_ids:[String]
+    postedbook_ids:[String]
 
 });
 

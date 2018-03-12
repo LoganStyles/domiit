@@ -327,9 +327,14 @@
                         headers:{'X-My-App-Token': 'loganstyles'},
                         success:function(response){
                             console.log(response);
-                            if(response.success==true){
+                            if(response.success==true && response.action=="like"){
                                 var old_val=parseInt($this.find('span.social_value').text());
                                 $this.find('span.social_value').text(old_val+1);//update the page value manually
+                                $this.find('i.fa').toggleClass('fa-heart-o fa-heart');
+                            }else if(response.success==true && response.action=="unlike"){
+                            var old_val=parseInt($this.find('span.social_value').text());
+                                $this.find('span.social_value').text(old_val-1);//update the page value manually
+                                $this.find('i.fa').toggleClass('fa-heart fa-heart-o');
                             }
                         },
                         error:function(xhr, status, err){
@@ -1137,6 +1142,42 @@
             var section=parent.find('input#post_type').val();
 
             var url='{{url}}/followMember';
+            // console.log('url '+url);
+
+            $.ajax({
+                url:url,
+                type:'POST',
+                data:{'post_id':id,'section':section},
+                headers: {'X-My-App-Token': 'loganstyles'},
+                success:function(response){
+                    console.log(response);
+                    if(response.success==true){
+                        //display notif
+                        alert(response.msg)
+                    }else{
+
+                         }                        
+
+                },
+                error:function(xhr, status, err){
+                    console.log('error');
+                    console.log(xhr);
+                    console.log(status);
+                    console.log(err);
+                }
+            });
+
+        });
+
+
+        //unfollow posts
+           $("body").on('click','.un_follow_section_item',function(){
+            //get this posts data
+            var parent=$(this).parents('.posted');
+            var id=parent.find('input#post_id').val();
+            var section=parent.find('input#post_type').val();
+
+            var url='{{url}}/unfollowMember';
             // console.log('url '+url);
 
             $.ajax({

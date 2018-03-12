@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var user = require('../models/user');
 // var user = require('../models/user');
 var trend = require('../models/trend');
+var mongoose = require('mongoose');
 
 var methods={};
 
@@ -22,21 +23,25 @@ methods.getStoryDetails=function (arr){
 };
 
 /*handle notification for the current user*/
-methods.getNotifications=function(user){
+methods.getNotifications=function(user,callback){
 
 //get pending friends
 var len=0;
+console.log('getnotifs for '+user._id)
 user.getPendingFriends(user._id,function(err,pending){
-    if(err)
-        //console.log(err)
-
-    if(pending){
+    if(err){
+        console.log(err)
+        callback(len);
+    }else if(pending){
+        console.log(pending)
         len=pending.length;
+        console.log('INSIDE NOTIFS..PENDING LEN '+len);
+        callback(len);
     }
-    return len;
+    //return len;
 
 });
-return len;
+// return len;
 };
 
 /*check if item has been previously bookmarked*/
@@ -55,6 +60,71 @@ methods.checkBookmarks=function(user,item_id){
     return false;
 };
 
+/*check if post owner is been followed by current user*/
+methods.checkFollowed=function(user,owner_id){
+    var followed_len=user.followed.length;
+    var followed=user.followed;
+    var curr_followed;
+
+    for(var i=0;i<followed_len;i++){
+        curr_followed=followed[i];
+        // console.log('curr_followed '+curr_followed)
+        if(curr_followed == (owner_id)){
+            return true;
+        }
+    }
+    return false;
+};
+
+/*check if item has been previously liked*/
+methods.checkLikes=function(user_id,item_likes){
+    var likes_len=item_likes.length;
+    var curr_liked_id;
+
+    for(var i=0;i<likes_len;i++){
+        curr_liked_id=item_likes[i];
+        if(curr_liked_id == (user_id).toString()){
+            return true;
+        }
+    }
+    return false;
+};
+
+methods.checkRelationship=function(user_id,post_owner_id,callback){
+    /*check if there's pending friend request with post owner
+    or if post owner is already a friend*/
+    //user_id::current user obj id
+    //post_owner_id::post owner string id
+    //console.log('inside relationship')
+    var friend_status='not_friend';
+    var req_user_id=(user_id).toString();
+    var post_owner_obj = mongoose.Types.ObjectId(post_owner_id);//convert id string to obj id
+
+    if(req_user_id ===post_owner_id){
+        //console.log('USER IS POST OWNER');
+        callback('friend');
+    }else{
+        //console.log('USER IS NOT POST OWNER..CHECKING FRIENDSHIP STATUS');
+        user.getFriendship(user_id,post_owner_obj,function(err_res,rel_res){
+            if(err_res){
+               // console.log(err_res)
+
+            }else if(rel_res){
+                //console.log('results for relationship found');
+            //console.log(rel_res._id);
+            //console.log(rel_res.status);
+
+            if(rel_res.status=='Accepted'){
+                callback('friend');
+            }else if(rel_res.status=='Pending'){
+                callback('Pending');
+            }
+        }
+
+    });
+    }
+};
+
 /*
 perform some operations on the posts such as updating display pics,
 checking if the post owner is a friend etc
@@ -63,7 +133,9 @@ checking if the post owner is a friend etc
 */
 
 methods.processPagePosts=function (items,ref_user,callback){
-    console.log('processPagePosts')
+    //items::posts that are to be displayed
+    //ref_user::current user viewing the posts
+    //console.log('processPagePosts')
     //console.log(items);
     var promise,trend_followed=false,
     displayPic="",
@@ -78,15 +150,35 @@ methods.processPagePosts=function (items,ref_user,callback){
         if(cur_item.post_type=="trending"){
             promise = this.getStoryDetails(cur_item);//fetch data for this story
         }else{
-            //check if already bookmarkd
+            //check if post is already bookmarkd
             cur_item.bookmarked_post=this.checkBookmarks(ref_user,cur_item._id);
-            promise = this.getLatestOwnerDetails(cur_item.owner);//fetch data for this person
+            //check if post is already bookmarkd
+            cur_item.followed_post=this.checkFollowed(ref_user,cur_item.owner.id);
+            //check if post is already liked
+            cur_item.liked_post=this.checkLikes(ref_user._id,cur_item.likes);
+
+            //check relationship of current user with post owner
+            this.checkRelationship(ref_user._id,cur_item.owner.id,function(rel_response){
+                cur_item.friend_status=rel_response;
+                //console.log('finished CHECKING relationship')
+               // console.log(items)
+            });
+            
+            //loop thru all existing answers
+            if(cur_item.answers && cur_item.answers.length >0){
+                cur_item.answers.forEach((cur_answer,index,array)=>{
+                    this.checkRelationship(ref_user._id,cur_answer.responder_id,function(rel_response){
+                        cur_answer.friend_status=rel_response;
+                    });
+                });
+            }
+
+            //fetch data for this person
+            promise = this.getLatestOwnerDetails(cur_item.owner);
         }
 
-        //console.log(index)
-
         promise.then(function(response){
-            //console.log(response);
+            //for trends
             if(response && (cur_item.post_type=="trending")){
                 displayPic=(response.category_icon)?(response.category_icon):('images/trending.png');
                 display_name=(response.category)?(response.category):('');
@@ -108,74 +200,13 @@ methods.processPagePosts=function (items,ref_user,callback){
                 display_name=(response.displayName)?(response.displayName):('');
                 res_id=(response._id)?((response._id).toString()):('');
 
-                
-
-                //check relationship
-                cur_item.friend_status='not_friend';
+                //check ownership of the secion post
                 var req_user_id=(ref_user._id).toString();
                 if(req_user_id ===res_id){
                     console.log('user is the owner of the post')
                     cur_item.post_owner=true;
-                    cur_item.friend_status='friend';
-
-                }else{
-                    /*Perform other checks:
-                    //check if there's pending friend request with owner
-                    or if owner is already a friend*/
-
-                    user.getFriendship(ref_user._id,response._id,function(err_res,rel_res){
-                        if(err_res){
-                            //console.log('err occured in chking relationship');
-                            console.log(err_res);
-                        }
-
-                        if(rel_res){
-                            console.log('results for relationship found');
-                            // console.log(rel_res._id);
-                            // console.log(rel_res.status);
-
-                            if(rel_res.status=='Accepted'){
-                                cur_item.friend_status='friend';
-                            }else if(rel_res.status=='Pending'){
-                                cur_item.friend_status='Pending';
-                            }
-                        }
-
-                    });
                 }
                 
-
-                // chk if current viewer is the owner
-                // cur_item.friend_status='not_friend';
-                // var req_user_id=(ref_user._id).toString();
-                // //console.log('req_user_id '+req_user_id);
-                // //console.log('res_id '+res_id);
-                // if(req_user_id ===res_id){
-                //     console.log('user is the owner of the post')
-                //     cur_item.post_owner=true;
-                //     cur_item.friend_status='friend';
-                // }else{
-                //     console.log('user is NOT the owner of the post')
-                //     /*Perform other checks:
-                //     //check if there's pending friend request with owner
-                //     or if owner is already a friend*/
-                //     user.find({$or:[{requester:ref_user._id,requested:response._id},
-                //                         {requester:response._id,requested:ref_user._id}
-                //                         ]},function(errChk,req_info){
-                //                             if(errChk)console.log(errChk);
-
-                //                             if(req_info){//data was found
-                //                                 console.log(req_info);
-                //                                 if(req_info.status=='Accepted'){
-                //                                     cur_item.friend_status='friend';
-                //                                 }else if(req_info.status=='Pending'){
-                //                                     cur_item.friend_status='Pending';
-                //                                 }
-                //                             }
-
-                //                         });
-                    
-                // } 
             }
 
             updated_obj={
@@ -190,9 +221,7 @@ methods.processPagePosts=function (items,ref_user,callback){
 
 
             processed_items++;
-                // console.log('process inside:'+processed_items);
                 if(processed_items==array.length){//iteration has ended
-                    // res_items=items;
                     console.log('processing finished')
                     //console.log(items);
                     callback(items);

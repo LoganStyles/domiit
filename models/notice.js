@@ -18,6 +18,8 @@ var noticeSchema = mongoose.Schema({
 	owner:{id:String,displayName:String,displayPic:String,status:String},
 	post_owner:{type:Boolean,default:false},
 	bookmarked_post:{type:Boolean,default:false},
+	followed_post:{type:Boolean,default:false},
+	liked_post:{type:Boolean,default:false},
 	friend_status:String,//ffriend,not_friend,Pending
 	comments_len:{type:Number,default:0},
 	comments:[{
@@ -38,7 +40,7 @@ var noticeSchema = mongoose.Schema({
 	page_response:{type:String,default:''},
 	views:{type:Number,default:0},
 	shares:{type:Number,default:0},
-	likes:{type:Number,default:0},
+	likes:[String],
 	attending:{type:Number,default:0},
 	not_attending:{type:Number,default:0},
 

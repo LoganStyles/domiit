@@ -16,6 +16,8 @@ var questionSchema = mongoose.Schema({
 	owner:{id:String,displayName:String,displayPic:String,status:String},
 	post_owner:{type:Boolean,default:false},
 	bookmarked_post:{type:Boolean,default:false},
+	followed_post:{type:Boolean,default:false},
+	liked_post:{type:Boolean,default:false},
 	friend_status:String,//friend,not_friend,Pending
 	
 	question_status:{type:Boolean,default:true},
@@ -28,7 +30,7 @@ var questionSchema = mongoose.Schema({
 	page_response:{type:String,default:'answer'},
 	views:{type:Number,default:0},
 	shares:{type:Number,default:0},
-	likes:{type:Number,default:0},
+	likes:[String],
 	answers_len:{type:Number,default:0},
 	comments_len:{type:Number,default:0},
 	comments:[{
@@ -44,6 +46,7 @@ var questionSchema = mongoose.Schema({
 		responder_id:String,
 		responderDisplayPic:String,
 		responderStatus:String,
+		friend_status:String,//friend,not_friend,Pending
 		pics:[String],
 		date_created:{type:Date,default:Date.now},
 		date_modified:{type:Date,default:Date.now},
@@ -57,7 +60,7 @@ var questionSchema = mongoose.Schema({
 			responder_id:String,
 			responderDisplayPic:String,
 			date_created:{type:Date,default:Date.now},
-			likes:{type:Number,default:0},
+			likes:[String],
 			reply:[{
 				body:String,
 				responderDisplayName:String,

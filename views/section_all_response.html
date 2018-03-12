@@ -91,10 +91,6 @@
                        
                 </div>
 
-
-
-
-
                 <div class="portlet-body">
                     <div class="" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
                         <div class="general-item-list">
@@ -169,17 +165,17 @@
                                         </div>
 
                                         <div class="posts_partition"><!--3rd partition-->
-                                            <div style="margin-left: 60%;">
+                                            <div class="pull-right">
                                                 <div class="fromnow">{{moment post_date "fromNow"}}</div>
                                                 <div class="clearfix"></div>
                                                 <div class="post_actions_button_left">
-                                                    <!-- <img class="icon_size_20" src="{{../url}}/images/mask.png"> -->
+                                                    
                                                 </div>
                                                 {{#if post_owner}}
                                                  <div class="actions post_actions_button">
                                                         <div class="btn-group">
                                                             <span class="item-status cursor_dropper" data-toggle="dropdown">
-                                                                <i class="fa fa-ellipsis-v"></i>
+                                                                <i class="fa fa-ellipsis-h"></i>
                                                             </span>
                                                             <ul class="dropdown-menu pull-right">
                                                                 <li class="edit_section_item">
@@ -191,10 +187,10 @@
                                                                         <i class="fa fa-trash-o"></i> Delete </a>
                                                                 </li>
                                                                 {{#if question_status}}
-                                                <li>
+                                                <li class="new_request_item">
                                                     <a href="javascript:;">
-                                                        <i class="fa fa-ban"></i> Request for answer </a>
-                                                </li>  
+                                                        <i class="fa fa-share-square-o"></i> Request for answer </a>
+                                                </li>   
                                                 {{/if}}
 
                                                 {{#if art_status}}
@@ -224,10 +220,10 @@
                                                 <div class="actions post_actions_button">
                                                         <div class="btn-group">
                                                             <span class="item-status cursor_dropper" data-toggle="dropdown">
-                                                                <i class="fa fa-ellipsis-v"></i>
+                                                                <i class="fa fa-ellipsis-h"></i>
                                                             </span>
                                                             <ul class="dropdown-menu pull-right">
-                                                                <li>
+                                                                <li class="follow_section_item">
                                                                     <a href="javascript:;">
                                                                         <i class="fa fa-pencil"></i> Follow </a>
                                                                 </li>
@@ -302,15 +298,19 @@
 
                                                     <a class="btn btn-link post_likes">
                                                         <span class="grey_button">
-                                                            <span class="social_value">{{likes}}</span>
-                                                            <i class="fa fa-heart-o"></i>&nbsp;Likes
+                                                            <span class="social_value">{{likes.length}}</span>
+                                                            {{#if liked_post}}
+                                                                <i class="fa fa-heart"></i>&nbsp;Likes
+                                                                {{else}}
+                                                                <i class="fa fa-heart-o"></i>&nbsp;Likes
+                                                                {{/if}}
                                                         </span>
                                                     </a>
 
-                                                    <a class="btn btn-link ">
+                                                    <a class="btn btn-link " href="{{../url}}/posts/section/{{post_type}}/all_responses/{{_id}}">
                                                     <span class="grey_button">
                                                         <span class="social_value">{{answers_len}}</span>
-                                                        <i class="fa fa-comment-o"></i>&nbsp;
+                                                        <img class="icon_size_20" src="{{../url}}/images/comments.png">&nbsp;
                                                         Answers
                                                     </span>
                                                     </a>
@@ -388,55 +388,58 @@
                                             </div>
 
                                             <div class="posts_partition_middle"><!--2nd partition-->
-                                                <span style="">
-                                                {{#if ../trend_status}}<!--trend post-->
-                                                    {{#if ../trend_followed}}
+                                                <span>
+                                            {{#if trend_status}}<!--trend post-->
+                                                    {{#if trend_followed}}
                                                         <img class="icon_size_50 " src="{{../url}}/images/filler.png">
                                                     {{else}}
-                                                    <a href="javascript:;" class="btn blue">
+                                                    <a href="javascript:;" class="btn blue" style="padding: 2px;">
                                                         <i class="fa fa-plus"></i>&nbsp; Follow</a>
 
                                                     {{/if}}
-                                                {{else}}<!--other post:questio etc-->
-                                                        {{#if post_owner}}
-                                                            <img class="icon_size_50 " src="{{../url}}/images/filler.png">
+                                            {{else}}<!--other post:questio etc-->
+                                                    {{#if (eq friend_status 'friend')}}
+                                                        <img class="" src="{{../url}}/images/filler.png">
+                                                        {{else}}
+                                                            {{#if (eq friend_status 'Pending')}}
+                                                            <span class="post_box_name">Pending Friend Request</span>
                                                             {{else}}
-                                                            <img class="icon_size_20 send_friend_req " src="{{../url}}/images/add_person.png">
+                                                            <img class="icon_size_20 send_friend_req" src="{{../url}}/images/add_person.png">
                                                         {{/if}}
+                                                    {{/if}}
 
-                                                {{/if}}
-                                                
-                                                </span>
+                                            {{/if}}
+                                                        
+                                        </span>
                                             </div>
 
                             <div class="posts_partition"><!--3rd partition-->
                                 <div class="pull-right">
                                     <div class="fromnow">{{moment post_date "fromNow"}}</div>
-                                    <div class="clearfix"></div>
-                                    
+                                    <div class="clearfix"></div>                                    
                                     <div class="post_actions_button_left">
-                                        <!-- <img class="icon_size_20" src="{{../url}}/images/mask.png"> -->
+                                        
                                     </div>
                                     {{#if post_owner}}
                                      <div class="actions post_actions_button">
                                             <div class="btn-group">
                                                 <span class="item-status cursor_dropper" data-toggle="dropdown">
-                                                    <i class="fa fa-ellipsis-v"></i>
+                                                    <i class="fa fa-ellipsis-h"></i>
                                                 </span>
                                                 <ul class="dropdown-menu pull-right">
                                                     <li class="edit_section_item">
-                                                        <a href="#">
+                                                        <a href="javascript:;">
                                                             <i class="fa fa-pencil"></i> Edit </a>
                                                     </li>
                                                     <li class="delete_section_item">
-                                                        <a href="#">
+                                                        <a href="javascript:;">
                                                             <i class="fa fa-trash-o"></i> Delete </a>
                                                     </li>
                                                     
                                                     {{#if question_status}}
-                                                <li>
+                                                <li class="new_request_item">
                                                     <a href="javascript:;">
-                                                        <i class="fa fa-ban"></i> Request for answer </a>
+                                                        <i class="fa fa-share-square-o"></i> Request for answer </a>
                                                 </li>  
                                                 {{/if}}
 
@@ -467,11 +470,11 @@
                                     <div class="actions post_actions_button">
                                             <div class="btn-group">
                                                 <span class="item-status cursor_dropper" data-toggle="dropdown">
-                                                    <i class="fa fa-ellipsis-v"></i>
+                                                    <i class="fa fa-ellipsis-h"></i>
                                                 </span>
                                                 <ul class="dropdown-menu pull-right">
                                                     <li class="follow_section_item">
-                                                        <a href="#">
+                                                        <a href="javascript:;">
                                                             <i class="fa fa-plus"></i> Follow </a>
                                                     </li>
                                                     {{#unless bookmarked_post}}
@@ -524,7 +527,6 @@
                         <a class="btn btn-link post_upvotes "  >
                             <span class="grey_button">
                                 <span class="social_value">{{upvotes}}</span>
-                                <!-- <i class="fa fa-long-arrow-up"></i> -->
                             <img class="icon_size_20" src="{{../../url}}/images/upvotes.png">&nbsp;
                             Upvotes
                             </span>
@@ -533,7 +535,6 @@
                         <a class="btn btn-link post_downvotes " >
                             <span class="grey_button">
                                 <span class="social_value">{{downvotes}}</span>
-                                <!-- <i class="fa fa-long-arrow-down "></i> -->
                                 <img class="icon_size_20" src="{{../../url}}/images/downvotes.png">
                                 Downvotes
                             </span>
