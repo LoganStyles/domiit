@@ -19,7 +19,7 @@
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <!-- BEGIN PROFILE SIDEBAR -->
                                         <div class="profile-sidebar">
                                             
@@ -33,7 +33,7 @@
                                         <!-- END BEGIN PROFILE SIDEBAR -->
                                     </div>
 
-        <div class="col-md-6">                                        
+        <div class="col-md-8">                                        
             <!-- BEGIN PORTLET -->
            <div class="panel panel-default portlet" {{#unless page_response}} style="display: none;"{{/unless}}>
               <div class="panel-body" style="width: 100%;">
@@ -175,7 +175,7 @@
                                                  <div class="actions post_actions_button">
                                                         <div class="btn-group">
                                                             <span class="item-status cursor_dropper" data-toggle="dropdown">
-                                                                <i class="fa fa-ellipsis-v" style="color: #666;"></i>
+                                                                <i class="fa fa-ellipsis-h" style="color: #666;"></i>
                                                             </span>
                                                             <ul class="dropdown-menu pull-right">
                                                                 <li class="edit_section_item">
@@ -187,21 +187,21 @@
                                                                         <i class="fa fa-trash-o"></i> Delete </a>
                                                                 </li>
                                                                 {{#if question_status}}
-                                                <li>
+                                                <li class="new_request_item">
                                                     <a href="javascript:;">
                                                         <i class="fa fa-share-square-o"></i> Request for answer </a>
                                                 </li>  
                                                 {{/if}}
 
                                                 {{#if art_status}}
-                                                <li>
+                                                <li class="new_request_item">
                                                     <a href="javascript:;">
                                                         <i class="fa fa-share-square-o"></i> Request for review </a>
                                                 </li>  
                                                 {{/if}} 
 
                                                 {{#if riddle_status}}
-                                                <li>
+                                                <li class="new_request_item">
                                                     <a href="javascript:;">
                                                         <i class="fa fa-share-square-o"></i> Request for solution </a>
                                                 </li>  
@@ -220,13 +220,21 @@
                                                 <div class="actions post_actions_button">
                                                         <div class="btn-group">
                                                             <span class="item-status cursor_dropper" data-toggle="dropdown">
-                                                                <i class="fa fa-ellipsis-v"></i>
+                                                                <i class="fa fa-ellipsis-h"></i>
                                                             </span>
                                                             <ul class="dropdown-menu pull-right">
-                                                                <li>
-                                                                    <a href="javascript:;">
-                                                                        <i class="fa fa-pencil"></i> Follow </a>
-                                                                </li>
+                                                                {{#if followed_post}}
+                                                                <li class="un_follow_section_item">
+                                                                        <a href="javascript:;">
+                                                                            <i class="fa fa-minus-square"></i> Unfollow </a>
+                                                                    </li>
+                                                                    
+                                                                {{else}}
+                                                                    <li class="follow_section_item">
+                                                                        <a href="javascript:;">
+                                                                            <i class="fa fa-plus-square"></i> Follow </a>
+                                                                    </li>
+                                                                {{/if}}
                                                                 {{#unless bookmarked_post}}
                                                 <li class="bookmark_section_item">
                                                     <a href="javascript:;">
@@ -292,8 +300,12 @@
 
                                             <a class="btn btn-link post_likes" >
                                             <span class="grey_button">
-                                                <span class="social_value">{{likes}}</span>
-                                                <i class="fa fa-heart-o"></i>&nbsp;Likes
+                                                <span class="social_value">{{likes.length}}</span>
+                                                {{#if liked_post}}
+                                                    <i class="fa fa-heart"></i>&nbsp;Likes
+                                                    {{else}}
+                                                    <i class="fa fa-heart-o"></i>&nbsp;Likes
+                                                    {{/if}}
                                             </span>
                                             </a>
 
@@ -524,19 +536,17 @@
                     <div class="response_votes div_vote_comments">
                         <input type="hidden" id="post_response_id" value="{{_id}}">
 
-                        <a class="btn btn-link post_upvotes" >
+                        <a class="btn btn-link post_upvotes">
                         <span class="grey_button">
-                            <span class="social_value">{{upvotes}}</span>
-                            <!-- <i class="fa fa-long-arrow-up"></i> -->
+                            <span class="social_value">{{upvotes.length}}</span>
                             <img class="icon_size_20" src="{{../url}}/images/upvotes.png">&nbsp;
                             Upvotes
                         </span>
                         </a>
 
-                        <a class="btn btn-link post_downvotes " >
+                        <a class="btn btn-link post_downvotes">
                             <span class="grey_button">
-                                <span class="social_value">{{downvotes}}</span>
-                                <!-- <i class="fa fa-long-arrow-down "></i> -->
+                                <span class="social_value">{{downvotes.length}}</span>
                                 <img class="icon_size_20" src="{{../url}}/images/downvotes.png">
                                 Downvotes
                             </span>
@@ -576,7 +586,7 @@
 
         </div>
 
-                                    <div class="col-md-3"><!--third-->
+                                    <div class="col-md-2"><!--third-->
                                         <div class="row">
                                             <!-- BEGIN PORTLET -->
                                             <!-- <div class="portlet light "> -->

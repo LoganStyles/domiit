@@ -10,7 +10,7 @@
                 <!-- END PAGE HEAD-->
                 <!-- BEGIN PAGE CONTENT BODY -->
                 <div class="page-content">
-                    <div class="container">
+                    <div class="container-fluid">
 
                         <!-- BEGIN PAGE CONTENT INNER -->
                         <div class="page-content-inner">                            
@@ -19,7 +19,7 @@
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <!-- BEGIN PROFILE SIDEBAR -->
                                         <div class="profile-sidebar">
                                             
@@ -33,40 +33,8 @@
                                         <!-- END BEGIN PROFILE SIDEBAR -->
                                     </div>
 
-        <div class="col-md-6">                                        
+        <div class="col-md-8">                                        
             <!-- BEGIN PORTLET -->
-            <!-- <div class="panel panel-default portlet" {{#unless page_response}} style="display: none;"{{/unless}}>
-              <div class="panel-body" style="width: 100%;">
-                <div class="posts_top_actions_left">
-                    <span class="posts_page_title">{{page_title}}</span>
-                </div>
-                <div class="posts_top_actions_right">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default">Actions</button>
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-angle-down"></i>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a onclick="modalLoader('question','new','');"> Ask a question </a>
-                        </li>
-                        <li>
-                            <a onclick="modalLoader('article','new','');"> Write an article </a>
-                        </li>
-                        <li>
-                            <a onclick="modalLoader('riddle','new','');"> Post a riddle</a>
-                        </li>
-                        <li>
-                            <a onclick="modalLoader('pab','new','');"> Post a book</a>
-                        </li>
-                    </ul>
-                </div>
-                                                            
-                   
-                </div>
-              </div>
-            </div>  -->
-
              <div class="panel panel-default portlet" {{#unless page_response}} style="display: none;"{{/unless}}>
               <div class="panel-body" style="width: 100%;">
                 <div class="posts_top_actions_left">
@@ -208,7 +176,7 @@
                                                  <div class="actions post_actions_button" >
                                                         <div class="btn-group">
                                                             <span class="item-status cursor_dropper" data-toggle="dropdown">
-                                                                <i class="fa fa-ellipsis-v"></i>
+                                                                <i class="fa fa-ellipsis-h"></i>
                                                             </span>
                                                             <ul class="dropdown-menu pull-right">
                                                                 <li class="edit_section_item">
@@ -221,21 +189,21 @@
                                                                 </li>
                                                                 
                                                                 {{#if question_status}}
-                                                <li>
+                                                <li class="new_request_item">
                                                     <a href="javascript:;">
                                                         <i class="fa fa-share-square-o"></i> Request for answer </a>
                                                 </li>  
                                                 {{/if}}
 
                                                 {{#if art_status}}
-                                                <li>
+                                                <li class="new_request_item">
                                                     <a href="javascript:;">
                                                         <i class="fa fa-share-square-o"></i> Request for review </a>
                                                 </li>  
                                                 {{/if}} 
 
                                                 {{#if riddle_status}}
-                                                <li>
+                                                <li class="new_request_item">
                                                     <a href="javascript:;">
                                                         <i class="fa fa-share-square-o"></i> Request for solution </a>
                                                 </li>  
@@ -254,13 +222,21 @@
                                                 <div class="actions post_actions_button">
                                                         <div class="btn-group">
                                                             <span class="item-status cursor_dropper" data-toggle="dropdown">
-                                                                <i class="fa fa-ellipsis-v"></i>
+                                                                <i class="fa fa-ellipsis-h"></i>
                                                             </span>
                                                             <ul class="dropdown-menu pull-right">
-                                                                <li class="follow_section_item">
-                                                                    <a href="#">
-                                                                        <i class="fa fa-plus"></i> Follow </a>
-                                                                </li>
+                                                                {{#if followed_post}}
+                                                                <li class="un_follow_section_item">
+                                                                        <a href="javascript:;">
+                                                                            <i class="fa fa-minus-square"></i> Unfollow </a>
+                                                                    </li>
+                                                                    
+                                                                {{else}}
+                                                                    <li class="follow_section_item">
+                                                                        <a href="javascript:;">
+                                                                            <i class="fa fa-plus-square"></i> Follow </a>
+                                                                    </li>
+                                                                {{/if}}
                                                                 {{#unless bookmarked_post}}
                                                 <li class="bookmark_section_item">
                                                     <a href="javascript:;">
@@ -449,16 +425,19 @@
 
                                                 <a class="btn btn-link post_likes">
                                                 <span class="grey_button">
-                                                    <span class="social_value ">{{likes}}</span>
-                                                    <i class="fa fa-heart-o"></i>&nbsp;Likes
+                                                    <span class="social_value ">{{likes.length}}</span>
+                                                    {{#if liked_post}}
+                                                        <i class="fa fa-heart"></i>&nbsp;Likes
+                                                        {{else}}
+                                                        <i class="fa fa-heart-o"></i>&nbsp;Likes
+                                                    {{/if}}
                                                 </span>
                                                 </a>
 
-                                                <a class="btn btn-link ">
+                                                <a class="btn btn-link " href="{{../url}}/posts/section/{{post_type}}/all_responses/{{_id}}">
                                                 <span class="grey_button">
                                                     {{#if question_status}}
                                                      <span class="social_value">{{answers_len}}</span>
-                                                    <!-- <i class="fa fa-comment-o"></i>&nbsp; -->
                                                     <img class="icon_size_20" src="{{../url}}/images/comments.png">&nbsp;
                                                     Answers
                                                     {{/if}}
@@ -523,7 +502,7 @@
 
         </div>
 
-                                    <div class="col-md-3"><!--third-->
+                                    <div class="col-md-2"><!--third-->
                                         <div class="row">
                                             <!-- BEGIN PORTLET -->
                                             <!-- <div class="portlet light "> -->

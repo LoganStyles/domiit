@@ -1176,6 +1176,18 @@ app.post('/make_new_request',request_upload,function(req,res,next){
                 section=question;
                 break;
 
+                case'article':
+                section = article;
+                break;
+
+                case'riddle':
+                section = riddle;
+                break;
+
+                case'pab':
+                section = pab;
+                break;
+
             }
 
             //get question & insert into request

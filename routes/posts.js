@@ -14,6 +14,8 @@ var request_model = require('../models/request');
 
 var process_posts=require('../config/processor');
 
+var mongoose = require('mongoose');
+
 
 /*chk loggedin*/
 function isLoggedIn(req, res, next) {
@@ -772,11 +774,14 @@ router.post('/update_meta/:type/:id/:action/:subitem_id',function(req,res,next){
     var user_id=req.user._id;
     var update_param='';
     var update_query={_id:id};
+    var action_msg="";
+    var subitem_id_obj;
 
     console.log('section_type '+section_type)
     console.log('id '+id)
     console.log('action '+action)
     console.log('subitem_id '+subitem_id)
+    
     console.log('user_id '+user_id)
 
     switch(section_type){
@@ -790,57 +795,65 @@ router.post('/update_meta/:type/:id/:action/:subitem_id',function(req,res,next){
     }
 
     switch(action){
-        // case'likes':        
-        // //update_param = {likes:1};
-        // break;
+        case'likes':        
+        update_query = {_id:id,likes:user_id};
+        update_param={likes:user_id};
+        break;
         case'shares':
         update_param = {shares:1};
         break;
         case'upvotes':
+        subitem_id_obj = mongoose.Types.ObjectId(subitem_id);//convert id string to obj id
         if(subitem_id){
-            update_query={_id:id,'answers._id':subitem_id};
-            update_param = {'answers.$.upvotes':1};
+            update_query={_id:id,'answers._id':subitem_id_obj,'answers.upvotes':user_id};
+            update_query2={_id:id,'answers._id':subitem_id_obj};
+            update_param = {'answers.$.upvotes':user_id};
         }
         
         break;
 
         case'downvotes':
+        subitem_id_obj = mongoose.Types.ObjectId(subitem_id);//convert id string to obj id
         if(subitem_id){
-            update_query={_id:id,'answers._id':subitem_id};
-            update_param = {'answers.$.downvotes':1};
+            update_query={_id:id,'answers._id':subitem_id_obj,'answers.downvotes':user_id};
+            update_query2={_id:id,'answers._id':subitem_id_obj};
+            update_param = {'answers.$.downvotes':user_id};
         }
         
         break;
     }
 
-    if(action == 'likes'){
-        section.find({_id:id,likes:user_id},function(err1,res1){
+    switch(action){
+        case 'likes':
+        action_msg="like";
+        
+        section.find(update_query,function(err1,res1){
             if(err1){
                 //console.log('likes err1')
                 console.log(err1)
             }else if(res1){
                 //console.log('likes response2')
-                console.log(res1)
+                console.log(res1);
                 //if data is found, remove user id else insert user id
                 if(res1.length >0){
-                    section.update({_id:id},{$pull:{likes:user_id}},function(err2,res2){
+                    section.update({_id:id},{$pull:update_param},function(err2,res2){
                         if(err2){
                             console.log(err2)
-                            res.json({success:false,msg:"UnLike Update failed"});
+                            res.json({success:false,msg:"Operation update failed"});
                         }else{
                             console.log(res2)
-                            res.json({success:true,msg:"Unlike Update succesful",action:"unlike"});
+                            res.json({success:true,msg:"Operation update succesful",action:"un"+action_msg});
                         }
 
                     });
                 }else{
-                    section.update({_id:id},{$push:{likes:user_id}},function(err3,res3){
+                    section.update({_id:id},{$push:update_param},function(err3,res3){
                         if(err3){
                             console.log(err3)
-                            res.json({success:false,msg:"Likes Update failed"});
+                            res.json({success:false,msg:"Operation update failed"});
                         }else{
                             console.log(res3)
-                            res.json({success:true,msg:"Likes Update succesful",action:"like"});
+                            res.json({success:true,msg:"Operation update succesful",action:action_msg});
                         }
 
                     });
@@ -849,7 +862,55 @@ router.post('/update_meta/:type/:id/:action/:subitem_id',function(req,res,next){
 
 
         });
-    }else{
+
+        break;
+        case 'upvotes':
+        case 'downvotes':
+        action_msg="votes";
+        
+        section.find(update_query,function(err1,res1){
+            if(err1){
+                console.log('likes err1')
+                console.log(err1)
+            }else if(res1){
+                console.log('upvotes res1')
+                console.log(res1);
+                //if data is found:user existed
+                if(res1.length >0){
+
+                    section.update(update_query2,{$pull:update_param},function(err2,res2){
+                        if(err2){
+                            console.log(err2)
+                            res.json({success:false,msg:"Operation update failed"});
+                        }else{
+                            console.log(res2)
+                            res.json({success:true,msg:"Operation update succesful",action:"un"+action_msg});
+                        }
+
+                    });
+
+                }else{
+                    //add new user
+                    section.update(update_query2,{$push:update_param},function(err3,res3){
+
+                        if(err3){
+                            console.log(err3)
+                            res.json({success:false,msg:"Operation update failed"});
+                        }else{
+                            console.log(res3)
+                            res.json({success:true,msg:"Operation update succesful",action:action_msg});
+                        }
+
+                    });
+
+                }
+                
+            }
+
+
+        });
+        break;
+        default:
         section.update(update_query,{$inc:update_param},function(error,response){
 
             if(error){
@@ -862,9 +923,9 @@ router.post('/update_meta/:type/:id/:action/:subitem_id',function(req,res,next){
 
 
     });
+        break;
     }
 
-    
 
 });
 

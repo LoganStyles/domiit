@@ -302,6 +302,7 @@
                         action='shares';
                         break;
                         case 'post_upvotes':
+                        console.log('inside upvotes')
                         action='upvotes';
                         selected_ans_id=$this.parents('.response_votes').find('#post_response_id').val();
                         break;
@@ -327,14 +328,21 @@
                         headers:{'X-My-App-Token': 'loganstyles'},
                         success:function(response){
                             console.log(response);
+                            var old_val=parseInt($this.find('span.social_value').text());
                             if(response.success==true && response.action=="like"){
-                                var old_val=parseInt($this.find('span.social_value').text());
+                                //var old_val=parseInt($this.find('span.social_value').text());
                                 $this.find('span.social_value').text(old_val+1);//update the page value manually
                                 $this.find('i.fa').toggleClass('fa-heart-o fa-heart');
                             }else if(response.success==true && response.action=="unlike"){
-                            var old_val=parseInt($this.find('span.social_value').text());
+                                //var old_val=parseInt($this.find('span.social_value').text());
                                 $this.find('span.social_value').text(old_val-1);//update the page value manually
                                 $this.find('i.fa').toggleClass('fa-heart fa-heart-o');
+                            }else if(response.success==true && response.action=="votes"){
+                                $this.find('span.social_value').text(old_val+1);//update the page value manually
+                                //$this.find('i.fa').toggleClass('fa-heart fa-heart-o');
+                            }else if(response.success==true && response.action=="unvotes"){
+                                $this.find('span.social_value').text(old_val-1);//update the page value manually
+                                //$this.find('i.fa').toggleClass('fa-heart fa-heart-o');
                             }
                         },
                         error:function(xhr, status, err){

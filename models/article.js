@@ -33,6 +33,8 @@ var articleSchema = mongoose.Schema({
 	views:{type:Number,default:0},
 	shares:{type:Number,default:0},
 	likes:[String],
+	//upvotes:[String],
+	// downvotes:[String],
 	answers_len:{type:Number,default:0},
 	comments_len:{type:Number,default:0},
 	comments:[{
@@ -54,8 +56,8 @@ var articleSchema = mongoose.Schema({
 		date_modified:{type:Date,default:Date.now},
 		post_date: { type: Date, default: Date.now },
 		views:{type:Number,default:0},
-		upvotes:{type:Number,default:0},
-		downvotes:{type:Number,default:0},
+		upvotes:[String],
+		downvotes:[String],
 		comments:[{
 			body:String,
 			responderDisplayName:String,

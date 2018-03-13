@@ -318,33 +318,33 @@ function displayPost(selected_class,json){
 		if(parsed.post_owner){
 			post_content+='<div class="actions post_actions_button">';
 			post_content+='<div class="btn-group"><span class="item-status cursor_dropper" data-toggle="dropdown">';
-			post_content+='<i class="fa fa-ellipsis-v"></i> </span>';
+			post_content+='<i class="fa fa-ellipsis-h"></i> </span>';
 			post_content+='<ul class="dropdown-menu pull-right">';
 			post_content+='<li class="edit_section_item">';
 			post_content+='<a href="#"><i class="fa fa-pencil"></i> Edit </a></li>';
 			post_content+='<li class="delete_section_item"><a href="#">';
 			post_content+='<i class="fa fa-trash-o"></i> Delete </a></li>';
 			if(parsed.question_status){
-				post_content+='<li><a href="javascript:;">';
-				post_content+='<i class="fa fa-ban"></i> Request for answer </a>';
+				post_content+='<li class="new_request_item"><a href="javascript:;">';
+				post_content+='<i class="fa fa-share-square-o"></i> Request for answer </a>';
 				post_content+='</li>';
 			}
 
 			if(parsed.art_status){
-				post_content+='<li><a href="javascript:;">';
-				post_content+='<i class="fa fa-ban"></i> Request for review </a>';
+				post_content+='<li class="new_request_item"><a href="javascript:;">';
+				post_content+='<i class="fa fa-share-square-o"></i> Request for review </a>';
 				post_content+='</li>';
 			}
 
 			if(parsed.riddle_status){
-				post_content+='<li><a href="javascript:;">';
-				post_content+='<i class="fa fa-ban"></i> Request for solution </a>';
+				post_content+='<li class="new_request_item"><a href="javascript:;">';
+				post_content+='<i class="fa fa-share-square-o"></i> Request for solution </a>';
 				post_content+='</li>';
 			}
 
 			if(parsed.notice_status){
 				post_content+='<li><a href="javascript:;">';
-				post_content+='<i class="fa fa-ban"></i> Share </a>';
+				post_content+='<i class="fa fa-share-alt"></i> Share </a>';
 				post_content+='</li>';
 			}
 			
@@ -355,7 +355,7 @@ function displayPost(selected_class,json){
             post_content+='<div class="actions post_actions_button">';
 			post_content+='<div class="btn-group">';
 			post_content+='<span class="item-status cursor_dropper" data-toggle="dropdown">';
-			post_content+='<i class="fa fa-ellipsis-v"></i></span>';
+			post_content+='<i class="fa fa-ellipsis-h"></i></span>';
             post_content+='<ul class="dropdown-menu pull-right">';
             post_content+='<li class="follow_section_item">';
             post_content+='<a href="#">';
@@ -515,7 +515,7 @@ function displayPost(selected_class,json){
 
     	post_content+='<div class="posts_partition_right"><!--3rd partition-->';
 	    post_content+='<a class="btn btn-link post_likes">';
-	    post_content+='<span class="grey_button"><span class="social_value ">'+parsed.likes+'&nbsp;</span>';
+	    post_content+='<span class="grey_button"><span class="social_value ">'+parsed.likes.length+'&nbsp;</span>';
 	    post_content+='<i class="fa fa-heart-o"></i>&nbsp;Likes</span></a>';
 
 	    post_content+='<a class="btn btn-link "><span class="grey_button">';
@@ -559,7 +559,7 @@ function displayPost(selected_class,json){
 		if(parsed.sub_cat2=='notification'){// chking for notification type
 			post_content+='<div class="btn-arrow-link "><a class="btn btn-link post_likes">';
 			post_content+='<span class="grey_button">';
-			post_content+='<span class="social_value ">'+parsed.likes+'</span>';
+			post_content+='<span class="social_value ">'+parsed.likes.length+'</span>';
 			post_content+='<i class="fa fa-heart-o"></i>&nbsp;Likes</span></a>';
 			post_content+='<a class="btn btn-link "><span class="grey_button">';
 			post_content+='<span class="social_value">'+parsed.comments_len+'</span>';
@@ -636,12 +636,12 @@ function displayPost(selected_class,json){
 			response_content+='<img src="'+URL_ROOT+'/uploads/group.png"></div>';
 			response_content+='<div class="actions" style="display: inline-block;"><div class="btn-group">';
 			response_content+='<span class="item-status" data-toggle="dropdown" style="cursor: pointer;">';
-			response_content+='<i class="fa fa-ellipsis-v"></i></span>';
+			response_content+='<i class="fa fa-ellipsis-h"></i></span>';
 			response_content+='<ul class="dropdown-menu pull-right"><li>';
 			response_content+=' <a href="javascript:;"><i class="fa fa-pencil"></i> Edit </a></li>';
 			response_content+='<li><a href="javascript:;"><i class="fa fa-trash-o"></i> Delete </a></li>';
 			response_content+='<li><a href="javascript:;"><i class="fa fa-ban"></i> Share </a></li>';
-			response_content+='<li><a href="javascript:;"> Request Answer </a></li></ul></div></div></div><!--end float right-->';
+			response_content+='<li class="new_request_item"><a href="javascript:;"> Request Answer </a></li></ul></div></div></div><!--end float right-->';
 			response_content+='<div class="clearfix"></div></div><div class="clearfix"></div></div></div>';
 			response_content+='<div class="item-body">';
 			if(parsed.pics.length >0){

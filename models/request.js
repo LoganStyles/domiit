@@ -57,8 +57,8 @@ var requestSchema = mongoose.Schema({
 		date_modified:{type:Date,default:Date.now},
 		post_date: { type: Date, default: Date.now },
 		views:{type:Number,default:0},
-		upvotes:{type:Number,default:0},
-		downvotes:{type:Number,default:0},
+		upvotes:[String],
+		downvotes:[String],
 		comments:[{
 			body:String,
 			responderDisplayName:String,

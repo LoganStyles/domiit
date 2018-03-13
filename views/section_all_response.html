@@ -10,7 +10,7 @@
         <!-- END PAGE HEAD-->
         <!-- BEGIN PAGE CONTENT BODY -->
         <div class="page-content">
-            <div class="container">
+            <div class="container-fluid">
 
                 <!-- BEGIN PAGE CONTENT INNER -->
                 <div class="page-content-inner">                            
@@ -19,7 +19,7 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <!-- BEGIN PROFILE SIDEBAR -->
                                 <div class="profile-sidebar">
 <!-- 
@@ -33,7 +33,7 @@
                                 <!-- END BEGIN PROFILE SIDEBAR -->
                             </div>
 
-                            <div class="col-md-6">                                        
+                            <div class="col-md-8">                                        
                                 <!-- BEGIN PORTLET -->
                                 <div class="panel panel-default portlet" {{#unless page_response}} style="display: none;"{{/unless}}>
               <div class="panel-body" style="width: 100%;">
@@ -524,17 +524,17 @@
                         <div class="response_votes">
                         <input type="hidden" id="post_response_id" value="{{_id}}">
 
-                        <a class="btn btn-link post_upvotes "  >
+                        <a class="btn btn-link post_upvotes"  >
                             <span class="grey_button">
-                                <span class="social_value">{{upvotes}}</span>
+                                <span class="social_value">{{upvotes.length}}</span>
                             <img class="icon_size_20" src="{{../../url}}/images/upvotes.png">&nbsp;
                             Upvotes
                             </span>
                         </a>
 
-                        <a class="btn btn-link post_downvotes " >
+                        <a class="btn btn-link post_downvotes" >
                             <span class="grey_button">
-                                <span class="social_value">{{downvotes}}</span>
+                                <span class="social_value">{{downvotes.length}}</span>
                                 <img class="icon_size_20" src="{{../../url}}/images/downvotes.png">
                                 Downvotes
                             </span>
@@ -588,7 +588,7 @@
 
                                             </div>
 
-                                            <div class="col-md-3"><!--third-->
+                                            <div class="col-md-2"><!--third-->
                                                 <div class="row">
                                                 </div>
                                                 <!-- END PORTLET -->
