@@ -599,16 +599,16 @@
                 {{else}}
 
                 <div class="btn-arrow-link ">
-                     <a class="btn btn-link post_likes">
+                     <a class="btn btn-link post_attending">
                         <span class="grey_button">
-                            <span class="social_value ">{{attending}}</span>
+                            <span class="social_value ">{{attending.length}}</span>
                             <img class="icon_size_20" src="{{../url}}/images/attending.png">&nbsp;Attending
                         </span>
                     </a>
 
-                    <a class="btn btn-link ">
+                    <a class="btn btn-link post_not_attending">
                         <span class="grey_button">
-                            <span class="social_value">{{not_attending}}</span>
+                            <span class="social_value ">{{not_attending.length}}</span>
                             <img class="icon_size_20" src="{{../url}}/images/not_attending.png">&nbsp;Not Attending
                         </span>
                     </a>

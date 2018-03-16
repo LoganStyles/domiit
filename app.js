@@ -578,7 +578,7 @@ app.get('/dashboard',isLoggedIn,function(req,res){
             //update other details needed by the post
             process_posts.processPagePosts(page_results,req.user,function(processed_response){
                 console.log('PROCESSED RESPONSE');
-                console.log(processed_response);
+                //console.log(processed_response);
 
                 res.render(page,{
                     url:process.env.URL_ROOT,
@@ -1648,6 +1648,7 @@ app.post('/update_bio1',profile_upload,function(req,res,next){
             let updateUser=u;
             updateUser.firstname=req.body.profile_bio1_firstname;
             updateUser.lastname=req.body.profile_bio1_lastname;
+            updateUser.location=req.body.profile_bio1_location;
             updateUser.dob=dob;
             updateUser.displayName=updateUser.firstname+' '+updateUser.lastname;
             updateUser.date_modified=new Date();

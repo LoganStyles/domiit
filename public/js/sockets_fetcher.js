@@ -496,7 +496,7 @@ function displayPost(selected_class,json){
 	} /*end if :chk for books-*/
 
 	post_content+='<div style="width: 100%;"><!--main block-->';
-	post_content+='<hr class="long_length"><div class="pull-left">';
+	post_content+='<!--<hr class="long_length">--><div class="pull-left">';
 	if(parsed.art_status && parsed.attachemnt){
 		//if page is article, chek for attachemnt
 		post_content+='<input type="hidden" class="download_input_field" value="'+parsed.attachemnt+'">';
@@ -584,7 +584,7 @@ function displayPost(selected_class,json){
 		post_content+='<div class="task-footer" style="">';
 		post_content+='<div class="btn-arrow-link ">';
 		if(!parsed.pab_status){
-			post_content+='<a class=" sbold grey_button response_button">';
+			post_content+='<a class=" sbold response_button">';
 			post_content+='<i class="fa fa-edit"></i>&nbsp;Write your '+parsed.page_response+'</a> ';
 		}
 		post_content+='</div></div>';

@@ -345,10 +345,11 @@ router.get('/getOwnerRequestLists',isLoggedIn,function(req,res){
 
     var bookmark_len=req.user.bookmarks.length;//get saved bookmarks for sidebar
 
+    //find pending notifications length
+        var pending_friend_notifs=0;
+        process_posts.getNotifications(req.user,function(rel_notifs){
+        pending_friend_notifs=rel_notifs;
 
-    //find pending notifications length for header
-    var pending_friend_notifs=process_posts.getNotifications(req.user);
-    //console.log('pending_friend_notifs '+pending_friend_notifs)
 
     var curr_user_display_pic='uploads/avatar.png';//set default pic
     if(req.user.displayPic[0]){
@@ -438,6 +439,8 @@ router.get('/getOwnerRequestLists',isLoggedIn,function(req,res){
 
 
     });//end request
+
+    });//end notifs
 
 
     });//end trend
@@ -625,7 +628,28 @@ router.get('/section/:item/:type/:id', isLoggedIn,function(req, res) {
         if(id){
             selection={_id:id};
             page='section_all_response';
-            page_title='Others';
+            
+            switch(item){
+                case 'question':
+                page_title='Answers';
+                break;
+
+                case 'article':
+                page_title='Reviews';
+                break;
+                case 'riddle':
+                page_title='Solutions';
+                break;
+                case 'pab':
+                page_title='Post Books';
+                break;
+                case 'notice':
+                page_title='Notices';
+                break;
+                case 'trend':
+                page_title='Trending';
+                break;
+            }
         }        
         break;
 
@@ -710,6 +734,8 @@ section.find(selection).sort({post_date:-1}).exec(function(err,items){
 
         process_posts.processPagePosts(items,req.user,function(processed_response){
 
+            //console.log('processed_response '+processed_response)
+
             res.render(page, {
                 url:process.env.URL_ROOT,
                 displayPic:curr_user_display_pic,
@@ -792,12 +818,31 @@ router.post('/update_meta/:type/:id/:action/:subitem_id',function(req,res,next){
         case'article':
         section = article;
         break;
+
+        case'riddle':
+        section = riddle;
+        break;
+
+        case'notice_board':
+        section = notice;
+        break;
     }
 
     switch(action){
-        case'likes':        
+        case'likes': 
+        action_msg="like";       
         update_query = {_id:id,likes:user_id};
         update_param={likes:user_id};
+        break;
+        case'attending':  
+        action_msg="attending";      
+        update_query = {_id:id,attending:user_id};
+        update_param={attending:user_id};
+        break;
+        case'not_attending':  
+        action_msg="not_attending";      
+        update_query = {_id:id,not_attending:user_id};
+        update_param={not_attending:user_id};
         break;
         case'shares':
         update_param = {shares:1};
@@ -825,7 +870,9 @@ router.post('/update_meta/:type/:id/:action/:subitem_id',function(req,res,next){
 
     switch(action){
         case 'likes':
-        action_msg="like";
+        case 'attending':
+        case 'not_attending':
+        
         
         section.find(update_query,function(err1,res1){
             if(err1){

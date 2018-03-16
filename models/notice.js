@@ -41,8 +41,8 @@ var noticeSchema = mongoose.Schema({
 	views:{type:Number,default:0},
 	shares:{type:Number,default:0},
 	likes:[String],
-	attending:{type:Number,default:0},
-	not_attending:{type:Number,default:0},
+	attending:[String],
+	not_attending:[String],
 
 });
 

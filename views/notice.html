@@ -234,7 +234,7 @@
                                             {{/if}}
 
                                                 <div class="post_item post_item_body">
-                                                    {{body}}
+                                                    {{{body}}}
                                                 
                                                 </div>
                                             
@@ -296,17 +296,17 @@
                         {{else}}
 
                         <div class="btn-arrow-link ">
-                             <a class="btn btn-link post_likes">
+                             <a class="btn btn-link post_attending">
                                 <span class="grey_button">
-                                    <span class="social_value ">{{attending}}</span>
-                                    <i class="fa fa-user-plus"></i>&nbsp;Attending
+                                    <span class="social_value ">{{attending.length}}</span>
+                                    <img class="icon_size_20" src="{{../url}}/images/attending.png">&nbsp;Attending
                                 </span>
                             </a>
 
-                            <a class="btn btn-link ">
+                            <a class="btn btn-link post_not_attending">
                                 <span class="grey_button">
-                                    <span class="social_value">{{not_attending}}</span>
-                                    <i class="fa fa-user"></i>-&nbsp;Not Attending
+                                    <span class="social_value">{{not_attending.length}}</span>
+                                    <img class="icon_size_20" src="{{../url}}/images/not_attending.png">&nbsp;Not Attending
                                 </span>
                             </a>
 
@@ -527,7 +527,7 @@
 
             <div class="portlet-body form">                                         
 
-                <div id="section_response_modal" class="modal fade" tabindex="-1">
+               <!-- <div id="section_response_modal" class="modal fade" tabindex="-1">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                         <h4 style="text-transform: uppercase;" class="modal-title" id="section_response_header">{{page_response}}</h4>
@@ -566,7 +566,7 @@
                         </form>
                     </div>
 
-                </div>
+                </div>-->
 
             </div>
 

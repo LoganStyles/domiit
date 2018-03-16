@@ -3,6 +3,9 @@ var user = require('../models/user');
 // var user = require('../models/user');
 var trend = require('../models/trend');
 var mongoose = require('mongoose');
+var MongoClient = require('mongodb').MongoClient;
+// var mongo_url = "mongodb://localhost:27017/";
+var mongo_url =MONGODB_URI;
 
 var methods={};
 
@@ -25,23 +28,25 @@ methods.getStoryDetails=function (arr){
 /*handle notification for the current user*/
 methods.getNotifications=function(user,callback){
 
-//get pending friends
+//get pending friends length
 var len=0;
-console.log('getnotifs for '+user._id)
-user.getPendingFriends(user._id,function(err,pending){
-    if(err){
-        console.log(err)
-        callback(len);
-    }else if(pending){
-        console.log(pending)
-        len=pending.length;
-        console.log('INSIDE NOTIFS..PENDING LEN '+len);
-        callback(len);
-    }
-    //return len;
+//console.log('getnotifs for '+user._id);
+
+
+MongoClient.connect(mongo_url, function(err, db) {
+  if (err) throw err;
+  var dbo = db.db("doomiit");
+  dbo.collection("FriendshipCollection").find({requested:user._id}).toArray(function(err, result) {
+    if (err) throw err;
+    //console.log(result);
+    //console.log(result.length);
+    len=result.length;
+    db.close();
+    callback(len);
+  });
 
 });
-// return len;
+
 };
 
 /*check if item has been previously bookmarked*/

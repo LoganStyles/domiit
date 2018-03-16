@@ -111,7 +111,7 @@
 
             $(document).ready(function(){
 
-            $('#question_title,#question_info,#section_response_details,#notice_title,#request_title,#request_info,#request_title_riddle,#request_info_article,#new_request_title,#new_request_info,#new_request_title_riddle,#new_request_info_article,#request_update_title,#request_update_info,#request_update_title_riddle,#request_update_info_article,#article_title,#riddle_title,#pab_synopsis,#pab_about_author,#section_pab_synopsis,#section_pab_about_author,#section_update_title,#section_update_info').froalaEditor({
+            $('#question_title,#question_info,#section_response_details,#notice_title,#request_title,#request_info,#request_title_riddle,#request_info_article,#new_request_title,#new_request_info,#new_request_title_riddle,#new_request_info_article,#request_update_title,#request_update_info,#request_update_title_riddle,#request_update_info_article,#article_title,#riddle_title,#pab_synopsis,#pab_about_author,#section_pab_synopsis,#section_pab_about_author,#section_update_title,#section_update_info,#profile_desc_description').froalaEditor({
                 heightMin:100,
                 heightMax:200,
                 toolbarButtons: ['bold','italic','underline','insertImage','insertLink','insertTable','undo','redo','color', 'formatOL', 'formatUL'],
@@ -288,7 +288,7 @@
             /*show modal for answering a question*/
 
              /*update social buttons*/
-                $('body').on('click','.post_likes,.post_shares,.post_upvotes,.post_downvotes',function(){
+                $('body').on('click','.post_likes,.post_shares,.post_upvotes,.post_downvotes,.post_attending,.post_not_attending',function(){
                     var $this=$(this);
                     var classes=$this.attr('class');
                     var classname=classes.replace('btn btn-link ','');
@@ -297,6 +297,12 @@
                     switch(classname){
                         case 'post_likes':
                         action='likes';
+                        break;
+                        case 'post_attending':
+                        action='attending';
+                        break;
+                        case 'post_not_attending':
+                        action='not_attending';
                         break;
                         case 'post_shares':
                         action='shares';
@@ -320,7 +326,12 @@
                     console.log('selected_type '+selected_type);
                     console.log('selected_ans_id '+selected_ans_id);
 
+                    if(selected_type=="notice board"){
+                        selected_type="notice_board";
+                    }
+
                     var my_url="{{url}}/posts/update_meta/"+selected_type+"/"+selected_id+"/"+action+"/"+selected_ans_id;
+                    console.log('my_url '+my_url);
 
                     $.ajax({
                         url:my_url,
@@ -343,6 +354,10 @@
                             }else if(response.success==true && response.action=="unvotes"){
                                 $this.find('span.social_value').text(old_val-1);//update the page value manually
                                 //$this.find('i.fa').toggleClass('fa-heart fa-heart-o');
+                            }else if(response.success==true && response.action=="attending"){
+                                $this.find('span.social_value').text(old_val+1);
+                            }else if(response.success==true && response.action=="unnot_attending"){
+                                $this.find('span.social_value').text(old_val-1);
                             }
                         },
                         error:function(xhr, status, err){
@@ -424,6 +439,14 @@
                         switch(selected_type){
                         case'question':
                         page_response='answer';
+                        break;
+
+                        case'article':
+                        page_response='review';
+                        break;
+
+                        case'riddle':
+                        page_response='solution';
                         break;
 
                         case'request':
