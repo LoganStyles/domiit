@@ -36,7 +36,7 @@ var len=0;
 
 MongoClient.connect(mongo_url, function(err, db) {
   if (err) throw err;
-  var dbo = db.db("doomiit");
+  var dbo = db.db("heroku_sdf7bh9m");
   dbo.collection("FriendshipCollection").find({requested:user._id}).toArray(function(err, result) {
     if (err) throw err;
     //console.log(result);
