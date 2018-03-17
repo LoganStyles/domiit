@@ -5,7 +5,7 @@ var trend = require('../models/trend');
 var mongoose = require('mongoose');
 var MongoClient = require('mongodb').MongoClient;
 // var mongo_url = "mongodb://localhost:27017/";
-var mongo_url ="mongodb://domiit_user:SocEcorOakEapM5@ds013475.mlab.com:13475/heroku_sdf7bh9m";
+var mongo_url ="mongodb://domiitu:SocEcorOakEapM5@ds013475.mlab.com:13475/heroku_sdf7bh9m";
 
 var methods={};
 
