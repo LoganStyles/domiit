@@ -17,5 +17,4 @@ npm-debug.log
 /*.env
 
 #images
-/public/uploads
 /public/uploads_bak
