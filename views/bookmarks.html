@@ -216,21 +216,21 @@
                                                 </li>
                                                 
                                                 {{#if question_status}}
-                                                <li>
+                                                <li class="new_request_item">
                                                     <a href="javascript:;">
                                                         <i class="fa fa-share-square-o"></i> Request for answer </a>
                                                 </li>  
                                                 {{/if}}
 
                                                 {{#if art_status}}
-                                                <li>
+                                                <li class="new_request_item">
                                                     <a href="javascript:;">
                                                         <i class="fa fa-share-square-o"></i> Request for review </a>
                                                 </li>  
                                                 {{/if}} 
 
                                                 {{#if riddle_status}}
-                                                <li>
+                                                <li class="new_request_item">
                                                     <a href="javascript:;">
                                                         <i class="fa fa-share-square-o"></i> Request for solution </a>
                                                 </li>  
@@ -252,10 +252,18 @@
                                                 <i class="fa fa-ellipsis-h"></i>
                                             </span>
                                             <ul class="dropdown-menu pull-right">
-                                                <li class="follow_section_item">
-                                                    <a href="javascript:;">
-                                                        <i class="fa fa-plus"></i> Follow </a>
-                                                </li>
+                                                {{#if followed_post}}
+                                                <li class="un_follow_section_item">
+                                                        <a href="javascript:;">
+                                                            <i class="fa fa-minus-square"></i> Unfollow </a>
+                                                    </li>
+                                                    
+                                                {{else}}
+                                                    <li class="follow_section_item">
+                                                        <a href="javascript:;">
+                                                            <i class="fa fa-plus-square"></i> Follow </a>
+                                                    </li>
+                                                {{/if}}
                                                 {{#unless bookmarked_post}}
                                                 <li class="bookmark_section_item">
                                                     <a href="javascript:;">
@@ -374,10 +382,10 @@
 
                               <div class="tab-content">
                                 <div id="synopsis{{@index}}" class="tab-pane fade in active">
-                                  <p class="pab_isynopsis">{{synopsis}}</p>
+                                  <p class="pab_isynopsis">{{{synopsis}}}</p>
                                 </div>
                                 <div id="about_author{{@index}}" class="tab-pane fade">
-                                  <p class="pab_iabout_author">{{about_author}}</p>
+                                  <p class="pab_iabout_author">{{{about_author}}}</p>
                                 </div>
                                 
                               </div>
@@ -399,7 +407,7 @@
 
                             {{#if topic}}
                                 <div class="post_item post_item_topic">
-                                    {{topic}}
+                                    {{{topic}}}
                                 </div>
                             {{/if}}
 
@@ -410,7 +418,7 @@
                             {{/if}}
 
                                 <div class="post_item post_item_body">
-                                    {{body}}
+                                    {{{body}}}
                                 
                                 </div>
                             
@@ -422,7 +430,7 @@
                     <div class="item-body"> 
                         {{#if topic}}
                             <div class="post_item post_item_topic">
-                                {{topic}}
+                                {{{topic}}}
                             </div>
                         {{/if}}
 
@@ -438,7 +446,7 @@
                         {{else}}
                         <div class="post_item post_item_topic">
                         {{/if}}
-                        {{body}}
+                        {{{body}}}
                     
                     </div>
                                                     
@@ -446,7 +454,7 @@
                         {{#if description}}
                     <hr class="short_length">
                     <div class="post_item post_item_more_info">
-                        {{description}}
+                        {{{description}}}
                     </div>
                         {{/if}}
                 
@@ -496,7 +504,7 @@
 
             <a class="btn btn-link post_likes">
             <span class="grey_button">
-                <span class="social_value ">{{likes}}</span>
+                <span class="social_value ">{{likes.length}}</span>
                 <i class="fa fa-heart-o"></i>&nbsp;Likes
             </span>
             </a>
@@ -567,7 +575,7 @@
                 <div class="btn-arrow-link ">
                      <a class="btn btn-link post_likes">
                         <span class="grey_button">
-                            <span class="social_value ">{{likes}}</span>
+                            <span class="social_value ">{{likes.length}}</span>
                             <i class="fa fa-heart-o"></i>&nbsp;Likes
                         </span>
                     </a>
@@ -592,15 +600,15 @@
                 <div class="btn-arrow-link ">
                      <a class="btn btn-link post_likes">
                         <span class="grey_button">
-                            <span class="social_value post_attending">{{attending}}</span>
-                            <i class="fa fa-user-plus"></i>&nbsp;Attending
+                            <span class="social_value post_attending">{{attending.length}}</span>
+                            <img class="icon_size_20" src="{{../url}}/images/attending.png">&nbsp;Attending
                         </span>
                     </a>
 
                     <a class="btn btn-link ">
                         <span class="grey_button">
-                            <span class="social_value post_not_attending">{{not_attending}}</span>
-                            <i class="fa fa-user"></i>-&nbsp;Not Attending
+                            <span class="social_value post_not_attending">{{not_attending.length}}</span>
+                            <img class="icon_size_20" src="{{../url}}/images/not_attending.png">&nbsp;Not Attending
                         </span>
                     </a>
 
@@ -626,7 +634,7 @@
             {{#unless pab_status}}
 
                 {{#if page_response}}
-                <a class=" sbold grey_button response_button">
+                <a class=" sbold response_button">
                 <i class="fa fa-edit"></i>&nbsp;Write your {{page_response}}</a>
                 {{/if}}                            
             {{/unless}}

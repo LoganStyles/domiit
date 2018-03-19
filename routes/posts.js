@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-// var ne = require('node-each');
 var config = require('../config/database');
 var user = require('../models/user');
 var question = require('../models/question');
@@ -39,9 +38,10 @@ function searchBookmarks(user,final_response){
     var res_items=[];//set empty result array
     var saved_bookmarks_len=user.bookmarks.length;
     var saved_bookmarks=user.bookmarks;
+    var item_id_obj;
 
     //loop thru bookmarks & process them
-    for(var i=0;i<saved_bookmarks_len;i++){
+    for(var i=0;i<saved_bookmarks_len;++i){
         curr_bm=saved_bookmarks[i];
         console.log(curr_bm.body)
 
@@ -58,11 +58,11 @@ function searchBookmarks(user,final_response){
             section = riddle;
             break;
 
-            case'pab':
+            case'Post Books':
             section = pab;
             break;
 
-            case'notice':
+            case'notice board':
             section = notice;
             break;
 
@@ -71,20 +71,28 @@ function searchBookmarks(user,final_response){
             break;
 
         }
-        section.findOne({_id:curr_bm.item_id}).exec(function(err,item){
-            console.log('result item found')
-            // console.log(item)
-            res_items.push(item);
+        item_id_obj = mongoose.Types.ObjectId(curr_bm.item_id);//convert id string to obj id
+        section.findOne({_id:item_id_obj}).exec(function(err,item){
+            if (err)
+                console.log(err)
+            if(item){
+                console.log('result item found')
+                console.log(item)
+                res_items.push(item);
+            console.log('i: '+i);
+            console.log('saved_bookmarks_len: '+saved_bookmarks_len);
 
             //loop has ended
-            if(i==saved_bookmarks_len){
+            if(i===saved_bookmarks_len){
                 process_posts.processPagePosts(res_items,user,function(processed_response){
                     console.log('final result response');
                     // console.log(processed_response);
                     final_response(processed_response);                    
                 });
             }
-        });  
+        }
+
+    });  
     }
 }
 
@@ -121,10 +129,14 @@ router.get('/get_bookmarked',isLoggedIn,function(req,res){
             request_model.find({$or:[{destination_id:id_string},{"owner.id":id_string}]}).exec(function(err1,res1){
             req_count =res1.length;
 
-            var pending_friend_notifs=process_posts.getNotifications(req.user);
+            //var pending_friend_notifs=process_posts.getNotifications(req.user);
+            //find pending notifications length
+        var pending_friend_notifs=0;
+        process_posts.getNotifications(req.user,function(rel_notifs){
+        pending_friend_notifs=rel_notifs;
 
 
-                console.log('get bookmarked');
+    console.log('get bookmarked');
     var saved_bookmarks=req.user.bookmarks;//get saved bookmarks
     var bookmark_len=saved_bookmarks.length;
 
@@ -178,13 +190,11 @@ router.get('/get_bookmarked',isLoggedIn,function(req,res){
         });
     }
 
+    });//end notifs
+
 });//end request
 
-
 });//end trend
-
-    //}//end if block
-
 
 });//end
 
@@ -216,10 +226,10 @@ router.get('/getRequests',isLoggedIn,function(req,res){
 
     var bookmark_len=req.user.bookmarks.length;//get saved bookmarks
 
-
     //find pending notifications length
-    var pending_friend_notifs=process_posts.getNotifications(req.user);
-    //console.log('pending_friend_notifs '+pending_friend_notifs)
+        var pending_friend_notifs=0;
+        process_posts.getNotifications(req.user,function(rel_notifs){
+        pending_friend_notifs=rel_notifs;
 
     var curr_user_display_pic='uploads/avatar.png';//set default pic
     if(req.user.displayPic[0]){
@@ -312,6 +322,8 @@ router.get('/getRequests',isLoggedIn,function(req,res){
         });//end destination request
 
     });//end request
+
+    });//end notifs
 
 
     });//end trend
@@ -474,10 +486,10 @@ router.get('/getDestinationRequestLists',isLoggedIn,function(req,res){
 
     var bookmark_len=req.user.bookmarks.length;//get saved bookmarks for sidebar
 
-
-    //find pending notifications length for header
-    var pending_friend_notifs=process_posts.getNotifications(req.user);
-    //console.log('pending_friend_notifs '+pending_friend_notifs)
+    //find pending notifications length
+    var pending_friend_notifs=0;
+    process_posts.getNotifications(req.user,function(rel_notifs){
+    pending_friend_notifs=rel_notifs;
 
     var curr_user_display_pic='uploads/avatar.png';//set default pic
     if(req.user.displayPic[0]){
@@ -568,13 +580,12 @@ router.get('/getDestinationRequestLists',isLoggedIn,function(req,res){
 
     });//end request
 
+    });//end notifs
+
 
     });//end trend
 
 });
-
-
-
 
 
 /*get all posted questions,*/
@@ -787,7 +798,8 @@ section.find(selection).sort({post_date:-1}).exec(function(err,items){
 
 });//end section
 
- });//end notifs
+});//end notifs
+
 
 });
 
