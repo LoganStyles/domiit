@@ -363,6 +363,8 @@
                                         </div>
 
 
+
+
                                         
                                     </div>  
                                     {{else}}
@@ -443,7 +445,7 @@
                                                     {{/if}}
 
                                                     {{#if pab_status}}
-                                                    <span class="social_value">{{comments_len}}</span>
+                                                    <span class="social_value">{{comments.length}}</span>
                                                     <img class="icon_size_20" src="{{../url}}/images/comments.png">&nbsp;Comments
                                                     {{/if}}
 
@@ -485,10 +487,25 @@
                    
                     <div class="task-footer" style="">
                         <div class="btn-arrow-link ">
-                        {{#unless pab_status}}
-                            <a class=" sbold response_button">
-                            <i class="fa fa-edit"></i>&nbsp;Write your {{page_response}}</a>                            
-                        {{/unless}}
+                    
+
+
+                        {{#if pab_status}}
+                        <hr class="long_length">
+            <div style="width: 100%;" class="new_comments">    
+                <input type="hidden" id="new_comment_section" value="pab">
+                <input type="hidden" id="new_comment_section_id" value="{{_id}}">
+                <input type="hidden" id="new_comment_response_id" value="">
+                <a class=" sbold comment_button">
+                <img class="icon_size_20" src="{{../url}}/images/comments.png">&nbsp;Write a comment</a>
+            </div>
+            {{else}}
+
+                {{#if page_response}}
+                <a class=" sbold response_button">
+                <i class="fa fa-edit"></i>&nbsp;Write your {{page_response}}</a>
+                {{/if}}                            
+            {{/if}}
 
                         
                         </div>

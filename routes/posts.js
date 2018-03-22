@@ -319,7 +319,7 @@ router.get('/getRequests',isLoggedIn,function(req,res){
     });//end all requests
 
 
-        });//end destination request
+     });//end destination request
 
     });//end request
 
@@ -560,6 +560,183 @@ router.get('/getDestinationRequestLists',isLoggedIn,function(req,res){
                 data_trend:res_item_trend,
                 page_title: page_title,
                 class_type:'my_requests_lists',
+                pending_friend_notifs:pending_friend_notifs,
+                bookmarks_count:bookmark_len,
+
+                quest_page_status:false,
+                art_page_status:false,
+                riddle_page_status:false,
+                notice_page_status:false,
+                pab_page_status:false,
+                trend_page_status:false,
+                home_page_status:true
+            });
+
+        }
+
+
+    });//end all requests
+
+
+    });//end request
+
+    });//end notifs
+
+
+    });//end trend
+
+});
+
+
+/*
+fetchs request details made by a user
+*/
+router.get('/getComments/:section/:section_id/:response_id',isLoggedIn,function(req,res){
+    var section_type=req.params.section;
+        console.log('section type '+section_type);
+        var section_id=req.params.section_id;
+        console.log('section_id '+section_id);
+        var comment_response_id=req.params.response_id;
+        console.log('comment_response_id '+comment_response_id);
+        var comment_response_id_obj;
+        var comment_section_id_obj;
+
+    var req_owner_count=0,
+    req_destination_count=0,
+    req_count=0,
+    pending_friend_notifs=0,
+    page='all_comments',
+    page_title='Comments',
+    res_item_trend=[];
+
+    //get list of trending stories for sidebar headlines::nb::this operation takes a while to complete,
+    //try nesting or callbacks to prevent
+    trend.find().sort({date_created:1}).exec(function(err_trend,item_trend){
+
+        if(err_trend){
+            //console.log(err_trend);
+        }
+        if(item_trend){
+            //console.log(item_trend);
+            res_item_trend=item_trend;
+        }
+
+    var bookmark_len=req.user.bookmarks.length;//get saved bookmarks for sidebar
+
+    //find pending notifications length
+        var pending_friend_notifs=0;
+        process_posts.getNotifications(req.user,function(rel_notifs){
+        pending_friend_notifs=rel_notifs;
+
+
+    var curr_user_display_pic='uploads/avatar.png';//set default pic
+    if(req.user.displayPic[0]){
+        curr_user_display_pic=req.user.displayPic[req.user.displayPic.length - 1];
+        }//end display
+
+    //get total requests for this user
+    var id_string=(req.user._id).toString();
+    request_model.find({$or:[{destination_id:id_string},{"owner.id":id_string}]}).exec(function(err1,res1){
+        if(err1){
+                    //console.log('err occured geting requests');
+                    //console.log(err1)
+                }
+        req_count =res1.length;
+
+            //get all comments for selected answer
+            switch(section_type){
+            case'question':
+            section = question;
+            break;
+
+            case'article':
+            section = article;
+            break;
+
+            case'riddle':
+            section = riddle;
+            break;
+
+            case'notice board':
+            section = notice;
+            break;
+
+            case'trend':
+            section = trend;
+            break;
+
+            case'pab':
+            section = pab;
+            break;
+
+            case'request':
+            section = request_model;
+            break;
+        }
+
+        comment_section_id_obj = mongoose.Types.ObjectId(section_id);//convert id string to obj id
+
+        if(comment_response_id !=0){
+            comment_response_id_obj = mongoose.Types.ObjectId(comment_response_id);//convert id string to obj id
+            update_query={_id:comment_section_id_obj,'answers._id':comment_response_id_obj};
+            
+        }else{
+            update_query={_id:comment_section_id_obj};
+        }
+
+
+        section.find(update_query).sort({date_created:-1}).exec(function(err3,res3){
+
+                if(err3){
+                    console.log('err occured geting requests');
+                    console.log(err3)
+                }else if(res3){
+                    console.log('res3 found');
+                    console.log(res3)
+            //update other details needed by the post
+            process_posts.processPagePosts(res3,req.user,function(processed_response){
+                //console.log('MY REQUESTS LISTS .......................PROCESSED RESPONSE');
+                //console.log(processed_response);
+
+                res.render(page,{
+                    url:process.env.URL_ROOT,
+                    displayPic:curr_user_display_pic,
+                    user_info:req.user,
+                    data:processed_response,
+                   // req_owner_count:req_owner_count,
+                    //page_response:item_response,
+                    req_count:req_count,
+                    data_trend:res_item_trend,
+                    page_title: page_title,
+                    class_type:'all_comments',
+                    pending_friend_notifs:pending_friend_notifs,
+                    bookmarks_count:bookmark_len,
+
+                    quest_page_status:false,
+                    art_page_status:false,
+                    riddle_page_status:false,
+                    notice_page_status:false,
+                    pab_page_status:false,
+                    trend_page_status:false,
+                    home_page_status:true
+                });      
+
+            });     
+
+        }else{
+
+            res.render(page,{
+                url:process.env.URL_ROOT,
+                displayPic:curr_user_display_pic,
+                user_info:req.user,
+                data:[],
+                req_owner_count:req_owner_count,
+                req_destination_count:req_destination_count,
+                req_count:req_count,
+                //page_response:item_response,
+                data_trend:res_item_trend,
+                page_title: page_title,
+                class_type:'all_comments',
                 pending_friend_notifs:pending_friend_notifs,
                 bookmarks_count:bookmark_len,
 

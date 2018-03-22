@@ -60,6 +60,8 @@ var Storage =multer.diskStorage({
 
 var process_posts=require('./config/processor');
 
+var mongoose = require('mongoose');
+
 
 // var inbound = require('inbound');
 
@@ -1774,6 +1776,115 @@ app.post('/response_item',upload.single('section_response_photo'),function(req,r
                 }
 
             });             
+            }else{
+                res.json({success:false,msg:"Item not found"});
+            }
+
+        });
+    }
+
+});
+
+
+/*process comments*/
+app.post('/comment_item',function(req,res,next){
+//    console.log(req.body)
+
+if( (req.user.displayPic).length ===0 || req.user.displayName =="User" || req.user.displayName ==""){
+    console.log("user has not updated profile")
+    res.json({success:false,msg:"Your comment failed, please update your profile first"});
+}else{
+    var section_type=req.body.comment_section;
+        // console.log('section type '+section_type);
+        var section_id=req.body.comment_section_id;
+        // console.log('section_id '+section_id);
+        var comment_response_id=req.body.comment_response_id;
+        // console.log('comment_response_id '+comment_response_id);
+        var comment_response_id_obj;
+        var comment_section_id_obj;
+
+        switch(section_type){
+            case'question':
+            section = question;
+            break;
+
+            case'article':
+            section = article;
+            break;
+
+            case'riddle':
+            section = riddle;
+            break;
+
+            case'notice':
+            section = notice;
+            break;
+
+            case'pab':
+            section = pab;
+            break;
+
+            case'request':
+            section = request_model;
+            break;
+        }
+
+        
+        comment_section_id_obj = mongoose.Types.ObjectId(section_id);//convert id string to obj id
+
+        if(comment_response_id){
+            comment_response_id_obj = mongoose.Types.ObjectId(comment_response_id);//convert id string to obj id
+            update_query={_id:comment_section_id_obj,'answers._id':comment_response_id_obj};
+            
+        }else{
+            update_query={_id:comment_section_id_obj};
+        }
+
+        section.find(update_query,function(error,result){//find the section that was commented on
+            if(result){
+
+                // console.log('update ')
+                // console.log(result);
+                
+                var displayPic=(req.user.displayPic[0])?(req.user.displayPic[req.user.displayPic.length -1]):('uploads/avatar.png');
+
+                let updateSection = {
+                    body : (req.body.comments),
+                    responderDisplayName:req.user.displayName,
+                    responder_id:req.user._id,
+                    responderDisplayPic:displayPic
+                };
+
+                if(comment_response_id){
+                    section.update(update_query,{'$push':{
+                        'answers.$.comments':updateSection
+                    }},function(err3,res3){
+                        if(err3){
+                        // console.log('failed')
+                        console.log(err3)
+                        res.json({success:false,msg:"Comment Operation failed"});
+                    }else{
+                            // console.log('success')
+                            // console.log(res3)
+                            res.json({success:true,msg:"Comment Operation succesful"});
+                        }
+                    });
+                }else{
+                    section.update(update_query,{'$push':{
+                        'comments':updateSection
+                    }},function(err3,res3){
+                        if(err3){
+                        // console.log('failed')
+                        console.log(err3)
+                        res.json({success:false,msg:"Comment Operation failed"});
+                    }else{
+                            // console.log('success')
+                            // console.log(res3)
+                            res.json({success:true,msg:"Comment Operation succesful"});
+                        }
+                    });
+                }
+
             }else{
                 res.json({success:false,msg:"Item not found"});
             }

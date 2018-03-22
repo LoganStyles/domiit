@@ -59,6 +59,7 @@ var questionSchema = mongoose.Schema({
 			responderDisplayName:String,
 			responder_id:String,
 			responderDisplayPic:String,
+			responderStatus:String,
 			date_created:{type:Date,default:Date.now},
 			likes:[String],
 			reply:[{

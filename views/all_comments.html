@@ -66,7 +66,7 @@
             <div class="panel panel-default portlet">
               <div class="panel-body" style="width: 100%;">
               <div class="posts_top_actions_left">
-                    <span class="posts_page_title">Requests ({{req_owner_count}})</span>
+                    <span class="posts_page_title">Comments ({{req_owner_count}})</span>
                 </div>
                                 
                 <div class="posts_top_actions_right">
@@ -600,15 +600,15 @@
                 <div class="btn-arrow-link ">
                      <a class="btn btn-link post_likes">
                         <span class="grey_button">
-                            <span class="social_value ">{{attending}}</span>
-                            <i class="fa fa-user-plus"></i>&nbsp;Attending
+                            <span class="social_value ">{{attending.length}}</span>
+                            <img class="icon_size_20" src="{{../url}}/images/attending.png">&nbsp;Attending
                         </span>
                     </a>
 
                     <a class="btn btn-link ">
                         <span class="grey_button">
-                            <span class="social_value">{{not_attending}}</span>
-                            <i class="fa fa-user"></i>-&nbsp;Not Attending
+                            <span class="social_value">{{not_attending.length}}</span>
+                            <img class="icon_size_20" src="{{../url}}/images/not_attending.png">&nbsp;Not Attending
                         </span>
                     </a>
 
