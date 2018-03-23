@@ -432,7 +432,7 @@
                 <div class="form-group">
                   <label class="col-md-3 col-lg-3 col-sm-12 control-label">Location</label>
                   <div class="col-md-9 col-lg-9 col-sm-12 ">
-                    <input type="text" name="profile_bio1_location" id="profile_bio1_location" class="form-control" value="{{location}}">
+                    <input type="text" name="profile_bio1_location" id="profile_bio1_location" class="form-control" value="{{user_info.location}}">
                   </div>
                 </div>
 
@@ -490,7 +490,7 @@
               <input type="hidden" name="profile_desc_id"  id="profile_desc_id" value="0">
 
               <div class="form-group">
-                <textarea name="profile_desc_description" id="profile_desc_description" class="form-control" rows="3" style="font-size: 1.2em;font-weight: 600">{{user_info.description}}</textarea>
+                <textarea name="profile_desc_description" id="profile_desc_description" class="form-control summer_details" rows="3" style="font-size: 1.2em;font-weight: 600">{{user_info.description}}</textarea>
               </div>
 
               <div class="form-actions noborder">

@@ -695,14 +695,15 @@ router.get('/getComments/:section/:section_id/:response_id',isLoggedIn,function(
                     console.log(res3)
             //update other details needed by the post
             process_posts.processPagePosts(res3,req.user,function(processed_response){
-                //console.log('MY REQUESTS LISTS .......................PROCESSED RESPONSE');
-                //console.log(processed_response);
+                console.log('MY REQUESTS LISTS .......................PROCESSED RESPONSE');
+                console.log(processed_response);
 
                 res.render(page,{
                     url:process.env.URL_ROOT,
                     displayPic:curr_user_display_pic,
                     user_info:req.user,
                     data:processed_response,
+                    comments_count:processed_response[0].comments.length,
                    // req_owner_count:req_owner_count,
                     //page_response:item_response,
                     req_count:req_count,
@@ -730,6 +731,7 @@ router.get('/getComments/:section/:section_id/:response_id',isLoggedIn,function(
                 displayPic:curr_user_display_pic,
                 user_info:req.user,
                 data:[],
+                comments_count:0,
                 req_owner_count:req_owner_count,
                 req_destination_count:req_destination_count,
                 req_count:req_count,

@@ -66,7 +66,7 @@
             <div class="panel panel-default portlet">
               <div class="panel-body" style="width: 100%;">
               <div class="posts_top_actions_left">
-                    <span class="posts_page_title">Comments ({{req_owner_count}})</span>
+                    <span class="posts_page_title">Comments ({{comments_count}})</span>
                 </div>
                                 
                 <div class="posts_top_actions_right">
@@ -104,6 +104,8 @@
                         {{#if art_status}} article {{/if}}
 
                         {{#if riddle_status}} riddle {{/if}}
+
+                        {{#if notice_status}} notice board {{/if}}
                         </span>
 
                         {{#if category}}
@@ -221,35 +223,7 @@
                                                     <a href="javascript:;">
                                                         <i class="fa fa-trash-o"></i> Delete </a>
                                                 </li>
-                                                <!--
-                                                {{#if question_status}}
-                                                <li>
-                                                    <a href="javascript:;">
-                                                        <i class="fa fa-share-square-o"></i> Request for answer </a>
-                                                </li>  
-                                                {{/if}}
-
-                                                {{#if art_status}}
-                                                <li>
-                                                    <a href="javascript:;">
-                                                        <i class="fa fa-share-square-o"></i> Request for review </a>
-                                                </li>  
-                                                {{/if}} 
-
-                                                {{#if riddle_status}}
-                                                <li>
-                                                    <a href="javascript:;">
-                                                        <i class="fa fa-share-square-o"></i> Request for solution </a>
-                                                </li>  
-                                                {{/if}} 
-
-                                                {{#if notice_status}}
-                                                <li>
-                                                    <a href="javascript:;">
-                                                        <i class="fa fa-share-alt"></i> Share</a>
-                                                </li>  
-                                                {{/if}}    
-                                                -->                      
+                                                                     
                                             </ul>
                                         </div>                                           
                                 </div>
@@ -569,7 +543,7 @@
 
     {{#if notice_status}}<!-- task-footer : chking for notices-->
 
-        <div class="task-footer" style="">
+        <!--<div class="task-footer" style="">
             {{#ifEquals 'notification' sub_cat2}}
 
                 <div class="btn-arrow-link ">
@@ -624,7 +598,7 @@
 
             {{/ifEquals}}
                 
-            </div>
+            </div>-->
 
 
     {{else}}<!--else task-footer : chking for pab-->
@@ -640,6 +614,55 @@
    
     
     <div class="clearfix"></div>
+{{#each comments}}
+    <div style="width: 100%;margin-left: 3%; margin-right: 3%;"><!--main block-->
+        <div class="posts_partition_friends"><!--1st partition-->
+            <div style="width: 100%;">
+                <div class="section_posts_avatar">
+                   <img class="icon_size_50 img-circle" src="{{../url}}/{{responderDisplayPic}}">
+                </div>
+                <div class="section_posts_text">
+                    
+                    
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+        </div>
+
+         <div class="posts_partition_friends_middle" style="width: 60%;"><!--2nd partition-->
+            <span>
+                ({{body}}) 
+                            
+            </span>
+        </div>
+         <div class=""><!--3rd partition-->
+            <div class="pull-right" style="width: 10%">
+                 <div class="fromnow"></div>
+                    <div class="clearfix"></div>
+
+
+                    <a href="{{url}}/posts/getDestinationRequestLists">
+
+                    
+                        <!-- <div style="margin-right: 5%;cursor: pointer" class="post_actions_button_left user_requests">
+                        
+                            View
+                        
+                        </div> -->
+
+                        </a>
+                    
+                    
+                
+            </div><!--end float right-->
+            <div class="clearfix"></div>
+        </div>
+
+            <div class="clearfix"></div>
+            </div> <br/>
+            {{/each}}
+
 
 </div>
 {{/each}}
