@@ -669,6 +669,10 @@ router.get('/getComments/:section/:section_id/:response_id',isLoggedIn,function(
             section = pab;
             break;
 
+            case'Post Books':
+            section = pab;
+            break;
+
             case'request':
             section = request_model;
             break;
