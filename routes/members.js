@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var config = require('../config/database');
 var user = require('../models/user');
+var group = require('../models/group');
 var path =require('path');
 var fs =require('fs');
 var url =require('url');
@@ -37,6 +38,8 @@ router.post('/register',function(req,res,next){
         });
 	
 });
+
+
 
 //Login
 router.post('/login',function(req,res,next){

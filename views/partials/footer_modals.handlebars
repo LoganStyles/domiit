@@ -574,90 +574,179 @@
 
 </div>
 
+<div id="group_modal" class="modal fade" tabindex="-1">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h4 class="modal-title" id="group_sub1_header" style="color: #3598dc;">Create a group</h4>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal" role="form" id="group_form" action="" method="post" enctype="multipart/form-data">
+                <span class="form_submission_error"></span>
+                <span class="form_submission_success"></span>
+
+                <input type="hidden" name="group_id"  id="group_id" value="0">
+
+                <div class="form-body">
+
+                    <div class="form-group">
+                      <label class="col-md-4 col-lg-4 col-sm-12 control-label">Name</label>
+                        <div class="col-md-8 col-lg-8 col-sm-12 ">
+                            <input type="text" name="question_title" id="question_title" class="form-control" value="">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-md-4 col-lg-4 col-sm-12 control-label">Motto</label>
+                        <div class="col-md-8 col-lg-8 col-sm-12 ">
+                            <input type="text" name="question_motto" id="question_motto" class="form-control" value="">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-md-4 col-lg-4 col-sm-12 control-label">About Us</label>
+                        <div class="col-md-8 col-lg-8 col-sm-12 ">
+                            <textarea  name="question_aboutus" id="question_aboutus" class="form-control summer_details" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
+                        </div>                                
+                    </div>
+
+                    <!--<div class="form-group">
+                        <label class="col-md-4 col-lg-4 col-sm-12 control-label">Mission</label>
+                        <div class="col-md-8 col-lg-8 col-sm-12 ">
+                            <textarea  name="question_mission" id="question_mission" class="form-control summer_details" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
+                        </div>                                
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 col-lg-4 col-sm-12 control-label">Vision</label>
+                        <div class="col-md-8 col-lg-8 col-sm-12 ">
+                            <textarea  name="question_vision" id="question_vision" class="form-control summer_details" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
+                        </div>                                
+                    </div>-->
+
+                    <div class="form-group">
+                        <div class="col-md-4 col-lg-4 col-sm-12"></div>
+
+                        <div class="col-md-8 col-lg-8 col-sm-12 ">
+                            <label for="group_avatar" class="col-md-6 col-lg-6 col-sm-12 control-label custom-file-upload">
+                                <i class="fa fa-camera"></i> Group avatar
+                            </label>
+                            <div class="col-md-4 col-lg-6 col-sm-12">
+                                <input id="group_avatar" name="group_avatar" type="file" accept="application/x-zip-compressed,image/*"/>
+                            </div>
+                            
+                        </div>                                
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-4 col-lg-4 col-sm-12"></div>
+
+                        <div class="col-md-8 col-lg-8 col-sm-12 ">
+                            <label for="group_backgroundPic" class="col-md-6 col-lg-6 col-sm-12 control-label custom-file-upload">
+                                <i class="fa fa-camera"></i> Group background picture
+                            </label>
+                            <div class="col-md-4 col-lg-6 col-sm-12">
+                                <input id="group_backgroundPic" name="group_backgroundPic" type="file" accept="application/x-zip-compressed,image/*"/>
+                            </div>
+                            
+                        </div>                                
+                    </div>
+
+
+                    <div class="form-actions noborder pull-right">
+                        <input type="submit" class="btn blue" name="submit" value="Submit" />
+                        <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+                    </div>
+                    <div class="clearfix"></div>
+
+                </div>
+            </form>
+        </div>
+
 
 
 <div id="question_modal" class="modal fade" tabindex="-1">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title" id="question_sub1_header" style="color: #3598dc;">Ask a question</h4>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal" role="form" id="question_form" action="" method="post" enctype="multipart/form-data">
-                        <span class="form_submission_error"></span>
-                        <span class="form_submission_success"></span>
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h4 class="modal-title" id="question_sub1_header" style="color: #3598dc;">Ask a question</h4>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal" role="form" id="question_form" action="" method="post" enctype="multipart/form-data">
+                <span class="form_submission_error"></span>
+                <span class="form_submission_success"></span>
 
-                        <input type="hidden" name="question_id"  id="question_id" value="0">
+                <input type="hidden" name="question_id"  id="question_id" value="0">
 
-                        <div class="form-body">
+                <div class="form-body">
 
-                            <div class="form-group">
-                                <label class="control-label col-md-4 col-lg-4 col-sm-12">Category </label>
-                                <div class="col-md-8 col-lg-8 col-sm-12">
-                                    <select class="form-control " name="question_category" id="question_category">
-                                           
+                    <div class="form-group">
+                        <label class="control-label col-md-4 col-lg-4 col-sm-12">Category </label>
+                        <div class="col-md-8 col-lg-8 col-sm-12">
+                            <select class="form-control " name="question_category" id="question_category">
+                                   
 
-                                    </select>
-                                    <span class="req_opt">*required</span>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                              <label class="col-md-4 col-lg-4 col-sm-12 control-label">Sub Category-1</label>
-                                <div class="col-md-8 col-lg-8 col-sm-12 ">
-                                    <input type="text" name="question_sub1" id="question_sub1" class="form-control" value="">
-                                    <span class="req_opt">*optional</span>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                              <label class="col-md-4 col-lg-4 col-sm-12 control-label">Sub Category-2</label>
-                                <div class="col-md-8 col-lg-8 col-sm-12 ">
-                                    <input type="text" name="question_sub2" id="question_sub2" class="form-control" value="">
-                                    <span class="req_opt">*optional</span>
-                                </div>
-                            </div>
-
-
-                            <div class="form-group">
-                                <label class="col-md-4 col-lg-4 col-sm-12 control-label">Write your question</label>
-                                <div class="col-md-8 col-lg-8 col-sm-12 ">
-                                    <textarea  name="question_title" id="question_title" class="form-control summer_details" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
-                                </div>                                
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-4 col-lg-4 col-sm-12 control-label">Provide additional information</label>
-                                <div class="col-md-8 col-lg-8 col-sm-12 ">
-                                    <textarea  name="question_info" id="question_info" class="form-control summer_details" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
-                                </div>                                
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-4 col-lg-4 col-sm-12"></div>
-
-                                <div class="col-md-8 col-lg-8 col-sm-12 ">
-                                    <label for="question_photo" class="col-md-6 col-lg-6 col-sm-12 control-label custom-file-upload">
-                                        <i class="fa fa-camera"></i> Add Photos
-                                    </label>
-                                    <div class="col-md-4 col-lg-6 col-sm-12">
-                                        <input id="question_photo" name="question_photo" type="file" accept="application/x-zip-compressed,image/*"/>
-                                    </div>
-                                    
-                                </div>                                
-                            </div>
-
-
-                            <div class="form-actions noborder pull-right">
-                                <input type="submit" class="btn blue" name="submit" value="Post" />
-                                <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
-                            </div>
-                            <div class="clearfix"></div>
-
+                            </select>
+                            <span class="req_opt">*required</span>
                         </div>
-                    </form>
-                </div>
+                    </div>
 
-            </div>
+                    <div class="form-group">
+                      <label class="col-md-4 col-lg-4 col-sm-12 control-label">Sub Category-1</label>
+                        <div class="col-md-8 col-lg-8 col-sm-12 ">
+                            <input type="text" name="question_sub1" id="question_sub1" class="form-control" value="">
+                            <span class="req_opt">*optional</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-md-4 col-lg-4 col-sm-12 control-label">Sub Category-2</label>
+                        <div class="col-md-8 col-lg-8 col-sm-12 ">
+                            <input type="text" name="question_sub2" id="question_sub2" class="form-control" value="">
+                            <span class="req_opt">*optional</span>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-md-4 col-lg-4 col-sm-12 control-label">Write your question</label>
+                        <div class="col-md-8 col-lg-8 col-sm-12 ">
+                            <textarea  name="question_title" id="question_title" class="form-control summer_details" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
+                        </div>                                
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 col-lg-4 col-sm-12 control-label">Provide additional information</label>
+                        <div class="col-md-8 col-lg-8 col-sm-12 ">
+                            <textarea  name="question_info" id="question_info" class="form-control summer_details" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
+                        </div>                                
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-4 col-lg-4 col-sm-12"></div>
+
+                        <div class="col-md-8 col-lg-8 col-sm-12 ">
+                            <label for="question_photo" class="col-md-6 col-lg-6 col-sm-12 control-label custom-file-upload">
+                                <i class="fa fa-camera"></i> Add Photos
+                            </label>
+                            <div class="col-md-4 col-lg-6 col-sm-12">
+                                <input id="question_photo" name="question_photo" type="file" accept="application/x-zip-compressed,image/*"/>
+                            </div>
+                            
+                        </div>                                
+                    </div>
+
+
+                    <div class="form-actions noborder pull-right">
+                        <input type="submit" class="btn blue" name="submit" value="Post" />
+                        <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+                    </div>
+                    <div class="clearfix"></div>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
 
     <div id="article_modal" class="modal fade" tabindex="-1">
             <div class="modal-header">

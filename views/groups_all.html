@@ -35,10 +35,10 @@
                                                                 <hr class="long_length">
                                                             </li>
                                                            
-                                                                <li>
-                                                                    <a href="{{url}}/posts/get_bookmarked" style="margin-left: 2px;">
-                                                                        <img alt="" class="icon_size" src="{{url}}/images/my_bookmarked_items.png"> My Bookmarked Items ({{bookmarks_count}})</a>
-                                                                    </li>
+                                                            <li>
+                                                                <a href="{{url}}/posts/get_bookmarked" style="margin-left: 2px;">
+                                                                    <img alt="" class="icon_size" src="{{url}}/images/my_bookmarked_items.png"> My Bookmarked Items ({{bookmarks_count}})</a>
+                                                                </li>
                                                                 </ul>
                                                             </div>
                                                             <!-- END MENU -->
@@ -60,34 +60,29 @@
 
              <div class="panel panel-default portlet">
               <div class="panel-body" style="width: 100%;">
+              <div class="posts_top_actions_left">
+                    <span class="posts_page_title">{{page_title}}</span>
+                </div>
                 
                 
                 <div class="posts_top_actions_right">
-                    <a class="page_top_actions" onclick="modalLoader('question','new','');">Ask a question</a>&nbsp;|&nbsp;
+                    <a class="page_top_actions" onclick="modalLoader('group','new','');">Create a group</a>&nbsp;
 
-                    <a class="page_top_actions" onclick="modalLoader('article','new','');">Write an article</a>&nbsp;|&nbsp;
-
-                    <a class="page_top_actions" onclick="modalLoader('riddle','new','');">Post a riddle</a>&nbsp;|&nbsp;
-
-                    <a class="page_top_actions" onclick="modalLoader('pab','new','');">Post a book</a>
-                   
                 </div>
                 <div class="clearfix"></div>
               </div>
             </div>
 
             
-            <div class="question_all_post_area my_requests">
+            <div class="question_all_post_area group_all">
 
-            
+            {{#each data}}
 
              <div class="portlet light posted">
              <input type="hidden" id="post_id" value="">
              <input type="hidden" id="post_type" value="">
 
                     <div class="portlet-body" style="padding-top: 0px;">
-                    <!-- <input type="hidden" id="post_source_id" value="{{source_id}}"> -->
-                    <!-- <input type="hidden" id="post_notif_id" value="{{_id}}"> -->
                         <div class="" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
                             <div class="general-item-list">
                                 <div class="item">
@@ -110,7 +105,7 @@
 
                                          <div class="posts_partition_friends_middle" style="width: 60%;"><!--2nd partition-->
                                             <span>
-                                                ({{req_owner_count}}) Requests made by you
+                                                {{displayName}}
                                                             
                                             </span>
                                         </div>
@@ -119,94 +114,14 @@
                                                  <div class="fromnow"></div>
                                                     <div class="clearfix"></div>
 
-                                                    {{#if (gt req_owner_count 0)}}
+                                                    <a href="{{../url}}/posts/showGroup/{{_id}}">
 
-                                                    <a href="{{url}}/posts/getOwnerRequestLists">
-
-                                                    <div style="margin-right: 5%;cursor: pointer" class="post_actions_button_left owner_requests">
-                                                        View
-                                                    </div>
-
-                                                    </a>
-                                                    {{/if}}
-                                                    
-                                                
-                                            </div><!--end float right-->
-                                            <div class="clearfix"></div>
-                                        </div>
-
-                                    <div class="clearfix"></div>
-                                    </div>                                      
-                                        
-
-                                    </div>
-                                    
-
-                                        
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END PORTLET -->
-                   
-                    
-
-                </div>
-            </div>
-
-
-            <div class="portlet light posted">
-             <input type="hidden" id="post_id" value="">
-             <input type="hidden" id="post_type" value="">
-
-                    <div class="portlet-body" style="padding-top: 0px;">
-                    <!-- <input type="hidden" id="post_source_id" value="{{source_id}}"> -->
-                    <!-- <input type="hidden" id="post_notif_id" value="{{_id}}"> -->
-                        <div class="" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
-                            <div class="general-item-list">
-                                <div class="item">
-                                    <div class="item-head">
-
-                                    <div style="width: 100%;"><!--main block-->
-                                        <div class="posts_partition_friends"><!--1st partition-->
-                                            <div style="width: 100%;">
-                                                <div class="section_posts_avatar">
-                                                   <img class="icon_size_50 img-circle" src="{{../url}}/{{displayPic}}">
-                                                </div>
-                                                <div class="section_posts_text">
-                                                    
-                                                    
-                                                </div>
-                                                <div class="clearfix"></div>
-                                            </div>
-
-                                        </div>
-
-                                         <div class="posts_partition_friends_middle" style="width: 60%;"><!--2nd partition-->
-                                            <span>
-                                                ({{req_destination_count}}) Requests made by users to you
-                                                            
-                                            </span>
-                                        </div>
-                                         <div class=""><!--3rd partition-->
-                                            <div class="pull-right" style="width: 10%">
-                                                 <div class="fromnow"></div>
-                                                    <div class="clearfix"></div>
-
-                                                    {{#if (gt req_destination_count 0)}}
-
-                                                    <a href="{{url}}/posts/getDestinationRequestLists">
-
-                                                    
-                                                        <div style="margin-right: 5%;cursor: pointer" class="post_actions_button_left user_requests">
-                                                        
+                                                        <div style="margin-right: 5%;cursor: pointer" class="post_actions_button_left">
                                                             View
-                                                        
                                                         </div>
 
                                                         </a>
                                                     
-                                                    {{/if}}
-                                                    
                                                 
                                             </div><!--end float right-->
                                             <div class="clearfix"></div>
@@ -229,6 +144,8 @@
 
                 </div>
             </div>
+
+            {{/each}}
 
 
         </div>

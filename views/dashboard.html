@@ -430,8 +430,17 @@
                         {{/if}}
 
                         {{#if pics.length }}
-                            <div style="margin-bottom: 3%;">                                                                  
-                                <img class="img-responsive" src="{{../url}}/{{pics.[0]}}">
+                            <div style="margin-bottom: 3%;">
+                            {{#if trend_status}}
+
+                            <img class="img-responsive" src="{{../url}}/{{pics}}">
+
+                            {{else}}
+
+                            <img class="img-responsive" src="{{../url}}/{{pics.[0]}}">
+
+                            {{/if}}                                                                  
+                                
                             </div>
                         {{/if}}
 
@@ -550,13 +559,42 @@
             </a>
             {{/if}}
 
-            <a class="btn btn-link post_shares">
+            <!-- <a class="btn btn-link post_shares">
                 <span class="item-label grey_button">
                     <span class="social_value">{{shares}}</span>
                     <i class="fa fa-share-alt"></i>&nbsp;
                     Shares                                
                 </span>
-            </a>
+            </a> -->
+
+            <div class="btn-group dropup">
+                <button type="button" class="btn btn-default">
+                <span class="social_value">{{shares}}&nbsp;</span>
+                    Shares
+                </button>
+
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    
+                    <!-- <i class="fa fa-share-alt"></i> -->
+                    <i class="fa fa-angle-up"></i>
+                </button>
+
+                <ul class="dropdown-menu" role="menu">
+                    <li>
+                        <a href="#" data-social="facebook" data-url="{{url}}/posts/section/trend/single/{{_id}}"> Share on Facebook <span data-counter="facebook"></span> </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;"> Another action </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;"> Something else here </a>
+                    </li>
+                    <li class="divider"> </li>
+                    <li>
+                        <a href="javascript:;"> Separated link </a>
+                    </li>
+                </ul>
+            </div>
 
     </div>
     
@@ -716,7 +754,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="cont-col2">
-                                                    <div class="desc"> {{excerpt}} ...(more) </div>
+                                                    <div class="desc"> {{{excerpt}}} ...(more) </div>
                                                 </div>
                                             </div>
                                         </div>

@@ -49,6 +49,22 @@ MongoClient.connect(mongo_url, function(err, db) {
 
 };
 
+/*check if item is in an array of strings*/
+methods.isIncluded=function(collection,item_id,callback){
+    var collection_len=collection.length;
+    var curr_col;
+    var status=false;
+
+    for(var i=0;i<collection_len;i++){
+        curr_col=collection[i];
+        if(curr_col == (item_id).toString()){
+            status=true;
+        }
+    }
+    callback(status);
+};
+
+
 /*check if item has been previously bookmarked*/
 methods.checkBookmarks=function(user,item_id){
     var saved_bookmarks_len=user.bookmarks.length;

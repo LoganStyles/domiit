@@ -21,6 +21,7 @@ MomentHandler.registerHelpers(Handlebars);
 var just_hb_helper= require('just-handlebars-helpers');
 just_hb_helper.registerHelpers(Handlebars);
 var user = require('./models/user');
+var group = require('./models/group');
 var members = require('./routes/members');
 var cms_routes = require('./routes/cms');
 var posts_routes = require('./routes/posts');
@@ -311,7 +312,7 @@ app.get('/profile/:id',isLoggedIn, function(req, res) {
 });
 
 app.get('/fetchCats',isLoggedIn,function(req,res){
-    console.log(req.query);
+    //console.log(req.query);
     var section =req.query.section,
     cat;
 
@@ -580,7 +581,7 @@ app.get('/dashboard',isLoggedIn,function(req,res){
             //update other details needed by the post
             process_posts.processPagePosts(page_results,req.user,function(processed_response){
                 console.log('PROCESSED RESPONSE');
-                //console.log(processed_response);
+                console.log(processed_response);
 
                 res.render(page,{
                     url:process.env.URL_ROOT,
@@ -909,8 +910,9 @@ io.on('connection',function(socket){
 });
 
 
-/*posts*/
+
 var upload = multer({storage:Storage});
+/*posts*/
 /*process an 'ask a question' post,save & update UI immediately*/
 app.post('/ask_question',upload.single('question_photo'),function(req,res,next){
     console.log('req.fil')
@@ -1442,6 +1444,61 @@ app.post('/ask_pab',upload.single('pab_photo'),function(req,res,next){
     });
 
 
+var group_upload = upload.fields([
+    {name: 'group_avatar',maxCount:1 },
+    {name: 'group_backgroundPic',maxCount:1 }]);
+//create group
+app.post('/createGroup',group_upload,function(req,res,next){
+
+    if( (req.user.displayPic).length ===0 || req.user.displayName =="User" || req.user.displayName ==""){
+        console.log("user has not updated profile")
+        res.json({success:false,msg:"Group creation failed, please update your profile first"});
+    }else{
+
+        //console.log(req.body);
+        group.findOne({displayName:req.body.question_title}, function(err, u) {
+            var msg;
+                if(!u) {//group does not previously exist
+                    console.log('reg !u findOne in save');
+                    let newGroup=new group();
+                    newGroup.displayName=req.body.question_title;
+                    newGroup.motto=req.body.question_motto; 
+                    newGroup.aboutus=req.body.question_aboutus; 
+                    newGroup.mission=req.body.question_mission; 
+                    newGroup.vision=req.body.question_vision;
+                    newGroup.member_ids.push(req.user._id); 
+                    newGroup.admin_ids.push(req.user._id);
+                    newGroup.superadmin_ids.push(req.user._id);
+
+                    //store avatar if it exists
+                    if(req.files && req.files['group_avatar']){
+                        console.log('filename '+req.files['group_avatar'][0].filename)
+                        newGroup.displayPic.push('uploads/'+req.files['group_avatar'][0].filename);
+                    }
+
+                    //store backgroundPic if it exists
+                    if(req.files && req.files['group_backgroundPic']){
+                        console.log('filename '+req.files['group_backgroundPic'][0].filename)
+                        newGroup.backgroundPic.push('uploads/'+req.files['group_backgroundPic'][0].filename);
+                    }
+
+                    newGroup.save(function(err, newG) {
+                        if(err){res.json({success: false,msg:"Group creation failed"});
+                    }else{
+                        res.json({success:true,msg:"Group created, please wait..."});
+                    }
+                });
+                } else {//group previously exists
+                    msg="Group already exists";
+                    res.json({success:false,msg:msg});
+                }
+            });
+
+    }
+
+});
+
+
 /*updates the description on the profile */
 app.post('/update_desc',function(req,res,next){
     var update_desc={description:req.body.profile_desc_description};
@@ -1684,6 +1741,160 @@ app.post('/update_bio1',profile_upload,function(req,res,next){
 
 });
 
+
+
+/*updates groupbio1*/
+var group_profile_upload = upload.fields([
+    {name: 'group_bio1_displayPic',maxCount:1 },
+    {name: 'group_bio1_backgroundPic',maxCount:1 }]);
+
+app.post('/updateGroupBio1',group_profile_upload,function(req,res,next){
+
+    //console.log(req.body);
+
+    var id_obj = mongoose.Types.ObjectId(req.body.group_bio1_id);//convert id string to obj id
+
+    group.findOne({_id:id_obj }, function(err, u) {
+        if(u){
+            //chk if user is an admin
+            process_posts.isIncluded(u.admin_ids,req.user._id,function(included_response){
+                
+            if(included_response){
+                let updateGroup=u;
+                updateGroup.displayName=req.body.group_bio1_title;
+                updateGroup.motto=req.body.group_bio1_motto;
+                updateGroup.aboutus=req.body.group_bio1_aboutus;
+                updateGroup.mission=req.body.group_bio1_mission;
+                updateGroup.vision=req.body.group_bio1_vision;
+                updateGroup.date_modified=new Date();
+
+            //store img if it exists
+            if(req.files && req.files['group_bio1_displayPic']){
+                updateGroup.displayPic.push('uploads/'+req.files['group_bio1_displayPic'][0].filename);
+            }
+
+            if(req.files && req.files['group_bio1_backgroundPic']){
+                updateGroup.backgroundPic.push('uploads/'+req.files['group_bio1_backgroundPic'][0].filename);
+            }
+            console.log(updateGroup);
+            group.updateOne({_id:id_obj},{$set:updateGroup},function(err1,res1){
+
+                if(err1){
+                    res.json({success:false,msg:"Your group profile update failed"});
+                }else {    
+                    res.json({success:true,msg:"Your group profile update was successfull"});
+                }
+
+            });
+        }else{
+            res.json({success:false,msg:"You do not have permission for this action"});
+        }
+
+
+        });//end processor
+        }else{
+            res.json({success:false,msg:"group profile not found"});
+        }
+
+    });
+
+});
+
+
+app.post('/addMember',isLoggedIn,function(req,res,next){
+
+    var group_id_obj = mongoose.Types.ObjectId(req.body.add_group_id);//convert id string to obj id
+
+    group.findOne({_id:group_id_obj }, function(err, u) {//find the group
+        if(u){
+
+            let updateGroup=u;
+            updateGroup.member_ids.push(req.user._id);
+            updateGroup.member_ids = updateGroup.member_ids.filter( onlyUnique );//remove duplicate entries
+
+            //console.log(updateGroup);
+            group.updateOne({_id:group_id_obj},{$set:updateGroup},function(err1,res1){
+
+                //update user's group_ids
+                user.findOne({_id:req.user._id }, function(uerr, udata) {
+                    if(udata){
+
+            let updateUser=udata;
+            updateUser.group_ids.push(req.body.add_group_id);
+            updateUser.group_ids = updateUser.group_ids.filter( onlyUnique );//remove duplicate entries
+
+            //console.log(updateUser);
+            user.updateOne({_id:req.user._id},{$set:updateUser},function(err2,res2){
+
+                if(err2){
+                    res.json({success:false,msg:"Unable to add member to group"});
+                }else {    
+                    res.json({success:true,msg:"You have been added successfully to this group"});
+                }
+
+            });
+
+        }else{
+            res.json({success:false,msg:"group profile not found"});
+        }
+
+    });
+
+            });
+
+        }else{
+            res.json({success:false,msg:"group profile not found"});
+        }
+
+    });
+
+});
+
+
+
+app.post('/removeMember',isLoggedIn,function(req,res,next){
+
+    var group_id_obj = mongoose.Types.ObjectId(req.body.remove_group_id);//convert id string to obj id
+    var curr_user=(req.user._id).toString();
+
+    group.findOne({_id:group_id_obj }, function(err, u) {//find the group
+        if(u){
+
+            let updateGroup=u;
+            updateGroup.member_ids=remove(updateGroup.member_ids,curr_user);
+            group.updateOne({_id:group_id_obj},{$set:updateGroup},function(err1,res1){
+
+                if(res1){
+                //update user's group_ids
+                user.findOne({_id:req.user._id }, function(uerr, udata) {
+                    if(udata){
+                        let updateUser=udata;
+                        updateUser.group_ids=remove(updateUser.group_ids,req.body.remove_group_id);
+
+                        user.updateOne({_id:req.user._id},{$set:updateUser},function(err2,res2){
+
+                            if(err2){
+                                res.json({success:false,msg:"Unable to remove member from group"});
+                            }else {    
+                                res.json({success:true,msg:"You have been removed from this group"});
+                            }
+
+                        });
+                    }
+
+                });
+            }
+
+        });
+            
+
+        }else{
+            res.json({success:false,msg:"group profile not found"});
+        }
+
+    });
+
+});
 
 /*process responses immediately*/
 app.post('/response_item',upload.single('section_response_photo'),function(req,res,next){

@@ -24,6 +24,7 @@
     "froala-editor": "^2.7.5",
     "fs": "0.0.1-security",
     "fs-extra": "^4.0.2",
+    "goodshare.js": "^4.2.0",
     "handlebars": "^4.0.11",
     "handlebars.moment": "^1.0.4",
     "inbound": "0.0.6",

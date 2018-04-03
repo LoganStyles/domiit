@@ -436,7 +436,15 @@
 
                         {{#if pics.length }}
                             <div style="margin-bottom: 3%;">                                                                  
-                                <img class="img-responsive" src="{{../url}}/{{pics.[0]}}">
+                                {{#if trend_status}}
+
+                            <img class="img-responsive" src="{{../url}}/{{pics}}">
+
+                            {{else}}
+
+                            <img class="img-responsive" src="{{../url}}/{{pics.[0]}}">
+
+                            {{/if}}
                             </div>
                         {{/if}}
 

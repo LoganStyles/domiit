@@ -1,4 +1,4 @@
-var URL_ROOT="https://ancient-falls-19080.herokuapp.com";
+avar URL_ROOT="https://ancient-falls-19080.herokuapp.com";
 // var URL_ROOT="http://localhost:8000";
 
 function newData(){
@@ -140,7 +140,7 @@ function typeModalLoader(mode,type){
 
 function modalLoader(type, mode,cat_type) {
 
-    //console.log('type: ' + type);
+    console.log('type: ' + type);
     //console.log('mode: ' + mode);
     // console.log('cat_type: ' + cat_type);
 
@@ -172,7 +172,7 @@ function modalLoader(type, mode,cat_type) {
         $(modal).modal({backdrop: false, keyboard: false});
         $(header).text('Add');
 
-        if(type != 'notice'){
+        if(type != 'notice' && type != 'group'){
             var category_id="#"+type+"_modal "+"#"+type+"_category";
             //console.log(category_id);
             
@@ -257,7 +257,7 @@ function modalLoader(type, mode,cat_type) {
     case 'edit':
     //console.log('inside mode edit: ');                
     $(modal).modal({backdrop: false, keyboard: false});
-    $(header).text('Edit');
+    //$(header).text('Edit');
     break;
 
     default:
