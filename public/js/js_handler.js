@@ -1,4 +1,4 @@
-avar URL_ROOT="https://ancient-falls-19080.herokuapp.com";
+var URL_ROOT="https://ancient-falls-19080.herokuapp.com";
 // var URL_ROOT="http://localhost:8000";
 
 function newData(){
