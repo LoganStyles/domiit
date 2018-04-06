@@ -120,6 +120,58 @@
 
 </div>
 
+<!--group suggestions-->
+
+<div id="suggestion_modal" class="modal fade" tabindex="-1">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title" id="suggestion_sub1_header" style="color: #3598dc;">Post a suggestion</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" id="suggestion_form" action="" method="post" enctype="multipart/form-data">
+                    <span class="form_submission_error"></span>
+                    <span class="form_submission_success"></span>
+
+                    <input type="hidden" name="suggestion_id"  id="suggestion_id" value="0">
+
+                    <div class="form-body">
+
+                        
+
+                    
+                <div class="form-group">
+                    <label class="col-md-3 col-lg-2 col-sm-12 control-label">Write your suggestion</label>
+                    <div class="col-md-9 col-lg-9 col-sm-12 ">
+                        <textarea  name="suggestion_title" id="suggestion_title" class="form-control summer_details" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
+                    </div>                                
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-4 col-lg-4 col-sm-12"></div>
+
+                    <div class="col-md-8 col-lg-8 col-sm-12 ">
+                        <label for="suggestion_photo" class="col-md-4 col-lg-4 col-sm-12 control-label custom-file-upload">
+                            <i class="fa fa-camera"></i> Add Photos
+                        </label>
+                        <div class="col-md-2 col-lg-2 col-sm-12">
+                            <input id="suggestion_photo" name="suggestion_photo" type="file" accept="application/x-zip-compressed,image/*"/>
+                        </div>
+                        
+                    </div>                                
+                </div>
+
+                <div class="form-actions noborder pull-right">
+                    <input type="submit" class="btn blue" name="submit" value="Post" />
+                    <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+                </div>
+                <div class="clearfix"></div>
+
+            </div>
+        </form>
+    </div>
+
+</div>
+
 <!--for plain new requests triggered from the header menu-->
 <div id="request_modal" class="modal fade" tabindex="-1">
                 <div class="modal-header">

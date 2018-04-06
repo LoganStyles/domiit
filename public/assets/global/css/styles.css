@@ -325,6 +325,28 @@
      	padding: 1%;
      }
 
+
+     /*group activities*/
+     .group_lists_box{
+     float: left;width: 50%;
+    }
+
+    .group_lists_box_title{
+        text-align: center;font-weight: 600;
+    }
+
+    .group_lists_item_no{
+     float: left;width: 10%;
+    }
+
+    .group_lists_item_button{
+     float: left;width: 10%;
+    }
+
+    .group_lists_item_title{
+     float: left;width: 70%;
+    }
+
      /*images*/
 
      .profile_bgimg_container{

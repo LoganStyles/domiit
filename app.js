@@ -241,6 +241,8 @@ app.get('/profile/:id',isLoggedIn, function(req, res) {
     //fetch user
     var user_id = req.params.id;
     console.log('user id '+user_id);
+    //console.log(typeof(user_id));
+    var isOwner=false;
 
     user.findOne({_id:user_id},function(err,u){
         if(u){
@@ -251,6 +253,9 @@ app.get('/profile/:id',isLoggedIn, function(req, res) {
             dob="",age="",
             displayPic="uploads/avatar.png",
             backgroundPic="";
+
+            if(user_id== (req.user._id).toString())
+                isOwner=true;
 
             if(found_user.qualification[0]){
                 qualification=found_user.qualification[found_user.qualification.length -1].title;
@@ -282,6 +287,7 @@ app.get('/profile/:id',isLoggedIn, function(req, res) {
             res.render('profile', {
                 url:process.env.URL_ROOT,
                 user_info:found_user,
+                isOwner:isOwner,
                 dob:dob,
                 age:age,
                 displayPic:displayPic,
@@ -310,7 +316,7 @@ app.get('/profile/:id',isLoggedIn, function(req, res) {
     
     
 });
-
+    
 app.get('/fetchCats',isLoggedIn,function(req,res){
     //console.log(req.query);
     var section =req.query.section,
@@ -580,8 +586,8 @@ app.get('/dashboard',isLoggedIn,function(req,res){
         if(page_results.length >0){
             //update other details needed by the post
             process_posts.processPagePosts(page_results,req.user,function(processed_response){
-                console.log('PROCESSED RESPONSE');
-                console.log(processed_response);
+                //console.log('PROCESSED RESPONSE');
+                //console.log(processed_response);
 
                 res.render(page,{
                     url:process.env.URL_ROOT,
@@ -957,8 +963,8 @@ app.post('/ask_question',upload.single('question_photo'),function(req,res,next){
                 page_results.push(saved_quest);
 
                 process_posts.processPagePosts(page_results,req.user,function(processed_response){
-                console.log('JSON PROCESSED RESPONSE');
-                 console.log(processed_response);
+                //console.log('JSON PROCESSED RESPONSE');
+                 //console.log(processed_response);
                 var json = JSON.stringify(processed_response[0], null, 2);
 
                 // console.log(json);//update dashboard,all questions & unanswered quests
@@ -1144,13 +1150,6 @@ var request_upload = upload.fields([
     ]);
 app.post('/make_new_request',request_upload,function(req,res,next){
 
-    // for (var key in body) {//loop thru obj
-    //     console.log(key)
-    //         // if (body.hasOwnProperty(key)) {
-    //         //     console.log(key + " -> " + body[key]);
-    //         // }
-    //     }
-    
     //console.log('request '+req);
     var request_type=req.body.new_request_type;
     console.log('request_type '+request_type);
@@ -1800,7 +1799,7 @@ app.post('/updateGroupBio1',group_profile_upload,function(req,res,next){
 
 });
 
-
+/*adds a user to a group and adds the group to the user's groups*/
 app.post('/addMember',isLoggedIn,function(req,res,next){
 
     var group_id_obj = mongoose.Types.ObjectId(req.body.add_group_id);//convert id string to obj id
@@ -1839,6 +1838,38 @@ app.post('/addMember',isLoggedIn,function(req,res,next){
         }
 
     });
+
+            });
+
+        }else{
+            res.json({success:false,msg:"group profile not found"});
+        }
+
+    });
+
+});
+
+
+/*adds a user to a group's admins*/
+app.post('/addAdmin',isLoggedIn,function(req,res,next){
+
+    var group_id_obj = mongoose.Types.ObjectId(req.body.add_group_id);//convert id string to obj id
+
+    group.findOne({_id:group_id_obj }, function(err, u) {//find the group
+        if(u){
+
+            let updateGroup=u;
+            updateGroup.admin_ids.push(req.body.add_member_id);
+            updateGroup.admin_ids = updateGroup.admin_ids.filter( onlyUnique );//remove duplicate entries
+
+            //console.log(updateGroup);
+            group.updateOne({_id:group_id_obj},{$set:updateGroup},function(err1,res1){
+
+                if(err1){
+                    res.json({success:false,msg:"Unable to add member to group admins"});
+                }else {    
+                    res.json({success:true,msg:"Member successfully added to this group admins"});
+                }
 
             });
 
@@ -1895,6 +1926,94 @@ app.post('/removeMember',isLoggedIn,function(req,res,next){
     });
 
 });
+
+
+app.post('/removeAdmin',isLoggedIn,function(req,res,next){
+    /*later put superadmin chks in d admin methods*/
+    var group_id_obj = mongoose.Types.ObjectId(req.body.remove_group_id);//convert id string to obj id
+
+    group.findOne({_id:group_id_obj }, function(err, u) {//find the group
+        if(u){
+
+            let updateGroup=u;
+            updateGroup.admin_ids=remove(updateGroup.admin_ids,req.body.remove_member_id);
+            group.updateOne({_id:group_id_obj},{$set:updateGroup},function(err1,res1){
+
+                if(err1){
+                    res.json({success:false,msg:"Unable to remove admin"});
+                }else {    
+                    res.json({success:true,msg:"You have removed this admin"});
+                }
+
+            });
+            
+
+        }else{
+            res.json({success:false,msg:"group profile not found"});
+        }
+
+    });
+
+});
+
+/*updates a group's activities*/
+app.post('/updateActivity',isLoggedIn,function(req,res,next){
+
+    var group_id_obj = mongoose.Types.ObjectId(req.body.update_group_id);//convert id string to obj id
+
+    group.findOne({_id:group_id_obj }, function(err, u) {//find the group
+        if(u){
+
+            let updateGroup=u;
+            updateGroup.activitys=req.body.update_activity;
+
+            console.log(updateGroup);
+            group.updateOne({_id:group_id_obj},{$set:updateGroup},function(err1,res1){
+
+                if(err1){
+                    res.json({success:false,msg:"Unable to update activity for this group"});
+                }else {    
+                    res.json({success:true,msg:"Activity successfully updated for this group"});
+                }
+
+            });
+
+        }else{
+            res.json({success:false,msg:"group profile not found"});
+        }
+
+    });
+
+});
+
+/*removes group's activity*/
+// app.post('/removeActivity',isLoggedIn,function(req,res,next){
+//     /*later put superadmin chks in d admin methods*/
+//     var group_id_obj = mongoose.Types.ObjectId(req.body.remove_group_id);//convert id string to obj id
+
+//     group.findOne({_id:group_id_obj }, function(err, u) {//find the group
+//         if(u){
+
+//             let updateGroup=u;
+//             updateGroup.activitys=remove(updateGroup.activitys,req.body.remove_activity);
+//             group.updateOne({_id:group_id_obj},{$set:updateGroup},function(err1,res1){
+
+//                 if(err1){
+//                     res.json({success:false,msg:"Unable to remove activity"});
+//                 }else {    
+//                     res.json({success:true,msg:"You have removed this activity"});
+//                 }
+
+//             });
+            
+
+//         }else{
+//             res.json({success:false,msg:"group profile not found"});
+//         }
+
+//     });
+
+// });
 
 /*process responses immediately*/
 app.post('/response_item',upload.single('section_response_photo'),function(req,res,next){

@@ -15,6 +15,7 @@ var groupSchema = mongoose.Schema({
     date_created: { type: Date, default: Date.now },
     date_modified: { type: Date, default: Date.now },
     //description:{type:String,default:''},
+    activitys:{type:String,default:''},
     member_ids:[String],
     admin_ids:[String],
     superadmin_ids:[String],

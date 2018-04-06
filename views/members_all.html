@@ -66,7 +66,7 @@
                 
                 
                 <div class="posts_top_actions_right">
-                    <a class="page_top_actions" onclick="modalLoader('group','new','');">Create a group</a>&nbsp;
+                    <!--<a class="page_top_actions" onclick="modalLoader('group','new','');">Create a group</a>&nbsp;-->
 
                 </div>
                 <div class="clearfix"></div>
@@ -76,11 +76,12 @@
             
             <div class="question_all_post_area group_all">
 
-            {{#each data}}
+            {{#each group_members}}
 
              <div class="portlet light posted">
              <input type="hidden" id="post_id" value="">
              <input type="hidden" id="post_type" value="">
+             <input type="hidden" id="post_member_id" value="{{item_id}}">
 
                     <div class="portlet-body" style="padding-top: 0px;">
                         <div class="" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
@@ -90,9 +91,9 @@
 
                                     <div style="width: 100%;"><!--main block-->
                                         <div class="posts_partition_friends"><!--1st partition-->
-                                            <div style="width: 10%;">
+                                            <div style="width: 100%;">
                                                 <div class="section_posts_avatar">
-                                                   <img class="icon_size_50 img-circle" src="{{../url}}/{{displayPic}}">
+                                                   <img class="icon_size_50 img-circle" src="{{../url}}/{{item_displayPic}}">
                                                 </div>
                                                 <div class="section_posts_text">
                                                     
@@ -103,9 +104,9 @@
 
                                         </div>
 
-                                         <div class="posts_partition_friends_middle" style="width: 50%;"><!--2nd partition-->
+                                         <div class="posts_partition_friends_middle" style="width: 40%;"><!--2nd partition-->
                                             <span>
-                                                {{displayName}}
+                                                {{item_displayName}}
                                                             
                                             </span>
                                         </div>
@@ -114,14 +115,24 @@
                                                  <div class="fromnow"></div>
                                                     <div class="clearfix"></div>
 
-                                                    <a style="color: #86be25;" href="{{../url}}/posts/showGroup/{{_id}}" class="post_actions_button_left btn btn-default">
+                                                    <a style="color: #86be25;margin-right: 5px;" href="{{../url}}/profile/{{item_id}}" class="post_actions_button_left btn btn-default">View </a>
 
-                                                       <!--  <div style="margin-right: 5%;cursor: pointer" class="post_actions_button_left"> -->
-                                                            view group profile
-                                                        <!-- </div> -->
+                                                    {{#if ../isSuperAdmin}}
 
-                                                        </a>
+                                                        {{#if item_isAdminUser}}
+
+                                                            <a style="color: #86be25;" class="post_actions_button_left btn btn-default remove_group_admin">Remove Admin </a>
+
+                                                            {{else}}
+
+                                                            <a style="color: #86be25;" class="post_actions_button_left btn btn-default add_group_admin">Add Admin </a>
+
+
+                                                        {{/if}}
+
                                                     
+
+                                                    {{/if}}
                                                 
                                             </div><!--end float right-->
                                             <div class="clearfix"></div>
@@ -308,7 +319,57 @@
 
             <!-- START MODAL PORTLET-->
 
-            <div class="portlet-body form">                                         
+            <div class="portlet-body form">  
+
+            <!--add_admin modal-->
+            <div id="add_admin_modal" class="modal fade" tabindex="-1">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title" id="add_member_header">Add Admin</h4>
+              </div>
+              <div class="modal-body">
+                <form role="form" id="add_admin_form" action="" method="post">
+                  <span class="form_submission_error"></span>
+                  <span class="form_submission_success"></span>
+
+                  <input type="hidden" name="add_group_id"  id="add_group_id" value="{{data._id}}">
+                  <input type="hidden" name="add_member_id"  id="add_member_id" value="">
+
+                  <h4>Are you sure you want to make this member an admin of this group?</h4>
+
+                  <div class="form-actions noborder">
+                    <input type="submit" class="btn blue" name="submit" value="Add" />
+                    <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+                  </div>
+                </form>
+              </div>
+
+            </div> 
+
+            <!--remove_admin modal-->
+            <div id="remove_admin_modal" class="modal fade" tabindex="-1">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title" id="remove_member_header">Remove Admin</h4>
+              </div>
+              <div class="modal-body">
+                <form role="form" id="remove_admin_form" action="" method="post">
+                  <span class="form_submission_error"></span>
+                  <span class="form_submission_success"></span>
+
+                  <input type="hidden" name="remove_group_id"  id="remove_group_id" value="{{data._id}}">
+                  <input type="hidden" name="remove_member_id"  id="remove_member_id" value="">
+
+                  <h4>Are you sure you want to remove this member from admins of this group?</h4>
+
+                  <div class="form-actions noborder">
+                    <input type="submit" class="btn blue" name="submit" value="Remove" />
+                    <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+                  </div>
+                </form>
+              </div>
+
+            </div>                                        
 
             </div>
 
@@ -331,6 +392,135 @@
         <script type="text/javascript">
 
             $( document ).ready( function () {
+
+                //for add admin:get id,section & display modal
+                $("body").on('click','.add_group_admin',function(e){
+
+                    var parent=$(this).parents('.posted');
+                    var member_id=parent.find('input#post_member_id').val();
+
+                    //update & show modal
+                    $('#add_admin_modal').modal({backdrop: false, keyboard: false});
+                    $('#add_admin_modal #add_member_id').val(member_id);
+
+                });
+
+                /*add member to group admins*/
+                $("body").on('submit','#add_admin_form',function(e){
+                    e.preventDefault();
+
+                    var sub_button=$(this).find(':submit');
+                    var old_button_val=sub_button.val();
+                    sub_button.prop('disabled', true);
+                    sub_button.val('...processing');
+
+                    resetFields();
+                    var my_url="{{url}}/addAdmin";
+                    //console.log('url: '+my_url);
+                    
+                    var form_data=$(this).serialize();
+                    //console.log(form_data);
+
+                    $.ajax({
+                        url:my_url,
+                        type:'POST',
+                        data:form_data,
+                        headers: {'X-My-App-Token': 'loganstyles'},
+                        success:function(response){
+                            //console.log(response);
+                            if(response.success==true){
+                            $('#add_admin_form  .form_submission_success').text(response.msg);
+                            setTimeout(function(){
+                                $('#add_admin_form  .form_submission_success').text('');
+                                sub_button.val(old_button_val);
+                                sub_button.prop('disabled', false);
+                                $('#add_admin_modal').modal('hide');
+                                    location.reload();//temp:later use sockets to update the actual post
+                                },3000);
+
+                        }else{
+                            console.log('response is false');
+                            $('#add_admin_form  .form_submission_error').text(response.msg);
+                            sub_button.val(old_button_val);
+                            sub_button.prop('disabled', false);
+                        }
+
+
+                        },
+                        error:function(xhr, status, err){
+                            /*console.log('error');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(err);*/
+                        }
+                    });
+
+                });
+
+
+                //for remove admin:get id,section & display modal
+                $("body").on('click','.remove_group_admin',function(e){
+
+                    var parent=$(this).parents('.posted');
+                    var member_id=parent.find('input#post_member_id').val();
+
+                    //update & show modal
+                    $('#remove_admin_modal').modal({backdrop: false, keyboard: false});
+                    $('#remove_admin_modal #remove_member_id').val(member_id);
+
+                });
+
+                /*remove member from group admins*/
+                $("body").on('submit','#remove_admin_form',function(e){
+                    e.preventDefault();
+
+                    var sub_button=$(this).find(':submit');
+                    var old_button_val=sub_button.val();
+                    sub_button.prop('disabled', true);
+                    sub_button.val('...processing');
+
+                    resetFields();
+                    var my_url="{{url}}/removeAdmin";
+                    //console.log('url: '+my_url);
+                    
+                    var form_data=$(this).serialize();
+                    //console.log(form_data);
+
+                    $.ajax({
+                        url:my_url,
+                        type:'POST',
+                        data:form_data,
+                        headers: {'X-My-App-Token': 'loganstyles'},
+                        success:function(response){
+                            //console.log(response);
+                            if(response.success==true){
+                            $('#remove_admin_form  .form_submission_success').text(response.msg);
+                            setTimeout(function(){
+                                $('#remove_admin_form  .form_submission_success').text('');
+                                sub_button.val(old_button_val);
+                                sub_button.prop('disabled', false);
+                                $('#remove_admin_modal').modal('hide');
+                                    location.reload();//temp:later use sockets to update the actual post
+                                },3000);
+
+                        }else{
+                            console.log('response is false');
+                            $('#remove_admin_form  .form_submission_error').text(response.msg);
+                            sub_button.val(old_button_val);
+                            sub_button.prop('disabled', false);
+                        }
+
+
+                        },
+                        error:function(xhr, status, err){
+                            /*console.log('error');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(err);*/
+                        }
+                    });
+
+                });
 
 
             });

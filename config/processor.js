@@ -3,7 +3,6 @@ var user = require('../models/user');
 // var user = require('../models/user');
 var trend = require('../models/trend');
 var MongoClient = require('mongodb').MongoClient;
-// var mongo_url = "mongodb://localhost:27017/";
 var mongo_url = process.env.MONGODB_URI;
 
 var methods={};
@@ -16,6 +15,12 @@ methods.getLatestOwnerDetails=function (arr){
         designation:1,
         trend_followed:1//string of ids
     }).exec();
+    return promise;
+};
+
+/*get user details::similar to getLatestOwnerDetails, consider revising*/
+methods.getUserDetails=function (item){
+    var promise=user.findOne({_id:item}).exec();
     return promise;
 };
 
@@ -64,6 +69,77 @@ methods.isIncluded=function(collection,item_id,callback){
     callback(status);
 };
 
+/*GET info for all items of a collection*/
+methods.getItemDetails=function(collection,callback){
+    var item_obj,item_results=[],curr_obj={};
+    var promise,processed_items=0;
+
+    collection.forEach((cur_item,index,array)=>{
+    item_obj = mongoose.Types.ObjectId(cur_item);//convert id string to obj id
+    promise = this.getUserDetails(item_obj);
+
+    promise.then(function(response){
+
+        curr_obj={
+            item_id:response._id,
+            item_displayName:response.displayName,
+            item_displayPic:response.displayPic
+        }
+        item_results.push(curr_obj);
+
+        processed_items++;
+            if(processed_items==array.length){//iteration has ended
+               // console.log('processing finished')
+                callback(item_results);
+            }
+
+
+            }).catch(function(err3){
+                //console.log('catch exec')
+                console.log(err3)
+            });    
+
+        });
+};
+
+/*GET member & admin details*/
+methods.getMemberAdminDetails=function(collection,callback){
+    var item_obj,item_results=[],curr_obj={};
+    var promise,processed_items=0;
+    var member_arr=collection.member_ids;
+
+    member_arr.forEach((cur_item,index,array)=>{
+    item_obj = mongoose.Types.ObjectId(cur_item);//convert memberid string to obj id
+    promise = this.getUserDetails(item_obj);
+
+    promise.then(function(response){
+
+        //chk if curr_usr isAdminUser
+        methods.isIncluded(collection.admin_ids,cur_item,function(isAdminUser){
+
+            curr_obj={
+                item_id:response._id,
+                item_displayName:response.displayName,
+                item_displayPic:response.displayPic,
+                item_isAdminUser:isAdminUser
+            }
+            item_results.push(curr_obj);
+
+            processed_items++;
+            if(processed_items==array.length){//iteration has ended
+             callback(item_results);
+         }
+
+     });
+
+
+    }).catch(function(err3){
+        console.log(err3)
+    });    
+
+});
+};
+
 
 /*check if item has been previously bookmarked*/
 methods.checkBookmarks=function(user,item_id){
@@ -73,7 +149,6 @@ methods.checkBookmarks=function(user,item_id){
 
     for(var i=0;i<saved_bookmarks_len;i++){
         curr_saved_bookmark=saved_bookmarks[i];
-        // console.log('curr_saved_bookmark '+curr_saved_bookmark)
         if(curr_saved_bookmark.item_id == (item_id).toString()){
             return true;
         }
@@ -89,7 +164,6 @@ methods.checkFollowed=function(user,owner_id){
 
     for(var i=0;i<followed_len;i++){
         curr_followed=followed[i];
-        // console.log('curr_followed '+curr_followed)
         if(curr_followed == (owner_id)){
             return true;
         }

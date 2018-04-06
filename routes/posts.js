@@ -260,13 +260,6 @@ router.get('/getGroups',isLoggedIn,function(req,res){
         group_count =res1.length;
 
         if(res1 && group_count > 0){
-            //console.log('group found')
-            //console.log(res1)
-            //update other details needed by the post
-            //process_posts.isIncluded(res1.member_ids,req.user._id,function(included_response){
-                //console.log('included_response');
-                //console.log(included_response);
-
                 res.render(page,{
                     url:process.env.URL_ROOT,
                     displayPic:curr_user_display_pic,
@@ -290,8 +283,6 @@ router.get('/getGroups',isLoggedIn,function(req,res){
                     home_page_status:false,
                     usergroup_status:true
                 }); 
-
-            //});          
 
         }else{
 
@@ -324,8 +315,139 @@ router.get('/getGroups',isLoggedIn,function(req,res){
 
     });//end all groups 
 
+    });//end requests
 
-    // });//end destination request
+    });//end notifs
+
+
+    });//end trend
+
+});
+
+/*
+fetchs all members of a group
+*/
+router.get('/getMembers/:id',isLoggedIn,function(req,res){
+
+    var group_id = req.params.id;
+    console.log('group_id'+group_id);
+
+    var req_count=0,
+    pending_friend_notifs=0,
+    page='members_all',
+    page_title='Members',
+    res_item_trend=[],
+    res_item_member=[];
+
+    //get trending stories for sidebar headlines::nb::this operation takes a while to complete,
+    //try nesting or callbacks to prevent..done
+    trend.find().sort({date_created:1}).exec(function(err_trend,item_trend){
+
+        if(err_trend){
+            //console.log(err_trend);
+        }
+        if(item_trend){
+            console.log(item_trend);
+            res_item_trend=item_trend;
+        }
+
+    var bookmark_len=req.user.bookmarks.length;//get saved bookmarks
+
+    //find pending notifications length
+    var pending_friend_notifs=0;
+    process_posts.getNotifications(req.user,function(rel_notifs){
+        pending_friend_notifs=rel_notifs;
+
+    var curr_user_display_pic='uploads/avatar.png';//set default pic
+    if(req.user.displayPic[0]){
+        curr_user_display_pic=req.user.displayPic[req.user.displayPic.length - 1];
+        }//end display
+
+        var id_string=(req.user._id).toString();
+        //get total requests for this user
+        request_model.find({$or:[{destination_id:id_string},{"owner.id":id_string}]}).exec(function(err3,res3){
+            req_count =res3.length;
+
+
+            if(err3){
+                    //console.log('err occured geting requests');
+                    //console.log(err3)
+                }
+
+    //get all members for this group
+    var id_obj = mongoose.Types.ObjectId(group_id);//convert id string to obj id
+    
+    group.findOne({_id:id_obj},function(err1,grp_data){
+        if(err1){
+            console.log('err occured geting groups');
+            console.log(err1)
+        }
+
+        if(grp_data){
+            //get group members
+            process_posts.getMemberAdminDetails(grp_data,function(group_members){
+
+            //chk if user is a super admin
+            process_posts.isIncluded(grp_data.superadmin_ids,req.user._id,function(isSuperAdmin){
+
+                res.render(page,{
+                    url:process.env.URL_ROOT,
+                    displayPic:curr_user_display_pic,
+                    user_info:req.user,
+                    data:grp_data,
+                    req_count:req_count,
+                    data_trend:res_item_trend,
+                    page_title: page_title,
+                    class_type:'members_all',
+                    pending_friend_notifs:pending_friend_notifs,
+                    bookmarks_count:bookmark_len,
+                    group_members:group_members,
+                    isSuperAdmin:isSuperAdmin,
+
+                    quest_page_status:false,
+                    art_page_status:false,
+                    riddle_page_status:false,
+                    notice_page_status:false,
+                    pab_page_status:false,
+                    trend_page_status:false,
+                    home_page_status:false,
+                    usergroup_status:true
+                });
+
+                });//end isSuperAdmin
+
+            }); //end group_members
+
+        }else{
+
+            res.render(page,{
+                url:process.env.URL_ROOT,
+                displayPic:curr_user_display_pic,
+                user_info:req.user,
+                data:res_item_member,
+                req_count:req_count,
+                data_trend:res_item_trend,
+                page_title: page_title,
+                class_type:'members_all',
+                pending_friend_notifs:pending_friend_notifs,
+                bookmarks_count:bookmark_len,
+                group_members:[],
+                isSuperAdmin:false,
+
+                quest_page_status:false,
+                art_page_status:false,
+                riddle_page_status:false,
+                notice_page_status:false,
+                pab_page_status:false,
+                trend_page_status:false,
+                home_page_status:false,
+                usergroup_status:true
+            });
+
+        }
+
+
+    });//end all members 
 
     });//end requests
 
@@ -340,7 +462,7 @@ router.get('/getGroups',isLoggedIn,function(req,res){
 
 router.get('/showGroup/:id',isLoggedIn, function(req, res) {
     console.log('inside group profile');
-     console.log(req.params)   
+    console.log(req.params)   
     var page='group_profile';
     var empty_page=[];
     var group_id = req.params.id;
@@ -360,7 +482,10 @@ router.get('/showGroup/:id',isLoggedIn, function(req, res) {
                 backgroundPic=found_group.backgroundPic[found_group.backgroundPic.length - 1];
             }
 
-            //chk if user is a member
+            //get group admins
+            process_posts.getItemDetails(found_group.admin_ids,function(group_admins){
+
+                //chk if user is a member
             process_posts.isIncluded(found_group.member_ids,req.user._id,function(member_response){
 
                 //chk if user is an admin
@@ -375,6 +500,7 @@ router.get('/showGroup/:id',isLoggedIn, function(req, res) {
                 backgroundPic:backgroundPic,
                 isMember:member_response,
                 isAdmin:included_response,
+                group_admins:group_admins,
 
                 quest_page_status:false,
                 art_page_status:false,
@@ -390,6 +516,8 @@ router.get('/showGroup/:id',isLoggedIn, function(req, res) {
 
         });//end isIncluded isMember
 
+            });//get group admins
+
         }else{
             res.render(page, {
                 url:process.env.URL_ROOT,
@@ -400,6 +528,7 @@ router.get('/showGroup/:id',isLoggedIn, function(req, res) {
                 backgroundPic:backgroundPic,
                 isMember:false,
                 isAdmin:false,
+                group_admins:[],
 
                 quest_page_status:false,
                 art_page_status:false,
@@ -926,7 +1055,7 @@ router.get('/getComments/:section/:section_id/:response_id',isLoggedIn,function(
             //update other details needed by the post
             process_posts.processPagePosts(res3,req.user,function(processed_response){
                 console.log('MY REQUESTS LISTS .......................PROCESSED RESPONSE');
-                console.log(processed_response);
+                //console.log(processed_response);
 
                 res.render(page,{
                     url:process.env.URL_ROOT,

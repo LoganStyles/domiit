@@ -22,7 +22,7 @@
                             <div class="col-md-2 col-lg-2"></div>
                             <div class="col-md-7 col-lg-7 profile_top profile_area" style="">                                        
 
-                                <div style="cursor: pointer;" class="profile_bgimg_container" onclick="modalLoader('profile_bio1','edit','');"><!--background img-->
+                                <div class="profile_bgimg_container"><!--background img-->
                                     <div class="pro_bgimage">
                                   {{#if backgroundPic}}
                                     <img class="object-fit_cover" src="{{url}}/{{backgroundPic}}">
@@ -31,7 +31,7 @@
                                 </div>
 
                                 <div class="profile_img_container">
-                                    <div style="cursor: pointer;" class="pro_image" onclick="modalLoader('profile_bio1','edit','');">
+                                    <div class="pro_image">
                                     
                                     <img class="object-fit_cover" src="{{url}}/{{displayPic}}">
                                     
@@ -39,10 +39,12 @@
                                 </div>
 
                                 <div class="profile_editicon_container">
+                                {{#if isOwner}}
                                     <div class="profile_editicon" onclick="modalLoader('profile_bio1','edit','');">
                                     <img src="{{url}}/images/edit_icon_24.png">
 
                                     </div>
+                                    {{/if}}
                                     <div class="clearfix"></div>
                                 </div>
 
@@ -55,9 +57,11 @@
                                         <div style="text-transform: capitalize;">{{user_info.location}}</div>                                   
                                     </div>
                                     <div class="thin_border_top">
+                                    {{#if isOwner}}
 
                                     <div class="profile_editicon" style="cursor: pointer;" onclick="modalLoader('profile_desc','edit','');">
                                       <img src="{{url}}/images/edit_icon_24.png">
+                                      {{/if}}
 
                                     </div>
                                     <div class="clearfix"></div>
@@ -99,10 +103,12 @@
                                                 <div class="profile_text_head ">Education:</div>
                                             </div>
                                             <div class="section_icon">
+                                            {{#if isOwner}}
                                               <div class="action_icons" onclick="modalLoader('profile_edu','new','');">
                                                 <img class="icon_size_15" src="{{url}}/images/add.png">
                                                 <div class="clearfix"></div>
                                               </div>
+                                              {{/if}}
                                             </div>
                                               <div class="clearfix"></div>
                                             </div>
@@ -117,12 +123,15 @@
                                                 <input type="hidden" class="subitem_id" value="{{_id}}">
                                               </div>
 
-                                              <div class="profile_text_body_icons">     
+                                              <div class="profile_text_body_icons">  
+                                              {{#if isOwner}}   
 
                                                 <div class="action_icons edit_icon hide_edit_icons" >
                                                   <img class="icon_size_15" src="{{url}}/images/edit_icon_24.png">
                                                   <div class="clearfix"></div>
                                                 </div>
+
+                                                {{/if}}
                                                 
                                               </div>
 
@@ -138,12 +147,14 @@
                                             <div class="section_title">
                                                 <div class="profile_text_head ">Qualification:</div>
                                             </div>
+                                            {{#if isOwner}}
                                               <div class="section_icon">
                                                 <div class="action_icons" onclick="modalLoader('profile_qual','new','');">
                                                   <img class="icon_size_15" src="{{url}}/images/add.png">
                                                   <div class="clearfix"></div>
                                                 </div>
                                               </div>
+                                              {{/if}}
                                               <div class="clearfix"></div>
                                             </div>
                                           
@@ -160,12 +171,12 @@
                                               </div>
 
                                               <div class="profile_text_body_icons">
-                                              
+                                              {{#if isOwner}}
                                                 <div class="action_icons edit_qual_icon hide_edit_icons" >
                                                   <img class="icon_size_15" src="{{url}}/images/edit_icon_24.png">
                                                   <div class="clearfix"></div>
                                                 </div>
-                                                
+                                                {{/if}}
                                               </div>
 
                                               <div class="clearfix"></div>
@@ -180,12 +191,14 @@
                                             <div class="section_title">
                                                 <div class="profile_text_head ">Schools Attended:</div>
                                             </div>
+                                            {{#if isOwner}}
                                               <div class="section_icon">
                                                 <div class="action_icons" onclick="modalLoader('profile_sch','new','');">
                                                   <img class="icon_size_15" src="{{url}}/images/add.png">
                                                   <div class="clearfix"></div>
                                                 </div>
                                               </div>
+                                              {{/if}}
                                               <div class="clearfix"></div>
                                             </div>
                                           
@@ -201,11 +214,12 @@
                                               </div>
 
                                               <div class="profile_text_body_icons">
-                                              
+                                              {{#if isOwner}}
                                                 <div class="action_icons edit_sch_icon hide_edit_icons" >
                                                   <img class="icon_size_15" src="{{url}}/images/edit_icon_24.png">
                                                   <div class="clearfix"></div>
                                                 </div>
+                                                {{/if}}
                                                 
                                               </div>
 

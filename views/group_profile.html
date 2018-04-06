@@ -80,12 +80,7 @@
                                             <div class="section_title">
                                                 <div class="profile_text_head ">MISSION:</div>
                                             </div>
-                                            <!--<div class="section_icon">
-                                              <div class="action_icons" onclick="modalLoader('profile_edu','new','');">
-                                                <img class="icon_size_15" src="{{url}}/images/edit_icon_24.png">
-                                                <div class="clearfix"></div>
-                                              </div>
-                                            </div>-->
+                                            
                                               <div class="clearfix"></div>
                                             </div>
 
@@ -97,14 +92,6 @@
                                                 <input type="hidden" class="subitem_id" value="{{_id}}">
                                               </div>
 
-                                              <!--<div class="profile_text_body_icons">     
-
-                                                <div class="action_icons edit_icon hide_edit_icons" >
-                                                  <img class="icon_size_15" src="{{url}}/images/edit_icon_24.png">
-                                                  <div class="clearfix"></div>
-                                                </div>
-                                                
-                                              </div>-->
 
                                               <div class="clearfix"></div>
                                             </div>
@@ -120,12 +107,6 @@
                                             <div class="section_title">
                                                 <div class="profile_text_head ">VISION:</div>
                                             </div>
-                                            <!--<div class="section_icon">
-                                              <div class="action_icons" onclick="modalLoader('profile_edu','new','');">
-                                                <img class="icon_size_15" src="{{url}}/images/edit_icon_24.png">
-                                                <div class="clearfix"></div>
-                                              </div>
-                                            </div>-->
                                               <div class="clearfix"></div>
                                             </div>
 
@@ -137,15 +118,6 @@
                                                 <input type="hidden" class="subitem_id" value="{{_id}}">
                                               </div>
 
-                                              <!--<div class="profile_text_body_icons">     
-
-                                                <div class="action_icons edit_icon hide_edit_icons" >
-                                                  <img class="icon_size_15" src="{{url}}/images/edit_icon_24.png">
-                                                  <div class="clearfix"></div>
-                                                </div>
-                                                
-                                              </div>-->
-
                                               <div class="clearfix"></div>
                                             </div>
                                                  
@@ -154,6 +126,7 @@
                                       </div>
                                       
                                   </div>
+
                               </div>
 
                           </div>
@@ -161,13 +134,52 @@
                           </div>
                       </div>
 
-                      <!--activities-->
-                      <div class="row">
+                      <!--admin & activities-->
+                      <div class="row" style="margin-top: 5px;">
                         <div class="col-md-12 col-lg-12 col-sm-12">
                           <div class="col-md-2 col-lg-2"></div>
                           <div class="col-md-7 col-lg-7 profile_top profile_area">                                        
 
-                           <div class="col-md-12 col-lg-12 col-sm-12 ">
+                           <div class="col-md-12 col-lg-12 col-sm-12 " style="width: 100%;border: 1px solid #ddd;">
+
+                           <div class="group_lists_box profile_bios" >
+                            <div class="group_lists_box_title">GROUP'S ADMIN</div>
+
+                            {{#group_admins}}
+
+                            <div style="width: 100%;margin-bottom: 5px;">
+                              <!--<div class="group_lists_item_no">{{@index}}</div>-->
+                              <div class="group_lists_item_title">{{item_displayName}}</div>
+                              <div class="group_lists_item_button">
+
+                              <a href="{{url}}/profile/{{item_id}}" style="color: #86be25;" class="btn btn-default">view profile</a>
+
+                              </div>
+                              <div class="clearfix"></div>
+                            </div>
+                            {{/group_admins}}
+                            <br/>
+                            <div style="margin:5px auto; width: 50%;">
+                            <a href="{{url}}/posts/getMembers/{{group_info._id}}" style="color: #86be25;" class="btn btn-default">view other members</a>
+                            </div>
+                           </div>
+
+                           <div class="group_lists_box">
+                           <div class="group_lists_box_title">GROUP'S ACTIVITIES</div>
+
+                           <div class="profile_editicon_container">
+                                {{#if isAdmin}}
+                                    <div class="profile_editicon update_group_activity">
+                                      <img src="{{url}}/images/edit_icon_24.png">
+
+                                    </div>
+                                    {{/if}}
+                                    <div class="clearfix"></div>
+                                </div>
+                            <div style="width: 100%;margin:5px; text-align: justify; ">{{{group_info.activitys}}}</div>
+
+                           </div>
+                           <div class="clearfix"></div>
 
                           </div>
 
@@ -176,9 +188,35 @@
                       </div>
                     </div>
 
-                    <!--violations-->
-                      <div class="row">
-                        
+
+                    <!--suggestion-->
+                      <div class="row" style="margin-top: 5px;">
+                        <div class="col-md-12 col-lg-12 col-sm-12">
+                          <div class="col-md-2 col-lg-2"></div>
+                          <div class="col-md-7 col-lg-7 profile_top profile_area">                                        
+
+                           <div class="col-md-12 col-lg-12 col-sm-12 " style="width: 100%;border: 1px solid #ddd;">
+
+                           <div class="group_lists_box profile_bios" >
+                            <div class="group_lists_box_title"></div>
+
+                            <div style="margin:5px auto; width: 50%;">
+                            <a style="color: #86be25;" class="btn btn-default post_suggestion">Post suggestion</a>
+                            </div>
+                           </div>
+
+                           <div class="group_lists_box">
+                           <div style="margin:5px auto; width: 50%;">
+                            <a href="javascript:;" style="color: #86be25;" class="btn btn-default">Open group's page</a>
+                            </div>
+                           </div>
+                           <div class="clearfix"></div>
+
+                          </div>
+
+                        </div>
+                        <div class="col-md-2 col-lg-2"></div>
+                      </div>
                     </div>
 
 
@@ -280,7 +318,7 @@
         <div id="add_member_modal" class="modal fade" tabindex="-1">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-            <h4 class="modal-title" id="add_member_header">Add Member</h4>
+            <h4 class="modal-title" id="add_member_header">Add member</h4>
           </div>
           <div class="modal-body">
             <form role="form" id="add_member_form" action="" method="post">
@@ -304,9 +342,9 @@
         <div id="remove_member_modal" class="modal fade" tabindex="-1">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-            <h4 class="modal-title" id="remove_member_header">Remove Member</h4>
+            <h4 class="modal-title" id="remove_member_header">Remove member</h4>
           </div>
-          <div class="modal-body">
+          <div class="modal-body"
             <form role="form" id="remove_member_form" action="" method="post">
               <span class="form_submission_error"></span>
               <span class="form_submission_success"></span>
@@ -323,6 +361,34 @@
           </div>
 
         </div>  
+
+        <!--update_activity-->
+          <div id="update_activity_modal" class="modal fade" tabindex="-1">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+              <h4 class="modal-title" id="update_activity_header">Update activity</h4>
+            </div>
+            <div class="modal-body">
+              <form role="form" id="update_activity_form" action="" method="post">
+                <span class="form_submission_error"></span>
+                <span class="form_submission_success"></span>
+
+                <input type="hidden" name="update_group_id"  id="update_group_id" value="{{group_info._id}}">
+                <div class="form-group">
+                  <label class="col-md-2 col-lg-2 col-sm-12 control-label">Details</label>
+                  <div class="col-md-10 col-lg-10 col-sm-12 ">
+                    <textarea  name="update_activity" id="update_activity" class="form-control summer_details" >{{group_info.activitys}}</textarea>
+                  </div>                                
+              </div>
+
+                <div class="form-actions noborder">
+                  <input type="submit" class="btn blue" name="submit" value="Update" />
+                  <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+                </div>
+              </form>
+            </div>
+
+          </div> 
 
 
 
@@ -352,6 +418,65 @@
 
         
         $( document ).ready( function () {
+
+          
+
+          //update & show modal
+          $("body").on('click','.update_group_activity',function(e){
+              $('#update_activity_modal').modal({backdrop: false, keyboard: false});
+          });
+
+          /*add activity to group*/
+                $("body").on('submit','#update_activity_form',function(e){
+                    e.preventDefault();
+
+                    var sub_button=$(this).find(':submit');
+                    var old_button_val=sub_button.val();
+                    sub_button.prop('disabled', true);
+                    sub_button.val('...processing');
+
+                    resetFields();
+                    var my_url="{{url}}/updateActivity";
+                    //console.log('url: '+my_url);
+                    
+                    var form_data=$(this).serialize();
+                    //console.log(form_data);
+
+                    $.ajax({
+                        url:my_url,
+                        type:'POST',
+                        data:form_data,
+                        headers: {'X-My-App-Token': 'loganstyles'},
+                        success:function(response){
+                            //console.log(response);
+                            if(response.success==true){
+                            $('#update_activity_form  .form_submission_success').text(response.msg);
+                            setTimeout(function(){
+                                $('#update_activity_form  .form_submission_success').text('');
+                                sub_button.val(old_button_val);
+                                sub_button.prop('disabled', false);
+                                $('#update_activity_modal').modal('hide');
+                                    location.reload();//temp:later use sockets to update the actual post
+                                },3000);
+
+                        }else{
+                            console.log('response is false');
+                            $('#update_activity_form  .form_submission_error').text(response.msg);
+                            sub_button.val(old_button_val);
+                            sub_button.prop('disabled', false);
+                        }
+
+
+                        },
+                        error:function(xhr, status, err){
+                            /*console.log('error');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(err);*/
+                        }
+                    });
+
+                });
 
           $( "#group_bio1_form" ).validate( {/*validate & submit profile bio1 modal data*/
                 rules: {  

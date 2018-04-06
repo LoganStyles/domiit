@@ -210,6 +210,12 @@
             });
 
 
+            //post suggestions
+          $("body").on('click','.post_suggestion',function(e){
+              $('#suggestion_modal').modal({backdrop: false, keyboard: false});
+          });
+
+
             //bookmarks an item
             //save posts
            $("body").on('click','.bookmark_section_item',function(){
