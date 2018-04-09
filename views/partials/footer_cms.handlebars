@@ -84,8 +84,6 @@
 
       <!-- Bootstrap Date-Picker Plugin -->
 
-        <!--<script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>-->
-
         <script type="text/javascript">
 
             $(document).ready(function(){
@@ -212,7 +210,11 @@
 
             //post suggestions
           $("body").on('click','.post_suggestion',function(e){
+                var parent=$(this).parents('.posted_suggestion');
+                var group_id=parent.find('input#post_group_id').val();
+
               $('#suggestion_modal').modal({backdrop: false, keyboard: false});
+              $('#suggestion_modal #suggestion_group_id').val(group_id);
           });
 
 
@@ -792,9 +794,9 @@
                     //$('#request_update_modal #request_update_title').text(post_item_topic.trim());
                     //$('#request_update_modal #request_update_info').text(post_item_more_info.trim());
 
-                    $('#request_update_modal #request_update_title').froalaEditor('html.set',post_item_topic.trim());
+                    $('#request_update_modal #request_update_title').summernote('code',post_item_topic.trim());
 
-                    $('#request_update_modal #request_update_info').froalaEditor('html.set',post_item_more_info.trim());
+                    $('#request_update_modal #request_update_info').summernote('code',post_item_more_info.trim());
 
                     }else if(section =="article"){
                     $('#request_update_modal #request_update_topic').val(post_item_body.trim());
@@ -895,19 +897,19 @@
                     /*$('#new_request_modal #new_request_sub1').val(post_sub_cat1);
                     $('#new_request_modal #new_request_sub2').val(post_sub_cat2);
                     if(section =="question"){
-                    $('#new_request_modal #new_request_title').froalaEditor('html.set',post_item_topic.trim());
+                    $('#new_request_modal #new_request_title').summernote('code',post_item_topic.trim());
 
-                    $('#new_request_modal #new_request_info').froalaEditor('html.set',post_item_more_info.trim());
+                    $('#new_request_modal #new_request_info').summernote('code',post_item_more_info.trim());
 
                     }else if(section =="article"){
-                    $('#new_request_modal #new_request_topic').froalaEditor('html.set',post_item_body.trim());
-                    $('#new_request_modal #new_request_info_article').froalaEditor('html.set',post_item_more_info.trim());
+                    $('#new_request_modal #new_request_topic').summernote('code',post_item_body.trim());
+                    $('#new_request_modal #new_request_info_article').summernote('code',post_item_more_info.trim());
 
                     //$('#request_modal #request_topic').val(post_item_body.trim());
                     //$('#request_modal #request_info_article').text(post_item_more_info.trim());
 
                     }else if(section =="riddle"){
-                    $('#new_request_modal #new_request_title_riddle').froalaEditor('html.set',post_item_topic.trim());
+                    $('#new_request_modal #new_request_title_riddle').summernote('code',post_item_topic.trim());
 
                     //$('#request_modal #request_title_riddle').text(post_item_topic.trim());
                     }
@@ -926,6 +928,30 @@
             }
         });
 
+
+        });
+
+        //edit group posts
+        $("body").on('click','.edit_group_item',function(e){
+            //get this posts data
+            var parent=$(this).parents('.posted');
+            var id=parent.find('input#post_id').val();
+            var groupid=parent.find('input#post_groupid').val();
+            var section=parent.find('input#post_type').val();
+            console.log('section '+section)
+            console.log('id '+id)
+            console.log('groupid '+groupid)
+
+            $("#update_suggestion_modal #update_suggestion_form").trigger('reset'); 
+            var post_item_body=parent.find('.item-body .post_item_body').html();
+            console.log('post_item_body '+post_item_body)
+
+
+            $('#update_suggestion_modal').modal({backdrop: false, keyboard: false});
+
+            $('#update_suggestion_modal #update_suggestion_id').val(id);
+            $('#update_suggestion_modal #update_suggestion_group_id').val(groupid);
+            $('#update_suggestion_modal #update_suggestion_title').summernote('code',post_item_body);
 
         });
 
@@ -983,36 +1009,36 @@
     $('#section_update_modal #section_update_type').val(section);
     $('#section_update_modal #section_update_sub1').val(post_sub_cat1);
     $('#section_update_modal #section_update_sub2').val(post_sub_cat2);
-    $('#section_update_modal #section_update_title').froalaEditor('html.set',post_item_topic.trim());
-    $('#section_update_modal #section_update_info').froalaEditor('html.set',post_item_more_info.trim());
+    $('#section_update_modal #section_update_title').summernote('code',post_item_topic.trim());
+    $('#section_update_modal #section_update_info').summernote('code',post_item_more_info.trim());
                         
 
-                        switch(section){
-                        case 'question':
-                            $('#section_update_modal .hiddle_for_riddle').show();
-                            $('#section_update_modal #section_update_info').text(post_item_more_info.trim());
-                            $('#section_update_modal .edit_itemtopic').text('Edit the question');
-                            $('#section_update_modal .edit_iteminfo').text('Provide additional information');
-                            break;
+        switch(section){
+        case 'question':
+            $('#section_update_modal .hiddle_for_riddle').show();
+            $('#section_update_modal #section_update_info').text(post_item_more_info.trim());
+            $('#section_update_modal .edit_itemtopic').text('Edit the question');
+            $('#section_update_modal .edit_iteminfo').text('Provide additional information');
+            break;
 
-                         case 'article':
-                            $('#section_update_modal .hiddle_for_riddle').show();
-                            $('#section_update_modal #section_update_info').text(post_item_body.trim());
-                            $('#section_update_modal .edit_itemtopic').text('Edit Topic');
-                            $('#section_update_modal .edit_iteminfo').text('Edit Article');
-                            break;
+         case 'article':
+            $('#section_update_modal .hiddle_for_riddle').show();
+            $('#section_update_modal #section_update_info').text(post_item_body.trim());
+            $('#section_update_modal .edit_itemtopic').text('Edit Topic');
+            $('#section_update_modal .edit_iteminfo').text('Edit Article');
+            break;
 
-                        case 'riddle':
-                            $('#section_update_modal .hiddle_for_riddle').hide();
-                            $('#section_update_modal .edit_itemtopic').text('Edit Riddle');
-                            break;
+        case 'riddle':
+            $('#section_update_modal .hiddle_for_riddle').hide();
+            $('#section_update_modal .edit_itemtopic').text('Edit Riddle');
+            break;
 
-                        }
+        }
 
-                        $('#section_update_modal #section_update_category').val(post_category);
-                    }else{
-                        //console.log('response is false');                            
-                    }                        
+        $('#section_update_modal #section_update_category').val(post_category);
+    }else{
+        //console.log('response is false');                            
+    }                        
 
                 },
                 error:function(xhr, status, err){
@@ -2050,6 +2076,85 @@
             }
             } );
 
+            $( "#update_suggestion_form" ).validate( {/*validate & submit updated group post data*/
+                rules: {  
+                    update_suggestion_title: {
+                        required: true
+                    }
+                    
+                },
+                messages: {                        
+                    update_suggestion_title: {
+                        required: "This field is required"
+                    }
+                },
+                errorElement: "em",
+                errorPlacement: function ( error, element ) {
+                // Add the `help-block` class to the error element
+                error.addClass( "help-block" );
+
+                if ( element.prop( "type" ) === "checkbox" ) {
+                    error.insertAfter( element.parent( "label" ) );
+                } else {
+                    error.insertAfter( element );
+                }
+            },
+            success: function ( label, element ) {
+                // Add the span element, if doesn't exists, and apply the icon classes to it.
+                if ( !$( element ).next( "span" )[ 0 ] ) {
+                    $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+                }
+            },
+            highlight: function ( element, errorClass, validClass ) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
+            },
+
+            submitHandler: function () {
+                //modify button
+                var sub_button=$("#update_suggestion_form").find(':submit');
+                var old_button_val=sub_button.val();
+                sub_button.prop('disabled', true);
+                sub_button.val('...processing');
+
+                resetFields("#update_suggestion_form");
+                var my_url="{{url}}/update_suggestion";
+                $("#update_suggestion_form").ajaxSubmit({
+                    url:my_url,
+                       contentType: 'application/json',
+                       success: function(response){
+                        if(response.success==true){
+                                console.log('image uploaded and form submitted');
+                                $('#update_suggestion_form  .form_submission_success').text(response.msg);
+                                setTimeout(function(){
+                                    $('#update_suggestion_form  .form_submission_success').text('');
+                                    sub_button.val(old_button_val);
+                                    sub_button.prop('disabled', false);
+                                    $('#update_suggestion_modal').modal('hide');
+                                    location.reload();
+                                },3000);
+                                
+                            }else{
+                                console.log('response is false');
+                                $('#update_suggestion_form  .form_submission_error').text(response.msg);
+                                sub_button.val(old_button_val);
+                                sub_button.prop('disabled', false);
+                            }
+                              
+                       },
+                       error:function(xhr, status, err){
+                            console.log('error');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(err);
+                        }
+                   });
+                
+            }
+            } );
+
 
         $( "#pab_form" ).validate( {/*validate & submit pab modal data*/
                 rules: {  
@@ -2204,6 +2309,86 @@
                             }else{
                                 console.log('response is false');
                                 $('#notice_form  .form_submission_error').text(response.msg);
+                                sub_button.val(old_button_val);
+                                sub_button.prop('disabled', false);
+                            }
+                              
+                       },
+                       error:function(xhr, status, err){
+                            console.log('error');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(err);
+                        }
+                   });
+                
+            }
+            } );
+
+
+            $( "#suggestion_form" ).validate( {/*validate & submit suggestion modal data*/
+                rules: {  
+                    suggestion_title: {
+                        required: true
+                    }
+                    
+                },
+                messages: {                        
+                    suggestion_title: {
+                        required: "This field is required"
+                    }
+                },
+                errorElement: "em",
+                errorPlacement: function ( error, element ) {
+                // Add the `help-block` class to the error element
+                error.addClass( "help-block" );
+
+                if ( element.prop( "type" ) === "checkbox" ) {
+                    error.insertAfter( element.parent( "label" ) );
+                } else {
+                    error.insertAfter( element );
+                }
+            },
+            success: function ( label, element ) {
+                // Add the span element, if doesn't exists, and apply the icon classes to it.
+                if ( !$( element ).next( "span" )[ 0 ] ) {
+                    $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+                }
+            },
+            highlight: function ( element, errorClass, validClass ) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
+            },
+
+            submitHandler: function () {
+                //modify button
+                var sub_button=$("#suggestion_form").find(':submit');
+                var old_button_val=sub_button.val();
+                sub_button.prop('disabled', true);
+                sub_button.val('...processing');
+
+                resetFields("#suggestion_form");
+                var my_url="{{url}}/post_suggestion";
+                $("#suggestion_form").ajaxSubmit({
+                    url:my_url,
+                       contentType: 'application/json',
+                       success: function(response){
+                        if(response.success==true){
+                                console.log('image uploaded and form submitted');
+                                $('#suggestion_form  .form_submission_success').text(response.msg);
+                                setTimeout(function(){
+                                    $('#suggestion_form  .form_submission_success').text('');
+                                    sub_button.val(old_button_val);
+                                    sub_button.prop('disabled', false);
+                                    $('#suggestion_modal').modal('hide');
+                                    //load group page
+                                },3000);
+                                
+                            }else{
+                                console.log('response is false');
+                                $('#suggestion_form  .form_submission_error').text(response.msg);
                                 sub_button.val(old_button_val);
                                 sub_button.prop('disabled', false);
                             }

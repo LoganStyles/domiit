@@ -9,6 +9,7 @@ var riddle = require('../models/riddle');
 var pab = require('../models/pab');
 var notice = require('../models/notice');
 var trend = require('../models/trend');
+var suggestion = require('../models/group_posts');
 
 var request_model = require('../models/request');
 
@@ -1127,6 +1128,120 @@ router.get('/getComments/:section/:section_id/:response_id',isLoggedIn,function(
 
 });
 
+/*get all posted questions,*/
+router.get('/showGroupPosts/:id', isLoggedIn,function(req, res) {
+    var group_id = req.params.id;
+    var id_obj = mongoose.Types.ObjectId(group_id);//convert id string to obj id
+    //set status defaults
+    let question_status=false,
+    home_status=false,
+    riddle_status=false,
+    pab_status=false,
+    article_status=false,
+    notice_status=false,
+    trend_status=false,
+    post_owner=false;
+    group_status=true;
+
+    var selection={"group_data.id":id_obj};
+    var page_title='All Suggestions';
+    var page="group";
+    var page_type=item='suggestion';
+
+    var section = suggestion,
+    item_response='';
+
+    //find pending notifications length
+    var pending_friend_notifs=0;
+    process_posts.getNotifications(req.user,function(rel_notifs){
+    pending_friend_notifs=rel_notifs;
+
+    //get required data
+    section.find(selection).sort({post_date:-1}).exec(function(err,items){
+
+        var res_items=[];
+        var curr_user_display_pic='uploads/avatar.png';//set default pic
+        if(req.user.displayPic[0]){
+            curr_user_display_pic=req.user.displayPic[req.user.displayPic.length - 1];
+        }
+
+        if(err){console.log(err);}
+        else if(items){
+        //items were found
+        /*for each item update owner details such as displayPic & displayName
+        since these may have changed*/
+        if(items.length >0){
+
+            console.log('items '+items);
+
+            //chk if user is a member
+            process_posts.isIncluded(req.user.group_ids,id_obj,function(is_member){
+                console.log('is a member');
+                console.log(is_member);
+
+            process_posts.processPagePosts(items,req.user,function(processed_response){
+
+                console.log('processed_response '+processed_response)
+
+                res.render(page, {
+                    url:process.env.URL_ROOT,
+                    displayPic:curr_user_display_pic,
+                    user_info:req.user,
+                    data:processed_response,
+                    data_item:item,
+                    page_title: page_title,
+                    page_type:page_type,
+                    class_type:item,
+                    page_response:item_response,
+                    pending_friend_notifs:pending_friend_notifs,
+                    isMember:is_member,
+                    quest_status:question_status,
+                    art_status:article_status,
+                    riddle_status:riddle_status,
+                    notice_status:notice_status,
+                    pab_status:pab_status,
+                    trend_status:trend_status,
+                    home_status:home_status,
+                    group_status:group_status
+                });
+
+            });
+
+            });
+
+        }else{
+            res.render(page, {
+                url:process.env.URL_ROOT,
+                displayPic:curr_user_display_pic,
+                user_info:req.user,
+                data:res_items,
+                data_item:item,
+                page_title: page_title,
+                page_type:page_type,
+                class_type:item,
+                page_response:item_response,
+                pending_friend_notifs:pending_friend_notifs,
+                quest_status:question_status,
+                art_status:article_status,
+                riddle_status:riddle_status,
+                notice_status:notice_status,
+                pab_status:pab_status,
+                trend_status:trend_status,
+                home_status:home_status,
+                group_status:group_status
+            });
+
+        }
+        
+    }
+
+    });//end section
+
+});//end ntififications
+    
+
+});
+
 
 /*get all posted questions,*/
 router.get('/section/:item/:type/:id', isLoggedIn,function(req, res) {
@@ -1144,6 +1259,7 @@ router.get('/section/:item/:type/:id', isLoggedIn,function(req, res) {
         notice_status=false,
         trend_status=false,
         post_owner=false;
+        group_status=false;
 
     let page_icon=item+'s_icon.png';//post icon
 
@@ -1157,6 +1273,11 @@ router.get('/section/:item/:type/:id', isLoggedIn,function(req, res) {
         selection={};
         page_title=type+' '+item+'s';
         break;
+
+        // case 'AllGroup':
+        // selection={"group_data.id":id};
+        // page_title=type+' '+item+'s';
+        // break;
 
         case 'Unanswered':
         case 'Unreviewed':
@@ -1254,6 +1375,13 @@ router.get('/section/:item/:type/:id', isLoggedIn,function(req, res) {
         page='notice';
         break;
 
+        //case'suggestion':
+        // section = suggestion;
+        // group_status=true;
+        // item_response='';
+        // page='group';
+        //break;
+
         case'trend':
         section = trend;
         trend_status=true;
@@ -1283,9 +1411,11 @@ section.find(selection).sort({post_date:-1}).exec(function(err,items){
     since these may have changed*/
     if(items.length >0){
 
+        console.log('items '+items)
+
         process_posts.processPagePosts(items,req.user,function(processed_response){
 
-            //console.log('processed_response '+processed_response)
+            console.log('processed_response '+processed_response)
 
             res.render(page, {
                 url:process.env.URL_ROOT,
@@ -1305,7 +1435,8 @@ section.find(selection).sort({post_date:-1}).exec(function(err,items){
                 notice_status:notice_status,
                 pab_status:pab_status,
                 trend_status:trend_status,
-                home_status:home_status
+                home_status:home_status,
+                group_status:group_status
             });
 
         });
@@ -1329,7 +1460,8 @@ section.find(selection).sort({post_date:-1}).exec(function(err,items){
             notice_status:notice_status,
             pab_status:pab_status,
             trend_status:trend_status,
-            home_status:home_status
+            home_status:home_status,
+            group_status:group_status
         });
 
     }

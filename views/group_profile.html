@@ -189,8 +189,10 @@
                     </div>
 
 
+                    {{#if isMember}}
                     <!--suggestion-->
-                      <div class="row" style="margin-top: 5px;">
+                      <div class="row posted_suggestion" style="margin-top: 5px;">
+                      <input type="hidden" id="post_group_id" value="{{{group_info._id}}}">
                         <div class="col-md-12 col-lg-12 col-sm-12">
                           <div class="col-md-2 col-lg-2"></div>
                           <div class="col-md-7 col-lg-7 profile_top profile_area">                                        
@@ -207,7 +209,7 @@
 
                            <div class="group_lists_box">
                            <div style="margin:5px auto; width: 50%;">
-                            <a href="javascript:;" style="color: #86be25;" class="btn btn-default">Open group's page</a>
+                            <a href="{{url}}/posts/showGroupPosts/{{group_info._id}}" style="color: #86be25;" class="btn btn-default">Open group's page</a>
                             </div>
                            </div>
                            <div class="clearfix"></div>
@@ -218,6 +220,7 @@
                         <div class="col-md-2 col-lg-2"></div>
                       </div>
                     </div>
+                    {{/if}}
 
 
                   </div>

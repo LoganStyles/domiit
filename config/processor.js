@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var user = require('../models/user');
-// var user = require('../models/user');
+var group = require('../models/group');
 var trend = require('../models/trend');
 var MongoClient = require('mongodb').MongoClient;
 var mongo_url = process.env.MONGODB_URI;
@@ -15,6 +15,12 @@ methods.getLatestOwnerDetails=function (arr){
         designation:1,
         trend_followed:1//string of ids
     }).exec();
+    return promise;
+};
+
+/*get group details*/
+methods.getLatestGroupDetails=function (arr){
+    var promise=group.findOne({_id:arr.id}).exec();
     return promise;
 };
 
@@ -312,7 +318,33 @@ methods.processPagePosts=function (items,ref_user,callback){
             };
 
             /* update owner info*/
-            cur_item.owner=updated_obj;           
+            cur_item.owner=updated_obj;
+
+            //if group post, get group data     
+            if(cur_item.post_type=="suggestion"){
+                grouppromise = methods.getLatestGroupDetails(cur_item.group_data);
+                grouppromise.then(function(grp_response){
+
+                    if(grp_response){
+                        displayPic=(grp_response.displayPic[0])?(grp_response.displayPic[grp_response.displayPic.length -1]):('uploads/avatar.png');
+                        display_name=(grp_response.displayName)?(grp_response.displayName):('');
+                        grp_id=(grp_response._id)?((grp_response._id).toString()):('');
+                        member_count=grp_response.member_ids.length;
+
+                        cur_item.group_data={
+                            id:grp_id,
+                            displayName:display_name,
+                            displayPic:displayPic,
+                            member_len:member_count
+                        }
+                    }
+
+                }).catch(function(grp_err){
+                    console.log("Error occured while fetching group data");
+                    console.log(grp_err)
+                });
+
+            }
 
 
             processed_items++;
@@ -323,8 +355,8 @@ methods.processPagePosts=function (items,ref_user,callback){
                 }
 
             }).catch(function(err3){
-                //console.log("Error occured while fetching owner/story data");
-                //console.log(err3)
+                console.log("Error occured while fetching owner/story data");
+                console.log(err3)
             });
 
         });

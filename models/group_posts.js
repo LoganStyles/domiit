@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var groupPostsSchema = mongoose.Schema({	
-	groupid:String,
+	// groupid:String,
 	post_type:String,
 	access:Number,
 	//topic:String,
@@ -16,6 +16,7 @@ var groupPostsSchema = mongoose.Schema({
 	date_modified: { type: Date, default: Date.now },
 	post_date: { type: Date, default: Date.now },
 	owner:{id:String,displayName:String,displayPic:String,status:String},
+	group_data:{id:String,displayName:String,displayPic:String,member_len:Number},
 	post_owner:{type:Boolean,default:false},
 	bookmarked_post:{type:Boolean,default:false},
 	followed_post:{type:Boolean,default:false},

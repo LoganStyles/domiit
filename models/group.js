@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 
-var groupSchema = mongoose.Schema({    
+var groupSchema = mongoose.Schema({   
+    // groupid:String, 
     email:String,
     type:{type:String,default:'Group'},
     //country:{type:String,default:''},
