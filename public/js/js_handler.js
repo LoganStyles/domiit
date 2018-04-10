@@ -229,13 +229,6 @@ function modalLoader(type, mode,cat_type) {
                     });
 
                     $(category_id).html(options);
-
-                    // if(type == 'request'){
-                    //     //populate the sub category1 field
-                    //     var category=$(category_id).val();
-                    //     //var section=$('#request_type').val();
-                    //     fetchItemList(category,section,URL_ROOT+"/fetchSubCats1",'#request_sub1'); 
-                    // }
                     
 
                 }else{

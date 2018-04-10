@@ -71,7 +71,7 @@
                                             <td> {{counter @index}}</td>
                                             <td class="curr_title"> {{body}} </td>
                                             <td class="curr_category"> {{category}} </td>
-                                            <td class="curr_desc"> {{description}} </td>
+                                            <td class="curr_desc"> {{{description}}} </td>
                                         </tr>
                                         {{/each}}
                                     </tbody>
@@ -123,6 +123,7 @@
                             <input type="hidden" name="page_id"  id="page_id" value="0">
                             <input type="hidden" name="page_mode"  id="page_mode" value="insert">
                             <input type="hidden" name="page_type"  id="page_type" value="{{item}}">
+
                             <div class="form-body">
                             {{#if trend_story_status}}
                                 <div class="form-group">
@@ -138,36 +139,35 @@
                                 </div>
                                 {{/if}}
 
-                                <div class="form-group">
-                                    <label class="control-label col-md-2 col-lg-2 col-sm-12" for="page_title">Title</label>
-                                    <div class="col-md-10 col-lg-10 col-sm-12 ">
-                                        <input type="text" class="form-control" id="page_title" name="page_title">
-                                    </div>                                   
-                                    
-                                </div>                                                     
-                                
-<div class="form-group ">
-<label class="control-label col-md-2 col-lg-2 col-sm-12" for="form_control_1">Description</label>
-<!-- <div class="col-md-10 col-lg-10 col-sm-12 "> -->
-<textarea class="form-control summer_details" id="page_description" name="page_description"></textarea>
-<!-- </div> -->
-                                        
+    <div class="form-group">
+        <label class="control-label col-md-2 col-lg-2 col-sm-12" for="page_title">Title</label>
+        <div class="col-md-10 col-lg-10 col-sm-12 ">
+            <input type="text" class="form-control" id="page_title" name="page_title">
+        </div>                                   
+        
+    </div>                                                     
+
+<div class="form-group">
+    <label class="col-md-2 col-lg-2 col-sm-12 control-label">Description</label>
+    <div class="col-md-10 col-lg-10 col-sm-12 ">
+        <textarea  name="page_description" id="page_description" class="form-control summer_details" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
+    </div>                                
 </div>
 
         
-        <div class="form-group">
-            <div class="col-md-2 col-lg-2 col-sm-12"></div>
+    <div class="form-group">
+        <div class="col-md-2 col-lg-2 col-sm-12"></div>
 
-            <div class="col-md-10 col-lg-10 col-sm-12 ">
-                <label for="page_photo" class="col-md-6 col-lg-6 col-sm-12 control-label custom-file-upload">
-                    <i class="fa fa-camera"></i> Add Photo
-                </label>
-                <div class="col-md-4 col-lg-6 col-sm-12">
-                    <input id="page_photo" name="page_photo" type="file" accept="application/x-zip-compressed,image/*"/>
-                </div>
-                
-            </div>                                
-        </div>
+        <div class="col-md-10 col-lg-10 col-sm-12 ">
+            <label for="page_photo" class="col-md-6 col-lg-6 col-sm-12 control-label custom-file-upload">
+                <i class="fa fa-camera"></i> Add Photo
+            </label>
+            <div class="col-md-4 col-lg-6 col-sm-12">
+                <input id="page_photo" name="page_photo" type="file" accept="application/x-zip-compressed,image/*"/>
+            </div>
+            
+        </div>                                
+    </div>
         
                                 
                             </div>
@@ -236,7 +236,7 @@
 
                         $('#page_id').val(curr_id);
                         $('#page_title').val(curr_title).attr('readonly',false);
-                        $('#page_description').text(curr_desc.trim()).attr('readonly',false);
+                        $('#page_description').summernote('code',curr_desc.trim());
                         $('#page_header').text('Edit');
                         $('#page_mode').val("edit");
                         $('#page_modal').modal({backdrop: false, keyboard: false});
@@ -265,7 +265,7 @@
 
                         $('#page_id').val(curr_id);
                         $('#page_title').val(curr_title).attr('readonly',true);
-                        $('#page_description').text(curr_desc.trim()).attr('readonly',true);
+                        $('#page_description').summernote('code',curr_desc.trim());
                         $('#page_header').text('View');
                         $('#page_mode').val("view");
                         $('#page_modal').modal({backdrop: false, keyboard: false});

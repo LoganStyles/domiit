@@ -2346,7 +2346,7 @@ app.post('/delete_postitem',function(req,res,next){
     var section_type=req.body.section_delete_type;
     var section_id=req.body.section_delete_id;
     var section;
-    // console.log('section_type '+section_type)
+    console.log('section_type '+section_type)
     // console.log('section_id '+section_id)
 
     switch(section_type){
@@ -2368,6 +2368,10 @@ app.post('/delete_postitem',function(req,res,next){
 
         case'riddle':
         section = riddle;
+        break;
+
+        case'suggestion':
+        section = suggestion;
         break;
 
         case'riddle_cat':

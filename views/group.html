@@ -181,14 +181,6 @@
                                         <div class="post_item post_item_topic" style="text-align: center;text-transform: uppercase;">
                                          {{sub_cat1}}
                                         </div>
-                                        <!-- <hr class="short_length"> -->
-
-                                            {{#if topic}}
-                                                <div class="post_item post_item_topic">
-                                                    {{topic}}
-                                                </div>
-                                            {{/if}}
-
                                             {{#if pics }}
                                                 <div style="margin-bottom: 3%;">                                                                  
                                                     <img class="img-responsive" src="{{../url}}/{{pics}}">
@@ -230,59 +222,29 @@
                     <!-- END PORTLET -->
                    
                     <div class="task-footer" style="">
-                    {{#ifEquals 'notification' sub_cat2}}
-
                         <div class="btn-arrow-link ">
-                             <a class="btn btn-link post_likes">
-                                <span class="grey_button">
-                                    <span class="social_value ">{{likes}}</span>
-                                    <i class="fa fa-heart-o"></i>&nbsp;Likes
-                                </span>
-                            </a>
+                                 <a class="btn btn-link post_likes">
+                                    <span class="grey_button">
+                                        <span class="social_value ">{{likes}}</span>
+                                        <i class="fa fa-heart-o"></i>&nbsp;Likes
+                                    </span>
+                                </a>
 
-                            <a class="btn btn-link ">
-                                <span class="grey_button">
-                                    <span class="social_value">{{comments.length}}</span>
-                                    <img class="icon_size_20" src="{{../url}}/images/comments.png">&nbsp;Comments
-                                </span>
-                            </a>
+                                <a class="btn btn-link ">
+                                    <span class="grey_button">
+                                        <span class="social_value">{{comments.length}}</span>
+                                        <img class="icon_size_20" src="{{../url}}/images/comments.png">&nbsp;Comments
+                                    </span>
+                                </a>
 
-                            <a class="btn btn-link post_shares">
-                                <span class="item-label grey_button">
-                                    <span class="social_value">{{shares}}</span>
-                                    <i class="fa fa-share-alt"></i>&nbsp;
-                                    Shares                                
-                                </span>
-                            </a>                        
-                        </div>
-                        {{else}}
-
-                        <div class="btn-arrow-link ">
-                             <a class="btn btn-link post_attending">
-                                <span class="grey_button">
-                                    <span class="social_value ">{{attending.length}}</span>
-                                    <img class="icon_size_20" src="{{../url}}/images/attending.png">&nbsp;Attending
-                                </span>
-                            </a>
-
-                            <a class="btn btn-link post_not_attending">
-                                <span class="grey_button">
-                                    <span class="social_value">{{not_attending.length}}</span>
-                                    <img class="icon_size_20" src="{{../url}}/images/not_attending.png">&nbsp;Not Attending
-                                </span>
-                            </a>
-
-                            <a class="btn btn-link ">
-                                <span class="grey_button">
-                                    <span class="social_value">{{comments.length}}</span>
-                                    <img class="icon_size_20" src="{{../url}}/images/comments.png">&nbsp;Comments
-                                </span>
-                            </a>                        
-                        </div>
-
-
-
-                    {{/ifEquals}}
+                                <a class="btn btn-link post_shares">
+                                    <span class="item-label grey_button">
+                                        <span class="social_value">{{shares}}</span>
+                                        <i class="fa fa-share-alt"></i>&nbsp;
+                                        Shares                                
+                                    </span>
+                                </a>                        
+                            </div>
 
                     <hr class="long_length">
 

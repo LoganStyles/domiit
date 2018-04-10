@@ -1131,7 +1131,14 @@ router.get('/getComments/:section/:section_id/:response_id',isLoggedIn,function(
 /*get all posted questions,*/
 router.get('/showGroupPosts/:id', isLoggedIn,function(req, res) {
     var group_id = req.params.id;
-    var id_obj = mongoose.Types.ObjectId(group_id);//convert id string to obj id
+    var selection;
+    if(group_id !=""){
+        var id_obj = mongoose.Types.ObjectId(group_id);//convert id string to obj id
+        selection={"group_data.id":id_obj};
+    }else{
+        selection={};
+    }
+    
     //set status defaults
     let question_status=false,
     home_status=false,
@@ -1143,7 +1150,7 @@ router.get('/showGroupPosts/:id', isLoggedIn,function(req, res) {
     post_owner=false;
     group_status=true;
 
-    var selection={"group_data.id":id_obj};
+    
     var page_title='All Suggestions';
     var page="group";
     var page_type=item='suggestion';
@@ -1176,8 +1183,6 @@ router.get('/showGroupPosts/:id', isLoggedIn,function(req, res) {
 
             //chk if user is a member
             process_posts.isIncluded(req.user.group_ids,id_obj,function(is_member){
-                console.log('is a member');
-                console.log(is_member);
 
             process_posts.processPagePosts(items,req.user,function(processed_response){
 
