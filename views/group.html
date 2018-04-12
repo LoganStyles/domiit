@@ -19,7 +19,7 @@
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <!-- BEGIN PROFILE SIDEBAR -->
                                         <div class="profile-sidebar">
                                             
@@ -33,22 +33,18 @@
                                         <!-- END BEGIN PROFILE SIDEBAR -->
                                     </div>
 
-        <div class="col-md-6">                                        
+        <div class="col-md-8">                                        
             <!-- BEGIN PORTLET -->
-            <div class="panel panel-default portlet" {{#unless page_response}} style="display: none;"{{/unless}}>
+            <div class="panel panel-default portlet" >
               <div class="panel-body" style="width: 100%;">
                 <div class="posts_top_actions_left">
-                    <span class="posts_page_title">{{page_title}}</span>
+                    <span class="posts_page_title">Groups</span>
                 </div>
                 
                 <div class="posts_top_actions_right">
-                    <a class="page_top_actions" onclick="modalLoader('question','new','');">Ask a question</a>&nbsp;|&nbsp;
+                    <a class="page_top_actions" onclick="modalLoader('group','new','');">Create a group</a>&nbsp;
 
-                    <a class="page_top_actions" onclick="modalLoader('article','new','');">Write an article</a>&nbsp;|&nbsp;
-
-                    <a class="page_top_actions" onclick="modalLoader('riddle','new','');">Post a riddle</a>&nbsp;|&nbsp;
-
-                    <a class="page_top_actions" onclick="modalLoader('pab','new','');">Post a book</a>
+                    <a class="page_top_actions" href="{{url}}/posts/getGroups">View all groups</a>&nbsp;
                    
                 </div>
                 <div class="clearfix"></div>
@@ -102,7 +98,7 @@
                                             <img class="icon_size_50 " src="{{../url}}/images/filler.png">
                                             {{else}}
 
-                                            <a href="javascript:;" class="btn blue" style="padding: 2px;">
+                                            <a class="btn blue show_add_member" style="padding: 2px;">
                                             <i class="fa fa-plus"></i>&nbsp; Join</a>
 
                                             {{/if}}
@@ -266,7 +262,7 @@
 
         </div>
 
-                                    <div class="col-md-3"><!--third-->
+                                    <div class="col-md-2"><!--third-->
                                         <div class="row">
                                             <!-- BEGIN PORTLET -->
                                             <!-- <div class="portlet light "> -->

@@ -217,6 +217,68 @@
               $('#suggestion_modal #suggestion_group_id').val(group_id);
           });
 
+          //add member to group modal
+          $("body").on('click','.show_add_member',function(e){
+                var parent=$(this).parents('.posted');
+                var group_id=parent.find('input#post_groupid').val();
+
+              $('#add_member_modal').modal({backdrop: false, keyboard: false});
+              $('#add_member_modal #add_group_id').val(group_id);
+          });
+
+
+          /*add member to group*/
+                $("body").on('submit','#add_member_form',function(e){
+                    e.preventDefault();
+
+                    var sub_button=$(this).find(':submit');
+                    var old_button_val=sub_button.val();
+                    sub_button.prop('disabled', true);
+                    sub_button.val('...processing');
+
+                    resetFields();
+                    var my_url="{{url}}/addMember";
+                    //console.log('url: '+my_url);
+                    
+                    var form_data=$(this).serialize();
+                    //console.log(form_data);
+
+                    $.ajax({
+                        url:my_url,
+                        type:'POST',
+                        data:form_data,
+                        headers: {'X-My-App-Token': 'loganstyles'},
+                        success:function(response){
+                            //console.log(response);
+                            if(response.success==true){
+                            $('#add_member_form  .form_submission_success').text(response.msg);
+                            setTimeout(function(){
+                                $('#add_member_form  .form_submission_success').text('');
+                                sub_button.val(old_button_val);
+                                sub_button.prop('disabled', false);
+                                $('#add_member_modal').modal('hide');
+                                    location.reload();//temp:later use sockets to update the actual post
+                                },3000);
+
+                        }else{
+                            console.log('response is false');
+                            $('#add_member_form  .form_submission_error').text(response.msg);
+                            sub_button.val(old_button_val);
+                            sub_button.prop('disabled', false);
+                        }
+
+
+                        },
+                        error:function(xhr, status, err){
+                            /*console.log('error');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(err);*/
+                        }
+                    });
+
+                });
+
 
             //bookmarks an item
             //save posts
@@ -499,6 +561,9 @@
                         });
 
             });
+
+
+
 
 
             $('body').on('click','.comment_button',function(e){
@@ -1297,18 +1362,18 @@
 
         $( "#group_form" ).validate( {/*validate & submit group details*/
                 rules: {  
-                    question_title: {
+                    group_title: {
                         required: true
                     },
-                    question_aboutus: {
+                    group_aboutus: {
                         required: true
                     }                    
                 },
                 messages: {                        
-                    question_title: {
+                    group_title: {
                         required: "This field is required"
                     },
-                    question_aboutus: {
+                    group_aboutus: {
                         required: "This field is required"
                     }
                 },
@@ -1358,7 +1423,9 @@
                                 sub_button.val(old_button_val);
                                 sub_button.prop('disabled', false);
                                 $('#group_modal').modal('hide');
-                                location.reload();
+                                //location.reload();
+                                //show new group profile
+                                window.location.href="{{url}}/posts/showGroup/"+response.created_id;
                             },3000);
 
                         }else{

@@ -587,8 +587,8 @@ app.get('/dashboard',isLoggedIn,function(req,res){
         if(page_results.length >0){
             //update other details needed by the post
             process_posts.processPagePosts(page_results,req.user,function(processed_response){
-                //console.log('PROCESSED RESPONSE');
-                //console.log(processed_response);
+                console.log('PROCESSED RESPONSE');
+                console.log(processed_response);
 
                 res.render(page,{
                     url:process.env.URL_ROOT,
@@ -1547,16 +1547,16 @@ app.post('/createGroup',group_upload,function(req,res,next){
     }else{
 
         //console.log(req.body);
-        group.findOne({displayName:req.body.question_title}, function(err, u) {
+        group.findOne({displayName:req.body.group_title}, function(err, u) {
             var msg;
                 if(!u) {//group does not previously exist
                     console.log('reg !u findOne in save');
                     let newGroup=new group();
-                    newGroup.displayName=req.body.question_title;
-                    newGroup.motto=req.body.question_motto; 
-                    newGroup.aboutus=req.body.question_aboutus; 
-                    newGroup.mission=req.body.question_mission; 
-                    newGroup.vision=req.body.question_vision;
+                    newGroup.displayName=req.body.group_title;
+                    newGroup.motto=req.body.group_motto; 
+                    newGroup.aboutus=req.body.group_aboutus; 
+                    newGroup.mission=req.body.group_mission; 
+                    newGroup.vision=req.body.group_vision;
                     newGroup.member_ids.push(req.user._id); 
                     newGroup.admin_ids.push(req.user._id);
                     newGroup.superadmin_ids.push(req.user._id);
@@ -1589,7 +1589,7 @@ app.post('/createGroup',group_upload,function(req,res,next){
                                     if(err2){
                                         res.json({success:false,msg:"Unable to update member's group status"});
                                     }else {    
-                                        res.json({success:true,msg:"Group created, please wait..."});
+                                        res.json({success:true,msg:"Group created, please wait...",created_id:newG._id});
                                     }
 
                                 });
@@ -2100,34 +2100,6 @@ app.post('/updateActivity',isLoggedIn,function(req,res,next){
 
 });
 
-/*removes group's activity*/
-// app.post('/removeActivity',isLoggedIn,function(req,res,next){
-//     /*later put superadmin chks in d admin methods*/
-//     var group_id_obj = mongoose.Types.ObjectId(req.body.remove_group_id);//convert id string to obj id
-
-//     group.findOne({_id:group_id_obj }, function(err, u) {//find the group
-//         if(u){
-
-//             let updateGroup=u;
-//             updateGroup.activitys=remove(updateGroup.activitys,req.body.remove_activity);
-//             group.updateOne({_id:group_id_obj},{$set:updateGroup},function(err1,res1){
-
-//                 if(err1){
-//                     res.json({success:false,msg:"Unable to remove activity"});
-//                 }else {    
-//                     res.json({success:true,msg:"You have removed this activity"});
-//                 }
-
-//             });
-            
-
-//         }else{
-//             res.json({success:false,msg:"group profile not found"});
-//         }
-
-//     });
-
-// });
 
 /*process responses immediately*/
 app.post('/response_item',upload.single('section_response_photo'),function(req,res,next){

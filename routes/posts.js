@@ -1128,15 +1128,15 @@ router.get('/getComments/:section/:section_id/:response_id',isLoggedIn,function(
 
 });
 
-/*get all posted questions,*/
+/*get posted group posts,*/
 router.get('/showGroupPosts/:id', isLoggedIn,function(req, res) {
     var group_id = req.params.id;
     var selection;
-    if(group_id !=""){
+    if(group_id =="all"){
+        selection={};        
+    }else{
         var id_obj = mongoose.Types.ObjectId(group_id);//convert id string to obj id
         selection={"group_data.id":id_obj};
-    }else{
-        selection={};
     }
     
     //set status defaults
@@ -1148,7 +1148,7 @@ router.get('/showGroupPosts/:id', isLoggedIn,function(req, res) {
     notice_status=false,
     trend_status=false,
     post_owner=false;
-    group_status=true;
+    usergroup_status=true;
 
     
     var page_title='All Suggestions';
@@ -1181,8 +1181,8 @@ router.get('/showGroupPosts/:id', isLoggedIn,function(req, res) {
 
             console.log('items '+items);
 
-            //chk if user is a member
-            process_posts.isIncluded(req.user.group_ids,id_obj,function(is_member){
+            //chk if current viewer is a member
+            process_posts.isIncluded(req.user.group_ids,req.user._id,function(is_member){
 
             process_posts.processPagePosts(items,req.user,function(processed_response){
 
@@ -1200,6 +1200,7 @@ router.get('/showGroupPosts/:id', isLoggedIn,function(req, res) {
                     page_response:item_response,
                     pending_friend_notifs:pending_friend_notifs,
                     isMember:is_member,
+                    
                     quest_status:question_status,
                     art_status:article_status,
                     riddle_status:riddle_status,
@@ -1207,7 +1208,7 @@ router.get('/showGroupPosts/:id', isLoggedIn,function(req, res) {
                     pab_status:pab_status,
                     trend_status:trend_status,
                     home_status:home_status,
-                    group_status:group_status
+                    usergroup_status:usergroup_status
                 });
 
             });
@@ -1233,7 +1234,7 @@ router.get('/showGroupPosts/:id', isLoggedIn,function(req, res) {
                 pab_status:pab_status,
                 trend_status:trend_status,
                 home_status:home_status,
-                group_status:group_status
+                usergroup_status:usergroup_status
             });
 
         }
@@ -1264,7 +1265,7 @@ router.get('/section/:item/:type/:id', isLoggedIn,function(req, res) {
         notice_status=false,
         trend_status=false,
         post_owner=false;
-        group_status=false;
+        usergroup_status=false;
 
     let page_icon=item+'s_icon.png';//post icon
 
@@ -1278,11 +1279,6 @@ router.get('/section/:item/:type/:id', isLoggedIn,function(req, res) {
         selection={};
         page_title=type+' '+item+'s';
         break;
-
-        // case 'AllGroup':
-        // selection={"group_data.id":id};
-        // page_title=type+' '+item+'s';
-        // break;
 
         case 'Unanswered':
         case 'Unreviewed':
@@ -1380,13 +1376,6 @@ router.get('/section/:item/:type/:id', isLoggedIn,function(req, res) {
         page='notice';
         break;
 
-        //case'suggestion':
-        // section = suggestion;
-        // group_status=true;
-        // item_response='';
-        // page='group';
-        //break;
-
         case'trend':
         section = trend;
         trend_status=true;
@@ -1434,6 +1423,7 @@ section.find(selection).sort({post_date:-1}).exec(function(err,items){
                 page_response:item_response,
                 page_icon:page_icon,
                 pending_friend_notifs:pending_friend_notifs,
+
                 quest_status:question_status,
                 art_status:article_status,
                 riddle_status:riddle_status,
@@ -1441,7 +1431,7 @@ section.find(selection).sort({post_date:-1}).exec(function(err,items){
                 pab_status:pab_status,
                 trend_status:trend_status,
                 home_status:home_status,
-                group_status:group_status
+                usergroup_status:usergroup_status
             });
 
         });
@@ -1466,7 +1456,7 @@ section.find(selection).sort({post_date:-1}).exec(function(err,items){
             pab_status:pab_status,
             trend_status:trend_status,
             home_status:home_status,
-            group_status:group_status
+            usergroup_status:usergroup_status
         });
 
     }

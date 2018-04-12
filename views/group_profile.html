@@ -61,7 +61,7 @@
 
                                         {{else}}
 
-                                        <button type="button" style="color: #86be25;" onclick="showAddMember();" class="btn btn-default">JOIN GROUP</button>
+                                        <button type="button" style="color: #86be25;" class="btn btn-default show_add_member">JOIN GROUP</button>
 
                                         {{/if}}
 
@@ -318,7 +318,7 @@
         </div>  
 
         <!--add_member modal-->
-        <div id="add_member_modal" class="modal fade" tabindex="-1">
+        <!--<div id="add_member_modal" class="modal fade" tabindex="-1">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
             <h4 class="modal-title" id="add_member_header">Add member</h4>
@@ -339,7 +339,7 @@
             </form>
           </div>
 
-        </div> 
+        </div> -->
 
         <!--remove_member modal-->
         <div id="remove_member_modal" class="modal fade" tabindex="-1">
@@ -411,9 +411,9 @@
 
         <script type="text/javascript">
 
-        function showAddMember(){
-          $('#add_member_modal').modal({backdrop: false, keyboard: false});
-        }
+        // function showAddMember(){
+        //   $('#add_member_modal').modal({backdrop: false, keyboard: false});
+        // }
 
         function showRemoveMember(){
           $('#remove_member_modal').modal({backdrop: false, keyboard: false});
@@ -421,8 +421,6 @@
 
         
         $( document ).ready( function () {
-
-          
 
           //update & show modal
           $("body").on('click','.update_group_activity',function(e){
@@ -566,57 +564,7 @@
             }
             });
 
-          /*add member to group*/
-                $("body").on('submit','#add_member_form',function(e){
-                    e.preventDefault();
-
-                    var sub_button=$(this).find(':submit');
-                    var old_button_val=sub_button.val();
-                    sub_button.prop('disabled', true);
-                    sub_button.val('...processing');
-
-                    resetFields();
-                    var my_url="{{url}}/addMember";
-                    //console.log('url: '+my_url);
-                    
-                    var form_data=$(this).serialize();
-                    //console.log(form_data);
-
-                    $.ajax({
-                        url:my_url,
-                        type:'POST',
-                        data:form_data,
-                        headers: {'X-My-App-Token': 'loganstyles'},
-                        success:function(response){
-                            //console.log(response);
-                            if(response.success==true){
-                            $('#add_member_form  .form_submission_success').text(response.msg);
-                            setTimeout(function(){
-                                $('#add_member_form  .form_submission_success').text('');
-                                sub_button.val(old_button_val);
-                                sub_button.prop('disabled', false);
-                                $('#add_member_modal').modal('hide');
-                                    location.reload();//temp:later use sockets to update the actual post
-                                },3000);
-
-                        }else{
-                            console.log('response is false');
-                            $('#add_member_form  .form_submission_error').text(response.msg);
-                            sub_button.val(old_button_val);
-                            sub_button.prop('disabled', false);
-                        }
-
-
-                        },
-                        error:function(xhr, status, err){
-                            /*console.log('error');
-                            console.log(xhr);
-                            console.log(status);
-                            console.log(err);*/
-                        }
-                    });
-
-                });
+          
 
                 /*remove member from group*/
                 $("body").on('submit','#remove_member_form',function(e){
