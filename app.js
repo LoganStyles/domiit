@@ -1340,72 +1340,62 @@ app.post('/post_suggestion',suggestion_upload,function(req,res,next){
 
         group.findOne({_id:group_id},function(err,u){
 
-        if(u){
-            found_group=u;
+            if(u){ found_group=u;
 
         //chk if user is a member
         process_posts.isIncluded(found_group.member_ids,req.user._id,function(member_response){
+            if(member_response){
 
-        var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('uploads/avatar.png');
-        var status=(req.user.designation[0])?((req.user.designation[req.user.designation.length -1]).title):('');
-        var display_name=(req.user.displayName)?(req.user.displayName):('');
-        var res_id=(req.user._id)?((req.user._id).toString()):('');
+                var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('uploads/avatar.png');
+                var status=(req.user.designation[0])?((req.user.designation[req.user.designation.length -1]).title):('');
+                var display_name=(req.user.displayName)?(req.user.displayName):('');
+                var res_id=(req.user._id)?((req.user._id).toString()):('');
 
-        var owner_details={id:res_id,
-            displayName:display_name,
-            displayPic:displayPic,
-            status:status};
+                var owner_details={id:res_id,
+                    displayName:display_name,
+                    displayPic:displayPic,
+                    status:status};
 
-        var group_details={
-            id:req.body.suggestion_group_id,
-            displayName:found_group.displayName,
-            displayPic:found_group.displayPic[found_group.displayPic.length - 1],
-            member_len:found_group.member_ids.length
-        };
+                    var group_details={
+                        id:req.body.suggestion_group_id,
+                        displayName:found_group.displayName,
+                        displayPic:found_group.displayPic[found_group.displayPic.length - 1],
+                        member_len:found_group.member_ids.length,
+                        is_member:true
+                    };
 
-        let write_suggestion =new suggestion();
-            write_suggestion.post_type="suggestion";
-            // write_suggestion.groupid=req.body.suggestion_group_id;
-            write_suggestion.access=1;//default :public access
-            write_suggestion.body=convertToSentencCase(req.body.suggestion_title);
-            write_suggestion.owner=owner_details;
-            write_suggestion.group_data=group_details;
+                    let write_suggestion =new suggestion();
+                    write_suggestion.post_type="suggestion";
+                    write_suggestion.access=1;//default :public access
+                    write_suggestion.body=convertToSentencCase(req.body.suggestion_title);
+                    write_suggestion.owner=owner_details;
+                    write_suggestion.group_data=group_details;
 
-        //store photo if it exists
-        if(req.files && req.files['suggestion_photo']){
-            console.log('filename '+req.files['suggestion_photo'][0].filename)
-            write_suggestion.pics='uploads/'+req.files['suggestion_photo'][0].filename;
-        }
-
-
-        write_suggestion.save(function(err1, saved_suggestion) {
-
-            if(err1){console.log(err1);res.json({success: false,msg:"suggestion submission failed"});
-
-            }else{
-                // var json = JSON.stringify(saved_suggestion, null, 2);
-                // io.emit('new_suggestions', json);
-                // res.json({success:true,msg:"suggestion submission succesful"});
-
-                var page_results=[];
-                page_results.push(saved_suggestion);
-
-            //     process_posts.processPagePosts(page_results,req.user,function(processed_response){
-            //     console.log('JSON PROCESSED RESPONSE');
-            //     var json = JSON.stringify(processed_response[0], null, 2);
-            //     console.log('emitting suggestions...')
-            //     io.emit('new_suggestions', json);
-                res.json({success:true,msg:"suggestion submission succesful"});
-
-            // });
+                    //store photo if it exists
+                    if(req.files && req.files['suggestion_photo']){
+                        console.log('filename '+req.files['suggestion_photo'][0].filename)
+                        write_suggestion.pics='uploads/'+req.files['suggestion_photo'][0].filename;
+                    }
 
 
-            }   
-        });
+                    write_suggestion.save(function(err1, saved_suggestion) {
 
-        });//end procssposts 
+                        if(err1){console.log(err1);res.json({success: false,msg:"suggestion submission failed"});
 
-        }
+                    }else{
+
+                        var page_results=[];
+                        page_results.push(saved_suggestion);
+                        res.json({success:true,msg:"suggestion submission succesful",suggestion_id:saved_suggestion.group_data.id});
+
+                    }   
+    });
+
+    }//end member_resp
+
+        });//end procssposts  isIncluded
+
+    }
 
        });//end findOne grup
 
@@ -2342,6 +2332,10 @@ app.post('/delete_postitem',function(req,res,next){
         section = riddle;
         break;
 
+        case'notice board':
+        section = notice;
+        break;
+
         case'suggestion':
         section = suggestion;
         break;
@@ -2362,7 +2356,7 @@ app.post('/delete_postitem',function(req,res,next){
         section = trend;
         break;
 
-        case'pab':
+        case'Post Books':
         section = pab;
         break;
 
@@ -2509,7 +2503,6 @@ app.post('/update_suggestion',update_suggestion_upload,function(req,res,next){
                 let updateGroup = result;
                 updateGroup.date_modified=new Date();
                 updateGroup.body=req.body.update_suggestion_title;
-                
 
                 //store photo if it exists
                 if(req.files && req.files['update_suggestion_photo']){
@@ -2524,9 +2517,6 @@ app.post('/update_suggestion',update_suggestion_upload,function(req,res,next){
                         console.log(err1)
                         res.json({success:false,msg:"Your update failed"});
                     }else if(res1){
-                        //var json = JSON.stringify(most_recent_response, null, 2);
-                        // console.log(json);
-                        // io.emit('responded', json);
                         res.json({success:true,msg:"Your update was successfull"});
                     }
 

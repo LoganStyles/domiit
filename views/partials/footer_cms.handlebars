@@ -2450,7 +2450,8 @@
                                     sub_button.val(old_button_val);
                                     sub_button.prop('disabled', false);
                                     $('#suggestion_modal').modal('hide');
-                                    //load group page
+                                    //load suggestion page
+                                    window.location.href="{{url}}/posts/showGroupPosts/"+response.suggestion_id;
                                 },3000);
                                 
                             }else{

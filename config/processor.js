@@ -1,6 +1,13 @@
 var mongoose = require('mongoose');
 var user = require('../models/user');
 var group = require('../models/group');
+var suggestion = require('../models/group_posts');
+var article = require('../models/article');
+var riddle = require('../models/riddle');
+var question = require('../models/question');
+var pab = require('../models/pab');
+var notice = require('../models/notice');
+var request_model = require('../models/request');
 var trend = require('../models/trend');
 var MongoClient = require('mongodb').MongoClient;
 var mongo_url = process.env.MONGODB_URI;
@@ -23,6 +30,45 @@ methods.getLatestGroupDetails=function (arr){
     var promise=group.findOne({_id:arr.id}).exec();
     return promise;
 };
+
+//save processed items
+methods.saveProcessedItems=function(item,type){
+    switch(type){
+        case 'suggestion':
+        section=suggestion;
+        break;
+
+        case 'question':
+        section=question;
+        break;
+
+        case 'article':
+        section=article;
+        break;
+
+        case 'request':
+        section=request_model;
+        break;
+
+        case 'notice board':
+        section=notice;
+        break;
+
+        case 'riddle':
+        section=riddle;
+        break;
+
+        case 'Post Books':
+        section=pab;
+        break;
+    }
+
+
+    var promise=section.updateOne({_id:item._id},{$set:item}).exec();
+    return promise;
+
+};
+
 
 /*get user details::similar to getLatestOwnerDetails, consider revising*/
 methods.getUserDetails=function (item){
@@ -253,7 +299,7 @@ methods.processPagePosts=function (items,ref_user,callback){
         }else{
             //check if post is already bookmarkd
             cur_item.bookmarked_post=this.checkBookmarks(ref_user,cur_item._id);
-            //check if post is already bookmarkd
+            //check if post is followed
             cur_item.followed_post=this.checkFollowed(ref_user,cur_item.owner.id);
             //check if post is already liked
             cur_item.liked_post=this.checkLikes(ref_user._id,cur_item.likes);
@@ -319,6 +365,8 @@ methods.processPagePosts=function (items,ref_user,callback){
 
             /* update owner info*/
             cur_item.owner=updated_obj;
+            //update views
+            cur_item.views++;
 
             //if group post, get group data     
             if(cur_item.post_type=="suggestion"){
@@ -330,13 +378,18 @@ methods.processPagePosts=function (items,ref_user,callback){
                         display_name=(grp_response.displayName)?(grp_response.displayName):('');
                         grp_id=(grp_response._id)?((grp_response._id).toString()):('');
                         member_count=grp_response.member_ids.length;
+                        methods.isIncluded(grp_response.member_ids,ref_user._id,function(is_member){
 
-                        cur_item.group_data={
-                            id:grp_id,
-                            displayName:display_name,
-                            displayPic:displayPic,
-                            member_len:member_count
-                        }
+                            cur_item.group_data={
+                                id:grp_id,
+                                displayName:display_name,
+                                displayPic:displayPic,
+                                member_len:member_count,
+                                is_member:is_member
+                            }
+
+                        });
+                        
                     }
 
                 }).catch(function(grp_err){
@@ -346,13 +399,22 @@ methods.processPagePosts=function (items,ref_user,callback){
 
             }
 
+            //save or update item here
+            saveitem=methods.saveProcessedItems(cur_item,cur_item.post_type);
+            saveitem.then(function(save_resp){
+                console.log(save_resp);
 
-            processed_items++;
+                processed_items++;
                 if(processed_items==array.length){//iteration has ended
                     console.log('processing finished')
-                    //console.log(items);
                     callback(items);
                 }
+
+
+            });
+            
+
+            
 
             }).catch(function(err3){
                 console.log("Error occured while fetching owner/story data");

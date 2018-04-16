@@ -94,7 +94,7 @@
 
                                          <div class="posts_partition_middle"><!--2nd partition-->
                                             <span>
-                                            {{#if ../isMember}}
+                                            {{#if group_data.is_member}}
                                             <img class="icon_size_50 " src="{{../url}}/images/filler.png">
                                             {{else}}
 
@@ -174,9 +174,7 @@
                                     </div>
                                     
                                         <div class="item-body"> 
-                                        <div class="post_item post_item_topic" style="text-align: center;text-transform: uppercase;">
-                                         {{sub_cat1}}
-                                        </div>
+                                        
                                             {{#if pics }}
                                                 <div style="margin-bottom: 3%;">                                                                  
                                                     <img class="img-responsive" src="{{../url}}/{{pics}}">
@@ -219,19 +217,23 @@
                    
                     <div class="task-footer" style="">
                         <div class="btn-arrow-link ">
-                                 <a class="btn btn-link post_likes">
+                                <a class="btn btn-link post_likes">
                                     <span class="grey_button">
-                                        <span class="social_value ">{{likes}}</span>
-                                        <i class="fa fa-heart-o"></i>&nbsp;Likes
+                                        <span class="social_value ">{{likes.length}}</span>
+                                        {{#if liked_post}}
+                                            <i class="fa fa-heart"></i>&nbsp;Likes
+                                            {{else}}
+                                            <i class="fa fa-heart-o"></i>&nbsp;Likes
+                                        {{/if}}
                                     </span>
                                 </a>
 
-                                <a class="btn btn-link ">
-                                    <span class="grey_button">
-                                        <span class="social_value">{{comments.length}}</span>
-                                        <img class="icon_size_20" src="{{../url}}/images/comments.png">&nbsp;Comments
-                                    </span>
-                                </a>
+                 <a class="btn btn-link " href="{{../url}}/posts/section/{{post_type}}/all_responses/{{_id}}">
+                <span class="grey_button">
+                <span class="social_value">{{comments.length}}</span>
+                <img class="icon_size_20" src="{{../url}}/images/comments.png">&nbsp;Comments
+                </span>
+                </a>
 
                                 <a class="btn btn-link post_shares">
                                     <span class="item-label grey_button">

@@ -1181,12 +1181,9 @@ router.get('/showGroupPosts/:id', isLoggedIn,function(req, res) {
 
             console.log('items '+items);
 
-            //chk if current viewer is a member
-            process_posts.isIncluded(req.user.group_ids,req.user._id,function(is_member){
-
             process_posts.processPagePosts(items,req.user,function(processed_response){
 
-                console.log('processed_response '+processed_response)
+                //console.log('processed_response '+processed_response)
 
                 res.render(page, {
                     url:process.env.URL_ROOT,
@@ -1199,7 +1196,6 @@ router.get('/showGroupPosts/:id', isLoggedIn,function(req, res) {
                     class_type:item,
                     page_response:item_response,
                     pending_friend_notifs:pending_friend_notifs,
-                    isMember:is_member,
                     
                     quest_status:question_status,
                     art_status:article_status,
@@ -1210,8 +1206,6 @@ router.get('/showGroupPosts/:id', isLoggedIn,function(req, res) {
                     home_status:home_status,
                     usergroup_status:usergroup_status
                 });
-
-            });
 
             });
 
@@ -1322,6 +1316,10 @@ router.get('/section/:item/:type/:id', isLoggedIn,function(req, res) {
                 case 'trend':
                 page_title='Trending';
                 break;
+
+                case 'suggestion':
+                page_title='Suggestions';
+                break;
             }
         }        
         break;
@@ -1374,6 +1372,13 @@ router.get('/section/:item/:type/:id', isLoggedIn,function(req, res) {
         notice_status=true;
         item_response='';
         page='notice';
+        break;
+
+        case'suggestion':
+        section = suggestion;        
+        item_response='';
+        usergroup_status=true;
+        //page='notice';
         break;
 
         case'trend':
@@ -1504,6 +1509,10 @@ router.post('/update_meta/:type/:id/:action/:subitem_id',function(req,res,next){
 
         case'notice_board':
         section = notice;
+        break;
+
+        case'suggestion':
+        section = suggestion;
         break;
     }
 
