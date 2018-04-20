@@ -61,6 +61,10 @@ methods.saveProcessedItems=function(item,type){
         case 'Post Books':
         section=pab;
         break;
+
+        case 'trending':
+        section=trend;
+        break;
     }
 
 

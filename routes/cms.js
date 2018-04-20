@@ -423,9 +423,9 @@ router.post('/post_about_subitem/:type',function(req,res,next){
     page_id=req.body.page_id, //
     page_type=req.body.page_type; //trend,news,question etc
 
-    // console.log('page_id '+page_id);
-    // console.log('mode '+mode);
-    // console.log('page_type '+page_type);
+    console.log('page_id '+page_id);
+    console.log('mode '+mode);
+    console.log('page_type '+page_type);
 
     if(mode=="insert"){
 
@@ -466,6 +466,7 @@ router.post('/post_about_subitem/:type',function(req,res,next){
             }
 
         }else if(type=="story"){
+            console.log('DESC '+req.body.page_description)
 
             switch(page_type){            
                 case 'trend':
@@ -475,7 +476,9 @@ router.post('/post_about_subitem/:type',function(req,res,next){
             obj.body = convertToSentencCase((req.body.page_title).trim());
             obj.post_type="trending";
             obj.description=convertToSentencCase((req.body.page_description).trim());
-            obj.excerpt = (obj.description).substr(0,100);
+            // obj.excerpt = (obj.description).substr(0,100);
+            obj.excerpt = req.body.page_description;
+            obj.brief = req.body.page_description;
             obj.category=req.body.page_category;
             obj.category_icon='images/trending.png';//sets default category icon
 

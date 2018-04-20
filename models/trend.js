@@ -6,6 +6,7 @@ var trendSchema = mongoose.Schema({
 	access:Number,
 	body:String,
 	excerpt:{type:String,default:''},
+	brief:String,
 	category:String,
 	category_icon:{type:String,default:''},
 	description:{type:String,default:''},

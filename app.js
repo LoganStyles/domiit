@@ -537,7 +537,8 @@ app.get('/dashboard',isLoggedIn,function(req,res){
             //console.log(err_trend);
         }
         if(item_trend){
-            //console.log(item_trend);
+            console.log('DATA TREND ITEM')
+            console.log(item_trend);
             res_item_trend=item_trend;
         }
 
@@ -587,8 +588,8 @@ app.get('/dashboard',isLoggedIn,function(req,res){
         if(page_results.length >0){
             //update other details needed by the post
             process_posts.processPagePosts(page_results,req.user,function(processed_response){
-                console.log('PROCESSED RESPONSE');
-                console.log(processed_response);
+                //console.log('PROCESSED RESPONSE');
+                //console.log(processed_response);
 
                 res.render(page,{
                     url:process.env.URL_ROOT,
@@ -614,7 +615,7 @@ app.get('/dashboard',isLoggedIn,function(req,res){
             });           
 
         }else{
-            console.log('PAGE RESULTS INITIALLY EMPTY')
+            //console.log('PAGE RESULTS INITIALLY EMPTY')
             
             res.render(page,{
                 url:process.env.URL_ROOT,
