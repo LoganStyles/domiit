@@ -1316,6 +1316,9 @@ router.get('/section/:item/:type/:id', isLoggedIn,function(req, res) {
                 case 'trend':
                 page_title='Trending';
                 break;
+                case 'trending':
+                page_title='Trending';
+                break;
 
                 case 'suggestion':
                 page_title='Suggestions';
@@ -1382,6 +1385,7 @@ router.get('/section/:item/:type/:id', isLoggedIn,function(req, res) {
         break;
 
         case'trend':
+        case'trending':
         section = trend;
         trend_status=true;
         item_response='';

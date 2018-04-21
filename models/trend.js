@@ -5,6 +5,8 @@ var trendSchema = mongoose.Schema({
 	post_type:String,
 	access:Number,
 	body:String,
+	shared_body:String,
+	shared_description:String,
 	excerpt:{type:String,default:''},
 	brief:String,
 	category:String,

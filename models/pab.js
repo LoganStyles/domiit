@@ -5,6 +5,8 @@ var pabSchema = mongoose.Schema({
 	post_type:String,
 	access:Number,
 	body:String,
+	shared_body:String,
+	shared_description:String,
 	category:{type:String,default:''},
 	author:{type:String,default:''},
 	amount:{type:Number,default:0},

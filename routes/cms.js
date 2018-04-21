@@ -414,8 +414,8 @@ router.post('/post_about_subitem/:type',function(req,res,next){
  var upload = multer({storage:Storage});
  router.post('/post_page/:type',upload.single('page_photo'),function(req,res,next){
 
-    // console.log('req.fil')
-    // console.log(req.file);
+    console.log('req.fil')
+    console.log(req.file);
 
     var type = req.params.type;//story or cat
     let obj,

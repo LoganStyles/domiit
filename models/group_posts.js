@@ -4,6 +4,8 @@ var groupPostsSchema = mongoose.Schema({
 	post_type:String,
 	access:Number,
 	body:String,
+	shared_body:String,
+	shared_description:String,
 	description:{type:String,default:''},
 	pics:{type:String,default:''},
 	date_created: { type: Date, default: Date.now },

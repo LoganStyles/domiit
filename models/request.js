@@ -6,6 +6,8 @@ var requestSchema = mongoose.Schema({
 	access:Number,
 	topic:String,
 	body:String,
+	shared_body:String,
+	shared_description:String,
 	destination_id:String,
 	destination_type:String,
 	// message:String,//display message prompt

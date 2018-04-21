@@ -6,6 +6,8 @@ var noticeSchema = mongoose.Schema({
 	access:Number,
 	topic:String,
 	body:String,
+	shared_body:String,
+	shared_description:String,
 	category:String,
 	sub_cat1:{type:String,default:''},
 	sub_cat2:{type:String,default:''},

@@ -464,13 +464,30 @@
                                                 </span>
                                                 </a>
 
-                                                <a class="btn btn-link post_shares">
-                                                    <span class="item-label grey_button">
-                                                        <span class="social_value">{{shares}}</span>
-                                                        <i class="fa fa-share-alt"></i>&nbsp;
-                                                        Shares                                
-                                                    </span>
-                                                </a>
+                                                <div class="btn-group dropup">
+                <button style="text-transform: capitalize; font-weight: 200;" type="button" class="btn btn-default">Shares</button>
+
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    
+                    <i class="fa fa-angle-up"></i>
+                </button>
+
+                <ul class="dropdown-menu" role="menu">
+                    <li>
+                        <a href="#" {{#if pics.length }} {{#if trend_status}} data-image="{{../url}}/{{pics}}" {{else}} data-image="{{../url}}/{{pics.[0]}}" {{/if}}{{/if}} data-social="facebook" data-title="{{shared_body}}" data-description="{{shared_description}}" data-url="{{../url}}/posts/section/{{post_type}}/single/{{_id}}"><i class="fa fa-facebook-official"></i> Share on Facebook <span data-counter="facebook"></span> </a>
+                    </li>
+                    <li>
+                        <a href="#" {{#if pics.length }} {{#if trend_status}} data-image="{{../url}}/{{pics}}" {{else}} data-image="{{../url}}/{{pics.[0]}}" {{/if}}{{/if}} data-social="twitter" data-title="{{shared_body}}" data-description="{{shared_description}}" data-url="{{../url}}/posts/section/{{post_type}}/single/{{_id}}"><i class="fa fa-twitter-square"></i> Share on Twitter <span data-counter="twitter"></span> </a>
+                    </li>
+                    <li>
+                        <a href="#" {{#if pics.length }} {{#if trend_status}} data-image="{{../url}}/{{pics}}" {{else}} data-image="{{../url}}/{{pics.[0]}}" {{/if}}{{/if}} data-social="linkedin" data-title="{{shared_body}}" data-description="{{shared_description}}" data-url="{{../url}}/posts/section/{{post_type}}/single/{{_id}}"> <i class="fa fa-linkedin-square"></i> Share on LinkedIn <span data-counter="linkedin"></span> </a>
+                    </li>
+                    <li>
+                        <a href="#" {{#if pics.length }} {{#if trend_status}} data-image="{{../url}}/{{pics}}" {{else}} data-image="{{../url}}/{{pics.[0]}}" {{/if}}{{/if}} data-social="googleplus" data-title="{{shared_body}}" data-description="{{shared_description}}" data-url="{{../url}}/posts/section/{{post_type}}/single/{{_id}}"><i class="fa fa-google-plus-square"></i> Share on Google <span data-counter="googleplus"></span> </a>
+                    </li>
+                    
+                </ul>
+            </div>
 
                                             </div>
 

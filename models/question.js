@@ -5,6 +5,8 @@ var questionSchema = mongoose.Schema({
 	post_type:String,
 	access:Number,
 	body:String,
+	shared_body:String,
+	shared_description:String,
 	category:String,
 	sub_cat1:{type:String,default:''},
 	sub_cat2:{type:String,default:''},

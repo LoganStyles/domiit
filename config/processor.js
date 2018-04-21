@@ -12,6 +12,7 @@ var trend = require('../models/trend');
 var MongoClient = require('mongodb').MongoClient;
 var mongo_url = process.env.MONGODB_URI;
 
+
 var methods={};
 
 /*get owner details*/
@@ -63,6 +64,7 @@ methods.saveProcessedItems=function(item,type){
         break;
 
         case 'trending':
+        case 'trend':
         section=trend;
         break;
     }
@@ -95,8 +97,8 @@ var len=0;
 
 MongoClient.connect(mongo_url, function(err, db) {
   if (err) throw err;
-  var dbo = db.db("heroku_sdf7bh9m");
-  // var dbo = db.db("doomiit");
+  // var dbo = db.db("heroku_sdf7bh9m");
+  var dbo = db.db("doomiit");
   dbo.collection("FriendshipCollection").find({requested:user._id}).toArray(function(err, result) {
     if (err) throw err;
     //console.log(result);

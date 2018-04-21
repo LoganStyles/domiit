@@ -46,6 +46,7 @@ var async = require('async');
 var multer = require('multer');
 var mime = require('mime-lib');
 var notifs = require('notifications');
+var striptags = require('striptags');
 
 var Storage =multer.diskStorage({
     destination:function(req,file,cb){
@@ -950,6 +951,9 @@ app.post('/ask_question',upload.single('question_photo'),function(req,res,next){
                 ask_quest.sub_cat2=req.body.question_sub2;
                 ask_quest.description=req.body.question_info;
                 ask_quest.owner=owner_details;
+                ask_quest.shared_body=striptags(req.body.question_title);
+                ask_quest.shared_description=striptags(req.body.question_info);
+                // ask_quest.shared_description=striptags(req.body.question_info,[],'\n');
 
             if (req.file && req.file.filename != null) {
                 ask_quest.pics.push('uploads/'+req.file.filename);
@@ -1016,6 +1020,8 @@ app.post('/ask_article',article_upload,function(req,res,next){
             write_art.sub_cat2=req.body.article_sub2;
             write_art.description=req.body.article_info;
             write_art.owner=owner_details;
+            write_art.shared_body=striptags(req.body.article_title);
+            write_art.shared_description=striptags(req.body.article_info);
 
         //store attachment if it exists
         if(req.files && req.files['article_attachment']){
@@ -1092,6 +1098,7 @@ app.post('/make_request',request_upload,function(req,res,next){
                 write_req.description=convertToSentencCase(req.body.request_info_article);
             }else if(request_type=="riddle"){
                 write_req.body=convertToSentencCase(req.body.request_title_riddle);
+                write_req.description=convertToSentencCase(req.body.request_title_riddle);
             }
             
             write_req.category = req.body.request_category;
@@ -1100,6 +1107,8 @@ app.post('/make_request',request_upload,function(req,res,next){
             write_req.sub_cat2=req.body.request_sub2;
             write_req.destination_id=req.body.request_users;
             write_req.destination_type=req.body.request_choice;
+            write_req.shared_body=striptags(req.body.request_title);
+            write_req.shared_description=striptags(write_req.description);
             
             write_req.owner=owner_details;
 
@@ -1212,6 +1221,7 @@ app.post('/make_new_request',request_upload,function(req,res,next){
                         write_req.description=(req.body.new_request_info_article);
                     }else if(request_type=="riddle"){
                         write_req.body=(req.body.new_request_title_riddle);
+                        write_req.description=(req.body.new_request_title_riddle);
                     }
 
                     write_req.destination_id=req.body.new_request_users;
@@ -1222,6 +1232,8 @@ app.post('/make_new_request',request_upload,function(req,res,next){
                     write_req.pics = section_data.pics;
                     write_req.date_created = new Date();;
                     write_req.sub_cat2 = section_data.sub_cat2;
+                    write_req.shared_body=striptags(write_req.body);
+                    write_req.shared_description=striptags(write_req.description);
 
                     write_req.owner=owner_details;
                     //set the appropriate new_request type
@@ -1286,6 +1298,8 @@ app.post('/ask_notice',notice_upload,function(req,res,next){
             write_notice.sub_cat1=req.body.notice_main_heading;
             write_notice.sub_cat2=req.body.notice_type;
             write_notice.owner=owner_details;
+            write_notice.shared_body=striptags(req.body.notice_title);
+            write_notice.shared_description=striptags(req.body.notice_title);
 
         //store photo if it exists
         if(req.files && req.files['notice_photo']){
@@ -1371,6 +1385,8 @@ app.post('/post_suggestion',suggestion_upload,function(req,res,next){
                     write_suggestion.body=convertToSentencCase(req.body.suggestion_title);
                     write_suggestion.owner=owner_details;
                     write_suggestion.group_data=group_details;
+                    write_suggestion.shared_body=striptags(req.body.suggestion_title);
+                    write_suggestion.shared_description=striptags(req.body.suggestion_title);
 
                     //store photo if it exists
                     if(req.files && req.files['suggestion_photo']){
@@ -1432,6 +1448,8 @@ app.post('/ask_riddle',upload.single('riddle_photo'),function(req,res,next){
             ask_riddle.sub_cat1=req.body.riddle_sub1;
             ask_riddle.sub_cat2=req.body.riddle_sub2;
             ask_riddle.owner=owner_details;
+            ask_riddle.shared_body=striptags(req.body.riddle_title);
+            ask_riddle.shared_description=striptags(req.body.riddle_title);
 
             if (req.file && req.file.filename != null) {
                 ask_riddle.pics.push('uploads/'+req.file.filename);
@@ -1493,6 +1511,9 @@ app.post('/ask_pab',upload.single('pab_photo'),function(req,res,next){
             ask_pab.synopsis=req.body.pab_synopsis;
             ask_pab.about_author=req.body.pab_about_author;
             ask_pab.owner=owner_details;
+            ask_pab.shared_body=striptags(req.body.pab_title);
+            ask_pab.shared_description=striptags(req.body.pab_title);
+
 
             if (req.file && req.file.filename != null) {
                 ask_pab.pics.push('uploads/'+req.file.filename);
@@ -2434,11 +2455,15 @@ app.post('/update_item',section_update_upload,function(req,res,next){
                     case 'article':
                     updateSection.topic=convertToSentencCase(req.body.section_update_title);
                     updateSection.body=convertToSentencCase(req.body.section_update_info);
+                    updateSection.description=convertToSentencCase(req.body.section_update_title);
                     break;
                     case 'riddle':
                     updateSection.body=convertToSentencCase(req.body.section_update_title);
+                    updateSection.description=convertToSentencCase(req.body.section_update_title);
                     break;
                 }
+                updateSection.shared_body=striptags(req.body.section_update_title);
+                updateSection.shared_description=striptags(req.body.section_update_title);
                 
                 updateSection.owner=owner_details;
                 
@@ -2504,6 +2529,8 @@ app.post('/update_suggestion',update_suggestion_upload,function(req,res,next){
                 let updateGroup = result;
                 updateGroup.date_modified=new Date();
                 updateGroup.body=req.body.update_suggestion_title;
+                updateGroup.shared_body=striptags(req.body.update_suggestion_title);
+                updateGroup.shared_description=striptags(req.body.update_suggestion_title);
 
                 //store photo if it exists
                 if(req.files && req.files['update_suggestion_photo']){
@@ -2573,8 +2600,11 @@ app.post('/update_request',request_update_upload,function(req,res,next){
                     break;
                     case 'riddle':
                     updateSection.body=convertToSentencCase(req.body.request_update_title_riddle);
+                    updateSection.description=convertToSentencCase(req.body.request_update_title_riddle);
                     break;
                 }
+                updateSection.shared_body=striptags(req.body.request_update_title);
+                updateSection.shared_description=striptags(updateSection.description);
                 
                 updateSection.owner=owner_details;
                 
@@ -2659,6 +2689,8 @@ app.post('/update_pab_item',section_update_upload,function(req,res,next){
                 updateSection.url=req.body.section_pab_url;
                 updateSection.synopsis=req.body.section_pab_synopsis;
                 updateSection.about_author=req.body.section_pab_about_author;
+                updateSection.shared_body=striptags(req.body.section_pab_title);
+                updateSection.shared_description=striptags(updateSection.body);
                 
                 updateSection.owner=owner_details;
 
