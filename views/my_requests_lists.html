@@ -517,11 +517,18 @@
             </span>
             </a>
 
-            <a class="btn btn-link ">
+            {{#if pab_status OR trend_status}}
+
+            <a class="btn btn-link" href="{{../url}}/posts/getComments/{{post_type}}/{{_id}}/0">
+
+            {{else}}
+
+            <a class="btn btn-link " href="{{../url}}/posts/section/{{post_type}}/all_responses/{{_id}}">
+
+            {{/if}}
             <span class="grey_button">
                 {{#if question_status}}
                  <span class="social_value">{{answers_len}}</span>
-                <!-- <i class="fa fa-comment-o"></i>&nbsp; -->
                 <img class="icon_size_20" src="{{../url}}/images/comments.png">&nbsp;
                 Answers
                 {{/if}}
@@ -545,7 +552,6 @@
                 {{#if riddle_status}}
                 <span class="social_value">{{answers_len}}</span>
                 <img class="icon_size_20" src="{{../url}}/images/comments.png">
-                <!-- <img alt="" class="icon_size_15" src="{{../url}}/images/solution.png">&nbsp; -->
                 Solution
                 {{/if}}
             </span>
@@ -605,7 +611,7 @@
                         </span>
                     </a>
 
-                    <a class="btn btn-link ">
+                    <a class="btn btn-link" href="{{../url}}/posts/getComments/{{post_type}}/{{_id}}/0">
                         <span class="grey_button">
                             <span class="social_value">{{comments.length}}</span>
                             <img class="icon_size_20" src="{{../url}}/images/comments.png">&nbsp;Comments
@@ -637,7 +643,7 @@
                         </span>
                     </a>
 
-                    <a class="btn btn-link ">
+                    <a class="btn btn-link" href="{{../url}}/posts/getComments/{{post_type}}/{{_id}}/0">
                         <span class="grey_button">
                             <span class="social_value">{{comments.length}}</span>
                             <img class="icon_size_20" src="{{../url}}/images/comments.png">&nbsp;Comments
@@ -707,7 +713,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="cont-col2">
-                                                    <div class="desc"> {{excerpt}} ...(more) </div>
+                                                    <div class="desc"> {{brief}} ...(more) </div>
                                                 </div>
                                             </div>
                                         </div>

@@ -205,13 +205,6 @@
                                                     <a href="javascript:;">
                                                         <i class="fa fa-ban"></i> Request for solution </a>
                                                 </li>  
-                                                {{/if}} 
-
-                                                {{#if notice_status}}
-                                                <li>
-                                                    <a href="javascript:;">
-                                                        <i class="fa fa-share-alt"></i> Share</a>
-                                                </li>  
                                                 {{/if}}                            
                                                             </ul>
                                                         </div>                                           
@@ -472,14 +465,7 @@
                                                     <a href="javascript:;">
                                                         <i class="fa fa-ban"></i> Request for solution </a>
                                                 </li>  
-                                                {{/if}} 
-
-                                                {{#if notice_status}}
-                                                <li>
-                                                    <a href="javascript:;">
-                                                        <i class="fa fa-ban"></i> Share</a>
-                                                </li>  
-                                                {{/if}}                              
+                                                {{/if}}                               
                                                 </ul>
                                             </div>                                           
                                     </div>
@@ -557,7 +543,7 @@
                             </span>
                         </a>
 
-                        <a class="btn btn-link ">
+                        <a class="btn btn-link " href="{{../../url}}/posts/getComments/{{../post_type}}/all_responses/{{../_id}}">
                             <span class="grey_button">
                                 <span class="social_value">{{comments.length}}</span>
                                 <img class="icon_size_20" src="{{../../url}}/images/comments.png">&nbsp;Comments
@@ -576,8 +562,7 @@
                 <input type="hidden" id="new_comment_section" value="{{../../page_type}}">
                 <input type="hidden" id="new_comment_section_id" value="{{../_id}}">
                 <input type="hidden" id="new_comment_response_id" value="{{_id}}">
-                <a class=" sbold comment_button">
-                <i class="fa fa-comment"></i>&nbsp;Write a comment</a>
+                <a class=" sbold comment_button">Write a comment</a>
             </div>
 
 

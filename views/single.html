@@ -166,13 +166,7 @@
                                                         <i class="fa fa-ban"></i> Request for solution </a>
                                                 </li>  
                                                 {{/if}} 
-
-                                                {{#if notice_status}}
-                                                <li>
-                                                    <a href="javascript:;">
-                                                        <i class="fa fa-share-alt"></i> Share</a>
-                                                </li>  
-                                                {{/if}}                              
+                                                                          
                                                             </ul>
                                                         </div>                                           
                                                 </div>
@@ -286,7 +280,7 @@
                             </span>
                         </a>
 
-                        <a class="btn btn-link">
+                        <a class="btn btn-link" href="{{../../url}}/posts/getComments/{{../post_type}}/{{../_id}}/0">
                             <span class="grey_button">
                                 <span class="social_value">{{comments.length}}</span>
                                 <img class="icon_size_20" src="{{../../url}}/images/comments.png">&nbsp;Comments

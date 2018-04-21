@@ -1014,17 +1014,16 @@ router.get('/getComments/:section/:section_id/:response_id',isLoggedIn,function(
             break;
 
             case'notice board':
+            case'notice':
             section = notice;
             break;
 
             case'trend':
+            case'trending':
             section = trend;
             break;
 
             case'pab':
-            section = pab;
-            break;
-
             case'Post Books':
             section = pab;
             break;
@@ -1250,6 +1249,10 @@ router.get('/section/:item/:type/:id', isLoggedIn,function(req, res) {
     var item = req.params.item;
     var type = req.params.type;
     var id = req.params.id;
+    console.log('item '+item);
+    console.log('type '+type);
+    console.log('id '+id);
+
     //set status defaults
     let question_status=false,
         home_status=false,
@@ -1311,11 +1314,10 @@ router.get('/section/:item/:type/:id', isLoggedIn,function(req, res) {
                 page_title='Post Books';
                 break;
                 case 'notice':
+                case 'notice board':
                 page_title='Notices';
                 break;
                 case 'trend':
-                page_title='Trending';
-                break;
                 case 'trending':
                 page_title='Trending';
                 break;
@@ -1370,7 +1372,8 @@ router.get('/section/:item/:type/:id', isLoggedIn,function(req, res) {
         page_type='Post Books';
         break;
 
-        case'notice':
+        case 'notice':
+        case 'notice board':
         section = notice;
         notice_status=true;
         item_response='';

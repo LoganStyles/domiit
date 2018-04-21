@@ -229,14 +229,7 @@
                                                     <a href="javascript:;">
                                                         <i class="fa fa-share-square-o"></i> Request for solution </a>
                                                 </li>  
-                                                {{/if}} 
-
-                                                {{#if notice_status}}
-                                                <li>
-                                                    <a href="javascript:;">
-                                                        <i class="fa fa-share-alt"></i> Share</a>
-                                                </li>  
-                                                {{/if}}                          
+                                                {{/if}}                           
                                             </ul>
                                         </div>                                           
                                 </div>
@@ -518,8 +511,17 @@
                 {{/if}}
             </span>
             </a>
+            {{#if trend_status}}
+
+            <a class="btn btn-link" href="{{../url}}/posts/getComments/{{post_type}}/{{_id}}/0">
+
+            {{else}}
 
             <a class="btn btn-link " href="{{../url}}/posts/section/{{post_type}}/all_responses/{{_id}}">
+
+            {{/if}}
+
+            
             <span class="grey_button">
                 {{#if question_status}}
                  <span class="social_value">{{answers_len}}</span>

@@ -126,11 +126,7 @@
                                                                 <li class="delete_section_item">
                                                                     <a href="#">
                                                                         <i class="fa fa-trash-o"></i> Delete </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="javascript:;">
-                                                                        <i class="fa fa-share-alt"></i> Share</a>
-                                                                </li>                           
+                                                                </li>                          
                                                             </ul>
                                                         </div>                                           
                                                 </div>
@@ -227,8 +223,8 @@
                                         {{/if}}
                                     </span>
                                 </a>
-
-                 <a class="btn btn-link " href="{{../url}}/posts/section/{{post_type}}/all_responses/{{_id}}">
+                                
+                 <a class="btn btn-link" href="{{../url}}/posts/getComments/{{post_type}}/{{_id}}/0">
                 <span class="grey_button">
                 <span class="social_value">{{comments.length}}</span>
                 <img class="icon_size_20" src="{{../url}}/images/comments.png">&nbsp;Comments

@@ -207,13 +207,6 @@
                                                     <a href="javascript:;">
                                                         <i class="fa fa-share-square-o"></i> Request for solution </a>
                                                 </li>  
-                                                {{/if}} 
-
-                                                {{#if notice_status}}
-                                                <li>
-                                                    <a href="javascript:;">
-                                                        <i class="fa fa-share-alt"></i> Share</a>
-                                                </li>  
                                                 {{/if}}                             
                                                 </ul>
                                                         </div>                                           
@@ -458,7 +451,6 @@
                                                     {{#if riddle_status}}
                                                     <span class="social_value">{{answers_len}}</span>
                                                     <img class="icon_size_20" src="{{../url}}/images/comments.png">
-                                                    <!-- <img alt="" class="icon_size_15" src="{{../url}}/images/solution.png">&nbsp; -->
                                                     Solution
                                                     {{/if}}
                                                 </span>
@@ -513,8 +505,7 @@
                 <input type="hidden" id="new_comment_section" value="pab">
                 <input type="hidden" id="new_comment_section_id" value="{{_id}}">
                 <input type="hidden" id="new_comment_response_id" value="">
-                <a class=" sbold comment_button">
-                <img class="icon_size_20" src="{{../url}}/images/comments.png">&nbsp;Write a comment</a>
+                <a class=" sbold comment_button">Write a comment</a>
             </div>
             {{else}}
 
