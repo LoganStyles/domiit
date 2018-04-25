@@ -89,9 +89,17 @@
             $(document).ready(function(){
 
             $('.summer_details').summernote({
-                tabsize:2,
-                height:120
-            });
+                    tabsize: 2,
+                    height: 120,
+                    toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['height', ['height']]
+                  ]
+                });
 
           var date_input=$('input[name="profile_bio1_dob"]'); 
           var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";

@@ -11,9 +11,6 @@ var session = require('client-sessions');
 var path = require('path');
 var request = require('request');
 var fs = require('fs');
-// var froalaEditor = require('froala-editor');
-//var FroalaEditor = require('wysiwyg-editor-node-sdk/lib/froalaEditor.js');
-
 var exphbs = require('express-handlebars');
 var Handlebars = require('handlebars');
 var MomentHandler =require("handlebars.moment");
@@ -234,6 +231,25 @@ function onlyUnique(value, index, self) {
 /*deletes all occurances of an item from an array*/
 function remove(array,element){
     return array.filter(e =>e !== element)
+}
+
+//delete files
+function deleteFile(filename){
+    var path='./public/'+filename;
+    fs.stat(path,function(err,stats){
+        if(err)console.log(err);
+
+        if(stats){
+           // console.log('file stats')
+        // console.log(stats)
+
+        fs.unlink(path,function(err2){
+            if(err2)console.log(err2);
+            console.log('File deleted successfully');
+        }) 
+    }
+});
+
 }
 
 
@@ -532,7 +548,7 @@ app.get('/dashboard',isLoggedIn,function(req,res){
 
     //get trending stories for sidebar headlines::nb::this operation takes a while to complete,
     //try nesting or callbacks to prevent
-    trend.find().sort({date_created:1}).exec(function(err_trend,item_trend){
+    trend.find().sort({date_created:1}).limit(5).exec(function(err_trend,item_trend){
 
         if(err_trend){
             //console.log(err_trend);
@@ -924,8 +940,8 @@ var upload = multer({storage:Storage});
 /*posts*/
 /*process an 'ask a question' post,save & update UI immediately*/
 app.post('/ask_question',upload.single('question_photo'),function(req,res,next){
-    console.log('req.fil')
-    console.log(req.file);
+    //console.log('req.fil')
+    //console.log(req.file);
 
     if( (req.user.displayPic).length ===0 || req.user.displayName =="User" || req.user.displayName ==""){
         console.log("user has not updated profile")
@@ -2143,7 +2159,7 @@ app.post('/response_item',upload.single('section_response_photo'),function(req,r
             break;
         }
 
-        section.findOne({_id:section_id},function(error,result){//find the question that was responsed
+        section.findOne({_id:section_id},function(error,result){//find the section that was responsed
             if(result){
                 let updateSection = result;
                 updateSection.answers_len=updateSection.answers_len +1;//incr the no. of ans
@@ -2167,21 +2183,49 @@ app.post('/response_item',upload.single('section_response_photo'),function(req,r
                 let temp=updateSection.answers[updateSection.answers.length - 1];
 
                 let most_recent_response={
-                    _id:temp._id,
-                    body : temp.body,
-                    responderDisplayName:temp.responderDisplayName,
-                    responder_id:temp.responder_id,
-                    responderDisplayPic:temp.responderDisplayPic,
-                    responderStatus:temp.responderStatus,
-                    comments:temp.comments,
-                    upvotes:temp.upvotes,
-                    downvotes:temp.downvotes,
-                    views:temp.views,
-                    post_date:temp.post_date,
-                    date_created:temp.date_created,
-                    date_modified:temp.date_modified,
-                    item_id:section_id,
-                    pics:temp.pics
+                    section_items:updateSection,
+                    section_resp:temp
+                    // _id:temp._id,
+                    // body : updateSection.body,
+                    // ans_body : temp.body,
+                    // responderDisplayName:temp.responderDisplayName,
+                    // responder_id:temp.responder_id,
+                    // responderDisplayPic:temp.responderDisplayPic,
+                    // responderStatus:temp.responderStatus,
+                    // comments:temp.comments,
+                    // upvotes:temp.upvotes,
+                    // downvotes:temp.downvotes,
+                    // views:updateSection.views,
+                    // ans_views:temp.views,
+                    // post_date:updateSection.post_date,
+                    // ans_post_date:temp.post_date,
+                    // date_created:updateSection.date_created,
+                    // date_modified:updateSection.date_modified,
+                    // ans_date_created:temp.date_created,
+                    // ans_date_modified:temp.date_modified,
+                    // item_id:section_id,
+                    // pics:updateSection.pics,
+                    // ans_pics:temp.pics,
+                    // post_type:updateSection.post_type,
+                    // owner:updateSection.owner,
+                    // notice_status:updateSection.notice_status,
+                    // question_status:updateSection.question_status,
+                    // art_status:updateSection.art_status,
+                    // riddle_status:updateSection.riddle_status,
+                    // category:updateSection.category,
+                    // sub_cat1:updateSection.sub_cat1,
+                    // sub_cat2:updateSection.sub_cat2,
+                    // trend_status:updateSection.trend_status,
+                    // friend_status:updateSection.friend_status,
+                    // followed_post:updateSection.followed_post,
+                    // bookmarked_post:updateSection.bookmarked_post,
+                    // description:updateSection.description,
+                    // likes:updateSection.likes,
+                    // liked_post:updateSection.liked_post,
+                    // answers_len:updateSection.answers_len,
+                    // shared_body:updateSection.shared_body,
+                    // shared_description:updateSection.shared_description,
+                    //page_response:updateSection.page_response
 
                 }
 
@@ -2195,7 +2239,7 @@ app.post('/response_item',upload.single('section_response_photo'),function(req,r
                         var json = JSON.stringify(most_recent_response, null, 2);
                         // console.log(json);
                         if(section_type !='request'){//for non-requests
-                            io.emit('responded', json);
+                            io.emit('responded_post', json);
                         }else{
                             //real time requests responses
                         }
@@ -2355,6 +2399,7 @@ app.post('/delete_postitem',function(req,res,next){
         break;
 
         case'notice board':
+        case'notice':
         section = notice;
         break;
 
@@ -2375,10 +2420,12 @@ app.post('/delete_postitem',function(req,res,next){
         break;
 
         case'trend':
+        case'trending':
         section = trend;
         break;
 
         case'Post Books':
+        case'pab':
         section = pab;
         break;
 
@@ -2391,6 +2438,26 @@ app.post('/delete_postitem',function(req,res,next){
         break;
     }
 
+    //find & delete files if exists
+    section.findOne({_id:section_id},function(error,results){
+        if(error)console.log(error)
+
+        if(results && results.pics && results.pics[0] != null){
+            // console.log(results);
+            var filename=results.pics[0];
+            //console.log('found file ref to delete '+results.pics[0] );
+            deleteFile(filename);
+        }
+
+        if(results && results.attachment && results.attachment[0] != null){
+            var filename=results.attachment[0];
+            //console.log('found attachment ref to delete '+results.attachment[0] );
+            deleteFile(filename);
+        }
+
+    });
+
+    //find post & delete
     section.findByIdAndRemove(section_id,function(err1,res1){
         if(err1){
             // console.log(err1)
@@ -2468,16 +2535,30 @@ app.post('/update_item',section_update_upload,function(req,res,next){
                 updateSection.owner=owner_details;
                 
 
-                //store attachment if it exists
+                //update attachment if it exists::delete prev
                 if(req.files && req.files['section_update_attachment']){
+                    //delete prev attachment
+                    if(updateSection.attachment && updateSection.attachment[0] != null){
+                        var filename=updateSection.attachment[0];
+                        console.log('found attachment ref to update '+updateSection.attachment[0] );
+                        deleteFile(filename);
+                    }
+
                     console.log('filename '+req.files['section_update_attachment'][0].filename)
-                    updateSection.attachment.push('uploads/'+req.files['section_update_attachment'][0].filename);
+                    updateSection.attachment[0]='uploads/'+req.files['section_update_attachment'][0].filename;
                 }
 
-                //store photo if it exists
+                //store photo if it exists::delete prev
                 if(req.files && req.files['section_update_photo']){
+                    //delete prev photo
+                    if(updateSection.pics && updateSection.pics[0] != null){
+                        var filename=updateSection.pics[0];
+                        console.log('found file ref to update '+updateSection.pics[0] );
+                        deleteFile(filename);
+                    }
+
                     console.log('filename '+req.files['section_update_photo'][0].filename)
-                    updateSection.pics.push('uploads/'+req.files['section_update_photo'][0].filename);
+                    updateSection.pics[0]='uploads/'+req.files['section_update_photo'][0].filename;
                 }                          
                 
                 let most_recent_response={

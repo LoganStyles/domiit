@@ -117,7 +117,7 @@ router.get('/get_bookmarked',isLoggedIn,function(req,res){
     var req_count=0;
 
         //get trending stories for sidebar headlines
-        trend.find().sort({date_created:1}).exec(function(err_trend,item_trend){
+        trend.find().sort({date_created:1}).limit(5).exec(function(err_trend,item_trend){
 
             if(err_trend){
                 //console.log(err_trend);
@@ -218,7 +218,7 @@ router.get('/getGroups',isLoggedIn,function(req,res){
 
     //get trending stories for sidebar headlines::nb::this operation takes a while to complete,
     //try nesting or callbacks to prevent..done
-    trend.find().sort({date_created:1}).exec(function(err_trend,item_trend){
+    trend.find().sort({date_created:1}).limit(5).exec(function(err_trend,item_trend){
 
         if(err_trend){
             //console.log(err_trend);
@@ -342,7 +342,7 @@ router.get('/getMembers/:id',isLoggedIn,function(req,res){
 
     //get trending stories for sidebar headlines::nb::this operation takes a while to complete,
     //try nesting or callbacks to prevent..done
-    trend.find().sort({date_created:1}).exec(function(err_trend,item_trend){
+    trend.find().sort({date_created:1}).limit(5).exec(function(err_trend,item_trend){
 
         if(err_trend){
             //console.log(err_trend);
@@ -564,7 +564,7 @@ router.get('/getRequests',isLoggedIn,function(req,res){
 
     //get trending stories for sidebar headlines::nb::this operation takes a while to complete,
     //try nesting or callbacks to prevent
-    trend.find().sort({date_created:1}).exec(function(err_trend,item_trend){
+    trend.find().sort({date_created:1}).limit(5).exec(function(err_trend,item_trend){
 
         if(err_trend){
             //console.log(err_trend);
@@ -697,7 +697,7 @@ router.get('/getOwnerRequestLists',isLoggedIn,function(req,res){
 
     //get list of trending stories for sidebar headlines::nb::this operation takes a while to complete,
     //try nesting or callbacks to prevent
-    trend.find().sort({date_created:1}).exec(function(err_trend,item_trend){
+    trend.find().sort({date_created:1}).limit(5).exec(function(err_trend,item_trend){
 
         if(err_trend){
             //console.log(err_trend);
@@ -828,7 +828,7 @@ router.get('/getDestinationRequestLists',isLoggedIn,function(req,res){
 
     //get list of trending stories for sidebar headlines::nb::this operation takes a while to complete,
     //try nesting or callbacks to prevent
-    trend.find().sort({date_created:1}).exec(function(err_trend,item_trend){
+    trend.find().sort({date_created:1}).limit(5).exec(function(err_trend,item_trend){
 
         if(err_trend){
             //console.log(err_trend);
@@ -967,7 +967,7 @@ router.get('/getComments/:section/:section_id/:response_id',isLoggedIn,function(
 
     //get list of trending stories for sidebar headlines::nb::this operation takes a while to complete,
     //try nesting or callbacks to prevent
-    trend.find().sort({date_created:1}).exec(function(err_trend,item_trend){
+    trend.find().sort({date_created:1}).limit(5).exec(function(err_trend,item_trend){
 
         if(err_trend){
             //console.log(err_trend);
