@@ -66,13 +66,14 @@
              <input type="hidden" id="post_owner_id" value="{{owner.id}}">
 
 
-                    <div class="portlet-title" {{#if notice_status}} style="background-color:  #3598dc;" {{/if}}>
+                    
+                    <div class="portlet-title" {{#if notice_status}} style="background-color:#5F84CF;" {{/if}}>
                     <div class="caption caption-md">
                         
                         <span {{#if notice_status}} style="color:  #fff;" {{/if}} class="caption-subject  bold post_box_name">{{../page_type}}</span>
 
                         {{#if category}}
-                        <span class="caption-helper post_category grey_cats left_border" {{#if notice_status}} style="color: #fff !important;" {{/if}} >{{category}}</span>
+                        <span class="caption-helper post_category grey_cats left_border" {{#if notice_status}} style="color: #fff !important;" {{/if}} >ggh{{category}}</span>
                         {{/if}}
 
                         {{#unless notice_status}}
@@ -367,6 +368,16 @@
                                                 <div class="post_item post_item_topic">
                                                     {{{topic}}}
                                                 </div>
+                                            {{/if}}
+
+                                            {{#if notice_status}}
+
+                                                {{#if sub_cat2}}
+                                                    <div style="display: none" class="post_item sub_cat2">
+                                                        {{sub_cat2}}
+                                                    </div>
+                                                {{/if}}
+
                                             {{/if}}
 
                                             {{#if pics.length }}

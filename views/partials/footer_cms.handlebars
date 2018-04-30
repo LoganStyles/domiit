@@ -1042,7 +1042,7 @@
             var post_sub_cat1=parent.find('.post_sub_cat1').text();
             var post_sub_cat2=parent.find('.post_sub_cat2').text();
 
-            if(section !="Post Books"){ 
+            if(section !="Post Books" && section !="notice board" && section !="notice"){ 
                 $("#section_update_modal #section_update_form").trigger('reset');           
                 var post_item_topic=parent.find('.item-body .post_item_topic').html();
                 var post_item_body=parent.find('.item-body .post_item_body').html();
@@ -1122,7 +1122,7 @@
                 }
             });
 
-            }else{
+            }else if(section =="Post Books"){
             $("#section_pab_modal #section_pab_form").trigger('reset');
             var pab_title=parent.find('.item-body .pab_ititle').text();
             console.log('pab_title '+pab_title);
@@ -1205,6 +1205,28 @@
                 }
             });
 
+
+            }else if(section =="notice board" || section =="notice"){
+
+            $("#notice_update_modal #notice_update_form").trigger('reset');           
+                var post_sub_cat1=parent.find('.item-body .post_item_topic').html();
+                var post_sub_cat2=parent.find('.item-body .sub_cat2').html();
+                var post_item_body=parent.find('.item-body .post_item_body').html();
+                console.log('post_sub_cat1 '+post_sub_cat1)
+                console.log('post_sub_cat2 '+post_sub_cat2)
+                console.log('post_item_body '+post_item_body)
+                console.log('post_category '+post_category);
+
+                //append data to modal
+                $('#notice_update_modal').modal({backdrop: false, keyboard: false});
+
+                //update other fields
+    $('#notice_update_modal #notice_update_sub1_header').text("Edit this "+section);
+    $('#notice_update_modal #notice_update_id').val(id);
+    $('#notice_update_modal #notice_update_type').val(post_sub_cat2.trim());
+    $('#notice_update_modal #notice_update_top_heading').val(post_category);
+    $('#notice_update_modal #notice_update_main_heading').val(post_sub_cat1.trim());
+    $('#notice_update_modal #notice_update_title').summernote('code',post_item_body.trim());
 
             }
             
@@ -2384,6 +2406,92 @@
                             }else{
                                 console.log('response is false');
                                 $('#notice_form  .form_submission_error').text(response.msg);
+                                sub_button.val(old_button_val);
+                                sub_button.prop('disabled', false);
+                            }
+                              
+                       },
+                       error:function(xhr, status, err){
+                            console.log('error');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(err);
+                        }
+                   });
+                
+            }
+            } );
+
+
+$( "#notice_update_form" ).validate( {/*validate & submit pab modal data*/
+                rules: {  
+                    notice_update_top_heading: {
+                        required: true
+                    },
+                    notice_update_main_heading: {
+                        required: true,
+                    }
+                    
+                },
+                messages: {                        
+                    notice_update_top_heading: {
+                        required: "This field is required"
+                    },
+                    notice_update_main_heading: {
+                        required: "This field is required"
+                    }
+                },
+                errorElement: "em",
+                errorPlacement: function ( error, element ) {
+                // Add the `help-block` class to the error element
+                error.addClass( "help-block" );
+
+                if ( element.prop( "type" ) === "checkbox" ) {
+                    error.insertAfter( element.parent( "label" ) );
+                } else {
+                    error.insertAfter( element );
+                }
+            },
+            success: function ( label, element ) {
+                // Add the span element, if doesn't exists, and apply the icon classes to it.
+                if ( !$( element ).next( "span" )[ 0 ] ) {
+                    $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+                }
+            },
+            highlight: function ( element, errorClass, validClass ) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
+            },
+
+            submitHandler: function () {
+                //modify button
+                var sub_button=$("#notice_update_form").find(':submit');
+                var old_button_val=sub_button.val();
+                sub_button.prop('disabled', true);
+                sub_button.val('...processing');
+
+                resetFields("#notice_update_form");
+                var my_url="{{url}}/update_notice";
+                $("#notice_update_form").ajaxSubmit({
+                    url:my_url,
+                       contentType: 'application/json',
+                       success: function(response){
+                        if(response.success==true){
+                                console.log('image uploaded and form submitted');
+                                $('#notice_update_form  .form_submission_success').text(response.msg);
+                                setTimeout(function(){
+                                    $('#notice_update_form  .form_submission_success').text('');
+                                    sub_button.val(old_button_val);
+                                    sub_button.prop('disabled', false);
+                                    $('#notice_update_modal').modal('hide');
+                                    location.reload();
+                                },3000);
+                                
+                            }else{
+                                console.log('response is false');
+                                $('#notice_update_form  .form_submission_error').text(response.msg);
                                 sub_button.val(old_button_val);
                                 sub_button.prop('disabled', false);
                             }

@@ -1353,6 +1353,82 @@ app.post('/ask_notice',notice_upload,function(req,res,next){
 
 });
 
+/*process  notice modifications & edits immediately*/
+var notice_update_upload = upload.fields([
+    {name: 'notice_update_photo',maxCount:1 }]);
+app.post('/update_notice',notice_update_upload,function(req,res,next){
+    // console.log(req.user)
+    
+    var section_id=req.body.notice_update_id;
+
+        notice.findOne({_id:section_id},function(error,result){//find the notice that was responsed
+            if(result){
+                var displayPic=(req.user.displayPic)?(req.user.displayPic[req.user.displayPic.length -1]):('uploads/avatar.png');
+                var status=(req.user.designation[0])?((req.user.designation[req.user.designation.length -1]).title):('');
+                var display_name=(req.user.displayName)?(req.user.displayName):('');
+                var res_id=(req.user._id)?((req.user._id).toString()):('');
+
+                var owner_details={id:res_id,
+                    displayName:display_name,
+                    displayPic:displayPic,
+                    status:status};
+
+                let updateSection = result;
+                updateSection.date_modified=new Date();
+                updateSection.category=req.body.notice_update_top_heading;
+                updateSection.sub_cat1=req.body.notice_update_main_heading;
+                updateSection.sub_cat2=req.body.notice_update_type;
+                updateSection.owner=owner_details;
+                updateSection.body=convertToSentencCase(req.body.notice_update_title);
+                updateSection.shared_body=striptags(req.body.notice_update_title);
+                updateSection.shared_description=striptags(req.body.notice_update_title);
+
+                //store photo if it exists::delete prev
+                if(req.files && req.files['notice_update_photo']){
+                    //delete prev photo
+                    if(updateSection.pics && updateSection.pics[0] != null){
+                        var filename=updateSection.pics[0];
+                        console.log('found file ref to update '+updateSection.pics[0] );
+                        deleteFile(filename);
+                    }
+
+                    console.log('filename '+req.files['notice_update_photo'][0].filename)
+                    updateSection.pics[0]='uploads/'+req.files['notice_update_photo'][0].filename;
+                }                          
+                
+                // let most_recent_response={
+                //     _id:section_id,
+                //     body : updateSection.body,
+                //     category:updateSection.category,
+                //     sub_cat1:updateSection.sub_cat1,
+                //     sub_cat2:updateSection.sub_cat2,
+                //     description:updateSection.description,
+                //     date_modified:updateSection.date_modified
+                // }
+
+
+                section.updateOne({_id:section_id},{$set:updateSection},function(err1,res1){
+
+                    if(err1){
+                        console.log(err1)
+                        res.json({success:false,msg:"Your update failed"});
+                    }else if(res1){
+                        //var json = JSON.stringify(most_recent_response, null, 2);
+                        // console.log(json);
+                        // io.emit('responded', json);
+                        res.json({success:true,msg:"Your update was successfull"});
+                    }
+
+                });             
+            }else{
+                res.json({success:false,msg:"Item not found"});
+            }
+
+        });
+
+
+    });
+
 
 /*process an 'post a suggestion for group' post,save & update UI immediately*/
 var suggestion_upload = upload.fields([

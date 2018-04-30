@@ -120,6 +120,85 @@
 
 </div>
 
+
+<div id="notice_update_modal" class="modal fade" tabindex="-1">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h4 class="modal-title" id="notice_update_sub1_header" style="color: #3598dc;">Post A Notice</h4>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal" role="form" id="notice_update_form" action="" method="post" enctype="multipart/form-data">
+                <span class="form_submission_error"></span>
+                <span class="form_submission_success"></span>
+
+                <input type="hidden" name="notice_update_id"  id="notice_update_id" value="0">
+
+                <div class="form-body">
+
+                    <div class="form-group">
+                      <label class="col-md-4 col-lg-4 col-sm-12 control-label">Top Heading</label>
+                        <div class="col-md-8 col-lg-8 col-sm-12 ">
+                            <input type="text" name="notice_update_top_heading" id="notice_update_top_heading" class="form-control" value="">
+                            <span class="req_opt">*required</span>
+                        </div>
+                        
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-md-4 col-lg-4 col-sm-12 control-label">Main Heading</label>
+                        <div class="col-md-8 col-lg-8 col-sm-12 ">
+                            <input type="text" name="notice_update_main_heading" id="notice_update_main_heading" class="form-control" value="">
+                            <span class="req_opt">*required</span>
+                        </div>
+                        
+                    </div>
+
+                
+            <div class="form-group">
+                <label class="col-md-4 col-lg-4 col-sm-12 control-label">Write your notice</label>
+                <div class="col-md-8 col-lg-8 col-sm-12 ">
+                    <textarea  name="notice_update_title" id="notice_update_title" class="form-control summer_details" rows="3" style="font-size: 1.2em;font-weight: 600"></textarea>
+                </div>                                
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-4 col-lg-4 col-sm-12"></div>
+
+                <div class="col-md-8 col-lg-8 col-sm-12 ">
+                    <label for="notice_update_photo" class="col-md-4 col-lg-4 col-sm-12 control-label custom-file-upload">
+                        <i class="fa fa-camera"></i> Add Photos
+                    </label>
+                    <div class="col-md-2 col-lg-2 col-sm-12">
+                        <input id="notice_update_photo" name="notice_update_photo" type="file" accept="application/x-zip-compressed,image/*"/>
+                    </div>
+                    
+                </div>                                
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4 col-lg-4 col-sm-12">Select Type</label>
+                <div class="col-md-8 col-lg-8 col-sm-12">
+                    <select class="form-control " name="notice_update_type" id="notice_update_type">
+                           <option value="invitation">Invitation</option>
+                           <option value="notification">Notification</option>
+                    </select>
+                    
+                </div>
+            </div>
+
+
+            <div class="form-actions noborder pull-right">
+                <input type="submit" class="btn blue" name="submit" value="Post" />
+                <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+            </div>
+            <div class="clearfix"></div>
+
+        </div>
+    </form>
+    </div>
+
+</div>
+
 <!--group suggestions-->
 
 <div id="suggestion_modal" class="modal fade" tabindex="-1">
