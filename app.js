@@ -252,6 +252,11 @@ function deleteFile(filename){
 
 }
 
+//for fuzzy searchs
+function escapeRegex(text){
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g,"\\$&");
+}
+
 
 app.get('/profile/:id',isLoggedIn, function(req, res) {
     console.log('inside profile');
@@ -642,6 +647,152 @@ app.get('/dashboard',isLoggedIn,function(req,res){
                 data_trend:res_item_trend,
                 page_title: page_title,
                 class_type:'dashboard_page',
+                pending_friend_notifs:pending_friend_notifs,
+                req_count:req_count,
+                bookmarks_count:bookmark_len,
+
+                quest_page_status:false,
+                art_page_status:false,
+                riddle_page_status:false,
+                notice_page_status:false,
+                pab_page_status:false,
+                trend_page_status:false,
+                home_page_status:true
+            });
+
+        }
+        
+        
+    });
+
+    });//end notifs
+
+    });//end request
+
+
+    });//end trend
+
+
+});
+
+
+/*
+fetch rows that contain the searched item,
+sort them by date_created
+*/
+app.get('/quicksearch',isLoggedIn,function(req,res){
+    //page defaults
+    var skip_val=0,
+    req_count=0,
+    limit_val=5,
+    page='quicksearch',
+    page_title='search results',
+    page_results=[],
+    regx="",
+    res_item_trend=[];
+
+    if(req.query.dom_search_item){
+        regx=new RegExp(escapeRegex(req.query.dom_search_item),'gi');
+
+    }else{
+        regx="";
+    }
+
+    //get trending stories for sidebar headlines
+    trend.find().sort({date_created:1}).limit(5).exec(function(err_trend,item_trend){
+
+        if(err_trend){
+            //console.log(err_trend);
+        }
+        if(item_trend){
+            //console.log('DATA TREND ITEM')
+            //console.log(item_trend);
+            res_item_trend=item_trend;
+        }
+
+    //get total requests for this user
+    var id_string=(req.user._id).toString();
+    request_model.find({$or:[{destination_id:id_string},{"owner.id":id_string}]}).exec(function(err1,res1){
+        req_count =res1.length;
+
+        var curr_user_display_pic='uploads/avatar.png';//set default pic
+        if(req.user.displayPic[0]){
+            curr_user_display_pic=req.user.displayPic[req.user.displayPic.length - 1];
+        }//end display
+
+        var bookmark_len=req.user.bookmarks.length;//get saved bookmarks
+
+
+        //find pending notifications length
+        var pending_friend_notifs=0;
+        process_posts.getNotifications(req.user,function(rel_notifs){
+             pending_friend_notifs=rel_notifs;
+
+    //using async get results from each collection
+    async.concat([question,article,riddle,pab,trend,notice],function(model,callback){
+        var query = model.find({"body":regx}).sort({"date_created":-1});
+        query.exec(function (err,docs){
+            if(err){
+                //console.log('err in query');
+                console.log(err);
+            }else if(docs){
+             callback(err,docs); 
+         }      
+
+     });
+    },
+    function(err2,res_items){
+        if (err2){
+            console.log(err2 )
+        }else if(res_items){
+            //results are now merged so sort by date
+            page_results=res_items.sort(function(a,b){
+                return (a.date_created < b.date_created)? 1:(a.date_created > b.date_created)? -1:0;
+            });
+            //console.log('sorted page_results')
+            //console.log(page_results);
+        }
+
+        if(page_results.length >0){
+            //update other details needed by the post
+            process_posts.processPagePosts(page_results,req.user,function(processed_response){
+                //console.log('PROCESSED RESPONSE');
+                //console.log(processed_response);
+
+                res.render(page,{
+                    url:process.env.URL_ROOT,
+                    displayPic:curr_user_display_pic,
+                    user_info:req.user,
+                    data:processed_response,
+                    data_trend:res_item_trend,
+                    page_title: page_title,
+                    class_type:'quicksearch_page',
+                    pending_friend_notifs:pending_friend_notifs,
+                    req_count:req_count,
+                    bookmarks_count:bookmark_len,
+
+                    quest_page_status:false,
+                    art_page_status:false,
+                    riddle_page_status:false,
+                    notice_page_status:false,
+                    pab_page_status:false,
+                    trend_page_status:false,
+                    home_page_status:true
+                });
+
+            });           
+
+        }else{
+            //console.log('PAGE RESULTS INITIALLY EMPTY')
+            
+            res.render(page,{
+                url:process.env.URL_ROOT,
+                displayPic:curr_user_display_pic,
+                user_info:req.user,
+                data:page_results,
+                data_trend:res_item_trend,
+                page_title: page_title,
+                class_type:'quicksearch_page',
                 pending_friend_notifs:pending_friend_notifs,
                 req_count:req_count,
                 bookmarks_count:bookmark_len,
